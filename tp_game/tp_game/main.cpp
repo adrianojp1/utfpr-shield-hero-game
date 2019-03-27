@@ -22,23 +22,33 @@ int main()
 	//Set sprite position
 	sprite.setPosition(sf::Vector2f{ 0.0f, 0.0f });
 
-	//Loop principal
+	//Main lopp
 	while (window.isOpen())
 	{
-		//Objeto evento
-		sf::Event event;
+		//Window event
+		sf::Event evnt;
 
-		//Verificação de eventos da janela
-		while (window.pollEvent(event))
+		//Window poll loop
+		while (window.pollEvent(evnt))
 		{
-			//Verifica se janela foi fechada
-			if (event.type == sf::Event::Closed)
+			//Close window
+			if (evnt.type == sf::Event::Closed || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
 				window.close();
 		}
 
-		window.clear(); //Limpa frame anterior
+		//Move the player
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) //Left
+			sprite.move(sf::Vector2f{ -0.05f, 0.0f });
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) //Bottom
+			sprite.move(sf::Vector2f{ 0.0f, 0.05f });
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) //Right
+			sprite.move(sf::Vector2f{ 0.05f, 0.0f });
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) //Up
+			sprite.move(sf::Vector2f{ 0.0f, -0.05f });
+
+		window.clear(); //Clear window buffer
 		window.draw(sprite);
-		window.display(); //Mostra frame atual
+		window.display(); //Show current frame
 	}
 
 	return 0;
