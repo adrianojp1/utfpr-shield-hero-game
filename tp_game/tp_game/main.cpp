@@ -1,5 +1,4 @@
-#include <SFML/Graphics.hpp>
-#include <iostream>
+#include "stdafx.h"
 
 const float pixelScale(5.5f);
 
