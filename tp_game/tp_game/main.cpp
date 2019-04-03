@@ -1,6 +1,9 @@
+//=============// Pre-Compiled Header //=============//
 #include "stdafx.h"
 
-const float pixelScale(5.5f);
+#include "Animator.h"
+
+const float pixelScale(5.5f); // Window pixel scale
 
 int main()
 {

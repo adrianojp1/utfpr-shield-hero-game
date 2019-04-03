@@ -24,7 +24,7 @@ public:
 	void initializeTexture(std::string texture_filePath);
 	void updateSprite(float* deltaTime, bool facingRight);
 
-	//=============/ Sets & Gets /=============/
+	//=============// Sets & Gets //=============//
 	//_frameCounter
 	void setFrameCounter(unsigned int frameCounter)	{ _frameCounter = frameCounter; }
 	unsigned int getSpriteCounter() const			{ return _frameCounter; };
@@ -40,4 +40,9 @@ public:
 	//_pSprite
 	void setpSprite(sf::RectangleShape* pSprite)	{ _pSprite = pSprite; }
 	sf::RectangleShape* getpSprite() const			{ return _pSprite; }
+
+private:
+	//Sprite update modules
+	void updateFrame();
+	void updateSpriteDirection(bool facingRight);
 };

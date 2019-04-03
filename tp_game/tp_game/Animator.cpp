@@ -46,6 +46,15 @@ void Animator::updateSprite(float* deltaTime, bool facingRight)
 {
 	_currentTime += *deltaTime;
 
+	updateFrame();
+	updateSpriteDirection(facingRight);
+
+	_pSprite->setTexture(&_texture);
+	_pSprite->setTextureRect(_canvasRect);
+}
+
+void Animator::updateFrame()
+{
 	//Enough time to change the frame
 	if (_currentTime >= _switchTime)
 	{
@@ -54,9 +63,14 @@ void Animator::updateSprite(float* deltaTime, bool facingRight)
 
 		//The animation is over
 		if (_frameCounter >= _nFrames)
-			{ _frameCounter = 0; }
+		{
+			_frameCounter = 0;
+		}
 	}
+}
 
+void Animator::updateSpriteDirection(bool facingRight)
+{
 	if (facingRight)
 	{
 		_canvasRect.left = _frameCounter * _canvasRect.width;
@@ -67,7 +81,4 @@ void Animator::updateSprite(float* deltaTime, bool facingRight)
 		_canvasRect.left = (_frameCounter + 1) * abs(_canvasRect.width);
 		_canvasRect.width = -abs(_canvasRect.width);
 	}
-
-	_pSprite->setTexture(&_texture);
-	_pSprite->setTextureRect(_canvasRect);
 }
