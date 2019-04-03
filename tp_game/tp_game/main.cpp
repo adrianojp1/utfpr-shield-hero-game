@@ -13,20 +13,23 @@ int main()
 	view.setSize( (sf::Vector2f) window.getSize()/pixelScale);
 	window.setView(view);
 
-	//Load player texture
-	sf::Texture texture;
-	if (!texture.loadFromFile("shield_hero.png")) 
-		{ std::cerr << "Couldn't load player texture! " << std::endl; }
 	//Player sprite
 	sf::Sprite sprite;
-	sprite.setTexture(texture);
-	sprite.setOrigin(sf::Vector2f{ texture.getSize() }/ 2.0f);
+	sprite.setOrigin(sf::Vector2f{ 7.0f, 7.5f });
 	//Set sprite position
 	sprite.setPosition(sf::Vector2f{ 0.0f, 0.0f });
+
+	Animator idle_anmt("shield_hero.png", 1, 0.0f, &sprite);
+	Animator walk_anmt("shield_hero-walk1.png", 4, 0.250f, &sprite);
+
+	float deltaTime = 0.0f;
+	sf::Clock clock;
 
 	//Main lopp
 	while (window.isOpen())
 	{
+		deltaTime = clock.restart().asSeconds();
+
 		//Window event
 		sf::Event evnt;
 
@@ -47,6 +50,8 @@ int main()
 			sprite.move(sf::Vector2f{ 0.05f, 0.0f });
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) //Up
 			sprite.move(sf::Vector2f{ 0.0f, -0.05f });
+		
+		walk_anmt.updateSprite(&deltaTime, 1);
 
 		window.clear(); //Clear window buffer
 		window.draw(sprite);

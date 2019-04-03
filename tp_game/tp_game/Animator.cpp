@@ -2,7 +2,7 @@
 #include "Animator.h"
 
 
-Animator::Animator(std::string texture_filePath, unsigned int nFrames, float switchTime, sf::RectangleShape* pSprite)
+Animator::Animator(std::string texture_filePath, unsigned int nFrames, float switchTime, sf::Sprite* pSprite)
 {
 	_nFrames = nFrames;
 	_switchTime = switchTime;
@@ -39,7 +39,7 @@ void Animator::initializeTexture(std::string texture_filePath)
 	_canvasRect.top = 0;
 
 	//Set texture to sprite
-	_pSprite->setTexture(&_texture);
+	_pSprite->setTexture(_texture);
 }
 
 void Animator::updateSprite(float* deltaTime, bool facingRight)
@@ -49,7 +49,7 @@ void Animator::updateSprite(float* deltaTime, bool facingRight)
 	updateFrame();
 	updateSpriteDirection(facingRight);
 
-	_pSprite->setTexture(&_texture);
+	_pSprite->setTexture(_texture);
 	_pSprite->setTextureRect(_canvasRect);
 }
 

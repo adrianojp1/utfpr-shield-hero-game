@@ -12,12 +12,12 @@ private:
 	float _currentTime;
 	float _switchTime;
 
-	sf::RectangleShape* _pSprite;
+	sf::Sprite* _pSprite;
 	sf::IntRect _canvasRect;
 	sf::Texture _texture;
 
 public:
-	Animator(std::string texture_filePath, unsigned int nFrames, float switchTime, sf::RectangleShape* pSprite);
+	Animator(std::string texture_filePath, unsigned int nFrames, float switchTime, sf::Sprite* pSprite);
 	Animator();
 	~Animator();
 
@@ -38,8 +38,8 @@ public:
 	void setSwitchTime(float switchTime)			{ _switchTime = switchTime; }
 	float getSwitchTime() const						{ return _switchTime; }
 	//_pSprite
-	void setpSprite(sf::RectangleShape* pSprite)	{ _pSprite = pSprite; }
-	sf::RectangleShape* getpSprite() const			{ return _pSprite; }
+	void setpSprite(sf::Sprite* pSprite)	{ _pSprite = pSprite; }
+	sf::Sprite* getpSprite() const			{ return _pSprite; }
 
 private:
 	//Sprite update modules
