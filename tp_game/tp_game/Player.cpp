@@ -6,8 +6,9 @@
 // === This Class Header === //
 #include "Player.h"
 
-Player::Player(sf::Vector2f initPosition, float speed)
+Player::Player(sf::Vector2f initPosition, float speed, float jumpHeight)
 {
+	_jumpHeight = jumpHeight;
 	_speed = speed;
 	_facingRight = true;
 
@@ -24,6 +25,7 @@ Player::Player()
 {
 	_facingRight = true;
 	_speed = 0.0f;
+	_jumpHeight = 0.0f;
 
 	_idle_anmt = NULL;
 	_walk_anmt = NULL;
@@ -51,14 +53,14 @@ void Player::execute(float deltaTime)
 	float deltaSpace = _speed * deltaTime;
 
 	//Move the player
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) //Left
-		movement.x -= deltaSpace;
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) //Right
-		movement.x += deltaSpace;
+	if (leftIsKeyPressed()) //Left
+		moveToLeft(&movement.x, deltaSpace);
+	if (rightIsKeyPressed()) //Right
+		moveToRight(&movement.x, deltaSpace);
 	
 	_sprite.move(movement);
 
-	if (movement.x == 0.0f)
+	if (isIdle(movement.x))
 	{
 		_idle_anmt->updateSprite(deltaTime, _facingRight);
 	}
@@ -77,12 +79,31 @@ void Player::execute(float deltaTime)
 	}
 }
 
-bool Player::leftKeyPressed()
+void Player::moveToLeft(float* HorizontalMovement, float offset)
+{
+	*HorizontalMovement -= offset;
+}
+
+void Player::moveToRight(float* HorizontalMovement, float offset)
+{
+	*HorizontalMovement += offset;
+}
+
+bool Player::isIdle(float HorizontalMovement)
+{
+	if (HorizontalMovement == 0.0f)
+	{
+		return true;
+	}
+	return false;
+}
+
+bool Player::leftIsKeyPressed()
 {
 	return (sf::Keyboard::isKeyPressed(sf::Keyboard::A));
 }
 
-bool Player::rightKeyPressed()
+bool Player::rightIsKeyPressed()
 {
 	return (sf::Keyboard::isKeyPressed(sf::Keyboard::D));
 }

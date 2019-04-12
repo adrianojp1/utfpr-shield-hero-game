@@ -23,7 +23,7 @@ Animator::Animator()
 {
 	_nFrames = 0;
 	_switchTime = 0;
-	_currentTime = 0;
+	_currentTime = 0.0f;
 	_frameCounter = 0;
 	_pSprite = NULL;
 } // end constr (no parameters)

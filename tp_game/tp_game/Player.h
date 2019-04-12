@@ -27,7 +27,7 @@ private:
 
 public:
 	//Constr
-	Player(sf::Vector2f initPosition, float speed);
+	Player(sf::Vector2f initPosition, float speed, float jumpHeight);
 	Player();
 	//Destr
 	~Player();
@@ -39,9 +39,14 @@ public:
 
 private:
 	// ========== Control keys methods ========== //
-	bool leftKeyPressed();
-	bool rightKeyPressed();
+	bool leftIsKeyPressed();
+	bool rightIsKeyPressed();
 	bool jumpKeyPressed();
 	bool defendKeyPressed();
+
+	// ========== Movement methods ========== //
+	void moveToLeft(float* HorizontalMovement, float offset);
+	void moveToRight(float* HorizontalMovement, float offset);
+	bool isIdle(float HorizontalMovement);
 };
 
