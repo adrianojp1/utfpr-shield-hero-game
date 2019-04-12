@@ -1,6 +1,11 @@
 #pragma once
+
+//======================================================================================================================================//
+// === Pre-Compiled Header === //
 #include "stdafx.h"
 
+//======================================================================================================================================//
+// === Animator Class === //
 class Animator
 {
 private:
@@ -17,12 +22,14 @@ private:
 	sf::Texture _texture;
 
 public:
+	//Constr
 	Animator(std::string texture_filePath, unsigned int nFrames, float switchTime, sf::Sprite* pSprite);
 	Animator();
+	//Destr
 	~Animator();
 
 	void initializeTexture(std::string texture_filePath);
-	void updateSprite(float* deltaTime, bool facingRight);
+	void updateSprite(float deltaTime, bool facingRight);
 
 	//=============// Sets & Gets //=============//
 	//_frameCounter

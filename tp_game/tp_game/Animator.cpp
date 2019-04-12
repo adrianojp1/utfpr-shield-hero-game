@@ -1,4 +1,9 @@
+//======================================================================================================================================//
+// === Pre-Compiled Header === //
 #include "stdafx.h"
+
+//======================================================================================================================================//
+// === This Class Header === //
 #include "Animator.h"
 
 
@@ -12,7 +17,7 @@ Animator::Animator(std::string texture_filePath, unsigned int nFrames, float swi
 
 	_pSprite = pSprite;
 	initializeTexture(texture_filePath);
-}
+} // end constr (parameters)
 
 Animator::Animator()
 {
@@ -21,11 +26,11 @@ Animator::Animator()
 	_currentTime = 0;
 	_frameCounter = 0;
 	_pSprite = NULL;
-}
+} // end constr (no parameters)
 
 Animator::~Animator()
 {
-}
+} // end destr
 
 void Animator::initializeTexture(std::string texture_filePath)
 {
@@ -40,18 +45,18 @@ void Animator::initializeTexture(std::string texture_filePath)
 
 	//Set texture to sprite
 	_pSprite->setTexture(_texture);
-}
+} // end initializeTexture
 
-void Animator::updateSprite(float* deltaTime, bool facingRight)
+void Animator::updateSprite(float deltaTime, bool facingRight)
 {
-	_currentTime += *deltaTime;
+	_currentTime += deltaTime;
 
 	updateFrame();
 	updateSpriteDirection(facingRight);
 
 	_pSprite->setTexture(_texture);
 	_pSprite->setTextureRect(_canvasRect);
-}
+} // end updateSprite
 
 void Animator::updateFrame()
 {
@@ -67,7 +72,7 @@ void Animator::updateFrame()
 			_frameCounter = 0;
 		}
 	}
-}
+} // end updateFrame
 
 void Animator::updateSpriteDirection(bool facingRight)
 {
@@ -81,4 +86,4 @@ void Animator::updateSpriteDirection(bool facingRight)
 		_canvasRect.left = (_frameCounter + 1) * abs(_canvasRect.width);
 		_canvasRect.width = -abs(_canvasRect.width);
 	}
-}
+} // end updateSpriteDirection
