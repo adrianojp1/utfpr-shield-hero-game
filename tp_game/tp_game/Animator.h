@@ -22,13 +22,19 @@ private:
 	sf::Texture _texture;
 
 public:
-	//Constr
+	//================================================================//
+	// ========== Constructors ========== //
 	Animator(std::string texture_filePath, unsigned int nFrames, float switchTime, sf::Sprite* pSprite);
 	Animator();
-	//Destr
+	// ========== Destructors ========== //
 	~Animator();
 
+	//================================================================//
+	// ========== Initializers ========== //
 	void initializeTexture(std::string texture_filePath);
+
+	//================================================================//
+	// ========== Loop methods ========== //
 	void updateSprite(float deltaTime, bool facingRight);
 
 	//=============// Sets & Gets //=============//
@@ -45,11 +51,11 @@ public:
 	void setSwitchTime(float switchTime)			{ _switchTime = switchTime; }
 	float getSwitchTime() const						{ return _switchTime; }
 	//_pSprite
-	void setpSprite(sf::Sprite* pSprite)	{ _pSprite = pSprite; }
-	sf::Sprite* getpSprite() const			{ return _pSprite; }
+	void setpSprite(sf::Sprite* pSprite)			{ _pSprite = pSprite; }
+	sf::Sprite* getpSprite() const					{ return _pSprite; }
 
 private:
-	//Sprite update modules
+	// ========== updateSprite submethods ========== //
 	void updateFrame();
 	void updateSpriteDirection(bool facingRight);
 };

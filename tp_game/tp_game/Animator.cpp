@@ -17,6 +17,8 @@ Animator::Animator(std::string texture_filePath, unsigned int nFrames, float swi
 
 	_pSprite = pSprite;
 	initializeTexture(texture_filePath);
+
+	_pSprite->setOrigin((sf::Vector2f)_texture.getSize() / 2.0f);
 } // end constr (parameters)
 
 Animator::Animator()
