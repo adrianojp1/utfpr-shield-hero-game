@@ -37,7 +37,8 @@ public:
 	// ========== Loop methods ========== //
 	void updateSprite(float deltaTime, bool facingRight);
 
-	//=============// Sets & Gets //=============//
+	//================================================================//
+	// ========== Sets & Gets ========== //
 	//_frameCounter
 	void setFrameCounter(unsigned int frameCounter)	{ _frameCounter = frameCounter; }
 	unsigned int getSpriteCounter() const			{ return _frameCounter; };

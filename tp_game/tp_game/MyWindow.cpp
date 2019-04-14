@@ -30,7 +30,7 @@ MyWindow::~MyWindow()
 void MyWindow::initializeWindow(sf::Vector2u size, std::string title)
 {
 	pWindow = new sf::RenderWindow(sf::VideoMode(size.x, size.y), title, sf::Style::Close | sf::Style::Titlebar);
-}
+} // end initializeWindow
 
 void MyWindow::initializeView(sf::Vector2f center, sf::Vector2f windowSize, float zoom)
 {
@@ -38,7 +38,7 @@ void MyWindow::initializeView(sf::Vector2f center, sf::Vector2f windowSize, floa
 	pView->setCenter(center);
 	pView->setSize( windowSize / zoom);
 	pWindow->setView(*pView);
-}
+} // end initializeView
 
 void MyWindow::execute()
 {
@@ -52,49 +52,49 @@ void MyWindow::execute()
 		if (evnt.type == sf::Event::Closed || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
 			this->close();
 	}
-}
+} // end execute
 
 bool MyWindow::isOpen()
 {
 	return pWindow->isOpen();
-}
+} // end isOpen
 
 bool MyWindow::pollEvent(sf::Event& evnt)
 {
 	return pWindow->pollEvent(evnt);
-}
+} // end pollEvent
 
 void MyWindow::close()
 {
 	pWindow->close();
-}
+} // end close
 
 void MyWindow::clear()
 {
 	pWindow->clear();
-}
+} // end clear
 
 void MyWindow::display()
 {
 	pWindow->display();
-}
+} // end display
 
 void MyWindow::draw(const sf::Drawable& drawable, const sf::RenderStates& states)
 {
 	pWindow->draw(drawable, states);
-}
+} // end draw
 
 void MyWindow::draw(const sf::Vertex* vertices, std::size_t vertexCount, sf::PrimitiveType type, const sf::RenderStates& states)
 {
 	pWindow->draw(vertices, vertexCount, type, states);
-}
+} // end draw
 
 void MyWindow::draw(const sf::VertexBuffer& vertexBuffer, const sf::RenderStates& states)
 {
 	pWindow->draw(vertexBuffer, states);
-}
+} // end draw
 
 void MyWindow::draw(const sf::VertexBuffer& vertexBuffer, std::size_t firstVertex, std::size_t vertexCount, const sf::RenderStates& states)
 {
 	pWindow->draw(vertexBuffer, firstVertex, vertexCount, states);
-}
+} // end draw

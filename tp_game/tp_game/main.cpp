@@ -37,12 +37,9 @@ int main()
 		deltaTime = clock.restart().asSeconds(); //Iteration clock
 
 		execute(deltaTime); //Future game executor
-		//window.execute();
-		//player1.execute(deltaTime);
 
 		window->clear(); //Clear window buffer
 
-		//player1.draw(&window);
 		draw(window); //Future game drawer
 
 		window->display(); //Show current frame
