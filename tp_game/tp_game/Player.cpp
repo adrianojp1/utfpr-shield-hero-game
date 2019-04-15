@@ -13,15 +13,15 @@
 Player::Player(sf::Vector2f initPosition, float speed, float jumpHeight)
 {
 	_jumpHeight = jumpHeight;
-	_speed = speed;
+	_walkSpeed = speed;
 	_position = initPosition;
 
 	_facingRight = true;
 	_defending = false;
+	_defCounterUp = false;
 	_canJump = true;
 
-	_sprite.setOrigin(sf::Vector2f{7.0f, 7.5f});
-	_sprite.setPosition(initPosition);
+	_defCounterTimer.setTotalTime(0.3f);
 
 	initializeAnimators();
 } // end constr (parameters)
@@ -29,7 +29,10 @@ Player::Player(sf::Vector2f initPosition, float speed, float jumpHeight)
 Player::Player()
 {
 	_facingRight = true;
-	_speed = 0.0f;
+	_defending = false;
+	_defCounterUp = false;
+	_canJump = true;
+	_walkSpeed = 0.0f;
 	_jumpHeight = 0.0f;
 	_position = {0.0f, 0.0f};
 
@@ -65,6 +68,8 @@ void Player::execute(float deltaTime)
 {
 	sf::Vector2f movement{0.0f, 0.0f};
 
+	_defCounterTimer.decreaseTime(deltaTime);
+
 	updatePosition(&movement, deltaTime);
 	updateAnimation(movement, deltaTime);
 
@@ -77,13 +82,20 @@ void Player::updatePosition(sf::Vector2f *pMovement, float deltaTime)
 	if (defendKeyPressed())
 	{
 		_defending = true;
+		if (_defCounterTimer.isTicking())
+			_defCounterUp = true;
+		else if (_defCounterTimer.isZeroed())
+			_defCounterUp = false;
+		else
+			_defCounterTimer.trigger();
 	}
 	// Player is not defending
 	else
 	{
 		_defending = false;
+		_defCounterTimer.resetTimer();
 
-		float offset = _speed * deltaTime; //the displacement between the loop iterations
+		float offset = _walkSpeed * deltaTime; //the displacement between the loop iterations
 
 		//Move the player
 		if (leftIsKeyPressed()) //Left
@@ -97,7 +109,12 @@ void Player::updateAnimation(sf::Vector2f movement, float deltaTime)
 {
 	if (_defending)
 	{
-		_def1_anmt->updateSprite(deltaTime, _facingRight);
+		if(_defCounterUp)
+			//Counter defense animation
+			_def2_anmt->updateSprite(deltaTime, _facingRight);
+		else
+			//Normal defense animation
+			_def1_anmt->updateSprite(deltaTime, _facingRight);
 	}
 	else
 	{
@@ -163,3 +180,51 @@ void Player::draw(MyWindow *window)
 {
 	window->draw(this->_sprite);
 } // end draw
+
+bool Player::isDefending() const
+{
+	return _defending;
+}
+
+bool Player::counterIsUp() const
+{
+	return _defCounterUp;
+}
+
+bool Player::isDefending_with_Counter() const
+{
+	if (this->isDefending() && this->counterIsUp())
+		return true;
+	else
+	return false;
+}
+
+void Player::setWalkSpeed(float walkSpeed)
+{
+	_walkSpeed = walkSpeed;
+}
+
+float Player::getWalkSpeed() const
+{
+	return _walkSpeed;
+}
+
+void Player::setJumpHeight(float jumpHeight)
+{
+	_jumpHeight = jumpHeight;
+}
+
+float Player::getJumpHeight() const
+{
+	return _jumpHeight;
+}
+
+void Player::setPosition(sf::Vector2f position)
+{
+	_position = position;
+}
+
+sf::Vector2f Player::getPosition() const
+{
+	return _position;
+}

@@ -60,6 +60,56 @@ void Animator::updateSprite(float deltaTime, bool facingRight)
 	_pSprite->setTextureRect(_canvasRect);
 } // end updateSprite
 
+void Animator::setFrameCounter(unsigned int frameCounter)
+{
+	_frameCounter = frameCounter;
+}
+
+unsigned int Animator::getSpriteCounter() const
+{
+	return _frameCounter;
+}
+
+void Animator::setnFrames(unsigned int nFrames)
+{
+	_nFrames = nFrames;
+}
+
+unsigned int Animator::getnFrames() const
+{
+	return _nFrames;
+}
+
+void Animator::setCurrentTime(float currentTime)
+{
+	_currentTime = currentTime;
+}
+
+float Animator::getCurrentTime() const
+{
+	return _currentTime;
+}
+
+void Animator::setSwitchTime(float switchTime)
+{
+	_switchTime = switchTime;
+}
+
+float Animator::getSwitchTime() const
+{
+	return _switchTime;
+}
+
+void Animator::setpSprite(sf::Sprite* pSprite)
+{
+	_pSprite = pSprite;
+}
+
+sf::Sprite* Animator::getpSprite() const
+{
+	return _pSprite;
+}
+
 void Animator::updateFrame()
 {
 	//Enough time to change the frame

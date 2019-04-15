@@ -40,21 +40,20 @@ public:
 	//================================================================//
 	// ========== Sets & Gets ========== //
 	//_frameCounter
-	void setFrameCounter(unsigned int frameCounter)	{ _frameCounter = frameCounter; }
-	unsigned int getSpriteCounter() const			{ return _frameCounter; };
+	void setFrameCounter(unsigned int frameCounter);
+	unsigned int getSpriteCounter() const;
 	//_nFrames
-	void setnFrames(unsigned int nFrames)			{ _nFrames = nFrames; }
-	unsigned int getnFrames() const					{ return _nFrames; }
-	//_totalTime
-	void setTotalTime(float totalTime)				{ _currentTime = totalTime; }
-	float getTotalTime() const						{ return _currentTime; }
+	void setnFrames(unsigned int nFrames);
+	unsigned int getnFrames() const;
+	//_currentTime
+	void setCurrentTime(float currentTime);
+	float getCurrentTime() const;
 	//_switchTime
-	void setSwitchTime(float switchTime)			{ _switchTime = switchTime; }
-	float getSwitchTime() const						{ return _switchTime; }
+	void setSwitchTime(float switchTime);
+	float getSwitchTime() const;
 	//_pSprite
-	void setpSprite(sf::Sprite* pSprite)			{ _pSprite = pSprite; }
-	sf::Sprite* getpSprite() const					{ return _pSprite; }
-
+	void setpSprite(sf::Sprite* pSprite);
+	sf::Sprite* getpSprite() const;	
 private:
 	// ========== updateSprite submethods ========== //
 	void updateFrame();
