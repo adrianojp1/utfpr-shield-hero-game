@@ -58,6 +58,13 @@ Player::~Player()
 	if (_def2_animator != NULL)
 		delete _def2_animator;
 
+	if (_idle_Collider != NULL)
+		delete _idle_Collider;
+	if (_walk_Collider != NULL)
+		delete _walk_Collider;
+	if (_def_Collider != NULL)
+		delete _def_Collider;
+
 } // end destr
 
 void Player::initializeAnimators()
@@ -217,14 +224,14 @@ bool Player::isDefending() const
 	return _defending;
 }
 
-bool Player::counterIsUp() const
+bool Player::isCounterUp() const
 {
 	return _defCounterUp;
 }
 
 bool Player::isDefending_with_Counter() const
 {
-	if (this->isDefending() && this->counterIsUp())
+	if (this->isDefending() && this->isCounterUp())
 		return true;
 	else
 	return false;

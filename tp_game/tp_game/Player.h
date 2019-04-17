@@ -15,7 +15,7 @@ class Player
 {
 private:
 	// ========= Visual Members ========= //
-	//Player animators
+	//Animators
 	Animator *_idle_animator; //Idle
 	Animator *_walk_animator; //Walking
 	Animator *_def1_animator; //Normal defense
@@ -27,7 +27,7 @@ private:
 	bool _facingRight;  //Bool for the side direction
 
 	// ========= Motion Members ========= //
-	//Player colliders
+	//Colliders
 	sf::RectangleShape* _idle_Collider; //Idle
 	sf::RectangleShape* _walk_Collider; //Walking
 	sf::RectangleShape* _def_Collider; //Defense
@@ -64,9 +64,13 @@ public:
 	void draw(MyWindow *window);
 
 	//================================================================//
+	// ========== Collision ========== //
+	void move(float dx, float dy) { _position += sf::Vector2f(dx, dy); }
+
+	//================================================================//
 	// ========== State checkers ========== //
 	bool isDefending() const;
-	bool counterIsUp() const;
+	bool isCounterUp() const;
 	bool isDefending_with_Counter() const;
 
 	//================================================================//
@@ -80,6 +84,8 @@ public:
 	// _position
 	void setPosition(sf::Vector2f position);
 	sf::Vector2f getPosition() const;
+	// _collider
+	sf::RectangleShape* getCollider() { return _current_Collider; }
 
 private:
 	// ========== Control keys methods ========== //

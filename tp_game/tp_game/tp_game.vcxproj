@@ -154,12 +154,14 @@
     <ClCompile Include="Animator.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MyWindow.cpp" />
+    <ClCompile Include="Platform.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animator.h" />
     <ClInclude Include="MyWindow.h" />
+    <ClInclude Include="Platform.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Timer.h" />
