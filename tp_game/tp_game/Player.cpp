@@ -12,6 +12,9 @@
 
 Player::Player(sf::Vector2f initPosition, float speed, float jumpHeight)
 {
+	_current_Animator = NULL;
+	_current_Collider = NULL;
+
 	_jumpHeight = jumpHeight;
 	_walkSpeed = speed;
 	_position = initPosition;
@@ -24,6 +27,7 @@ Player::Player(sf::Vector2f initPosition, float speed, float jumpHeight)
 	_defCounterTimer.setTotalTime(0.3f);
 
 	initializeAnimators();
+	initializeColliders();
 } // end constr (parameters)
 
 Player::Player()
@@ -36,33 +40,54 @@ Player::Player()
 	_jumpHeight = 0.0f;
 	_position = {0.0f, 0.0f};
 
-	_idle_anmt = NULL;
-	_walk_anmt = NULL;
-	_def1_anmt = NULL;
-	_def2_anmt = NULL;
+	_idle_animator = NULL;
+	_walk_animator = NULL;
+	_def1_animator = NULL;
+	_def2_animator = NULL;
 } // end constr (no parameters)
 
 Player::~Player()
 {
 	//Destroy animators
-	if (_idle_anmt != NULL)
-		delete _idle_anmt;
-	if (_walk_anmt != NULL)
-		delete _walk_anmt;
-	if (_def1_anmt != NULL)
-		delete _def1_anmt;
-	if (_def2_anmt != NULL)
-		delete _def2_anmt;
+	if (_idle_animator != NULL)
+		delete _idle_animator;
+	if (_walk_animator != NULL)
+		delete _walk_animator;
+	if (_def1_animator != NULL)
+		delete _def1_animator;
+	if (_def2_animator != NULL)
+		delete _def2_animator;
 
 } // end destr
 
 void Player::initializeAnimators()
 {
-	_idle_anmt = new Animator("Media\\shield_hero-idle-1.png", 1, 0.0f, &_sprite);
-	_walk_anmt = new Animator("Media\\shield_hero-walk-1.png", 4, 0.250f, &_sprite);
-	_def1_anmt = new Animator("Media\\shield_hero-def1-1.png", 1, 0.0f, &_sprite);
-	_def2_anmt = new Animator("Media\\shield_hero-def2-1.png", 1, 0.0f, &_sprite);
+	_idle_animator = new Animator("Media\\shield_hero-idle-1.png", 1, 0.0f, this);
+	_walk_animator = new Animator("Media\\shield_hero-walk-1.png", 4, 0.250f, this);
+	_def1_animator = new Animator("Media\\shield_hero-def1-1.png", 1, 0.0f, this);
+	_def2_animator = new Animator("Media\\shield_hero-def2-1.png", 1, 0.0f, this);
 } // end initializeAnimators
+
+void Player::initializeColliders()
+{
+	_idle_Collider = new sf::RectangleShape(_idle_animator->getSpriteSize());
+	_idle_Collider->setOrigin(_idle_Collider->getSize() / 2.0f);
+	_idle_Collider->setOutlineThickness(0.2f);
+	_idle_Collider->setOutlineColor(sf::Color::White);
+	_idle_Collider->setFillColor(sf::Color::Transparent);
+
+	_walk_Collider = new sf::RectangleShape(_walk_animator->getSpriteSize());
+	_walk_Collider->setOrigin(_walk_Collider->getSize() / 2.0f);
+	_walk_Collider->setOutlineThickness(0.2f);
+	_walk_Collider->setOutlineColor(sf::Color::White);
+	_walk_Collider->setFillColor(sf::Color::Transparent);
+
+	_def_Collider = new sf::RectangleShape(_def1_animator->getSpriteSize());
+	_def_Collider->setOrigin(_def_Collider->getSize() / 2.0f);
+	_def_Collider->setOutlineThickness(0.2f);
+	_def_Collider->setOutlineColor(sf::Color::White);
+	_def_Collider->setFillColor(sf::Color::Transparent);
+}
 
 void Player::execute(float deltaTime)
 {
@@ -74,7 +99,8 @@ void Player::execute(float deltaTime)
 	updateAnimation(movement, deltaTime);
 
 	_position += movement;
-	_sprite.setPosition(_position);
+
+	_current_Collider->setPosition(_position);
 } // end execute
 
 void Player::updatePosition(sf::Vector2f *pMovement, float deltaTime)
@@ -109,18 +135,20 @@ void Player::updateAnimation(sf::Vector2f movement, float deltaTime)
 {
 	if (_defending)
 	{
+		_current_Collider = _def_Collider;
 		if(_defCounterUp)
 			//Counter defense animation
-			_def2_anmt->updateSprite(deltaTime, _facingRight);
+			_current_Animator = _def2_animator;
 		else
 			//Normal defense animation
-			_def1_anmt->updateSprite(deltaTime, _facingRight);
+			_current_Animator = _def1_animator;
 	}
 	else
 	{
 		if (isIdle(movement.x))
 		{
-			_idle_anmt->updateSprite(deltaTime, _facingRight);
+			_current_Collider = _idle_Collider;
+			_current_Animator = _idle_animator;
 		}
 		else
 		{
@@ -132,10 +160,12 @@ void Player::updateAnimation(sf::Vector2f movement, float deltaTime)
 			{
 				_facingRight = false;
 			}
-			_walk_anmt->updateSprite(deltaTime, _facingRight);
+			_current_Collider = _walk_Collider;
+			_current_Animator = _walk_animator;
 		}
 	}
-} // end updateAnimtion
+	_current_Animator->updateSprite(deltaTime, _facingRight);
+} // end updateAnimation
 
 void Player::moveToLeft(float *HorizontalMovement, float offset)
 {
@@ -178,7 +208,8 @@ bool Player::defendKeyPressed()
 
 void Player::draw(MyWindow *window)
 {
-	window->draw(this->_sprite);
+	window->draw(*(_current_Animator->getpSprite()));
+	window->draw(*(_current_Collider));
 } // end draw
 
 bool Player::isDefending() const

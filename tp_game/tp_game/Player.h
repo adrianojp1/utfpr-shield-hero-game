@@ -16,15 +16,24 @@ class Player
 private:
 	// ========= Visual Members ========= //
 	//Player animators
-	Animator *_idle_anmt; //Idle
-	Animator *_walk_anmt; //Walking
-	Animator *_def1_anmt; //Normal defense
-	Animator *_def2_anmt; //Counter defense
+	Animator *_idle_animator; //Idle
+	Animator *_walk_animator; //Walking
+	Animator *_def1_animator; //Normal defense
+	Animator *_def2_animator; //Counter defense
 
-	sf::Sprite _sprite; //Sprite for textures setting
+	Animator* _current_Animator; //Pointer for current animator
+
+	//sf::Sprite _sprite; //Sprite for textures setting
 	bool _facingRight;  //Bool for the side direction
 
 	// ========= Motion Members ========= //
+	//Player colliders
+	sf::RectangleShape* _idle_Collider; //Idle
+	sf::RectangleShape* _walk_Collider; //Walking
+	sf::RectangleShape* _def_Collider; //Defense
+
+	sf::RectangleShape* _current_Collider; //Pointer for current collider
+
 	float _walkSpeed; //Horizontal walking speed
 	float _jumpHeight;
 	sf::Vector2f _position;
@@ -47,6 +56,7 @@ public:
 	//================================================================//
 	// ========== Initializers ========== //
 	void initializeAnimators();
+	void initializeColliders();
 
 	//================================================================//
 	// ========== Loop methods ========== //

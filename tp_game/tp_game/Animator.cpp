@@ -6,8 +6,11 @@
 // === This Class Header === //
 #include "Animator.h"
 
+//======================================================================================================================================//
+// === Classes headers for redefinition === //
+#include "Player.h"
 
-Animator::Animator(std::string texture_filePath, unsigned int nFrames, float switchTime, sf::Sprite* pSprite)
+Animator::Animator(std::string texture_filePath, unsigned int nFrames, float switchTime, Player* pPlayer)
 {
 	_nFrames = nFrames;
 	_switchTime = switchTime;
@@ -15,10 +18,11 @@ Animator::Animator(std::string texture_filePath, unsigned int nFrames, float swi
 	_currentTime = 0.0f;
 	_frameCounter = 0;
 
-	_pSprite = pSprite;
-	initializeTexture(texture_filePath);
+	_pPlayer = pPlayer;
 
-	_pSprite->setOrigin((sf::Vector2f)_texture.getSize() / 2.0f);
+	initializeTexture(texture_filePath);
+	initializeSprite();
+
 } // end constr (parameters)
 
 Animator::Animator()
@@ -28,6 +32,7 @@ Animator::Animator()
 	_currentTime = 0.0f;
 	_frameCounter = 0;
 	_pSprite = NULL;
+	_pPlayer = NULL;
 } // end constr (no parameters)
 
 Animator::~Animator()
@@ -45,9 +50,14 @@ void Animator::initializeTexture(std::string texture_filePath)
 	_canvasRect.height = _texture.getSize().y;
 	_canvasRect.top = 0;
 
-	//Set texture to sprite
-	_pSprite->setTexture(_texture);
 } // end initializeTexture
+
+void Animator::initializeSprite()
+{
+	_pSprite = new sf::Sprite;
+	_pSprite->setTexture(_texture);
+	_pSprite->setOrigin(sf::Vector2f((float)_canvasRect.width, (float)_canvasRect.height) / 2.0f);
+} // end initializeSprite
 
 void Animator::updateSprite(float deltaTime, bool facingRight)
 {
@@ -58,6 +68,7 @@ void Animator::updateSprite(float deltaTime, bool facingRight)
 
 	_pSprite->setTexture(_texture);
 	_pSprite->setTextureRect(_canvasRect);
+	_pSprite->setPosition(_pPlayer->getPosition());
 } // end updateSprite
 
 void Animator::setFrameCounter(unsigned int frameCounter)
@@ -108,6 +119,11 @@ void Animator::setpSprite(sf::Sprite* pSprite)
 sf::Sprite* Animator::getpSprite() const
 {
 	return _pSprite;
+}
+
+sf::Vector2f Animator::getSpriteSize() const
+{
+	return sf::Vector2f( (float)_canvasRect.width, (float)_canvasRect.height );
 }
 
 void Animator::updateFrame()

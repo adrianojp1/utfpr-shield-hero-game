@@ -5,26 +5,33 @@
 #include "stdafx.h"
 
 //======================================================================================================================================//
+// === Classes Declaration === //
+class Player; //Future: Entity
+
+//======================================================================================================================================//
 // === Animator Class === //
 class Animator
 {
 private:
-	//Frame control
-	unsigned int _frameCounter;
-	unsigned int _nFrames;
-
-	//Time control
-	float _currentTime;
-	float _switchTime;
-
+	//Visual members
 	sf::Sprite* _pSprite;
 	sf::IntRect _canvasRect;
 	sf::Texture _texture;
 
+	//Frame members
+	unsigned int _frameCounter;
+	unsigned int _nFrames;
+
+	//Time members
+	float _currentTime;
+	float _switchTime;
+
+	Player* _pPlayer; //Future: Entity
+
 public:
 	//================================================================//
 	// ========== Constructors ========== //
-	Animator(std::string texture_filePath, unsigned int nFrames, float switchTime, sf::Sprite* pSprite);
+	Animator(std::string texture_filePath, unsigned int nFrames, float switchTime, Player* pPlayer);
 	Animator();
 	// ========== Destructors ========== //
 	~Animator();
@@ -32,6 +39,7 @@ public:
 	//================================================================//
 	// ========== Initializers ========== //
 	void initializeTexture(std::string texture_filePath);
+	void initializeSprite();
 
 	//================================================================//
 	// ========== Loop methods ========== //
@@ -54,6 +62,8 @@ public:
 	//_pSprite
 	void setpSprite(sf::Sprite* pSprite);
 	sf::Sprite* getpSprite() const;	
+	//spriteSize
+	sf::Vector2f getSpriteSize() const;
 private:
 	// ========== updateSprite submethods ========== //
 	void updateFrame();
