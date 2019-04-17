@@ -37,6 +37,7 @@ private:
 	float _walkSpeed; //Horizontal walking speed
 	float _jumpHeight;
 	sf::Vector2f _position;
+	sf::Vector2f _velocity;
 
 	// ========= Booleans for state control ========= //
 	bool _defending;
@@ -66,7 +67,8 @@ public:
 	//================================================================//
 	// ========== Collision ========== //
 	void move(float dx, float dy) { _position += sf::Vector2f(dx, dy); }
-
+	void move(sf::Vector2f offset) { _position += offset; }
+	void onCollision(sf::Vector2f collisionDirection);
 	//================================================================//
 	// ========== State checkers ========== //
 	bool isDefending() const;
@@ -95,9 +97,7 @@ private:
 	bool defendKeyPressed();
 
 	// ========== execute submethods ========== //
-	void updatePosition(sf::Vector2f *movement, float deltaTime);
-	void updateAnimation(sf::Vector2f movement, float deltaTime);
-	void moveToLeft(float *HorizontalMovement, float offset);
-	void moveToRight(float *HorizontalMovement, float offset);
-	bool isIdle(float HorizontalMovement);
+	void updatePosition(float deltaTime);
+	void updateAnimation(float deltaTime);
+	bool isNotWalking(float HorizontalMovement);
 };

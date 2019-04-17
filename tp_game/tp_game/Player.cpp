@@ -98,19 +98,19 @@ void Player::initializeColliders()
 
 void Player::execute(float deltaTime)
 {
-	sf::Vector2f movement{0.0f, 0.0f};
+	_velocity.x = 0.0f;
 
 	_defCounterTimer.decreaseTime(deltaTime);
 
-	updatePosition(&movement, deltaTime);
-	updateAnimation(movement, deltaTime);
+	updatePosition(deltaTime);
+	updateAnimation(deltaTime);
 
-	_position += movement;
+	_position += _velocity * deltaTime;
 
 	_current_Collider->setPosition(_position);
 } // end execute
 
-void Player::updatePosition(sf::Vector2f *pMovement, float deltaTime)
+void Player::updatePosition(float deltaTime)
 {
 	if (defendKeyPressed())
 	{
@@ -128,17 +128,28 @@ void Player::updatePosition(sf::Vector2f *pMovement, float deltaTime)
 		_defending = false;
 		_defCounterTimer.resetTimer();
 
-		float offset = _walkSpeed * deltaTime; //the displacement between the loop iterations
-
 		//Move the player
 		if (leftIsKeyPressed()) //Left
-			moveToLeft(&(pMovement->x), offset);
+			_velocity.x -= _walkSpeed;
+
 		if (rightIsKeyPressed()) //Right
-			moveToRight(&(pMovement->x), offset);
+			_velocity.x += _walkSpeed;
+
+		if (jumpKeyPressed() && _canJump) //Jump
+		{
+			_canJump = false;
+
+			//square root ( 2.0f * gravity * _jumpHeight )
+			//gravity = 9.81 m / s^2
+			//10 pixels = 1m
+			//gravity = 98.1
+			_velocity.y = -sqrtf(2.0f * 300.0f * _jumpHeight);
+		}
 	}
+	_velocity.y += 300.0f * deltaTime; //constant g force
 } // end updatePosition
 
-void Player::updateAnimation(sf::Vector2f movement, float deltaTime)
+void Player::updateAnimation(float deltaTime)
 {
 	if (_defending)
 	{
@@ -152,14 +163,14 @@ void Player::updateAnimation(sf::Vector2f movement, float deltaTime)
 	}
 	else
 	{
-		if (isIdle(movement.x))
+		if (isNotWalking(_velocity.x))
 		{
 			_current_Collider = _idle_Collider;
 			_current_Animator = _idle_animator;
 		}
 		else
 		{
-			if (movement.x > 0.0f)
+			if (_velocity.x > 0.0f)
 			{
 				_facingRight = true;
 			}
@@ -174,17 +185,7 @@ void Player::updateAnimation(sf::Vector2f movement, float deltaTime)
 	_current_Animator->updateSprite(deltaTime, _facingRight);
 } // end updateAnimation
 
-void Player::moveToLeft(float *HorizontalMovement, float offset)
-{
-	*HorizontalMovement -= offset;
-} // end moveToleft
-
-void Player::moveToRight(float *HorizontalMovement, float offset)
-{
-	*HorizontalMovement += offset;
-} // end moveToRight
-
-bool Player::isIdle(float HorizontalMovement)
+bool Player::isNotWalking(float HorizontalMovement)
 {
 	if (HorizontalMovement == 0.0f)
 	{
@@ -218,6 +219,30 @@ void Player::draw(MyWindow *window)
 	window->draw(*(_current_Animator->getpSprite()));
 	window->draw(*(_current_Collider));
 } // end draw
+
+void Player::onCollision(sf::Vector2f collisionDirection)
+{
+	//X axe
+	if (collisionDirection.x < 0.0f)
+	{ //Collision on left
+		_velocity.x = 0.0f;
+	}
+	else if(collisionDirection.x > 0.0f)
+	{ //Collisiton on right
+		_velocity.x = 0.0f;
+	}
+
+	//Y axe
+	if (collisionDirection.y > 0.0f)
+	{ //Collisition on bottom
+		_velocity.y = 0.0f;
+		_canJump = true;
+	}
+	else if (collisionDirection.y < 0.0f)
+	{ //Collision on top
+		_velocity.y = 0.0f;
+	}
+}
 
 bool Player::isDefending() const
 {

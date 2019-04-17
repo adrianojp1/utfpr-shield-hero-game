@@ -14,13 +14,14 @@ void execute(float deltaTime);
 void draw(MyWindow* window);
 
 //Collision
-bool checkCollision(Player* player, Platform* platform, float push);
+bool checkCollision(Player* player, Platform* platform, sf::Vector2f* direction, float push);
 
 //======================================================================================================================================//
 // === Temporary Pointers === //
 Player* player1;
 MyWindow* window;
-Platform* platform1;
+
+std::vector<Platform*> vPlatforms;
 
 //======================================================================================================================================//
 // === Main === //
@@ -29,11 +30,13 @@ int main()
 	//Window: zoom(5x), ratio (4:3), ratio multiplier (250)
 	window = new MyWindow(5.0f, { 4, 3 }, 250);
 
-	//Player: initial position (0, 0), speed (50), jump height (100)
-	player1 = new Player(sf::Vector2f{ 0.0f, 0.0f }, 50.0f, 100.0f);
+	//Player: initial position (0, 0), speed (50), jump height (30 pixels)
+	player1 = new Player(sf::Vector2f{ 0.0f, 0.0f }, 60.0f, 30.0f);
 	
-	//Platform: 
-	platform1 = new Platform(sf::Color::Magenta, sf::Vector2f(20.0f, 20.0f), sf::Vector2f(40.0f, 0.0f));
+	//Platforms
+	vPlatforms.push_back(new Platform(sf::Color::Magenta, sf::Vector2f(20.0f, 40.0f), sf::Vector2f(60.0f, 30.0f)));
+	vPlatforms.push_back(new Platform(sf::Color::Magenta, sf::Vector2f(20.0f, 40.0f), sf::Vector2f(-60.0f, 30.0f)));
+	vPlatforms.push_back(new Platform(sf::Color::Green, sf::Vector2f(100.0f, 10.0f), sf::Vector2f(0.0f, 30.0f)));
 
 	//Clocking variables
 	float deltaTime = 0.0f; //Time elapsed between loop iterations
@@ -44,14 +47,22 @@ int main()
 	{
 		deltaTime = clock.restart().asSeconds(); //Iteration clock
 
-		execute(deltaTime); //Future game executor
+		execute(deltaTime); //Future game executor: execute all objects
 
-		checkCollision(player1, platform1, 0.5f);
+		sf::Vector2f collisionDirection;
+
+		for (Platform* platform : vPlatforms) 
+		//Check collision between the player and all platforms
+		{
+			if (checkCollision(player1, platform, &collisionDirection, 0.0f))
+				player1->onCollision(collisionDirection);
+		}
 
 		window->execute();
+
 		window->clear(); //Clear window buffer
 
-		draw(window); //Future game drawer
+		draw(window); //Future game drawer: draw all objects
 
 		window->display(); //Show current frame
 	} // end game loop
@@ -68,17 +79,24 @@ void execute(float deltaTime)
 
 	// ========== Objects ========== //
 	player1->execute(deltaTime);
-	platform1->execute(deltaTime);
-
+	
+	for (Platform* platform : vPlatforms) //execute all platforms
+	{
+		platform->execute(deltaTime);
+	}
 } // end execute
 
 void draw(MyWindow* window)
 {
 	player1->draw(window);
-	platform1->draw(window);
+
+	for (Platform* platform : vPlatforms) //draw all platforms
+	{
+		platform->draw(window);
+	}
 } // end draw
 
-bool checkCollision(Player* player, Platform* platform, float push)
+bool checkCollision(Player* player, Platform* platform, sf::Vector2f* collisionDirection, float push)
 {
 	sf::Vector2f otherPosition = platform->getPosition();
 	sf::Vector2f otherHalfSize = platform->getCollider()->getSize() / 2.0f;
@@ -102,11 +120,15 @@ bool checkCollision(Player* player, Platform* platform, float push)
 				
 				player->move((intersectX * (1.0f - push)), 0.0f);
 				platform->move((-intersectX * push), 0.0f);
+
+				*collisionDirection = sf::Vector2f(1.0f, 0.0f);
 			}
 			else
 			{
 				player->move((-intersectX * (1.0f - push)), 0.0f);
 				platform->move((intersectX * push), 0.0f);
+
+				*collisionDirection = sf::Vector2f(-1.0f, 0.0f);
 			}
 		}
 		else
@@ -115,11 +137,15 @@ bool checkCollision(Player* player, Platform* platform, float push)
 			{
 				player->move(0.0f, (intersectY * (1.0f - push)));
 				platform->move(0.0f, (-intersectY * push));
+
+				*collisionDirection = sf::Vector2f(0.0f, 1.0f);
 			}
 			else
 			{
 				player->move(0.0f, (-intersectY * (1.0f - push)));
 				platform->move(0.0f, (intersectY * push));
+
+				*collisionDirection = sf::Vector2f(0.0f, -1.0f);
 			}
 		}
 		return true;
