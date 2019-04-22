@@ -2,16 +2,11 @@
 
 //======================================================================================================================================//
 // === Classes Headers === //
-#include "Animator.h"
-#include "Timer.h"
-
-//======================================================================================================================================//
-// === Classes Declaration === //
-class MyWindow;
+#include "Character.h" //Base class
 
 //======================================================================================================================================//
 // === Player Class === //
-class Player
+class Player : public Charc
 {
 private:
 	// ========= Visual Members ========= //
@@ -21,54 +16,45 @@ private:
 	Animator *_def1_animator; //Normal defense
 	Animator *_def2_animator; //Counter defense
 
-	Animator* _current_Animator; //Pointer for current animator
-
-	//sf::Sprite _sprite; //Sprite for textures setting
-	bool _facingRight;  //Bool for the side direction
-
 	// ========= Motion Members ========= //
 	//Colliders
-	sf::RectangleShape* _idle_Collider; //Idle
-	sf::RectangleShape* _walk_Collider; //Walking
-	sf::RectangleShape* _def_Collider; //Defense
+	sf::RectangleShape* _idle_collider; //Idle
+	sf::RectangleShape* _walk_collider; //Walking
+	sf::RectangleShape* _def_collider; //Defense
 
-	sf::RectangleShape* _current_Collider; //Pointer for current collider
-
-	float _walkSpeed; //Horizontal walking speed
-	float _jumpHeight;
-	sf::Vector2f _position;
-	sf::Vector2f _velocity;
-
-	// ========= Booleans for state control ========= //
+	// ========= State control members ========= //
 	bool _defending;
 	bool _defCounterUp;
-	bool _canJump;
 
 	Timer _defCounterTimer; //Timer for the defense counter
 
 public:
 	//================================================================//
 	// ========== Constructors ========== //
-	Player(sf::Vector2f initPosition, float speed, float jumpHeight);
+	Player(const sf::Vector2f initPosition);
 	Player();
 	// ========== Destructors ========== //
 	~Player();
 
 	//================================================================//
 	// ========== Initializers ========== //
-	void initializeAnimators();
-	void initializeColliders();
+	void initialize_AllAnimators(); //Initializes all the animators
+
+	void initialize_AllColliders(); //Initializes all the colliders
+	void initialize_Collider(sf::RectangleShape*& pCollider, const sf::Vector2f size);		//Initialize a specific collider
 
 	//================================================================//
 	// ========== Loop methods ========== //
-	void execute(float deltaTime);
-	void draw(MyWindow *window);
+	void execute(const float deltaTime);
+	void draw(MyWindow* window) const;
 
 	//================================================================//
-	// ========== Collision ========== //
-	void move(float dx, float dy) { _position += sf::Vector2f(dx, dy); }
-	void move(sf::Vector2f offset) { _position += offset; }
-	void onCollision(sf::Vector2f collisionDirection);
+	// ========== Motion ========== //
+	//Virtuals
+	//void move(const float dx, const float dy);
+	//void move(const sf::Vector2f offset);
+	//void onCollision(const sf::Vector2f collisionDirection);
+
 	//================================================================//
 	// ========== State checkers ========== //
 	bool isDefending() const;
@@ -77,27 +63,30 @@ public:
 
 	//================================================================//
 	// ========== Sets & Gets ========== //
+	/*	All virtuals
 	// _walkSpeed
-	void setWalkSpeed(float walkSpeed);
+	void setWalkSpeed(const float walkSpeed);
 	float getWalkSpeed() const;
 	// _jumpHeight
-	void setJumpHeight(float jumpHeight);
+	void setJumpHeight(const float jumpHeight);
 	float getJumpHeight() const;
 	// _position
-	void setPosition(sf::Vector2f position);
+	void setPosition(const sf::Vector2f position);
 	sf::Vector2f getPosition() const;
 	// _collider
-	sf::RectangleShape* getCollider() { return _current_Collider; }
+	sf::RectangleShape* getCollider() const;
+	*/
 
 private:
 	// ========== Control keys methods ========== //
-	bool leftIsKeyPressed();
-	bool rightIsKeyPressed();
-	bool jumpKeyPressed();
-	bool defendKeyPressed();
+	bool leftIsKeyPressed() const;
+	bool rightIsKeyPressed() const;
+	bool jumpKeyPressed() const;
+	bool defendKeyPressed() const;
 
 	// ========== execute submethods ========== //
-	void updatePosition(float deltaTime);
-	void updateAnimation(float deltaTime);
-	bool isNotWalking(float HorizontalMovement);
-};
+	void updateAction(const float deltaTime);
+	void updateAnimation(const float deltaTime);
+	//virtual bool isWalking(const float HorizontalMovement) const;
+
+}; // end Player

@@ -7,27 +7,33 @@
 #include "Player.h"
 
 //======================================================================================================================================//
-// === Classes headers for redefinition === //
-#include "MyWindow.h"
+// === Player methods === //
 
-Player::Player(sf::Vector2f initPosition, float speed, float jumpHeight)
+Player::Player(const sf::Vector2f initPosition)
 {
-	_current_Animator = NULL;
-	_current_Collider = NULL;
+	//Pointers
+	_current_animator = NULL;
+	_current_collider = NULL;
 
-	_jumpHeight = jumpHeight;
-	_walkSpeed = speed;
+	//Parameters
 	_position = initPosition;
 
+	//Constants
+	_jumpHeight = 30.0f;
+	_walkSpeed = 60.f;
+
+	//Bools
 	_facingRight = true;
 	_defending = false;
 	_defCounterUp = false;
 	_canJump = true;
+	
+	//Methods
+	initialize_AllAnimators();
+	initialize_AllColliders();
 
-	_defCounterTimer.setTotalTime(0.3f);
+	_defCounterTimer.setTotalTime(0.3f); //Counter defense time
 
-	initializeAnimators();
-	initializeColliders();
 } // end constr (parameters)
 
 Player::Player()
@@ -44,6 +50,13 @@ Player::Player()
 	_walk_animator = NULL;
 	_def1_animator = NULL;
 	_def2_animator = NULL;
+	
+	_idle_collider = NULL;
+	_walk_collider = NULL;
+	_def_collider = NULL;
+
+	_defCounterTimer.setTotalTime(0.3f); //Counter defense time
+
 } // end constr (no parameters)
 
 Player::~Player()
@@ -58,16 +71,16 @@ Player::~Player()
 	if (_def2_animator != NULL)
 		delete _def2_animator;
 
-	if (_idle_Collider != NULL)
-		delete _idle_Collider;
-	if (_walk_Collider != NULL)
-		delete _walk_Collider;
-	if (_def_Collider != NULL)
-		delete _def_Collider;
+	if (_idle_collider != NULL)
+		delete _idle_collider;
+	if (_walk_collider != NULL)
+		delete _walk_collider;
+	if (_def_collider != NULL)
+		delete _def_collider;
 
 } // end destr
 
-void Player::initializeAnimators()
+void Player::initialize_AllAnimators()
 {
 	_idle_animator = new Animator("Media\\shield_hero-idle-1.png", 1, 0.0f, this);
 	_walk_animator = new Animator("Media\\shield_hero-walk-1.png", 4, 0.250f, this);
@@ -75,42 +88,39 @@ void Player::initializeAnimators()
 	_def2_animator = new Animator("Media\\shield_hero-def2-1.png", 1, 0.0f, this);
 } // end initializeAnimators
 
-void Player::initializeColliders()
+void Player::initialize_AllColliders()
 {
-	_idle_Collider = new sf::RectangleShape(_idle_animator->getSpriteSize());
-	_idle_Collider->setOrigin(_idle_Collider->getSize() / 2.0f);
-	_idle_Collider->setOutlineThickness(0.2f);
-	_idle_Collider->setOutlineColor(sf::Color::White);
-	_idle_Collider->setFillColor(sf::Color::Transparent);
-
-	_walk_Collider = new sf::RectangleShape(_walk_animator->getSpriteSize());
-	_walk_Collider->setOrigin(_walk_Collider->getSize() / 2.0f);
-	_walk_Collider->setOutlineThickness(0.2f);
-	_walk_Collider->setOutlineColor(sf::Color::White);
-	_walk_Collider->setFillColor(sf::Color::Transparent);
-
-	_def_Collider = new sf::RectangleShape(_def1_animator->getSpriteSize());
-	_def_Collider->setOrigin(_def_Collider->getSize() / 2.0f);
-	_def_Collider->setOutlineThickness(0.2f);
-	_def_Collider->setOutlineColor(sf::Color::White);
-	_def_Collider->setFillColor(sf::Color::Transparent);
+	initialize_Collider(_idle_collider, _idle_animator->getSpriteSize());
+	initialize_Collider(_walk_collider, _walk_animator->getSpriteSize());
+	initialize_Collider(_def_collider, _def1_animator->getSpriteSize());
 }
 
-void Player::execute(float deltaTime)
+void Player::initialize_Collider(sf::RectangleShape*& pCollider, const sf::Vector2f size)
+{
+	pCollider = new sf::RectangleShape(size);
+	pCollider->setOrigin(size / 2.0f);
+
+	//For tests porpouse
+	pCollider->setOutlineThickness(0.2f);
+	pCollider->setOutlineColor(sf::Color::White);
+	pCollider->setFillColor(sf::Color::Transparent);
+}
+
+void Player::execute(const float deltaTime)
 {
 	_velocity.x = 0.0f;
 
 	_defCounterTimer.decreaseTime(deltaTime);
 
-	updatePosition(deltaTime);
+	updateAction(deltaTime);
 	updateAnimation(deltaTime);
 
 	_position += _velocity * deltaTime;
 
-	_current_Collider->setPosition(_position);
+	_current_collider->setPosition(_position);
 } // end execute
 
-void Player::updatePosition(float deltaTime)
+void Player::updateAction(const float deltaTime)
 {
 	if (defendKeyPressed())
 	{
@@ -146,27 +156,29 @@ void Player::updatePosition(float deltaTime)
 			_velocity.y = -sqrtf(2.0f * 300.0f * _jumpHeight);
 		}
 	}
+
 	_velocity.y += 300.0f * deltaTime; //constant g force
+
 } // end updatePosition
 
-void Player::updateAnimation(float deltaTime)
+void Player::updateAnimation(const float deltaTime)
 {
 	if (_defending)
 	{
-		_current_Collider = _def_Collider;
+		_current_collider = _def_collider;
 		if(_defCounterUp)
 			//Counter defense animation
-			_current_Animator = _def2_animator;
+			_current_animator = _def2_animator;
 		else
 			//Normal defense animation
-			_current_Animator = _def1_animator;
+			_current_animator = _def1_animator;
 	}
 	else
 	{
-		if (isNotWalking(_velocity.x))
+		if (!isWalking(_velocity.x))
 		{
-			_current_Collider = _idle_Collider;
-			_current_Animator = _idle_animator;
+			_current_collider = _idle_collider;
+			_current_animator = _idle_animator;
 		}
 		else
 		{
@@ -178,49 +190,40 @@ void Player::updateAnimation(float deltaTime)
 			{
 				_facingRight = false;
 			}
-			_current_Collider = _walk_Collider;
-			_current_Animator = _walk_animator;
+			_current_collider = _walk_collider;
+			_current_animator = _walk_animator;
 		}
 	}
-	_current_Animator->updateSprite(deltaTime, _facingRight);
+	_current_animator->updateSprite(deltaTime, _facingRight);
 } // end updateAnimation
 
-bool Player::isNotWalking(float HorizontalMovement)
-{
-	if (HorizontalMovement == 0.0f)
-	{
-		return true;
-	}
-	return false;
-} // end isIdle
-
-bool Player::leftIsKeyPressed()
+bool Player::leftIsKeyPressed() const
 {
 	return (sf::Keyboard::isKeyPressed(sf::Keyboard::A));
 } // end leftIsKeyPressed
 
-bool Player::rightIsKeyPressed()
+bool Player::rightIsKeyPressed() const
 {
 	return (sf::Keyboard::isKeyPressed(sf::Keyboard::D));
 } // end rightIsKeyPressed
 
-bool Player::jumpKeyPressed()
+bool Player::jumpKeyPressed() const
 {
 	return (sf::Keyboard::isKeyPressed(sf::Keyboard::W));
 } // end jumpKeyPressed
 
-bool Player::defendKeyPressed()
+bool Player::defendKeyPressed() const
 {
 	return (sf::Keyboard::isKeyPressed(sf::Keyboard::S));
 } // end defendKeyPressed
 
-void Player::draw(MyWindow *window)
+void Player::draw(MyWindow *window) const
 {
-	window->draw(*(_current_Animator->getpSprite()));
-	window->draw(*(_current_Collider));
+	window->draw(*(_current_animator->getpSprite()));
+	window->draw(*(_current_collider));
 } // end draw
-
-void Player::onCollision(sf::Vector2f collisionDirection)
+/*
+void Player::onCollision(const sf::Vector2f collisionDirection)
 {
 	//X axe
 	if (collisionDirection.x < 0.0f)
@@ -242,7 +245,7 @@ void Player::onCollision(sf::Vector2f collisionDirection)
 	{ //Collision on top
 		_velocity.y = 0.0f;
 	}
-}
+}*/
 
 bool Player::isDefending() const
 {
@@ -260,34 +263,4 @@ bool Player::isDefending_with_Counter() const
 		return true;
 	else
 	return false;
-}
-
-void Player::setWalkSpeed(float walkSpeed)
-{
-	_walkSpeed = walkSpeed;
-}
-
-float Player::getWalkSpeed() const
-{
-	return _walkSpeed;
-}
-
-void Player::setJumpHeight(float jumpHeight)
-{
-	_jumpHeight = jumpHeight;
-}
-
-float Player::getJumpHeight() const
-{
-	return _jumpHeight;
-}
-
-void Player::setPosition(sf::Vector2f position)
-{
-	_position = position;
-}
-
-sf::Vector2f Player::getPosition() const
-{
-	return _position;
 }
