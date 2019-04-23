@@ -30,8 +30,8 @@ int main()
 	//Window: zoom(5x), ratio (4:3), ratio multiplier (250)
 	window = new MyWindow(5.0f, { 4, 3 }, 250);
 
-	//Player: initial position (0, 0), speed (50), jump height (30 pixels)
-	player1 = new Player(sf::Vector2f{ 0.0f, 0.0f }, 60.0f, 30.0f);
+	//Player: initial position (0, 0)
+	player1 = new Player(sf::Vector2f{ 0.0f, 0.0f });
 	
 	//Platforms
 	vPlatforms.push_back(new Platform(sf::Color::Magenta, sf::Vector2f(20.0f, 40.0f), sf::Vector2f(60.0f, 30.0f)));
@@ -46,6 +46,8 @@ int main()
 	while (window->isOpen())
 	{
 		deltaTime = clock.restart().asSeconds(); //Iteration clock
+		if (deltaTime > 1.0f / 20.f)
+			deltaTime = 1.0f / 20.f;
 
 		execute(deltaTime); //Future game executor: execute all objects
 
