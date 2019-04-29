@@ -162,6 +162,7 @@
   <ItemGroup>
     <ClInclude Include="Animator.h" />
     <ClInclude Include="Character.h" />
+    <ClInclude Include="Enemy2.h" />
     <ClInclude Include="MyWindow.h" />
     <ClInclude Include="Platform.h" />
     <ClInclude Include="Player.h" />
