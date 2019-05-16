@@ -11,6 +11,8 @@
 
 Player::Player(const sf::Vector2f initPosition)
 {
+	std::cerr << __FUNCTION__ << " | -ov: 0 | " << std::endl;
+
 	//Pointers
 	_current_animator = NULL;
 	_current_collider = NULL;
@@ -38,6 +40,8 @@ Player::Player(const sf::Vector2f initPosition)
 
 Player::Player()
 {
+	std::cerr << __FUNCTION__ << " | -ov: 1 | " << std::endl;
+
 	_facingRight = true;
 	_defending = false;
 	_defCounterUp = false;
@@ -61,6 +65,8 @@ Player::Player()
 
 Player::~Player()
 {
+	std::cerr << __FUNCTION__ << " | -ov: 0 | " << std::endl;
+
 	//Destroy animators
 	if (_idle_animator != NULL)
 		delete _idle_animator;
@@ -82,6 +88,8 @@ Player::~Player()
 
 void Player::initialize_AllAnimators()
 {
+	std::cerr << __FUNCTION__ << " | -ov: 0 | " << std::endl;
+
 	_idle_animator = new Animator("Media\\shield_hero-idle-1.png", 1, 0.0f, this);
 	_walk_animator = new Animator("Media\\shield_hero-walk-1.png", 4, 0.250f, this);
 	_def1_animator = new Animator("Media\\shield_hero-def1-1.png", 1, 0.0f, this);
@@ -90,6 +98,8 @@ void Player::initialize_AllAnimators()
 
 void Player::initialize_AllColliders()
 {
+	std::cerr << __FUNCTION__ << " | -ov: 0 | " << std::endl;
+
 	initialize_Collider(_idle_collider, _idle_animator->getSpriteSize());
 	initialize_Collider(_walk_collider, _walk_animator->getSpriteSize());
 	initialize_Collider(_def_collider, _def1_animator->getSpriteSize());
@@ -97,6 +107,8 @@ void Player::initialize_AllColliders()
 
 void Player::initialize_Collider(sf::RectangleShape*& pCollider, const sf::Vector2f size)
 {
+	std::cerr << __FUNCTION__ << " | -ov: 0 | " << std::endl;
+
 	pCollider = new sf::RectangleShape(size);
 	pCollider->setOrigin(size / 2.0f);
 
@@ -108,6 +120,8 @@ void Player::initialize_Collider(sf::RectangleShape*& pCollider, const sf::Vecto
 
 void Player::execute(const float deltaTime)
 {
+	std::cerr << __FUNCTION__ << " | -ov: 0 | " << std::endl;
+
 	_velocity.x = 0.0f;
 
 	_defCounterTimer.decreaseTime(deltaTime);
@@ -122,6 +136,8 @@ void Player::execute(const float deltaTime)
 
 void Player::updateAction(const float deltaTime)
 {
+	std::cerr << __FUNCTION__ << " | -ov: 0 | " << std::endl;
+
 	if (defendKeyPressed())
 	{
 		_defending = true;
@@ -163,6 +179,8 @@ void Player::updateAction(const float deltaTime)
 
 void Player::updateAnimation(const float deltaTime)
 {
+	std::cerr << __FUNCTION__ << " | -ov: 0 | " << std::endl;
+
 	if (_defending)
 	{
 		_current_collider = _def_collider;
@@ -219,6 +237,8 @@ bool Player::defendKeyPressed() const
 
 void Player::draw(MyWindow *window) const
 {
+	std::cerr << __FUNCTION__ << " | -ov: 0 | " << std::endl;
+
 	window->draw(*(_current_animator->getpSprite()));
 	window->draw(*(_current_collider));
 } // end draw

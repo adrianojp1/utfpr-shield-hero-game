@@ -11,30 +11,40 @@
 
 Character::Character()
 {
+	std::cerr << __FUNCTION__ << " | -ov: 0 | " << std::endl;
 }
 
 Character::~Character()
 {
+	std::cerr << __FUNCTION__ << " | -ov: 0 | " << std::endl;
 }
 
 void Character::initialize_Collider(sf::RectangleShape*& pCollider, const sf::Vector2f size)
 {
+	std::cerr << __FUNCTION__ << " | -ov: 0 | " << std::endl;
+
 	pCollider = new sf::RectangleShape(size);
 	pCollider->setOrigin(size / 2.0f);
 }
 
 void Character::move(const float dx, const float dy)
 {
+	std::cerr << __FUNCTION__ << " | -ov: 0 | " << std::endl;
+
 	_position += sf::Vector2f(dx, dy);
 }
 
 void Character::move(const sf::Vector2f offset)
 {
+	std::cerr << __FUNCTION__ << " | -ov: 0 | " << std::endl;
+
 	_position += offset;
 }
 
 void Character::onCollision(const sf::Vector2f collisionDirection)
 {
+	std::cerr << __FUNCTION__ << " | -ov: 0 | " << std::endl;
+
 	//X axe
 	if (collisionDirection.x < 0.0f)
 	{ //Collision on left
@@ -94,6 +104,8 @@ sf::RectangleShape* Character::getCollider() const
 
 bool Character::isWalking(const float HorizontalMovement) const
 {
+	std::cerr << __FUNCTION__ << " | -ov: 0 | " << std::endl;
+
 	if (HorizontalMovement == 0.0f)
 	{
 		return false;

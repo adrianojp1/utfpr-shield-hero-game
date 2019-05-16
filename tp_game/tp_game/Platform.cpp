@@ -12,6 +12,8 @@
 
 Platform::Platform(sf::Color color, sf::Vector2f size, sf::Vector2f position)
 {
+	std::cerr << __FUNCTION__ << " | -ov: 0 | " << std::endl;
+
 	_position = position;
 
 	_collider = new sf::RectangleShape(size);
@@ -23,15 +25,20 @@ Platform::Platform(sf::Color color, sf::Vector2f size, sf::Vector2f position)
 
 Platform::~Platform()
 {
+	std::cerr << __FUNCTION__ << " | -ov: 0 | " << std::endl;
 }
 
 void Platform::execute(float deltaTime)
 {
+	std::cerr << __FUNCTION__ << " | -ov: 0 | " << std::endl;
+
 	_collider->setPosition(_position);
 }
 
 void Platform::draw(MyWindow* window)
 {
+	std::cerr << __FUNCTION__ << " | -ov: 0 | " << std::endl;
+
 	window->draw(*(this->_collider));
 }
 

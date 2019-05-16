@@ -9,18 +9,24 @@
 
 MyWindow::MyWindow(float viewZoom, sf::Vector2u windowRatio, unsigned int ratioMultiplier)
 {
+	std::cerr << __FUNCTION__ << " | -ov: 0 | " << std::endl;
+
 	initializeWindow(windowRatio * ratioMultiplier, "Shield Hero");
 	initializeView({ 0.0f, 0.0f }, (sf::Vector2f) pWindow->getSize(), viewZoom);
 } // end constr (parameters)
 
 MyWindow::MyWindow()
 {
+	std::cerr << __FUNCTION__ << " | -ov: 1 | " << std::endl;
+
 	pWindow = NULL;
 	pView = NULL;
 } // end constr (no parameters)
 
 MyWindow::~MyWindow()
 {
+	std::cerr << __FUNCTION__ << " | -ov: 0 | " << std::endl;
+
 	if(pWindow != NULL)
 		delete pWindow;
 	if(pView != NULL)
@@ -29,11 +35,15 @@ MyWindow::~MyWindow()
 
 void MyWindow::initializeWindow(sf::Vector2u size, std::string title)
 {
+	std::cerr << __FUNCTION__ << " | -ov: 0 | " << std::endl;
+
 	pWindow = new sf::RenderWindow(sf::VideoMode(size.x, size.y), title, sf::Style::Close | sf::Style::Titlebar);
 } // end initializeWindow
 
 void MyWindow::initializeView(sf::Vector2f center, sf::Vector2f windowSize, float zoom)
 {
+	std::cerr << __FUNCTION__ << " | -ov: 0 | " << std::endl;
+
 	pView = new sf::View;
 	pView->setCenter(center);
 	pView->setSize( windowSize / zoom);
@@ -42,6 +52,8 @@ void MyWindow::initializeView(sf::Vector2f center, sf::Vector2f windowSize, floa
 
 void MyWindow::execute()
 {
+	std::cerr << __FUNCTION__ << " | -ov: 0 | " << std::endl;
+
 	//Window event
 	sf::Event evnt;
 

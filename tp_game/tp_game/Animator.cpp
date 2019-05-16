@@ -12,6 +12,8 @@
 
 Animator::Animator(std::string texture_filePath, unsigned int nFrames, float switchTime, Player* pPlayer)
 {
+	std::cerr << __FUNCTION__ << " | -ov: 0 | " << std::endl;
+
 	_nFrames = nFrames;
 	_switchTime = switchTime;
 
@@ -27,6 +29,8 @@ Animator::Animator(std::string texture_filePath, unsigned int nFrames, float swi
 
 Animator::Animator()
 {
+	std::cerr << __FUNCTION__ << " | -ov: 1 | " << std::endl;
+
 	_nFrames = 0;
 	_switchTime = 0;
 	_currentTime = 0.0f;
@@ -37,10 +41,13 @@ Animator::Animator()
 
 Animator::~Animator()
 {
+	std::cerr << __FUNCTION__ << " | -ov: 0 | " << std::endl;
 } // end destr
 
 void Animator::initializeTexture(std::string texture_filePath)
 {
+	std::cerr << __FUNCTION__ << " | -ov: 0 | " << std::endl;
+
 	//Load texture 
 	if( !_texture.loadFromFile(texture_filePath))
 		{ std::cerr << "Failed loading texture: " << texture_filePath << std::endl; }
@@ -54,6 +61,8 @@ void Animator::initializeTexture(std::string texture_filePath)
 
 void Animator::initializeSprite()
 {
+	std::cerr << __FUNCTION__ << " | -ov: 0 | " << std::endl;
+
 	_pSprite = new sf::Sprite;
 	_pSprite->setTexture(_texture);
 	_pSprite->setOrigin(sf::Vector2f((float)_canvasRect.width, (float)_canvasRect.height) / 2.0f);
@@ -61,6 +70,8 @@ void Animator::initializeSprite()
 
 void Animator::updateSprite(float deltaTime, bool facingRight)
 {
+	std::cerr << __FUNCTION__ << " | -ov: 0 | " << std::endl;
+
 	_currentTime += deltaTime;
 
 	updateFrame();
@@ -128,6 +139,8 @@ sf::Vector2f Animator::getSpriteSize() const
 
 void Animator::updateFrame()
 {
+	std::cerr << __FUNCTION__ << " | -ov: 0 | " << std::endl;
+
 	//Enough time to change the frame
 	if (_currentTime >= _switchTime)
 	{
@@ -144,6 +157,8 @@ void Animator::updateFrame()
 
 void Animator::updateSpriteDirection(bool facingRight)
 {
+	std::cerr << __FUNCTION__ << " | -ov: 0 | " << std::endl;
+
 	if (facingRight)
 	{
 		_canvasRect.left = _frameCounter * _canvasRect.width;

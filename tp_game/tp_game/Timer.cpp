@@ -8,6 +8,8 @@
 
 Timer::Timer(float totalTime)
 {
+	std::cerr << __FUNCTION__ << " | -ov: 0 | " << std::endl;
+
 	_ticking = false;
 	_totalTime = totalTime;
 	resetTimer();
@@ -15,6 +17,8 @@ Timer::Timer(float totalTime)
 
 Timer::Timer()
 {
+	std::cerr << __FUNCTION__ << " | -ov: 1 | " << std::endl;
+
 	_ticking = false;
 	_totalTime = 0.0f;
 	resetTimer();
@@ -22,10 +26,13 @@ Timer::Timer()
 
 Timer::~Timer()
 {
+	std::cerr << __FUNCTION__ << " | -ov: 0 | " << std::endl;
 }
 
 void Timer::decreaseTime(float deltaTime)
 {
+	std::cerr << __FUNCTION__ << " | -ov: 0 | " << std::endl;
+
 	if (_ticking)
 	{
 		_currentTime -= deltaTime;
@@ -51,6 +58,8 @@ bool Timer::isZeroed() const
 
 void Timer::resetTimer()
 {
+	std::cerr << __FUNCTION__ << " | -ov: 0 | " << std::endl;
+
 	_currentTime = _totalTime;
 	_zeroed = false;
 } // end resetTimer
