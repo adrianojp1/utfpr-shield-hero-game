@@ -9,9 +9,45 @@
 //======================================================================================================================================//
 // === Character methods === //
 
-Character::Character()
+Character::Character(const sf::Vector2f initPosition) :
+	Entity(initPosition)
 {
 	std::cerr << __FUNCTION__ << " | -ov: 0 | " << std::endl;
+
+	//Pointers
+	_current_animator = NULL;
+	_current_collider = NULL;
+
+	//Parameters
+	_position = initPosition;
+
+	//Constants
+	_jumpHeight = 0.0f;
+	_speed = 0.0f;
+
+	//Bools
+	_facingRight = true;
+	_canJump = false;
+}
+
+Character::Character()
+{
+	std::cerr << __FUNCTION__ << " | -ov: 1 | " << std::endl;
+
+	//Pointers
+	_current_animator = NULL;
+	_current_collider = NULL;
+
+	//Parameters
+	_position = { 0.0f, 0.0f };
+
+	//Constants
+	_jumpHeight = 0.0f;
+	_speed = 0.0f;
+
+	//Bools
+	_facingRight = true;
+	_canJump = false;
 }
 
 Character::~Character()
@@ -26,7 +62,7 @@ void Character::initialize_Collider(sf::RectangleShape*& pCollider, const sf::Ve
 	pCollider = new sf::RectangleShape(size);
 	pCollider->setOrigin(size / 2.0f);
 }
-
+/*
 void Character::move(const float dx, const float dy)
 {
 	std::cerr << __FUNCTION__ << " | -ov: 0 | " << std::endl;
@@ -39,7 +75,7 @@ void Character::move(const sf::Vector2f offset)
 	std::cerr << __FUNCTION__ << " | -ov: 0 | " << std::endl;
 
 	_position += offset;
-}
+}*/
 
 void Character::onCollision(const sf::Vector2f collisionDirection)
 {
@@ -67,16 +103,6 @@ void Character::onCollision(const sf::Vector2f collisionDirection)
 	}
 }
 
-void Character::setWalkSpeed(const float walkSpeed)
-{
-	_walkSpeed = walkSpeed;
-}
-
-float Character::getWalkSpeed() const
-{
-	return _walkSpeed;
-}
-
 void Character::setJumpHeight(const float jumpHeight)
 {
 	_jumpHeight = jumpHeight;
@@ -85,6 +111,16 @@ void Character::setJumpHeight(const float jumpHeight)
 float Character::getJumpHeight() const
 {
 	return _jumpHeight;
+}
+/*
+void Character::setSpeed(const float speed)
+{
+	_speed = speed;
+}
+
+float Character::getSpeed() const
+{
+	return _speed;
 }
 
 void Character::setPosition(const sf::Vector2f position)
@@ -101,7 +137,7 @@ sf::RectangleShape* Character::getCollider() const
 {
 	return _current_collider;
 }
-
+*/
 bool Character::isWalking(const float HorizontalMovement) const
 {
 	std::cerr << __FUNCTION__ << " | -ov: 0 | " << std::endl;

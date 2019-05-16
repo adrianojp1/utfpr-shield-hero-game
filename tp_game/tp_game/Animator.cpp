@@ -50,7 +50,9 @@ void Animator::initializeTexture(std::string texture_filePath)
 
 	//Load texture 
 	if( !_texture.loadFromFile(texture_filePath))
-		{ std::cerr << "Failed loading texture: " << texture_filePath << std::endl; }
+	{
+		getchar();
+	}
 	
 	//Set canvas borders
 	_canvasRect.width = _texture.getSize().x / _nFrames;

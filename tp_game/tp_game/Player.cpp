@@ -9,20 +9,22 @@
 //======================================================================================================================================//
 // === Player methods === //
 
-Player::Player(const sf::Vector2f initPosition)
+Player::Player(const sf::Vector2f initPosition) :
+	Character(initPosition)
 {
 	std::cerr << __FUNCTION__ << " | -ov: 0 | " << std::endl;
 
+	/*
 	//Pointers
 	_current_animator = NULL;
 	_current_collider = NULL;
 
 	//Parameters
 	_position = initPosition;
-
+	*/
 	//Constants
 	_jumpHeight = 30.0f;
-	_walkSpeed = 60.f;
+	_speed = 60.f;
 
 	//Bools
 	_facingRight = true;
@@ -38,7 +40,8 @@ Player::Player(const sf::Vector2f initPosition)
 
 } // end constr (parameters)
 
-Player::Player()
+Player::Player() : 
+	Character()
 {
 	std::cerr << __FUNCTION__ << " | -ov: 1 | " << std::endl;
 
@@ -46,7 +49,7 @@ Player::Player()
 	_defending = false;
 	_defCounterUp = false;
 	_canJump = true;
-	_walkSpeed = 0.0f;
+	_speed = 0.0f;
 	_jumpHeight = 0.0f;
 	_position = {0.0f, 0.0f};
 
@@ -90,10 +93,10 @@ void Player::initialize_AllAnimators()
 {
 	std::cerr << __FUNCTION__ << " | -ov: 0 | " << std::endl;
 
-	_idle_animator = new Animator("Media\\shield_hero-idle-1.png", 1, 0.0f, this);
-	_walk_animator = new Animator("Media\\shield_hero-walk-1.png", 4, 0.250f, this);
-	_def1_animator = new Animator("Media\\shield_hero-def1-1.png", 1, 0.0f, this);
-	_def2_animator = new Animator("Media\\shield_hero-def2-1.png", 1, 0.0f, this);
+	_idle_animator = new Animator("Media/shield-hero/shield_hero-idle.png", 1, 0.0f, this);
+	_walk_animator = new Animator("Media/shield-hero/shield_hero-walk.png", 4, 0.250f, this);
+	_def1_animator = new Animator("Media/shield-hero/shield_hero-def1.png", 1, 0.0f, this);
+	_def2_animator = new Animator("Media/shield-hero/shield_hero-def2.png", 1, 0.0f, this);
 } // end initializeAnimators
 
 void Player::initialize_AllColliders()
@@ -156,10 +159,10 @@ void Player::updateAction(const float deltaTime)
 
 		//Move the player
 		if (leftIsKeyPressed()) //Left
-			_velocity.x -= _walkSpeed;
+			_velocity.x -= _speed;
 
 		if (rightIsKeyPressed()) //Right
-			_velocity.x += _walkSpeed;
+			_velocity.x += _speed;
 
 		if (jumpKeyPressed() && _canJump) //Jump
 		{
