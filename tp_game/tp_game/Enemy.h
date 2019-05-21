@@ -6,7 +6,7 @@
 
 //======================================================================================================================================//
 // === Enemy2 Class === //
-class Enemy2 : public Charc
+class Enemy : public Charc
 {
 private:
 	// ========= Visual Members ========= //
@@ -28,10 +28,10 @@ private:
 public:
 	//================================================================//
 	// ========== Constructors ========== //
-	Enemy2(const sf::Vector2f initPosition);
-	Enemy2();
+	Enemy(const sf::Vector2f initPosition);
+	Enemy();
 	// ========== Destructors ========== //
-	~Enemy2();
+	~Enemy();
 
 	//================================================================//
 	// ========== Initializers ========== //
