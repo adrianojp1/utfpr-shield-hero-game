@@ -12,7 +12,7 @@
 
 Platform::Platform(sf::Color color, sf::Vector2f size, sf::Vector2f position)
 {
-	std::cerr << __FUNCTION__ << " | -ov: 0 | " << std::endl;
+	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
 	_position = position;
 
@@ -25,29 +25,31 @@ Platform::Platform(sf::Color color, sf::Vector2f size, sf::Vector2f position)
 
 Platform::~Platform()
 {
-	std::cerr << __FUNCTION__ << " | -ov: 0 | " << std::endl;
+	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 }
 
 void Platform::execute(float deltaTime)
 {
-	std::cerr << __FUNCTION__ << " | -ov: 0 | " << std::endl;
+	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
 	_collider->setPosition(_position);
 }
 
 void Platform::draw(MyWindow* window)
 {
-	std::cerr << __FUNCTION__ << " | -ov: 0 | " << std::endl;
+	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
 	window->draw(*(this->_collider));
 }
 
 void Platform::setPosition(sf::Vector2f position)
 {
+	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 	_position = position;
 }
 
 sf::Vector2f Platform::getPosition() const
 {
+	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 	return _position;
 }

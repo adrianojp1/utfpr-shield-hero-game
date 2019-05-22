@@ -7,52 +7,44 @@
 #include "MyWindow.h"
 
 
-MyWindow::MyWindow(float viewZoom, sf::Vector2u windowRatio, unsigned int ratioMultiplier)
+MyWindow::MyWindow(float viewZoom, sf::Vector2u windowRatio, unsigned int ratioMultiplier) :
+	sf::RenderWindow(sf::VideoMode(windowRatio.x * ratioMultiplier, windowRatio.y * ratioMultiplier),
+					 "Shield Hero",
+					 sf::Style::Close | sf::Style::Titlebar)
 {
-	std::cerr << __FUNCTION__ << " | -ov: 0 | " << std::endl;
+	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
-	initializeWindow(windowRatio * ratioMultiplier, "Shield Hero");
-	initializeView({ 0.0f, 0.0f }, (sf::Vector2f) pWindow->getSize(), viewZoom);
+	initializeView({ 0.0f, 0.0f }, (sf::Vector2f) this->getSize(), viewZoom);
 } // end constr (parameters)
 
 MyWindow::MyWindow()
 {
-	std::cerr << __FUNCTION__ << " | -ov: 1 | " << std::endl;
+	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 1 | ");
 
-	pWindow = NULL;
 	pView = NULL;
 } // end constr (no parameters)
 
 MyWindow::~MyWindow()
 {
-	std::cerr << __FUNCTION__ << " | -ov: 0 | " << std::endl;
+	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
-	if(pWindow != NULL)
-		delete pWindow;
 	if(pView != NULL)
 		delete pView;
 } // end destr
 
-void MyWindow::initializeWindow(sf::Vector2u size, std::string title)
-{
-	std::cerr << __FUNCTION__ << " | -ov: 0 | " << std::endl;
-
-	pWindow = new sf::RenderWindow(sf::VideoMode(size.x, size.y), title, sf::Style::Close | sf::Style::Titlebar);
-} // end initializeWindow
-
 void MyWindow::initializeView(sf::Vector2f center, sf::Vector2f windowSize, float zoom)
 {
-	std::cerr << __FUNCTION__ << " | -ov: 0 | " << std::endl;
+	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
 	pView = new sf::View;
 	pView->setCenter(center);
 	pView->setSize( windowSize / zoom);
-	pWindow->setView(*pView);
+	this->setView(*pView);
 } // end initializeView
 
 void MyWindow::execute()
 {
-	std::cerr << __FUNCTION__ << " | -ov: 0 | " << std::endl;
+	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
 	//Window event
 	sf::Event evnt;
@@ -66,47 +58,9 @@ void MyWindow::execute()
 	}
 } // end execute
 
-bool MyWindow::isOpen()
+void MyWindow::console_log(std::string log)
 {
-	return pWindow->isOpen();
-} // end isOpen
-
-bool MyWindow::pollEvent(sf::Event& evnt)
-{
-	return pWindow->pollEvent(evnt);
-} // end pollEvent
-
-void MyWindow::close()
-{
-	pWindow->close();
-} // end close
-
-void MyWindow::clear()
-{
-	pWindow->clear();
-} // end clear
-
-void MyWindow::display()
-{
-	pWindow->display();
-} // end display
-
-void MyWindow::draw(const sf::Drawable& drawable, const sf::RenderStates& states)
-{
-	pWindow->draw(drawable, states);
-} // end draw
-
-void MyWindow::draw(const sf::Vertex* vertices, std::size_t vertexCount, sf::PrimitiveType type, const sf::RenderStates& states)
-{
-	pWindow->draw(vertices, vertexCount, type, states);
-} // end draw
-
-void MyWindow::draw(const sf::VertexBuffer& vertexBuffer, const sf::RenderStates& states)
-{
-	pWindow->draw(vertexBuffer, states);
-} // end draw
-
-void MyWindow::draw(const sf::VertexBuffer& vertexBuffer, std::size_t firstVertex, std::size_t vertexCount, const sf::RenderStates& states)
-{
-	pWindow->draw(vertexBuffer, firstVertex, vertexCount, states);
-} // end draw
+#if CONSOLE_LOG
+	std::cerr << log << std::endl;
+#endif //  CONSOLE_LOG
+}

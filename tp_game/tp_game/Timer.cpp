@@ -8,7 +8,7 @@
 
 Timer::Timer(float totalTime)
 {
-	std::cerr << __FUNCTION__ << " | -ov: 0 | " << std::endl;
+	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
 	_ticking = false;
 	_totalTime = totalTime;
@@ -17,7 +17,7 @@ Timer::Timer(float totalTime)
 
 Timer::Timer()
 {
-	std::cerr << __FUNCTION__ << " | -ov: 1 | " << std::endl;
+	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 1 | ");
 
 	_ticking = false;
 	_totalTime = 0.0f;
@@ -26,12 +26,12 @@ Timer::Timer()
 
 Timer::~Timer()
 {
-	std::cerr << __FUNCTION__ << " | -ov: 0 | " << std::endl;
+	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 }
 
 void Timer::decreaseTime(float deltaTime)
 {
-	std::cerr << __FUNCTION__ << " | -ov: 0 | " << std::endl;
+	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
 	if (_ticking)
 	{
@@ -48,17 +48,19 @@ void Timer::decreaseTime(float deltaTime)
 
 bool Timer::isTicking() const
 {
+	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 	return _ticking;
 } // end isTicking
 
 bool Timer::isZeroed() const
 {
+	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 	return _zeroed;
 } // end isZeroed
 
 void Timer::resetTimer()
 {
-	std::cerr << __FUNCTION__ << " | -ov: 0 | " << std::endl;
+	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
 	_currentTime = _totalTime;
 	_zeroed = false;
@@ -66,31 +68,37 @@ void Timer::resetTimer()
 
 void Timer::pause()
 {
+	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 	_ticking = false;
 } // end pause
 
 void Timer::trigger()
 {
+	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 	_ticking = true;
 } // end trigger
 
 void Timer::reset_and_trigger()
 {
+	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 	this->resetTimer();
 	this->trigger();
 } // end reset_and_trigger
 
 void Timer::setTotalTime(float totalTime)
 {
+	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 	_totalTime = totalTime;
 } // end setTotalTime
 
 float Timer::getTotalTime() const
 {
+	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 	return _totalTime;
 } // end getTotalTime
 
 float Timer::getCurrentTime() const
 {
+	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 	return _currentTime;
 } // end getCurrentTime

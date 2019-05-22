@@ -4,7 +4,7 @@
 
 Entity::Entity(const sf::Vector2f initPosition)
 {
-	std::cerr << __FUNCTION__ << " | -ov: 0 | " << std::endl;
+	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
 	//Pointers
 	_current_animator = NULL;
@@ -21,7 +21,7 @@ Entity::Entity(const sf::Vector2f initPosition)
 
 Entity::Entity()
 {
-	std::cerr << __FUNCTION__ << " | -ov: 0 | " << std::endl;
+	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 1 | ");
 
 	//Pointers
 	_current_animator = NULL;
@@ -39,12 +39,12 @@ Entity::Entity()
 
 Entity::~Entity()
 {
-	std::cerr << __FUNCTION__ << " | -ov: 0 | " << std::endl;
+	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 }
 
 void Entity::initialize_Collider(sf::RectangleShape*& pCollider, const sf::Vector2f size)
 {
-	std::cerr << __FUNCTION__ << " | -ov: 0 | " << std::endl;
+	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
 	pCollider = new sf::RectangleShape(size);
 	pCollider->setOrigin(size / 2.0f);
@@ -52,21 +52,21 @@ void Entity::initialize_Collider(sf::RectangleShape*& pCollider, const sf::Vecto
 
 void Entity::move(const float dx, const float dy)
 {
-	std::cerr << __FUNCTION__ << " | -ov: 0 | " << std::endl;
+	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
 	move(sf::Vector2f(dx, dy));
 }
 
 void Entity::move(const sf::Vector2f offset)
 {
-	std::cerr << __FUNCTION__ << " | -ov: 0 | " << std::endl;
+	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
 	_position += offset;
 }
 
 void Entity::onCollision(const sf::Vector2f collisionDirection)
 {
-	std::cerr << __FUNCTION__ << " | -ov: 0 | " << std::endl;
+	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
 	//X axe
 	if (collisionDirection.x < 0.0f)
@@ -91,25 +91,30 @@ void Entity::onCollision(const sf::Vector2f collisionDirection)
 
 void Entity::setSpeed(const float speed)
 {
+	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 	_speed = speed;
 }
 
 float Entity::getSpeed() const
 {
+	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 	return _speed;
 }
 
 void Entity::setPosition(const sf::Vector2f position)
 {
+	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 	_position = position;
 }
 
 sf::Vector2f Entity::getPosition() const
 {
+	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 	return _position;
 }
 
 sf::RectangleShape* Entity::getCollider() const
 {
+	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 	return _current_collider;
 }
