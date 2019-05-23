@@ -20,7 +20,7 @@ public:
 	Timer(float totalTime);
 	Timer();
 	// ========== Destructors ========== //
-	~Timer();
+	virtual ~Timer();
 
 	//================================================================//
 	// ========== Loop methods ========== //

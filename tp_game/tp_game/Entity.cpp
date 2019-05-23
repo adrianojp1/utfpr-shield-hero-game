@@ -2,7 +2,7 @@
 #include "Entity.h"
 
 
-Entity::Entity(const sf::Vector2f initPosition)
+Entity::Entity(const sf::Vector2f initPosition, bool active = false)
 {
 	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
@@ -17,6 +17,7 @@ Entity::Entity(const sf::Vector2f initPosition)
 
 	//Bools
 	_facingRight = true;
+	_active = active;
 }
 
 Entity::Entity()
@@ -34,6 +35,7 @@ Entity::Entity()
 
 	//Bools
 	_facingRight = true;
+	_active = false;
 }
 
 
@@ -117,4 +119,19 @@ sf::RectangleShape* Entity::getCollider() const
 {
 	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 	return _current_collider;
+}
+
+void Entity::active()
+{
+	_active = true;
+}
+
+void Entity::desactive()
+{
+	_active = false;
+}
+
+bool Entity::isActive() const
+{
+	return _active;
 }

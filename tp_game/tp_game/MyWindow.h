@@ -14,7 +14,7 @@ public:
 	MyWindow(float viewZoom, sf::Vector2u windowRatio, unsigned int ratioMultiplier);
 	MyWindow();
 	// ========== Destructors ========== //
-	~MyWindow();
+	virtual ~MyWindow();
 
 	//================================================================//
 	// ========== Initializers ========== //

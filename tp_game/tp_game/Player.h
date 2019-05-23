@@ -34,7 +34,7 @@ public:
 	Player(const sf::Vector2f initPosition);
 	Player();
 	// ========== Destructors ========== //
-	~Player();
+	virtual ~Player();
 
 	//================================================================//
 	// ========== Initializers ========== //

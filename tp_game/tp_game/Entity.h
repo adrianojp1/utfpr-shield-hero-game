@@ -26,10 +26,12 @@ protected:
 	sf::Vector2f _position;
 	sf::Vector2f _velocity;
 
+	bool _active;
+
 public:
 	//================================================================//
 	// ========== Constructors ========== //
-	Entity(const sf::Vector2f initPosition);
+	Entity(const sf::Vector2f initPosition, bool active);
 	Entity();
 	// ========== Destructors ========== //
 	virtual ~Entity();
@@ -59,6 +61,10 @@ public:
 	virtual sf::Vector2f getPosition() const;
 	// _collider
 	virtual sf::RectangleShape* getCollider() const;
+	// _active
+	virtual void active();
+	virtual void desactive();
+	virtual bool isActive() const;
 
 protected:
 	// ========== execute submethods ========== //

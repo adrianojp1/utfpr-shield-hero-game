@@ -24,7 +24,7 @@ public:
 	// ========== Constructors ========== //
 	Platform(sf::Color color, sf::Vector2f size, sf::Vector2f position);
 	// ========== Destructors ========== //
-	~Platform();
+	virtual ~Platform();
 
 	//================================================================//
 	// ========== Loop methods ========== //
