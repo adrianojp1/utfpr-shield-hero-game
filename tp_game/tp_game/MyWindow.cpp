@@ -58,9 +58,18 @@ void MyWindow::execute()
 	}
 } // end execute
 
+void MyWindow::setViewCenter(sf::Vector2f center)
+{
+	pView->setCenter(center);
+}
+
+void MyWindow::moveView(sf::Vector2f offset)
+{
+	pView->move(offset);
+}
+
 void MyWindow::console_log(std::string log)
 {
-#if CONSOLE_LOG
-	std::cerr << log << std::endl;
-#endif //  CONSOLE_LOG
+	if(console::CONSOLE_LOG)
+		std::cerr << log << std::endl;
 }

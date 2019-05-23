@@ -24,6 +24,13 @@ public:
 	// ========== Loop methods ========== //
 	void execute();
 
+	//================================================================//
+	// ========== View methods ========== //
+	void setViewCenter(sf::Vector2f center);
+	void moveView(sf::Vector2f offset);
+
+	//================================================================//
+	// ========== Log method ========== //
 	static void console_log(std::string log);
 };
 

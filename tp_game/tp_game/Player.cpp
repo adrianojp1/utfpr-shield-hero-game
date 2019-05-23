@@ -93,10 +93,10 @@ void Player::initialize_AllAnimators()
 {
 	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
-	_idle_animator = new Animator("Media/shield-hero/shield_hero-idle.png", 1, 0.0f, this);
-	_walk_animator = new Animator("Media/shield-hero/shield_hero-walk.png", 4, 0.250f, this);
-	_def1_animator = new Animator("Media/shield-hero/shield_hero-def1.png", 1, 0.0f, this);
-	_def2_animator = new Animator("Media/shield-hero/shield_hero-def2.png", 1, 0.0f, this);
+	_idle_animator = new Animator(player::idle_sprite_filePath, 1, 0.0f, this);
+	_walk_animator = new Animator(player::walk_sprite_filePath, 4, 0.250f, this);
+	_def1_animator = new Animator(player::def1_sprite_filePath, 1, 0.0f, this);
+	_def2_animator = new Animator(player::def2_sprite_filePath, 1, 0.0f, this);
 } // end initializeAnimators
 
 void Player::initialize_AllColliders()
