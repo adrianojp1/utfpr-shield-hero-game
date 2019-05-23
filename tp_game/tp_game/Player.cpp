@@ -90,10 +90,10 @@ void Player::initialize_AllAnimators()
 {
 	std::cerr << __FUNCTION__ << " | -ov: 0 | " << std::endl;
 
-	_idle_animator = new Animator("Media\\shield_hero-idle-1.png", 1, 0.0f, this);
-	_walk_animator = new Animator("Media\\shield_hero-walk-1.png", 4, 0.250f, this);
-	_def1_animator = new Animator("Media\\shield_hero-def1-1.png", 1, 0.0f, this);
-	_def2_animator = new Animator("Media\\shield_hero-def2-1.png", 1, 0.0f, this);
+	_idle_animator = new Animator("Media\\shield-hero\\shield_hero-idle.png", 1, 0.0f, this);
+	_walk_animator = new Animator("Media\\shield-hero\\shield_hero-walk.png", 4, 0.250f, this);
+	_def1_animator = new Animator("Media\\shield-hero\\shield_hero-def1.png", 1, 0.0f, this);
+	_def2_animator = new Animator("Media\\shield-hero\\shield_hero-def2.png", 1, 0.0f, this);
 } // end initializeAnimators
 
 void Player::initialize_AllColliders()
