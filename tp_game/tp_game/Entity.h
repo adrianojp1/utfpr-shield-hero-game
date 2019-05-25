@@ -31,7 +31,7 @@ protected:
 public:
 	//================================================================//
 	// ========== Constructors ========== //
-	Entity(const sf::Vector2f initPosition, bool active);
+	Entity(const sf::Vector2f initPosition, bool active = false);
 	Entity();
 	// ========== Destructors ========== //
 	virtual ~Entity();
@@ -68,7 +68,7 @@ public:
 
 protected:
 	// ========== execute submethods ========== //
-	virtual void updateAction(const float deltaTime) = 0;
-	virtual void updateAnimation(const float deltaTime) = 0;
+	virtual void updateAction(const float deltaTime);
+	virtual void updateAnimation(const float deltaTime);
 };
 

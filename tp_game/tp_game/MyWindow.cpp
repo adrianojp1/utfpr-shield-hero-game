@@ -7,22 +7,15 @@
 #include "MyWindow.h"
 
 
-MyWindow::MyWindow(float viewZoom, sf::Vector2u windowRatio, unsigned int ratioMultiplier) :
-	sf::RenderWindow(sf::VideoMode(windowRatio.x * ratioMultiplier, windowRatio.y * ratioMultiplier),
-					 "Shield Hero",
+MyWindow::MyWindow() :
+	sf::RenderWindow(sf::VideoMode(windowNS::windowRatio.x * windowNS::ratioMultiplier, windowNS::windowRatio.y * windowNS::ratioMultiplier),
+					 windowNS::windowName,
 					 sf::Style::Close | sf::Style::Titlebar)
 {
 	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
-	initializeView({ 0.0f, 0.0f }, (sf::Vector2f) this->getSize(), viewZoom);
-} // end constr (parameters)
-
-MyWindow::MyWindow()
-{
-	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 1 | ");
-
-	pView = NULL;
-} // end constr (no parameters)
+	initializeView({ 0.0f, 0.0f }, (sf::Vector2f) this->getSize(), windowNS::viewZoom);
+} // end constr
 
 MyWindow::~MyWindow()
 {
@@ -70,6 +63,6 @@ void MyWindow::moveView(sf::Vector2f offset)
 
 void MyWindow::console_log(std::string log)
 {
-	if(console::CONSOLE_LOG)
+	if(consoleNS::CONSOLE_LOG)
 		std::cerr << log << std::endl;
 }

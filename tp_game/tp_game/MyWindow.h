@@ -11,7 +11,6 @@ private:
 public:
 	//================================================================//
 	// ========== Constructors ========== //
-	MyWindow(float viewZoom, sf::Vector2u windowRatio, unsigned int ratioMultiplier);
 	MyWindow();
 	// ========== Destructors ========== //
 	virtual ~MyWindow();

@@ -4,52 +4,66 @@
 
 //======================================================================================================================================//
 // === This Class Header === //
-#include "Platform.h"
+#include "Block.h"
 
 //======================================================================================================================================//
 // === Classes headers for redefinition === //
 #include "MyWindow.h"
 
-Platform::Platform(sf::Color color, sf::Vector2f size, sf::Vector2f position)
+Block::Block(const sf::Vector2f initPosition) :
+	Entity(initPosition, true)
 {
 	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
-	_position = position;
+	//_position = initPosition;
 
-	_collider = new sf::RectangleShape(size);
-	_collider->setOrigin(size / 2.0f);
-	_collider->setFillColor(sf::Color::Transparent);
-	_collider->setOutlineColor(color);
-	_collider->setOutlineThickness(0.5f);
+	initialize_Collider(_collider, blockNS::blockSize);
+
+	//For tests porpouse
+	_collider->setOutlineThickness(-0.5f);
+	_collider->setOutlineColor(sf::Color::Color(150, 150, 150));
+	_collider->setFillColor(sf::Color::Color(40, 40, 40));
+
+	_current_collider = _collider;
 }
 
-Platform::~Platform()
+Block::Block() : Entity()
+{
+	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 1 | ");
+	_collider = NULL;
+}
+
+Block::~Block()
 {
 	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+	if (_collider)
+		delete _collider;
 }
 
-void Platform::execute(float deltaTime)
+void Block::execute(float deltaTime)
 {
 	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
 	_collider->setPosition(_position);
 }
 
-void Platform::draw(MyWindow* window)
+void Block::draw(MyWindow* window) const
 {
 	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
 	window->draw(*(this->_collider));
 }
 
-void Platform::setPosition(sf::Vector2f position)
+/*
+void Block::setPosition(sf::Vector2f position)
 {
 	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 	_position = position;
 }
 
-sf::Vector2f Platform::getPosition() const
+sf::Vector2f Block::getPosition() const
 {
 	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 	return _position;
 }
+*/

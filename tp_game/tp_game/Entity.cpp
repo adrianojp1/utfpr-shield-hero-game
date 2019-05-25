@@ -2,7 +2,7 @@
 #include "Entity.h"
 
 
-Entity::Entity(const sf::Vector2f initPosition, bool active = false)
+Entity::Entity(const sf::Vector2f initPosition, bool active)
 {
 	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
@@ -134,4 +134,12 @@ void Entity::desactive()
 bool Entity::isActive() const
 {
 	return _active;
+}
+
+void Entity::updateAction(const float deltaTime)
+{
+}
+
+void Entity::updateAnimation(const float deltaTime)
+{
 }

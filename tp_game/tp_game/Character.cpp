@@ -10,7 +10,7 @@
 // === Character methods === //
 
 Character::Character(const sf::Vector2f initPosition) :
-	Entity(initPosition)
+	Entity(initPosition, true)
 {
 	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
