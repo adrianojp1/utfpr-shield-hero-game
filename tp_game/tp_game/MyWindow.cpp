@@ -7,41 +7,38 @@
 #include "MyWindow.h"
 
 
-MyWindow::MyWindow(float viewZoom, sf::Vector2u windowRatio, unsigned int ratioMultiplier)
+MyWindow::MyWindow() :
+	sf::RenderWindow(sf::VideoMode(windowNS::windowRatio.x * windowNS::ratioMultiplier, windowNS::windowRatio.y * windowNS::ratioMultiplier),
+					 windowNS::windowName,
+					 sf::Style::Close | sf::Style::Titlebar)
 {
-	initializeWindow(windowRatio * ratioMultiplier, "Shield Hero");
-	initializeView({ 0.0f, 0.0f }, (sf::Vector2f) pWindow->getSize(), viewZoom);
-} // end constr (parameters)
+	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
-MyWindow::MyWindow()
-{
-	pWindow = NULL;
-	pView = NULL;
-} // end constr (no parameters)
+	initializeView({ 0.0f, 0.0f }, (sf::Vector2f) this->getSize(), windowNS::viewZoom);
+} // end constr
 
 MyWindow::~MyWindow()
 {
-	if(pWindow != NULL)
-		delete pWindow;
+	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+
 	if(pView != NULL)
 		delete pView;
 } // end destr
 
-void MyWindow::initializeWindow(sf::Vector2u size, std::string title)
-{
-	pWindow = new sf::RenderWindow(sf::VideoMode(size.x, size.y), title, sf::Style::Close | sf::Style::Titlebar);
-} // end initializeWindow
-
 void MyWindow::initializeView(sf::Vector2f center, sf::Vector2f windowSize, float zoom)
 {
+	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+
 	pView = new sf::View;
 	pView->setCenter(center);
 	pView->setSize( windowSize / zoom);
-	pWindow->setView(*pView);
+	this->setView(*pView);
 } // end initializeView
 
 void MyWindow::execute()
 {
+	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+
 	//Window event
 	sf::Event evnt;
 
@@ -54,47 +51,18 @@ void MyWindow::execute()
 	}
 } // end execute
 
-bool MyWindow::isOpen()
+void MyWindow::setViewCenter(sf::Vector2f center)
 {
-	return pWindow->isOpen();
-} // end isOpen
+	pView->setCenter(center);
+}
 
-bool MyWindow::pollEvent(sf::Event& evnt)
+void MyWindow::moveView(sf::Vector2f offset)
 {
-	return pWindow->pollEvent(evnt);
-} // end pollEvent
+	pView->move(offset);
+}
 
-void MyWindow::close()
+void MyWindow::console_log(std::string log)
 {
-	pWindow->close();
-} // end close
-
-void MyWindow::clear()
-{
-	pWindow->clear();
-} // end clear
-
-void MyWindow::display()
-{
-	pWindow->display();
-} // end display
-
-void MyWindow::draw(const sf::Drawable& drawable, const sf::RenderStates& states)
-{
-	pWindow->draw(drawable, states);
-} // end draw
-
-void MyWindow::draw(const sf::Vertex* vertices, std::size_t vertexCount, sf::PrimitiveType type, const sf::RenderStates& states)
-{
-	pWindow->draw(vertices, vertexCount, type, states);
-} // end draw
-
-void MyWindow::draw(const sf::VertexBuffer& vertexBuffer, const sf::RenderStates& states)
-{
-	pWindow->draw(vertexBuffer, states);
-} // end draw
-
-void MyWindow::draw(const sf::VertexBuffer& vertexBuffer, std::size_t firstVertex, std::size_t vertexCount, const sf::RenderStates& states)
-{
-	pWindow->draw(vertexBuffer, firstVertex, vertexCount, states);
-} // end draw
+	if(consoleNS::CONSOLE_LOG)
+		std::cerr << log << std::endl;
+}

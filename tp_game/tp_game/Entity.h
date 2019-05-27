@@ -1,44 +1,40 @@
 #pragma once
-
 //======================================================================================================================================//
 // === Classes Headers === //
-#include "Entity.h"		//Base class
-
-//======================================================================================================================================//
-// === Classes Declaration === //
+#include "Animator.h"		//Animations
+#include "Timer.h"			//Timing effects
+#include "MyWindow.h"		//Drawer
 
 //======================================================================================================================================//
 // === Derived classes from this === //
-// Player
-// Enemy
+// Character
+// Menu
 
 //======================================================================================================================================//
-// === Character Class === //
-class Character : public Entity
+// === Entity Class === //
+class Entity
 {
 protected:
 	// ========= Visual Members ========= //
-	//Animator* _current_animator; //Pointer for current animator
-	//bool _facingRight; //Bool for the side direction
+	Animator* _current_animator; //Pointer for current animator
+	bool _facingRight; //Bool for the side direction
 
 	// ========= Motion Members ========= //
-	//sf::RectangleShape* _current_collider; //Pointer for current collider
+	sf::RectangleShape* _current_collider; //Pointer for current collider
 
-	//float _speed; //Horizontal walking speed
-	float _jumpHeight;
-	//sf::Vector2f _position;
-	//sf::Vector2f _velocity;
+	float _speed;
+	sf::Vector2f _position;
+	sf::Vector2f _velocity;
 
-	// ========= State control members ========= //
-	bool _canJump;
+	bool _active;
 
 public:
 	//================================================================//
 	// ========== Constructors ========== //
-	Character(const sf::Vector2f initPosition);
-	Character();
+	Entity(const sf::Vector2f initPosition, bool active = false);
+	Entity();
 	// ========== Destructors ========== //
-	virtual ~Character();
+	virtual ~Entity();
 
 	//================================================================//
 	// ========== Initializers ========== //
@@ -51,16 +47,12 @@ public:
 
 	//================================================================//
 	// ========== Motion ========== //
-	//virtual void move(const float dx, const float dy);
-	//virtual void move(const sf::Vector2f offset);
+	void move(const float dx, const float dy);
+	virtual void move(const sf::Vector2f offset);
 	virtual void onCollision(const sf::Vector2f collisionDirection);
 
 	//================================================================//
 	// ========== Sets & Gets ========== //
-	// _jumpHeight
-	virtual void setJumpHeight(const float jumpHeight);
-	virtual float getJumpHeight() const;
-	/* All virtuals
 	// _speed
 	virtual void setSpeed(const float speed);
 	virtual float getSpeed() const;
@@ -69,12 +61,14 @@ public:
 	virtual sf::Vector2f getPosition() const;
 	// _collider
 	virtual sf::RectangleShape* getCollider() const;
-	*/
+	// _active
+	virtual void active();
+	virtual void desactive();
+	virtual bool isActive() const;
 
 protected:
 	// ========== execute submethods ========== //
-	virtual void updateAction(const float deltaTime) = 0;
-	virtual void updateAnimation(const float deltaTime) = 0;
-	virtual bool isWalking(const float HorizontalMovement) const;
-
+	virtual void updateAction(const float deltaTime);
+	virtual void updateAnimation(const float deltaTime);
 };
+

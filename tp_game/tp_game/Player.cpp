@@ -9,18 +9,22 @@
 //======================================================================================================================================//
 // === Player methods === //
 
-Player::Player(const sf::Vector2f initPosition)
+Player::Player(const sf::Vector2f initPosition) :
+	Character(initPosition)
 {
+	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+
+	/*
 	//Pointers
 	_current_animator = NULL;
 	_current_collider = NULL;
 
 	//Parameters
 	_position = initPosition;
-
+	*/
 	//Constants
 	_jumpHeight = 30.0f;
-	_walkSpeed = 60.f;
+	_speed = 60.f;
 
 	//Bools
 	_facingRight = true;
@@ -36,13 +40,16 @@ Player::Player(const sf::Vector2f initPosition)
 
 } // end constr (parameters)
 
-Player::Player()
+Player::Player() : 
+	Character()
 {
+	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 1| ");
+
 	_facingRight = true;
 	_defending = false;
 	_defCounterUp = false;
 	_canJump = true;
-	_walkSpeed = 0.0f;
+	_speed = 0.0f;
 	_jumpHeight = 0.0f;
 	_position = {0.0f, 0.0f};
 
@@ -61,6 +68,8 @@ Player::Player()
 
 Player::~Player()
 {
+	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+
 	//Destroy animators
 	if (_idle_animator != NULL)
 		delete _idle_animator;
@@ -82,14 +91,18 @@ Player::~Player()
 
 void Player::initialize_AllAnimators()
 {
-	_idle_animator = new Animator("Media\\shield_hero-idle-1.png", 1, 0.0f, this);
-	_walk_animator = new Animator("Media\\shield_hero-walk-1.png", 4, 0.250f, this);
-	_def1_animator = new Animator("Media\\shield_hero-def1-1.png", 1, 0.0f, this);
-	_def2_animator = new Animator("Media\\shield_hero-def2-1.png", 1, 0.0f, this);
+	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+
+	_idle_animator = new Animator(playerNS::idle_sprite_filePath, 1, 0.0f, this);
+	_walk_animator = new Animator(playerNS::walk_sprite_filePath, 4, 0.250f, this);
+	_def1_animator = new Animator(playerNS::def1_sprite_filePath, 1, 0.0f, this);
+	_def2_animator = new Animator(playerNS::def2_sprite_filePath, 1, 0.0f, this);
 } // end initializeAnimators
 
 void Player::initialize_AllColliders()
 {
+	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+
 	initialize_Collider(_idle_collider, _idle_animator->getSpriteSize());
 	initialize_Collider(_walk_collider, _walk_animator->getSpriteSize());
 	initialize_Collider(_def_collider, _def1_animator->getSpriteSize());
@@ -97,6 +110,8 @@ void Player::initialize_AllColliders()
 
 void Player::initialize_Collider(sf::RectangleShape*& pCollider, const sf::Vector2f size)
 {
+	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+
 	pCollider = new sf::RectangleShape(size);
 	pCollider->setOrigin(size / 2.0f);
 
@@ -108,6 +123,8 @@ void Player::initialize_Collider(sf::RectangleShape*& pCollider, const sf::Vecto
 
 void Player::execute(const float deltaTime)
 {
+	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+
 	_velocity.x = 0.0f;
 
 	_defCounterTimer.decreaseTime(deltaTime);
@@ -122,6 +139,8 @@ void Player::execute(const float deltaTime)
 
 void Player::updateAction(const float deltaTime)
 {
+	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+
 	if (defendKeyPressed())
 	{
 		_defending = true;
@@ -140,10 +159,10 @@ void Player::updateAction(const float deltaTime)
 
 		//Move the player
 		if (leftIsKeyPressed()) //Left
-			_velocity.x -= _walkSpeed;
+			_velocity.x -= _speed;
 
 		if (rightIsKeyPressed()) //Right
-			_velocity.x += _walkSpeed;
+			_velocity.x += _speed;
 
 		if (jumpKeyPressed() && _canJump) //Jump
 		{
@@ -163,6 +182,8 @@ void Player::updateAction(const float deltaTime)
 
 void Player::updateAnimation(const float deltaTime)
 {
+	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+
 	if (_defending)
 	{
 		_current_collider = _def_collider;
@@ -199,26 +220,32 @@ void Player::updateAnimation(const float deltaTime)
 
 bool Player::leftIsKeyPressed() const
 {
+	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 	return (sf::Keyboard::isKeyPressed(sf::Keyboard::A));
 } // end leftIsKeyPressed
 
 bool Player::rightIsKeyPressed() const
 {
+	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 	return (sf::Keyboard::isKeyPressed(sf::Keyboard::D));
 } // end rightIsKeyPressed
 
 bool Player::jumpKeyPressed() const
 {
+	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 	return (sf::Keyboard::isKeyPressed(sf::Keyboard::W));
 } // end jumpKeyPressed
 
 bool Player::defendKeyPressed() const
 {
+	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 	return (sf::Keyboard::isKeyPressed(sf::Keyboard::S));
 } // end defendKeyPressed
 
 void Player::draw(MyWindow *window) const
 {
+	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+
 	window->draw(*(_current_animator->getpSprite()));
 	window->draw(*(_current_collider));
 } // end draw
@@ -249,16 +276,19 @@ void Player::onCollision(const sf::Vector2f collisionDirection)
 
 bool Player::isDefending() const
 {
+	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 	return _defending;
 }
 
 bool Player::isCounterUp() const
 {
+	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 	return _defCounterUp;
 }
 
 bool Player::isDefending_with_Counter() const
 {
+	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 	if (this->isDefending() && this->isCounterUp())
 		return true;
 	else

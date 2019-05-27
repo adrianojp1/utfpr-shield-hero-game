@@ -154,18 +154,21 @@
     <ClCompile Include="Animator.cpp" />
     <ClCompile Include="Character.cpp" />
     <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="Entity.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MyWindow.cpp" />
-    <ClCompile Include="Platform.cpp" />
+    <ClCompile Include="Block.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animator.h" />
     <ClInclude Include="Character.h" />
+    <ClInclude Include="Constants.cpp" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="Entity.h" />
     <ClInclude Include="MyWindow.h" />
-    <ClInclude Include="Platform.h" />
+    <ClInclude Include="Block.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Timer.h" />

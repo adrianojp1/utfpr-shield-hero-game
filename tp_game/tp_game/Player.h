@@ -6,7 +6,7 @@
 
 //======================================================================================================================================//
 // === Player Class === //
-class Player : public Charc
+class Player : public Character
 {
 private:
 	// ========= Visual Members ========= //
@@ -34,7 +34,7 @@ public:
 	Player(const sf::Vector2f initPosition);
 	Player();
 	// ========== Destructors ========== //
-	~Player();
+	virtual ~Player();
 
 	//================================================================//
 	// ========== Initializers ========== //

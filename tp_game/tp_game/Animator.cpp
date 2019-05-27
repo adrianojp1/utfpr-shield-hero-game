@@ -9,9 +9,12 @@
 //======================================================================================================================================//
 // === Classes headers for redefinition === //
 #include "Player.h"
+#include "Enemy.h"
 
 Animator::Animator(std::string texture_filePath, unsigned int nFrames, float switchTime, Player* pPlayer)
 {
+	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+
 	_nFrames = nFrames;
 	_switchTime = switchTime;
 
@@ -25,25 +28,50 @@ Animator::Animator(std::string texture_filePath, unsigned int nFrames, float swi
 
 } // end constr (parameters)
 
+Animator::Animator(std::string texture_filePath, unsigned int nFrames, float switchTime, Enemy* pEnemy)
+{
+	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+
+	_nFrames = nFrames;
+	_switchTime = switchTime;
+
+	_currentTime = 0.0f;
+	_frameCounter = 0;
+
+	_pEnemy = pEnemy;
+
+	initializeTexture(texture_filePath);
+	initializeSprite();
+
+} // end constr (parameters)
+
 Animator::Animator()
 {
+	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 1 | ");
+
 	_nFrames = 0;
 	_switchTime = 0;
 	_currentTime = 0.0f;
 	_frameCounter = 0;
 	_pSprite = NULL;
 	_pPlayer = NULL;
+	_pEnemy = NULL;
 } // end constr (no parameters)
 
 Animator::~Animator()
 {
+	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 } // end destr
 
 void Animator::initializeTexture(std::string texture_filePath)
 {
+	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+
 	//Load texture 
 	if( !_texture.loadFromFile(texture_filePath))
-		{ std::cerr << "Failed loading texture: " << texture_filePath << std::endl; }
+	{
+		 getchar();
+	}
 	
 	//Set canvas borders
 	_canvasRect.width = _texture.getSize().x / _nFrames;
@@ -54,6 +82,8 @@ void Animator::initializeTexture(std::string texture_filePath)
 
 void Animator::initializeSprite()
 {
+	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+
 	_pSprite = new sf::Sprite;
 	_pSprite->setTexture(_texture);
 	_pSprite->setOrigin(sf::Vector2f((float)_canvasRect.width, (float)_canvasRect.height) / 2.0f);
@@ -61,6 +91,8 @@ void Animator::initializeSprite()
 
 void Animator::updateSprite(float deltaTime, bool facingRight)
 {
+	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+
 	_currentTime += deltaTime;
 
 	updateFrame();
@@ -69,65 +101,79 @@ void Animator::updateSprite(float deltaTime, bool facingRight)
 	_pSprite->setTexture(_texture);
 	_pSprite->setTextureRect(_canvasRect);
 	_pSprite->setPosition(_pPlayer->getPosition());
+	_pSprite->setPosition(_pEnemy->getPosition());
 } // end updateSprite
 
 void Animator::setFrameCounter(unsigned int frameCounter)
 {
+	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 	_frameCounter = frameCounter;
 }
 
 unsigned int Animator::getSpriteCounter() const
 {
+	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 	return _frameCounter;
 }
 
 void Animator::setnFrames(unsigned int nFrames)
 {
+	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 	_nFrames = nFrames;
 }
 
 unsigned int Animator::getnFrames() const
 {
+	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 	return _nFrames;
 }
 
 void Animator::setCurrentTime(float currentTime)
 {
+	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 	_currentTime = currentTime;
 }
 
 float Animator::getCurrentTime() const
 {
+	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 	return _currentTime;
 }
 
 void Animator::setSwitchTime(float switchTime)
 {
+	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 	_switchTime = switchTime;
 }
 
 float Animator::getSwitchTime() const
 {
+	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 	return _switchTime;
 }
 
 void Animator::setpSprite(sf::Sprite* pSprite)
 {
+	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 	_pSprite = pSprite;
 }
 
 sf::Sprite* Animator::getpSprite() const
 {
+	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 	return _pSprite;
 }
 
 sf::Vector2f Animator::getSpriteSize() const
 {
+	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 	return sf::Vector2f( (float)_canvasRect.width, (float)_canvasRect.height );
 }
 
 void Animator::updateFrame()
 {
+	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+
 	//Enough time to change the frame
 	if (_currentTime >= _switchTime)
 	{
@@ -144,6 +190,8 @@ void Animator::updateFrame()
 
 void Animator::updateSpriteDirection(bool facingRight)
 {
+	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+
 	if (facingRight)
 	{
 		_canvasRect.left = _frameCounter * _canvasRect.width;

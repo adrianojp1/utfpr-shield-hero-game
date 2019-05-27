@@ -9,3 +9,12 @@
 #include <iostream>
 #include <math.h>
 #include <vector>
+
+//======================================================================================================================================//
+// === Internal Constants === //
+#include "Constants.cpp"
+
+//======================================================================================================================================//
+/* === Notification Subtitles === //
+	<-ov: int>		If the method is overloaded, shows$ the definition ordinal.
+*/
