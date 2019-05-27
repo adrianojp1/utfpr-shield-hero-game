@@ -62,8 +62,8 @@ public:
 	// _collider
 	virtual sf::RectangleShape* getCollider() const;
 	// _active
-	virtual void active();
-	virtual void desactive();
+	virtual void activate();
+	virtual void desactivate();
 	virtual bool isActive() const;
 
 protected:

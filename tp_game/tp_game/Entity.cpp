@@ -121,12 +121,12 @@ sf::RectangleShape* Entity::getCollider() const
 	return _current_collider;
 }
 
-void Entity::active()
+void Entity::activate()
 {
 	_active = true;
 }
 
-void Entity::desactive()
+void Entity::desactivate()
 {
 	_active = false;
 }
