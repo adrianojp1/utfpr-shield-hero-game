@@ -59,15 +59,17 @@ int main()
 
 		sf::Vector2f collisionDirection;
 
+		//Check collision between the player and the orc
+		if (checkCollision(static_cast<Entity*>(player1), static_cast<Entity*>(orc), &collisionDirection, 0.5f))
+			player1->onCollision(collisionDirection);
+
 		for (Block* block : vBlocks) 
-		//Check collision between the player and all platforms
+		//Check collision with all blocks
 		{
 			if (checkCollision(static_cast<Entity*>(player1), static_cast<Entity*>(block), &collisionDirection, 0.0f))
 				player1->onCollision(collisionDirection);
 			if (checkCollision(static_cast<Entity*>(orc), static_cast<Entity*>(block), &collisionDirection, 0.0f))
 				orc->onCollision(collisionDirection);
-			if (checkCollision(static_cast<Entity*>(player1), static_cast<Entity*>(orc), &collisionDirection, 0.0f))
-				player1->onCollision(collisionDirection);
 		}
 
 		window->execute();

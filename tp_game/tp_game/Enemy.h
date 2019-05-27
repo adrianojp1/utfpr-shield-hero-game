@@ -5,7 +5,7 @@
 #include "Character.h" //Base class
 
 //======================================================================================================================================//
-// === Enemy2 Class === //
+// === Enemy Class === //
 class Enemy : public Character
 {
 private:
@@ -45,12 +45,9 @@ public:
 	void execute(const float deltaTime);
 	void draw(MyWindow *window) const;
 
-	== == == =
-
-				 private :
-		// ========== execute submethods ========== //
-		void
-		updateAction(const float deltaTime);
+private :
+	// ========== execute submethods ========== //
+	void updateAction(const float deltaTime);
 	void updateAnimation(const float deltaTime);
 	//virtual bool isWalking(const float HorizontalMovement) const;
 };
