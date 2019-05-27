@@ -36,7 +36,7 @@ int main()
 	player1 = new Player(sf::Vector2f{ -32.0f, 0.0f });
 
 	//Orc: initial position (0, 0)
-	orc = new Enemy(sf::Vector2f{ 32.0f, 0.0f });
+	orc = new Enemy(sf::Vector2f{ 80.0f, 0.0f });
 	
 	//Blocks
 	for (int i = -4; i < 0; i++) {
@@ -60,8 +60,16 @@ int main()
 		sf::Vector2f collisionDirection;
 
 		//Check collision between the player and the orc
-		if (checkCollision(static_cast<Entity*>(player1), static_cast<Entity*>(orc), &collisionDirection, 0.5f))
-			player1->onCollision(collisionDirection);
+		if (player1->isDefending()) 
+		{
+			if (checkCollision(static_cast<Entity*>(player1), static_cast<Entity*>(orc), &collisionDirection, 1.0f))
+				player1->onCollision(collisionDirection);
+		}
+		else
+		{
+			if (checkCollision(static_cast<Entity*>(player1), static_cast<Entity*>(orc), &collisionDirection, 0.5f))
+				player1->onCollision(collisionDirection);
+		}
 
 		for (Block* block : vBlocks) 
 		//Check collision with all blocks
