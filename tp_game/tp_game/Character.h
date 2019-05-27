@@ -76,6 +76,5 @@ protected:
 	virtual void updateAction(const float deltaTime) = 0;
 	virtual void updateAnimation(const float deltaTime) = 0;
 	virtual bool isWalking(const float HorizontalMovement) const;
-};
 
-typedef Character Charc;
+};

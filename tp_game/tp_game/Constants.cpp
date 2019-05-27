@@ -35,6 +35,13 @@ namespace playerNS {
 }
 
 //======================================================================================================================================//
+// === Orc-Enemy === //
+namespace orcNS {
+	const std::string idle_sprite_filePath = "Media/orc/orc-idle.png";
+	const std::string walk_sprite_filePath = "Media/orc/orc-walk.png";
+}
+
+//======================================================================================================================================//
 // === Block === //
 namespace blockNS {
 	const sf::Vector2f blockSize = { 16.0f, 16.0f };

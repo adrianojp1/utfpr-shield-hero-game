@@ -5,6 +5,7 @@
 //======================================================================================================================================//
 // === Classes Headers === //
 #include "Player.h"
+#include "Enemy.h"
 #include "MyWindow.h"
 #include "Block.h"
 
@@ -19,6 +20,7 @@ bool checkCollision(Entity* player, Entity* block, sf::Vector2f* collisionDirect
 //======================================================================================================================================//
 // === Temporary Pointers === //
 Player* player1;
+Enemy* orc;
 MyWindow* window;
 
 std::vector<Block*> vBlocks;
@@ -32,6 +34,9 @@ int main()
 
 	//Player: initial position (0, 0)
 	player1 = new Player(sf::Vector2f{ -32.0f, 0.0f });
+
+	//Orc: initial position (0, 0)
+	orc = new Enemy(sf::Vector2f{ 32.0f, 0.0f });
 	
 	//Blocks
 	for (int i = -4; i < 0; i++) {
@@ -59,6 +64,10 @@ int main()
 		{
 			if (checkCollision(static_cast<Entity*>(player1), static_cast<Entity*>(block), &collisionDirection, 0.0f))
 				player1->onCollision(collisionDirection);
+			if (checkCollision(static_cast<Entity*>(orc), static_cast<Entity*>(block), &collisionDirection, 0.0f))
+				orc->onCollision(collisionDirection);
+			if (checkCollision(static_cast<Entity*>(player1), static_cast<Entity*>(orc), &collisionDirection, 0.0f))
+				player1->onCollision(collisionDirection);
 		}
 
 		window->execute();
@@ -82,6 +91,7 @@ void execute(float deltaTime)
 
 	// ========== Objects ========== //
 	player1->execute(deltaTime);
+	orc->execute(deltaTime);
 	
 	for (Block* block : vBlocks) //execute all platforms
 	{
@@ -92,6 +102,7 @@ void execute(float deltaTime)
 void draw(MyWindow* window)
 {
 	player1->draw(window);
+	orc->draw(window);
 
 	for (Block* block : vBlocks) //draw all platforms
 	{
