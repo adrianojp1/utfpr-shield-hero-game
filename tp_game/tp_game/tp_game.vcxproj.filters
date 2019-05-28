@@ -1,47 +1,59 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="Animator.cpp" />
-    <ClCompile Include="Character.cpp" />
-    <ClCompile Include="Enemy.cpp" />
-    <ClCompile Include="Entity.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Menu.cpp" />
-    <ClCompile Include="Graphical_Manager.cpp" />
-    <ClCompile Include="Block.cpp" />
-    <ClCompile Include="Player.cpp" />
     <ClCompile Include="Timer.cpp" />
+    <ClCompile Include="Animator.cpp">
+      <Filter>Graphicals</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphical_Manager.cpp">
+      <Filter>Graphicals</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Characters</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Characters</Filter>
+    </ClCompile>
+    <ClCompile Include="Character.cpp">
+      <Filter>Characters</Filter>
+    </ClCompile>
+    <ClCompile Include="Block.cpp">
+      <Filter>Blocks</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity.cpp">
+      <Filter>Abstract Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Menu.cpp">
+      <Filter>Abstract Entities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Animator.h">
-      <Filter>Characters</Filter>
-    </ClInclude>
-    <ClInclude Include="Block.h">
-      <Filter>Characters</Filter>
-    </ClInclude>
     <ClInclude Include="Character.h">
       <Filter>Characters</Filter>
     </ClInclude>
     <ClInclude Include="Enemy.h">
       <Filter>Characters</Filter>
     </ClInclude>
-    <ClInclude Include="Entity.h">
-      <Filter>Characters</Filter>
-    </ClInclude>
-    <ClInclude Include="Graphical_Manager.h">
-      <Filter>Characters</Filter>
-    </ClInclude>
-    <ClInclude Include="Menu.h">
-      <Filter>Characters</Filter>
-    </ClInclude>
     <ClInclude Include="Player.h">
       <Filter>Characters</Filter>
     </ClInclude>
-    <ClInclude Include="stdafx.h">
-      <Filter>Characters</Filter>
+    <ClInclude Include="Animator.h">
+      <Filter>Graphicals</Filter>
     </ClInclude>
-    <ClInclude Include="Timer.h">
-      <Filter>Characters</Filter>
+    <ClInclude Include="Graphical_Manager.h">
+      <Filter>Graphicals</Filter>
+    </ClInclude>
+    <ClInclude Include="Block.h">
+      <Filter>Blocks</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h" />
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="Entity.h">
+      <Filter>Abstract Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Menu.h">
+      <Filter>Abstract Entities</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -56,6 +68,9 @@
     </Filter>
     <Filter Include="Graphicals">
       <UniqueIdentifier>{5b5a9430-aedc-439e-a9e8-a510aade548e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Abstract Entities">
+      <UniqueIdentifier>{d8e314f9-9d7b-4a4d-a421-1a8419665539}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
