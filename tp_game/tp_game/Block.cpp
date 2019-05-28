@@ -8,12 +8,12 @@
 
 //======================================================================================================================================//
 // === Classes headers for redefinition === //
-#include "MyWindow.h"
+#include "Graphical_Manager.h"
 
 Block::Block(const sf::Vector2f initPosition) :
 	Entity(initPosition, true)
 {
-	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+	Graphical_Manager::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
 	//_position = initPosition;
 
@@ -29,27 +29,27 @@ Block::Block(const sf::Vector2f initPosition) :
 
 Block::Block() : Entity()
 {
-	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 1 | ");
+	Graphical_Manager::console_log(__FUNCTION__ + (std::string)" | -ov: 1 | ");
 	_collider = NULL;
 }
 
 Block::~Block()
 {
-	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+	Graphical_Manager::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 	if (_collider)
 		delete _collider;
 }
 
 void Block::execute(float deltaTime)
 {
-	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+	Graphical_Manager::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
 	_collider->setPosition(_position);
 }
 
-void Block::draw(MyWindow* window) const
+void Block::draw(Graphical_Manager* window) const
 {
-	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+	Graphical_Manager::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
 	window->draw(*(this->_collider));
 }

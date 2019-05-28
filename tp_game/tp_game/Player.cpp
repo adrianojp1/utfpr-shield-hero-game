@@ -12,7 +12,7 @@
 Player::Player(const sf::Vector2f initPosition) :
 	Character(initPosition)
 {
-	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+	Graphical_Manager::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
 	/*
 	//Pointers
@@ -43,7 +43,7 @@ Player::Player(const sf::Vector2f initPosition) :
 Player::Player() : 
 	Character()
 {
-	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 1| ");
+	Graphical_Manager::console_log(__FUNCTION__ + (std::string)" | -ov: 1| ");
 
 	_facingRight = true;
 	_defending = false;
@@ -68,7 +68,7 @@ Player::Player() :
 
 Player::~Player()
 {
-	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+	Graphical_Manager::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
 	//Destroy animators
 	if (_idle_animator != NULL)
@@ -91,7 +91,7 @@ Player::~Player()
 
 void Player::initialize_AllAnimators()
 {
-	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+	Graphical_Manager::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
 	_idle_animator = new Animator(playerNS::idle_sprite_filePath, 1, 0.0f, this);
 	_walk_animator = new Animator(playerNS::walk_sprite_filePath, 4, 0.250f, this);
@@ -101,7 +101,7 @@ void Player::initialize_AllAnimators()
 
 void Player::initialize_AllColliders()
 {
-	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+	Graphical_Manager::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
 	initialize_Collider(_idle_collider, _idle_animator->getSpriteSize());
 	initialize_Collider(_walk_collider, _walk_animator->getSpriteSize());
@@ -110,7 +110,7 @@ void Player::initialize_AllColliders()
 
 void Player::initialize_Collider(sf::RectangleShape*& pCollider, const sf::Vector2f size)
 {
-	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+	Graphical_Manager::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
 	pCollider = new sf::RectangleShape(size);
 	pCollider->setOrigin(size / 2.0f);
@@ -123,7 +123,7 @@ void Player::initialize_Collider(sf::RectangleShape*& pCollider, const sf::Vecto
 
 void Player::execute(const float deltaTime)
 {
-	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+	Graphical_Manager::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
 	_velocity.x = 0.0f;
 
@@ -139,7 +139,7 @@ void Player::execute(const float deltaTime)
 
 void Player::updateAction(const float deltaTime)
 {
-	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+	Graphical_Manager::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
 	if (defendKeyPressed())
 	{
@@ -182,7 +182,7 @@ void Player::updateAction(const float deltaTime)
 
 void Player::updateAnimation(const float deltaTime)
 {
-	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+	Graphical_Manager::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
 	if (_defending)
 	{
@@ -220,31 +220,31 @@ void Player::updateAnimation(const float deltaTime)
 
 bool Player::leftIsKeyPressed() const
 {
-	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+	Graphical_Manager::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 	return (sf::Keyboard::isKeyPressed(sf::Keyboard::A));
 } // end leftIsKeyPressed
 
 bool Player::rightIsKeyPressed() const
 {
-	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+	Graphical_Manager::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 	return (sf::Keyboard::isKeyPressed(sf::Keyboard::D));
 } // end rightIsKeyPressed
 
 bool Player::jumpKeyPressed() const
 {
-	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+	Graphical_Manager::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 	return (sf::Keyboard::isKeyPressed(sf::Keyboard::W));
 } // end jumpKeyPressed
 
 bool Player::defendKeyPressed() const
 {
-	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+	Graphical_Manager::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 	return (sf::Keyboard::isKeyPressed(sf::Keyboard::S));
 } // end defendKeyPressed
 
-void Player::draw(MyWindow *window) const
+void Player::draw(Graphical_Manager *window) const
 {
-	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+	Graphical_Manager::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
 	window->draw(*(_current_animator->getpSprite()));
 	window->draw(*(_current_collider));
@@ -276,19 +276,19 @@ void Player::onCollision(const sf::Vector2f collisionDirection)
 
 bool Player::isDefending() const
 {
-	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+	Graphical_Manager::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 	return _defending;
 }
 
 bool Player::isCounterUp() const
 {
-	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+	Graphical_Manager::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 	return _defCounterUp;
 }
 
 bool Player::isDefending_with_Counter() const
 {
-	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+	Graphical_Manager::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 	if (this->isDefending() && this->isCounterUp())
 		return true;
 	else

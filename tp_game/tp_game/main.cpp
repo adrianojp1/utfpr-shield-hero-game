@@ -5,13 +5,13 @@
 //======================================================================================================================================//
 // === Classes Headers === //
 #include "Player.h"
-#include "MyWindow.h"
+#include "Graphical_Manager.h"
 #include "Block.h"
 
 //======================================================================================================================================//
 // === Temporary Functions Declaration === //
 void execute(float deltaTime);
-void draw(MyWindow* window);
+void draw(Graphical_Manager* window);
 
 //Collision
 bool checkCollision(Entity* player, Entity* block, sf::Vector2f* collisionDirection, float push);
@@ -19,7 +19,7 @@ bool checkCollision(Entity* player, Entity* block, sf::Vector2f* collisionDirect
 //======================================================================================================================================//
 // === Temporary Pointers === //
 Player* player1;
-MyWindow* window;
+Graphical_Manager* window;
 
 std::vector<Block*> vBlocks;
 
@@ -28,7 +28,7 @@ std::vector<Block*> vBlocks;
 int main()
 {
 	//Window: zoom(5x), ratio (4:3), ratio multiplier (250)
-	window = new MyWindow;
+	window = new Graphical_Manager;
 
 	//Player: initial position (0, 0)
 	player1 = new Player(sf::Vector2f{ -32.0f, 0.0f });
@@ -89,7 +89,7 @@ void execute(float deltaTime)
 	}
 } // end execute
 
-void draw(MyWindow* window)
+void draw(Graphical_Manager* window)
 {
 	player1->draw(window);
 

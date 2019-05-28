@@ -46,7 +46,7 @@ public:
 	//================================================================//
 	// ========== Loop methods ========== //
 	void execute(const float deltaTime);
-	void draw(MyWindow* window) const;
+	void draw(Graphical_Manager* window) const;
 
 	//================================================================//
 	// ========== Motion ========== //

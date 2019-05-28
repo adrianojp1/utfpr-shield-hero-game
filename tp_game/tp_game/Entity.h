@@ -3,7 +3,7 @@
 // === Classes Headers === //
 #include "Animator.h"		//Animations
 #include "Timer.h"			//Timing effects
-#include "MyWindow.h"		//Drawer
+#include "Graphical_Manager.h"		//Drawer
 
 //======================================================================================================================================//
 // === Derived classes from this === //
@@ -43,7 +43,7 @@ public:
 	//================================================================//
 	// ========== Loop methods ========== //
 	virtual void execute(const float deltaTime) = 0;
-	virtual void draw(MyWindow* window) const = 0;
+	virtual void draw(Graphical_Manager* window) const = 0;
 
 	//================================================================//
 	// ========== Motion ========== //

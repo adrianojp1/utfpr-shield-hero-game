@@ -2,7 +2,7 @@
 
 //======================================================================================================================================//
 // === MyWindow Class === //
-class MyWindow : public sf::RenderWindow
+class Graphical_Manager : public sf::RenderWindow
 {
 private:
 	//Pointer for dynamic allocation
@@ -11,9 +11,9 @@ private:
 public:
 	//================================================================//
 	// ========== Constructors ========== //
-	MyWindow();
+	Graphical_Manager();
 	// ========== Destructors ========== //
-	virtual ~MyWindow();
+	virtual ~Graphical_Manager();
 
 	//================================================================//
 	// ========== Initializers ========== //

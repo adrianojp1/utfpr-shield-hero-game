@@ -47,7 +47,7 @@ public:
 	//================================================================//
 	// ========== Loop methods ========== //
 	virtual void execute(const float deltaTime) = 0;
-	virtual void draw(MyWindow* window) const = 0;
+	virtual void draw(Graphical_Manager* window) const = 0;
 
 	//================================================================//
 	// ========== Motion ========== //

@@ -36,7 +36,7 @@ Menu::~Menu()
 	_vOptions.clear();
 }
 
-void Menu::draw(MyWindow* window) const
+void Menu::draw(Graphical_Manager* window) const
 {
 	//window->draw(*_animator->getpSprite());
 	/*for (int i = 0; i < _vOptions.size(); i++)
@@ -108,7 +108,7 @@ void Menu::Option::execute(const float deltaTime)
 {
 }
 
-void Menu::Option::draw(MyWindow* window) const
+void Menu::Option::draw(Graphical_Manager* window) const
 {
 	window->draw(*_text);
 }

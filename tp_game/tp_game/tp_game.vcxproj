@@ -156,7 +156,7 @@
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Menu.cpp" />
-    <ClCompile Include="MyWindow.cpp" />
+    <ClCompile Include="Graphical_Manager.cpp" />
     <ClCompile Include="Block.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Timer.cpp" />
@@ -167,7 +167,7 @@
     <ClInclude Include="Constants.cpp" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="Menu.h" />
-    <ClInclude Include="MyWindow.h" />
+    <ClInclude Include="Graphical_Manager.h" />
     <ClInclude Include="Block.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="stdafx.h" />
