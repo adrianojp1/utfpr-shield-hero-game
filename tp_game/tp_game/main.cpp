@@ -5,12 +5,8 @@
 //======================================================================================================================================//
 // === Classes Headers === //
 #include "Player.h"
-<<<<<<< HEAD
 #include "Graphical_Manager.h"
-=======
 #include "Enemy.h"
-#include "MyWindow.h"
->>>>>>> Enemy
 #include "Block.h"
 
 //======================================================================================================================================//
@@ -19,19 +15,15 @@ void execute(float deltaTime);
 void drawAll();
 
 //Collision
-bool checkCollision(Entity* player, Entity* block, sf::Vector2f* collisionDirection, float push);
+bool checkCollision(Entity *player, Entity *block, sf::Vector2f *collisionDirection, float push);
 
 //======================================================================================================================================//
 // === Temporary Pointers === //
-Player* player1;
-<<<<<<< HEAD
-Graphical_Manager* window;
-=======
-Enemy* orc;
-MyWindow* window;
->>>>>>> Enemy
+Player *player1;
+Graphical_Manager *window;
+Enemy *orc;
 
-std::vector<Block*> vBlocks;
+std::vector<Block *> vBlocks;
 
 //======================================================================================================================================//
 // === Main === //
@@ -42,20 +34,21 @@ int main()
 	Entity::setGraphManager(window);
 
 	//Player: initial position (0, 0)
-	player1 = new Player(sf::Vector2f{ -32.0f, 0.0f });
+	player1 = new Player(sf::Vector2f{-32.0f, 0.0f});
 
 	//Orc: initial position (0, 0)
-	orc = new Enemy(sf::Vector2f{ 32.0f, 0.0f });
-	
+	orc = new Enemy(sf::Vector2f{32.0f, 0.0f});
+
 	//Blocks
-	for (int i = -4; i < 0; i++) {
+	for (int i = -4; i < 0; i++)
+	{
 		vBlocks.push_back(new Block(sf::Vector2f(float(Block::size.x * i), 20.0f)));
-		vBlocks.push_back(new Block(sf::Vector2f(float(Block::size.x * i + Block::size.x*6), 20.0f)));
+		vBlocks.push_back(new Block(sf::Vector2f(float(Block::size.x * i + Block::size.x * 6), 20.0f)));
 	}
 
 	//Clocking variables
 	float deltaTime = 0.0f; //Time elapsed between loop iterations
-	sf::Clock clock; //To get the deltaTime
+	sf::Clock clock;		//To get the deltaTime
 
 	//Game loop
 	while (window->isOpen())
@@ -69,15 +62,15 @@ int main()
 		sf::Vector2f collisionDirection;
 
 		//Check collision between the player and the orc
-		if (checkCollision(static_cast<Entity*>(player1), static_cast<Entity*>(orc), &collisionDirection, 0.5f))
+		if (checkCollision(static_cast<Entity *>(player1), static_cast<Entity *>(orc), &collisionDirection, 0.5f))
 			player1->onCollision(collisionDirection);
 
-		for (Block* block : vBlocks) 
+		for (Block *block : vBlocks)
 		//Check collision with all blocks
 		{
-			if (checkCollision(static_cast<Entity*>(player1), static_cast<Entity*>(block), &collisionDirection, 0.0f))
+			if (checkCollision(static_cast<Entity *>(player1), static_cast<Entity *>(block), &collisionDirection, 0.0f))
 				player1->onCollision(collisionDirection);
-			if (checkCollision(static_cast<Entity*>(orc), static_cast<Entity*>(block), &collisionDirection, 0.0f))
+			if (checkCollision(static_cast<Entity *>(orc), static_cast<Entity *>(block), &collisionDirection, 0.0f))
 				orc->onCollision(collisionDirection);
 		}
 
@@ -88,7 +81,7 @@ int main()
 		drawAll(); //Future game drawer: draw all objects
 
 		window->display(); //Show current frame
-	} // end game loop
+	}					   // end game loop
 
 	return 0;
 } // end main
@@ -103,8 +96,8 @@ void execute(float deltaTime)
 	// ========== Objects ========== //
 	player1->execute(deltaTime);
 	orc->execute(deltaTime);
-	
-	for (Block* block : vBlocks) //execute all platforms
+
+	for (Block *block : vBlocks) //execute all platforms
 	{
 		block->execute(deltaTime);
 	}
@@ -112,20 +105,16 @@ void execute(float deltaTime)
 
 void drawAll()
 {
-<<<<<<< HEAD
 	player1->draw();
-=======
-	player1->draw(window);
-	orc->draw(window);
->>>>>>> Enemy
+	orc->draw();
 
-	for (Block* block : vBlocks) //draw all platforms
+	for (Block *block : vBlocks) //draw all platforms
 	{
 		block->draw();
 	}
 } // end draw
 
-bool checkCollision(Entity* player, Entity* block, sf::Vector2f* collisionDirection, float push)
+bool checkCollision(Entity *player, Entity *block, sf::Vector2f *collisionDirection, float push)
 {
 	sf::Vector2f otherPosition = block->getPosition();
 	sf::Vector2f otherHalfSize = block->getCollider()->getSize() / 2.0f;
@@ -142,11 +131,11 @@ bool checkCollision(Entity* player, Entity* block, sf::Vector2f* collisionDirect
 	{
 		push = std::min(std::max(push, 0.0f), 1.0f); // clumping push between 0.0f and 1.0f
 
-		if (intersectX > intersectY)// = (abs(intersectX) < abs(intersectY))
-		{ // pushing on the X axe
+		if (intersectX > intersectY) // = (abs(intersectX) < abs(intersectY))
+		{							 // pushing on the X axe
 			if (deltaX > 0.0f)
 			{
-				
+
 				player->move((intersectX * (1.0f - push)), 0.0f);
 				block->move((-intersectX * push), 0.0f);
 

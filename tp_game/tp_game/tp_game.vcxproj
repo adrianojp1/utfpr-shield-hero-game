@@ -165,11 +165,7 @@
   <ItemGroup>
     <ClInclude Include="Animator.h" />
     <ClInclude Include="Character.h" />
-<<<<<<< HEAD
-=======
-    <ClInclude Include="Constants.cpp" />
     <ClInclude Include="Enemy.h" />
->>>>>>> Enemy
     <ClInclude Include="Entity.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="Graphical_Manager.h" />

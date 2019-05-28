@@ -57,7 +57,10 @@ public:
 	static const std::string player_die_Sp_Fp;
 
 	//Orc
-
+	static const std::string orc_idle_Sp_Fp;
+	static const std::string orc_walk_Sp_Fp;
+	static const std::string orc_atk_Sp_Fp;
+	static const std::string orc_die_Sp_Fp;
 
 	//White_Skeleton
 

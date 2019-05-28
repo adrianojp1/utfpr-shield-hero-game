@@ -11,25 +11,14 @@
 
 Enemy::Enemy(const sf::Vector2f initPosition) : Character(initPosition)
 {
-	MyWindow::console_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
-
-	/*
-	//Pointers
-	_current_animator = NULL;
-	_current_collider = NULL;
-
-	//Parameters
-	_position = initPosition;
-	*/
-	//Constants
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
+	
 	_jumpHeight = 30.0f;
 	_speed = 40.f;
 
-	//Bools
 	_facingRight = true;
 	_canJump = true;
 
-	//Methods
 	initialize_AllAnimators();
 	initialize_AllColliders();
 
@@ -37,7 +26,7 @@ Enemy::Enemy(const sf::Vector2f initPosition) : Character(initPosition)
 
 Enemy::Enemy() : Character()
 {
-	MyWindow::console_log(__FUNCTION__ + (std::string) " | -ov: 1| ");
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 1| ");
 
 	_facingRight = true;
 	_canJump = true;
@@ -54,7 +43,7 @@ Enemy::Enemy() : Character()
 
 Enemy::~Enemy()
 {
-	MyWindow::console_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
 	//Destroy animators
 	if (_idle_animator != NULL)
@@ -71,16 +60,16 @@ Enemy::~Enemy()
 
 void Enemy::initialize_AllAnimators()
 {
-	MyWindow::console_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
-	_idle_animator = new Animator(orcNS::idle_sprite_filePath, 1, 0.0f, this);
-	_walk_animator = new Animator(orcNS::walk_sprite_filePath, 4, 0.250f, this);
+	_idle_animator = new Animator(gMng::orc_idle_Sp_Fp, 1, 0.0f, this);
+	_walk_animator = new Animator(gMng::orc_walk_Sp_Fp, 4, 0.250f, this);
 
 } // end initializeAnimators
 
 void Enemy::initialize_AllColliders()
 {
-	MyWindow::console_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
 	initialize_Collider(_idle_collider, _idle_animator->getSpriteSize());
 	initialize_Collider(_walk_collider, _walk_animator->getSpriteSize());
@@ -88,7 +77,7 @@ void Enemy::initialize_AllColliders()
 
 void Enemy::initialize_Collider(sf::RectangleShape *&pCollider, const sf::Vector2f size)
 {
-	MyWindow::console_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
 	pCollider = new sf::RectangleShape(size);
 	pCollider->setOrigin(size / 2.0f);
@@ -101,7 +90,7 @@ void Enemy::initialize_Collider(sf::RectangleShape *&pCollider, const sf::Vector
 
 void Enemy::execute(const float deltaTime)
 {
-	MyWindow::console_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
 	_velocity.x = 0.0f;
 
@@ -115,13 +104,14 @@ void Enemy::execute(const float deltaTime)
 
 void Enemy::updateAction(const float deltaTime)
 {
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
 	_velocity.y += 300.0f * deltaTime; //constant g force
 } // end updatePosition
 
 void Enemy::updateAnimation(const float deltaTime)
 {
-	MyWindow::console_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
 	if (!isWalking(_velocity.x))
 	{
@@ -144,10 +134,10 @@ void Enemy::updateAnimation(const float deltaTime)
 	_current_animator->updateSprite(deltaTime, _facingRight);
 }
 
-void Enemy::draw(MyWindow *window) const
+void Enemy::draw() const
 {
-	MyWindow::console_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
-	window->draw(*(_current_animator->getpSprite()));
-	window->draw(*(_current_collider));
+	Entity::_pGraphMng->draw(*(_current_animator->getpSprite()));
+	Entity::_pGraphMng->draw(*(_current_collider));
 } // end draw
