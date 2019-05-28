@@ -12,7 +12,7 @@
 
 Animator::Animator(std::string texture_filePath, unsigned int nFrames, float switchTime, Player* pPlayer)
 {
-	std::cerr << __FUNCTION__ << " | -ov: 0 | " << std::endl;
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
 	_nFrames = nFrames;
 	_switchTime = switchTime;
@@ -29,7 +29,7 @@ Animator::Animator(std::string texture_filePath, unsigned int nFrames, float swi
 
 Animator::Animator()
 {
-	std::cerr << __FUNCTION__ << " | -ov: 1 | " << std::endl;
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 1 | ");
 
 	_nFrames = 0;
 	_switchTime = 0;
@@ -41,16 +41,18 @@ Animator::Animator()
 
 Animator::~Animator()
 {
-	std::cerr << __FUNCTION__ << " | -ov: 0 | " << std::endl;
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 } // end destr
 
 void Animator::initializeTexture(std::string texture_filePath)
 {
-	std::cerr << __FUNCTION__ << " | -ov: 0 | " << std::endl;
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
 	//Load texture 
 	if( !_texture.loadFromFile(texture_filePath))
-		{ std::cerr << "Failed loading texture: " << texture_filePath << std::endl; }
+	{
+		getchar();
+	}
 	
 	//Set canvas borders
 	_canvasRect.width = _texture.getSize().x / _nFrames;
@@ -61,7 +63,7 @@ void Animator::initializeTexture(std::string texture_filePath)
 
 void Animator::initializeSprite()
 {
-	std::cerr << __FUNCTION__ << " | -ov: 0 | " << std::endl;
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
 	_pSprite = new sf::Sprite;
 	_pSprite->setTexture(_texture);
@@ -70,7 +72,7 @@ void Animator::initializeSprite()
 
 void Animator::updateSprite(float deltaTime, bool facingRight)
 {
-	std::cerr << __FUNCTION__ << " | -ov: 0 | " << std::endl;
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
 	_currentTime += deltaTime;
 
@@ -84,62 +86,73 @@ void Animator::updateSprite(float deltaTime, bool facingRight)
 
 void Animator::setFrameCounter(unsigned int frameCounter)
 {
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 	_frameCounter = frameCounter;
 }
 
 unsigned int Animator::getSpriteCounter() const
 {
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 	return _frameCounter;
 }
 
 void Animator::setnFrames(unsigned int nFrames)
 {
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 	_nFrames = nFrames;
 }
 
 unsigned int Animator::getnFrames() const
 {
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 	return _nFrames;
 }
 
 void Animator::setCurrentTime(float currentTime)
 {
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 	_currentTime = currentTime;
 }
 
 float Animator::getCurrentTime() const
 {
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 	return _currentTime;
 }
 
 void Animator::setSwitchTime(float switchTime)
 {
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 	_switchTime = switchTime;
 }
 
 float Animator::getSwitchTime() const
 {
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 	return _switchTime;
 }
 
 void Animator::setpSprite(sf::Sprite* pSprite)
 {
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 	_pSprite = pSprite;
 }
 
 sf::Sprite* Animator::getpSprite() const
 {
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 	return _pSprite;
 }
 
 sf::Vector2f Animator::getSpriteSize() const
 {
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 	return sf::Vector2f( (float)_canvasRect.width, (float)_canvasRect.height );
 }
 
 void Animator::updateFrame()
 {
-	std::cerr << __FUNCTION__ << " | -ov: 0 | " << std::endl;
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
 	//Enough time to change the frame
 	if (_currentTime >= _switchTime)
@@ -157,7 +170,7 @@ void Animator::updateFrame()
 
 void Animator::updateSpriteDirection(bool facingRight)
 {
-	std::cerr << __FUNCTION__ << " | -ov: 0 | " << std::endl;
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
 	if (facingRight)
 	{

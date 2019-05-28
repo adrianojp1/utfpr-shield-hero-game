@@ -34,7 +34,7 @@ public:
 	Animator(std::string texture_filePath, unsigned int nFrames, float switchTime, Player* pPlayer);
 	Animator();
 	// ========== Destructors ========== //
-	~Animator();
+	virtual ~Animator();
 
 	//================================================================//
 	// ========== Initializers ========== //

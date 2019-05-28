@@ -5,38 +5,40 @@
 //======================================================================================================================================//
 // === Classes Headers === //
 #include "Player.h"
-#include "MyWindow.h"
-#include "Platform.h"
+#include "Graphical_Manager.h"
+#include "Block.h"
 
 //======================================================================================================================================//
 // === Temporary Functions Declaration === //
 void execute(float deltaTime);
-void draw(MyWindow* window);
+void drawAll();
 
 //Collision
-bool checkCollision(Player* player, Platform* platform, sf::Vector2f* direction, float push);
+bool checkCollision(Entity* player, Entity* block, sf::Vector2f* collisionDirection, float push);
 
 //======================================================================================================================================//
 // === Temporary Pointers === //
 Player* player1;
-MyWindow* window;
+Graphical_Manager* window;
 
-std::vector<Platform*> vPlatforms;
+std::vector<Block*> vBlocks;
 
 //======================================================================================================================================//
 // === Main === //
 int main()
 {
 	//Window: zoom(5x), ratio (4:3), ratio multiplier (250)
-	window = new MyWindow(5.0f, { 4, 3 }, 250);
+	window = new Graphical_Manager;
+	Entity::setGraphManager(window);
 
 	//Player: initial position (0, 0)
-	player1 = new Player(sf::Vector2f{ 0.0f, 0.0f });
+	player1 = new Player(sf::Vector2f{ -32.0f, 0.0f });
 	
-	//Platforms
-	vPlatforms.push_back(new Platform(sf::Color::Magenta, sf::Vector2f(20.0f, 40.0f), sf::Vector2f(60.0f, 30.0f)));
-	vPlatforms.push_back(new Platform(sf::Color::Magenta, sf::Vector2f(20.0f, 40.0f), sf::Vector2f(-60.0f, 30.0f)));
-	vPlatforms.push_back(new Platform(sf::Color::Green, sf::Vector2f(100.0f, 10.0f), sf::Vector2f(0.0f, 30.0f)));
+	//Blocks
+	for (int i = -4; i < 0; i++) {
+		vBlocks.push_back(new Block(sf::Vector2f(float(Block::size.x * i), 20.0f)));
+		vBlocks.push_back(new Block(sf::Vector2f(float(Block::size.x * i + Block::size.x*6), 20.0f)));
+	}
 
 	//Clocking variables
 	float deltaTime = 0.0f; //Time elapsed between loop iterations
@@ -53,10 +55,10 @@ int main()
 
 		sf::Vector2f collisionDirection;
 
-		for (Platform* platform : vPlatforms) 
+		for (Block* block : vBlocks) 
 		//Check collision between the player and all platforms
 		{
-			if (checkCollision(player1, platform, &collisionDirection, 0.0f))
+			if (checkCollision(static_cast<Entity*>(player1), static_cast<Entity*>(block), &collisionDirection, 0.0f))
 				player1->onCollision(collisionDirection);
 		}
 
@@ -64,7 +66,7 @@ int main()
 
 		window->clear(); //Clear window buffer
 
-		draw(window); //Future game drawer: draw all objects
+		drawAll(); //Future game drawer: draw all objects
 
 		window->display(); //Show current frame
 	} // end game loop
@@ -82,26 +84,26 @@ void execute(float deltaTime)
 	// ========== Objects ========== //
 	player1->execute(deltaTime);
 	
-	for (Platform* platform : vPlatforms) //execute all platforms
+	for (Block* block : vBlocks) //execute all platforms
 	{
-		platform->execute(deltaTime);
+		block->execute(deltaTime);
 	}
 } // end execute
 
-void draw(MyWindow* window)
+void drawAll()
 {
-	player1->draw(window);
+	player1->draw();
 
-	for (Platform* platform : vPlatforms) //draw all platforms
+	for (Block* block : vBlocks) //draw all platforms
 	{
-		platform->draw(window);
+		block->draw();
 	}
 } // end draw
 
-bool checkCollision(Player* player, Platform* platform, sf::Vector2f* collisionDirection, float push)
+bool checkCollision(Entity* player, Entity* block, sf::Vector2f* collisionDirection, float push)
 {
-	sf::Vector2f otherPosition = platform->getPosition();
-	sf::Vector2f otherHalfSize = platform->getCollider()->getSize() / 2.0f;
+	sf::Vector2f otherPosition = block->getPosition();
+	sf::Vector2f otherHalfSize = block->getCollider()->getSize() / 2.0f;
 	sf::Vector2f thisPosition = player->getPosition();
 	sf::Vector2f thisHalfSize = player->getCollider()->getSize() / 2.0f;
 
@@ -121,14 +123,14 @@ bool checkCollision(Player* player, Platform* platform, sf::Vector2f* collisionD
 			{
 				
 				player->move((intersectX * (1.0f - push)), 0.0f);
-				platform->move((-intersectX * push), 0.0f);
+				block->move((-intersectX * push), 0.0f);
 
 				*collisionDirection = sf::Vector2f(1.0f, 0.0f);
 			}
 			else
 			{
 				player->move((-intersectX * (1.0f - push)), 0.0f);
-				platform->move((intersectX * push), 0.0f);
+				block->move((intersectX * push), 0.0f);
 
 				*collisionDirection = sf::Vector2f(-1.0f, 0.0f);
 			}
@@ -138,14 +140,14 @@ bool checkCollision(Player* player, Platform* platform, sf::Vector2f* collisionD
 			if (deltaY > 0.0f)
 			{
 				player->move(0.0f, (intersectY * (1.0f - push)));
-				platform->move(0.0f, (-intersectY * push));
+				block->move(0.0f, (-intersectY * push));
 
 				*collisionDirection = sf::Vector2f(0.0f, 1.0f);
 			}
 			else
 			{
 				player->move(0.0f, (-intersectY * (1.0f - push)));
-				platform->move(0.0f, (intersectY * push));
+				block->move(0.0f, (intersectY * push));
 
 				*collisionDirection = sf::Vector2f(0.0f, -1.0f);
 			}

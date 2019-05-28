@@ -34,48 +34,24 @@ public:
 	Player(const sf::Vector2f initPosition);
 	Player();
 	// ========== Destructors ========== //
-	~Player();
+	virtual ~Player();
 
 	//================================================================//
 	// ========== Initializers ========== //
 	void initialize_AllAnimators(); //Initializes all the animators
 
 	void initialize_AllColliders(); //Initializes all the colliders
-	void initialize_Collider(sf::RectangleShape*& pCollider, const sf::Vector2f size);		//Initialize a specific collider
 
 	//================================================================//
 	// ========== Loop methods ========== //
 	void execute(const float deltaTime);
-	void draw(MyWindow* window) const;
-
-	//================================================================//
-	// ========== Motion ========== //
-	//Virtuals
-	//void move(const float dx, const float dy);
-	//void move(const sf::Vector2f offset);
-	//void onCollision(const sf::Vector2f collisionDirection);
+	void draw() const;
 
 	//================================================================//
 	// ========== State checkers ========== //
 	bool isDefending() const;
 	bool isCounterUp() const;
 	bool isDefending_with_Counter() const;
-
-	//================================================================//
-	// ========== Sets & Gets ========== //
-	/*	All virtuals
-	// _walkSpeed
-	void setWalkSpeed(const float walkSpeed);
-	float getWalkSpeed() const;
-	// _jumpHeight
-	void setJumpHeight(const float jumpHeight);
-	float getJumpHeight() const;
-	// _position
-	void setPosition(const sf::Vector2f position);
-	sf::Vector2f getPosition() const;
-	// _collider
-	sf::RectangleShape* getCollider() const;
-	*/
 
 private:
 	// ========== Control keys methods ========== //
