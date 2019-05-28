@@ -22,32 +22,32 @@ Menu::Menu() : Entity(), _betweenKeys()
 
 Menu::~Menu()
 {
-	for (int i = 0; i < _vOptions.size(); i++)
+	/*for (int i = 0; i < _vOptions.size(); i++)
 	{
 		if (_vOptions[i])
 			delete _vOptions[i];
 	}
-	/*
+	*/
 	for (Option* option : _vOptions)
 	{
 		if (option)
 			delete option;
-	}*/
+	}
 	_vOptions.clear();
 }
 
 void Menu::draw(MyWindow* window) const
 {
 	//window->draw(*_animator->getpSprite());
-	for (int i = 0; i < _vOptions.size(); i++)
+	/*for (int i = 0; i < _vOptions.size(); i++)
 	{
 		_vOptions[i]->draw(window);
 	}
-	/*
+	*/
 	for (Option* option : _vOptions)
 	{
 		option->draw(window);
-	}*/
+	}
 }
 
 void Menu::activate()
