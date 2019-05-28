@@ -7,17 +7,20 @@
 #include "Block.h"
 
 //======================================================================================================================================//
-// === Classes headers for redefinition === //
-#include "Graphical_Manager.h"
+// === Static initializations === //
+const sf::Vector2f Block::size = { 16.0f, 16.0f };
+
+//======================================================================================================================================//
+// === Block methods === //
 
 Block::Block(const sf::Vector2f initPosition) :
 	Entity(initPosition, true)
 {
-	Graphical_Manager::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
 	//_position = initPosition;
 
-	initialize_Collider(_collider, blockNS::blockSize);
+	initialize_Collider(_collider, size);
 
 	//For tests porpouse
 	_collider->setOutlineThickness(-0.5f);
@@ -29,41 +32,27 @@ Block::Block(const sf::Vector2f initPosition) :
 
 Block::Block() : Entity()
 {
-	Graphical_Manager::console_log(__FUNCTION__ + (std::string)" | -ov: 1 | ");
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 1 | ");
 	_collider = NULL;
 }
 
 Block::~Block()
 {
-	Graphical_Manager::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 	if (_collider)
 		delete _collider;
 }
 
 void Block::execute(float deltaTime)
 {
-	Graphical_Manager::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
 	_collider->setPosition(_position);
 }
 
-void Block::draw(Graphical_Manager* window) const
+void Block::draw() const
 {
-	Graphical_Manager::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
-	window->draw(*(this->_collider));
+	Entity::_pGraphMng->draw(*(this->_collider));
 }
-
-/*
-void Block::setPosition(sf::Vector2f position)
-{
-	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
-	_position = position;
-}
-
-sf::Vector2f Block::getPosition() const
-{
-	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
-	return _position;
-}
-*/

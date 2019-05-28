@@ -41,7 +41,7 @@ protected:
 
 		// ========== Loop methods ========== //
 		virtual void execute(const float deltaTime);
-		virtual void draw(Graphical_Manager* window) const;
+		virtual void draw() const;
 
 		// ========== Activation methods ========== //
 		virtual void activate();
@@ -77,11 +77,10 @@ public:
 	//================================================================//
 	// ========== Loop methods ========== //
 	virtual void execute(const float deltaTime) = 0;
-	virtual void draw(Graphical_Manager* window) const;
+	virtual void draw() const;
 
 	// ========== Activation methods ========== //
 	virtual void activate();
-	//virtual void desactivate();
 
 	// ========== Option methods ========== //
 	virtual void add_option(Option* pOp);

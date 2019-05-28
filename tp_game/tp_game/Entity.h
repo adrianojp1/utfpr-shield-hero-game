@@ -28,6 +28,7 @@ protected:
 
 	bool _active;
 
+	static Graphical_Manager* _pGraphMng;
 public:
 	//================================================================//
 	// ========== Constructors ========== //
@@ -43,7 +44,7 @@ public:
 	//================================================================//
 	// ========== Loop methods ========== //
 	virtual void execute(const float deltaTime) = 0;
-	virtual void draw(Graphical_Manager* window) const = 0;
+	virtual void draw() const = 0;
 
 	//================================================================//
 	// ========== Motion ========== //
@@ -65,6 +66,9 @@ public:
 	virtual void activate();
 	virtual void desactivate();
 	virtual bool isActive() const;
+	// _pGraphMng
+	static void setGraphManager(gMng* gMng);
+	static gMng* getGraphManager();
 
 protected:
 	// ========== execute submethods ========== //

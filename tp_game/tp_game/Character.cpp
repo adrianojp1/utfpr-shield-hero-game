@@ -12,7 +12,7 @@
 Character::Character(const sf::Vector2f initPosition) :
 	Entity(initPosition, true)
 {
-	Graphical_Manager::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
 	//Pointers
 	_current_animator = NULL;
@@ -32,7 +32,7 @@ Character::Character(const sf::Vector2f initPosition) :
 
 Character::Character()
 {
-	Graphical_Manager::console_log(__FUNCTION__ + (std::string)" | -ov: 1 | ");
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 1 | ");
 
 	//Pointers
 	_current_animator = NULL;
@@ -52,34 +52,12 @@ Character::Character()
 
 Character::~Character()
 {
-	Graphical_Manager::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 }
-
-void Character::initialize_Collider(sf::RectangleShape*& pCollider, const sf::Vector2f size)
-{
-	Graphical_Manager::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
-
-	pCollider = new sf::RectangleShape(size);
-	pCollider->setOrigin(size / 2.0f);
-}
-/*
-void Character::move(const float dx, const float dy)
-{
-	std::cerr << __FUNCTION__ << " | -ov: 0 | " << std::endl;
-
-	_position += sf::Vector2f(dx, dy);
-}
-
-void Character::move(const sf::Vector2f offset)
-{
-	std::cerr << __FUNCTION__ << " | -ov: 0 | " << std::endl;
-
-	_position += offset;
-}*/
 
 void Character::onCollision(const sf::Vector2f collisionDirection)
 {
-	Graphical_Manager::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
 	//X axe
 	if (collisionDirection.x < 0.0f)
@@ -105,44 +83,19 @@ void Character::onCollision(const sf::Vector2f collisionDirection)
 
 void Character::setJumpHeight(const float jumpHeight)
 {
-	Graphical_Manager::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 	_jumpHeight = jumpHeight;
 }
 
 float Character::getJumpHeight() const
 {
-	Graphical_Manager::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 	return _jumpHeight;
 }
-/*
-void Character::setSpeed(const float speed)
-{
-	_speed = speed;
-}
 
-float Character::getSpeed() const
-{
-	return _speed;
-}
-
-void Character::setPosition(const sf::Vector2f position)
-{
-	_position = position;
-}
-
-sf::Vector2f Character::getPosition() const
-{
-	return _position;
-}
-
-sf::RectangleShape* Character::getCollider() const
-{
-	return _current_collider;
-}
-*/
 bool Character::isWalking(const float HorizontalMovement) const
 {
-	Graphical_Manager::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
 	if (HorizontalMovement == 0.0f)
 	{

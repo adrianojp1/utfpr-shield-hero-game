@@ -11,7 +11,7 @@
 //======================================================================================================================================//
 // === Temporary Functions Declaration === //
 void execute(float deltaTime);
-void draw(Graphical_Manager* window);
+void drawAll();
 
 //Collision
 bool checkCollision(Entity* player, Entity* block, sf::Vector2f* collisionDirection, float push);
@@ -29,14 +29,15 @@ int main()
 {
 	//Window: zoom(5x), ratio (4:3), ratio multiplier (250)
 	window = new Graphical_Manager;
+	Entity::setGraphManager(window);
 
 	//Player: initial position (0, 0)
 	player1 = new Player(sf::Vector2f{ -32.0f, 0.0f });
 	
 	//Blocks
 	for (int i = -4; i < 0; i++) {
-		vBlocks.push_back(new Block(sf::Vector2f(float(blockNS::blockSize.x * i), 20.0f)));
-		vBlocks.push_back(new Block(sf::Vector2f(float(blockNS::blockSize.x * i + blockNS::blockSize.x*6), 20.0f)));
+		vBlocks.push_back(new Block(sf::Vector2f(float(Block::size.x * i), 20.0f)));
+		vBlocks.push_back(new Block(sf::Vector2f(float(Block::size.x * i + Block::size.x*6), 20.0f)));
 	}
 
 	//Clocking variables
@@ -65,7 +66,7 @@ int main()
 
 		window->clear(); //Clear window buffer
 
-		draw(window); //Future game drawer: draw all objects
+		drawAll(); //Future game drawer: draw all objects
 
 		window->display(); //Show current frame
 	} // end game loop
@@ -89,13 +90,13 @@ void execute(float deltaTime)
 	}
 } // end execute
 
-void draw(Graphical_Manager* window)
+void drawAll()
 {
-	player1->draw(window);
+	player1->draw();
 
 	for (Block* block : vBlocks) //draw all platforms
 	{
-		block->draw(window);
+		block->draw();
 	}
 } // end draw
 

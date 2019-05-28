@@ -1,10 +1,21 @@
+//======================================================================================================================================//
+// === Pre-Compiled Header === //
 #include "stdafx.h"
+
+//======================================================================================================================================//
+// === This Class Header === //
 #include "Entity.h"
 
+//======================================================================================================================================//
+// === Static initializations === //
+Graphical_Manager* Entity::_pGraphMng = NULL;
+
+//======================================================================================================================================//
+// === Entity methods === //
 
 Entity::Entity(const sf::Vector2f initPosition, bool active)
 {
-	Graphical_Manager::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
 	//Pointers
 	_current_animator = NULL;
@@ -22,7 +33,7 @@ Entity::Entity(const sf::Vector2f initPosition, bool active)
 
 Entity::Entity()
 {
-	Graphical_Manager::console_log(__FUNCTION__ + (std::string)" | -ov: 1 | ");
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 1 | ");
 
 	//Pointers
 	_current_animator = NULL;
@@ -41,34 +52,41 @@ Entity::Entity()
 
 Entity::~Entity()
 {
-	Graphical_Manager::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 }
 
 void Entity::initialize_Collider(sf::RectangleShape*& pCollider, const sf::Vector2f size)
 {
-	Graphical_Manager::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
 	pCollider = new sf::RectangleShape(size);
 	pCollider->setOrigin(size / 2.0f);
+
+	if (gMng::COLLISION_DBG)
+	{
+		pCollider->setOutlineThickness(0.2f);
+		pCollider->setOutlineColor(sf::Color::White);
+		pCollider->setFillColor(sf::Color::Transparent);
+	}
 }
 
 void Entity::move(const float dx, const float dy)
 {
-	Graphical_Manager::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
 	move(sf::Vector2f(dx, dy));
 }
 
 void Entity::move(const sf::Vector2f offset)
 {
-	Graphical_Manager::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
 	_position += offset;
 }
 
 void Entity::onCollision(const sf::Vector2f collisionDirection)
 {
-	Graphical_Manager::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
 	//X axe
 	if (collisionDirection.x < 0.0f)
@@ -93,53 +111,77 @@ void Entity::onCollision(const sf::Vector2f collisionDirection)
 
 void Entity::setSpeed(const float speed)
 {
-	Graphical_Manager::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 	_speed = speed;
 }
 
 float Entity::getSpeed() const
 {
-	Graphical_Manager::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 	return _speed;
 }
 
 void Entity::setPosition(const sf::Vector2f position)
 {
-	Graphical_Manager::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 	_position = position;
 }
 
 sf::Vector2f Entity::getPosition() const
 {
-	Graphical_Manager::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 	return _position;
 }
 
 sf::RectangleShape* Entity::getCollider() const
 {
-	Graphical_Manager::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 	return _current_collider;
 }
 
 void Entity::activate()
 {
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+
 	_active = true;
 }
 
 void Entity::desactivate()
 {
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+
 	_active = false;
 }
 
 bool Entity::isActive() const
 {
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+
 	return _active;
+}
+
+void Entity::setGraphManager(gMng* gMng)
+{
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+
+	_pGraphMng = gMng;
+}
+
+gMng* Entity::getGraphManager()
+{
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+
+	return _pGraphMng;
 }
 
 void Entity::updateAction(const float deltaTime)
 {
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+
 }
 
 void Entity::updateAnimation(const float deltaTime)
 {
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+
 }

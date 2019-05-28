@@ -164,7 +164,6 @@
   <ItemGroup>
     <ClInclude Include="Animator.h" />
     <ClInclude Include="Character.h" />
-    <ClInclude Include="Constants.cpp" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="Graphical_Manager.h" />

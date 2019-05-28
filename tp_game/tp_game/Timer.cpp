@@ -8,7 +8,7 @@
 
 Timer::Timer(float totalTime)
 {
-	Graphical_Manager::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
 	_ticking = false;
 	_totalTime = totalTime;
@@ -17,7 +17,7 @@ Timer::Timer(float totalTime)
 
 Timer::Timer()
 {
-	Graphical_Manager::console_log(__FUNCTION__ + (std::string)" | -ov: 1 | ");
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 1 | ");
 
 	_ticking = false;
 	_totalTime = 0.0f;
@@ -26,12 +26,12 @@ Timer::Timer()
 
 Timer::~Timer()
 {
-	Graphical_Manager::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 }
 
 void Timer::decreaseTime(float deltaTime)
 {
-	Graphical_Manager::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
 	if (_ticking)
 	{
@@ -48,19 +48,19 @@ void Timer::decreaseTime(float deltaTime)
 
 bool Timer::isTicking() const
 {
-	Graphical_Manager::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 	return _ticking;
 } // end isTicking
 
 bool Timer::isZeroed() const
 {
-	Graphical_Manager::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 	return _zeroed;
 } // end isZeroed
 
 void Timer::resetTimer()
 {
-	Graphical_Manager::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
 	_currentTime = _totalTime;
 	_zeroed = false;
@@ -68,37 +68,37 @@ void Timer::resetTimer()
 
 void Timer::pause()
 {
-	Graphical_Manager::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 	_ticking = false;
 } // end pause
 
 void Timer::trigger()
 {
-	Graphical_Manager::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 	_ticking = true;
 } // end trigger
 
 void Timer::reset_and_trigger()
 {
-	Graphical_Manager::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 	this->resetTimer();
 	this->trigger();
 } // end reset_and_trigger
 
 void Timer::setTotalTime(float totalTime)
 {
-	Graphical_Manager::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 	_totalTime = totalTime;
 } // end setTotalTime
 
 float Timer::getTotalTime() const
 {
-	Graphical_Manager::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 	return _totalTime;
 } // end getTotalTime
 
 float Timer::getCurrentTime() const
 {
-	Graphical_Manager::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 	return _currentTime;
 } // end getCurrentTime
