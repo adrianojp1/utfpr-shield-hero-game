@@ -13,15 +13,49 @@
     <ClCompile Include="Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Animator.h" />
-    <ClInclude Include="Character.h" />
-    <ClInclude Include="Enemy.h" />
-    <ClInclude Include="Entity.h" />
-    <ClInclude Include="Menu.h" />
-    <ClInclude Include="Graphical_Manager.h" />
-    <ClInclude Include="Block.h" />
-    <ClInclude Include="Player.h" />
-    <ClInclude Include="stdafx.h" />
-    <ClInclude Include="Timer.h" />
+    <ClInclude Include="Animator.h">
+      <Filter>Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="Block.h">
+      <Filter>Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="Character.h">
+      <Filter>Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity.h">
+      <Filter>Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphical_Manager.h">
+      <Filter>Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="Menu.h">
+      <Filter>Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>Characters</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Characters">
+      <UniqueIdentifier>{7982dda9-e580-46e5-abed-5aa2cc2fc3d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Blocks">
+      <UniqueIdentifier>{96fd9ad3-e8b2-4940-a6c2-83e162df66c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Obstacles">
+      <UniqueIdentifier>{9c453660-aca3-47d6-90f7-fe2f726a71ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphicals">
+      <UniqueIdentifier>{5b5a9430-aedc-439e-a9e8-a510aade548e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

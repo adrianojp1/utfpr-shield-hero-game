@@ -19,16 +19,10 @@ bool checkCollision(Entity *player, Entity *block, sf::Vector2f *collisionDirect
 
 //======================================================================================================================================//
 // === Temporary Pointers === //
-<<<<<<< HEAD
 Player *player1;
 Graphical_Manager *window;
 Enemy *orc;
-=======
-Player* player1;
-Enemy* orc;
-MyWindow* window;
-sf::RectangleShape* background;
->>>>>>> Enemy
+sf::RectangleShape *background;
 
 std::vector<Block *> vBlocks;
 
@@ -50,7 +44,6 @@ int main()
 	Entity::setGraphManager(window);
 
 	//Player: initial position (0, 0)
-<<<<<<< HEAD
 	player1 = new Player(sf::Vector2f{-32.0f, 0.0f});
 
 	//Orc: initial position (0, 0)
@@ -61,21 +54,6 @@ int main()
 	{
 		vBlocks.push_back(new Block(sf::Vector2f(float(Block::size.x * i), 20.0f)));
 		vBlocks.push_back(new Block(sf::Vector2f(float(Block::size.x * i + Block::size.x * 6), 20.0f)));
-=======
-	player1 = new Player(sf::Vector2f{ -32.0f, 
-		
-		
-		
-		44.0f });
-
-	//Orc: initial position (0, 0)
-	orc = new Enemy(sf::Vector2f{ 80.0f, 44.0f });
-	
-	//Blocks
-	for (int i = -4; i < 0; i++) {
-		vBlocks.push_back(new Block(sf::Vector2f(float(blockNS::blockSize.x * i), 64.0f)));
-		vBlocks.push_back(new Block(sf::Vector2f(float(blockNS::blockSize.x * i + blockNS::blockSize.x*6), 64.0f)));
->>>>>>> Enemy
 	}
 
 	//Clocking variables
@@ -94,21 +72,16 @@ int main()
 		sf::Vector2f collisionDirection;
 
 		//Check collision between the player and the orc
-<<<<<<< HEAD
-		if (checkCollision(static_cast<Entity *>(player1), static_cast<Entity *>(orc), &collisionDirection, 0.5f))
-			player1->onCollision(collisionDirection);
-=======
-		if (player1->isDefending()) 
+		if (player1->isDefending())
 		{
-			if (checkCollision(static_cast<Entity*>(player1), static_cast<Entity*>(orc), &collisionDirection, 1.0f))
+			if (checkCollision(static_cast<Entity *>(player1), static_cast<Entity *>(orc), &collisionDirection, 1.0f))
 				player1->onCollision(collisionDirection);
 		}
 		else
 		{
-			if (checkCollision(static_cast<Entity*>(player1), static_cast<Entity*>(orc), &collisionDirection, 0.5f))
+			if (checkCollision(static_cast<Entity *>(player1), static_cast<Entity *>(orc), &collisionDirection, 0.5f))
 				player1->onCollision(collisionDirection);
 		}
->>>>>>> Enemy
 
 		for (Block *block : vBlocks)
 		//Check collision with all blocks
@@ -150,14 +123,10 @@ void execute(float deltaTime)
 
 void drawAll()
 {
-<<<<<<< HEAD
+	window->draw(*background);
+
 	player1->draw();
 	orc->draw();
-=======
-	window->draw(*background);
-	player1->draw(window);
-	orc->draw(window);
->>>>>>> Enemy
 
 	for (Block *block : vBlocks) //draw all platforms
 	{

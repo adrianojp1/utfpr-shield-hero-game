@@ -92,7 +92,7 @@ void Enemy::execute(const float deltaTime)
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
-	_velocity.x = -25.0f;
+	//_velocity.x = -25.0f;
 
 	updateAction(deltaTime);
 	updateAnimation(deltaTime);
