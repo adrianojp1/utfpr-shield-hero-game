@@ -38,7 +38,6 @@ public:
 	void initialize_AllAnimators(); //Initializes all the animators
 
 	void initialize_AllColliders();													   //Initializes all the colliders
-	void initialize_Collider(sf::RectangleShape *&pCollider, const sf::Vector2f size); //Initialize a specific collider
 
 	//================================================================//
 	// ========== Loop methods ========== //

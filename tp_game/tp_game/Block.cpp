@@ -18,15 +18,13 @@ Block::Block(const sf::Vector2f initPosition) :
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
-	//_position = initPosition;
-
 	initialize_Collider(_collider, size);
-
+	
 	//For tests porpouse
 	_collider->setOutlineThickness(-0.5f);
 	_collider->setOutlineColor(sf::Color::Color(150, 150, 150));
 	_collider->setFillColor(sf::Color::Color(40, 40, 40));
-
+	
 	_current_collider = _collider;
 }
 

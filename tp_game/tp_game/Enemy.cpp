@@ -75,19 +75,6 @@ void Enemy::initialize_AllColliders()
 	initialize_Collider(_walk_collider, _walk_animator->getSpriteSize());
 }
 
-void Enemy::initialize_Collider(sf::RectangleShape *&pCollider, const sf::Vector2f size)
-{
-	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
-
-	pCollider = new sf::RectangleShape(size);
-	pCollider->setOrigin(size / 2.0f);
-
-	//For tests porpouse
-	pCollider->setOutlineThickness(0.2f);
-	pCollider->setOutlineColor(sf::Color::Green);
-	pCollider->setFillColor(sf::Color::Transparent);
-}
-
 void Enemy::execute(const float deltaTime)
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
@@ -139,5 +126,6 @@ void Enemy::draw() const
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
 	Entity::_pGraphMng->draw(*(_current_animator->getpSprite()));
-	Entity::_pGraphMng->draw(*(_current_collider));
+	if(gMng::COLLISION_DBG)
+		Entity::_pGraphMng->draw(*(_current_collider));
 } // end draw
