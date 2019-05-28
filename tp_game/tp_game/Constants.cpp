@@ -17,7 +17,7 @@ namespace debugNS {
 //======================================================================================================================================//
 // === Window === //
 namespace windowNS {
-	const float viewZoom = 5.0f;
+	const float viewZoom = 4.0f;
 	const sf::Vector2u windowRatio = { 4, 3 };
 	const unsigned int ratioMultiplier = 250;
 	const std::string windowName = "Shield Hero";

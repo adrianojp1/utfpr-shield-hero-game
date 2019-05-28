@@ -22,6 +22,7 @@ bool checkCollision(Entity* player, Entity* block, sf::Vector2f* collisionDirect
 Player* player1;
 Enemy* orc;
 MyWindow* window;
+sf::RectangleShape* background;
 
 std::vector<Block*> vBlocks;
 
@@ -29,19 +30,32 @@ std::vector<Block*> vBlocks;
 // === Main === //
 int main()
 {
+	//Background
+	sf::Texture bgtexture;
+	bgtexture.loadFromFile("Media/Background.png");
+	background = new sf::RectangleShape;
+	background->setTexture(&bgtexture);
+	background->setSize(sf::Vector2f(background->getTexture()->getSize().x, background->getTexture()->getSize().y));
+	background->setOrigin(background->getTexture()->getSize().x / 2, background->getTexture()->getSize().y / 2);
+
+	background->setPosition(0.0f, -30.0f);
 	//Window: zoom(5x), ratio (4:3), ratio multiplier (250)
 	window = new MyWindow;
 
 	//Player: initial position (0, 0)
-	player1 = new Player(sf::Vector2f{ -32.0f, 0.0f });
+	player1 = new Player(sf::Vector2f{ -32.0f, 
+		
+		
+		
+		44.0f });
 
 	//Orc: initial position (0, 0)
-	orc = new Enemy(sf::Vector2f{ 80.0f, 0.0f });
+	orc = new Enemy(sf::Vector2f{ 80.0f, 44.0f });
 	
 	//Blocks
 	for (int i = -4; i < 0; i++) {
-		vBlocks.push_back(new Block(sf::Vector2f(float(blockNS::blockSize.x * i), 20.0f)));
-		vBlocks.push_back(new Block(sf::Vector2f(float(blockNS::blockSize.x * i + blockNS::blockSize.x*6), 20.0f)));
+		vBlocks.push_back(new Block(sf::Vector2f(float(blockNS::blockSize.x * i), 64.0f)));
+		vBlocks.push_back(new Block(sf::Vector2f(float(blockNS::blockSize.x * i + blockNS::blockSize.x*6), 64.0f)));
 	}
 
 	//Clocking variables
@@ -111,6 +125,7 @@ void execute(float deltaTime)
 
 void draw(MyWindow* window)
 {
+	window->draw(*background);
 	player1->draw(window);
 	orc->draw(window);
 
