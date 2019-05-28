@@ -5,64 +5,49 @@
 #include "Character.h" //Base class
 
 //======================================================================================================================================//
-// === Player Class === //
-class Player : public Character
+// === Enemy Class === //
+class Enemy : public Character
 {
 private:
 	// ========= Visual Members ========= //
 	//Animators
 	Animator *_idle_animator; //Idle
 	Animator *_walk_animator; //Walking
-	Animator *_def1_animator; //Normal defense
-	Animator *_def2_animator; //Counter defense
+	//Animator* _attack_animator; //Shoot (skeleton)
+	//Animator* _dead_animator; //Dying
 
 	// ========= Motion Members ========= //
 	//Colliders
-	sf::RectangleShape* _idle_collider; //Idle
-	sf::RectangleShape* _walk_collider; //Walking
-	sf::RectangleShape* _def_collider; //Defense
+	sf::RectangleShape *_idle_collider; //Idle
+	sf::RectangleShape *_walk_collider; //Walking
+										//sf::RectangleShape* _attack_collider; //(if change when is attacking)
 
 	// ========= State control members ========= //
-	bool _defending;
-	bool _defCounterUp;
-
-	Timer _defCounterTimer; //Timer for the defense counter
+	//bool _attacking;
 
 public:
 	//================================================================//
 	// ========== Constructors ========== //
-	Player(const sf::Vector2f initPosition);
-	Player();
+	Enemy(const sf::Vector2f initPosition);
+	Enemy();
 	// ========== Destructors ========== //
-	virtual ~Player();
+	~Enemy();
 
 	//================================================================//
 	// ========== Initializers ========== //
 	void initialize_AllAnimators(); //Initializes all the animators
 
-	void initialize_AllColliders(); //Initializes all the colliders
+	void initialize_AllColliders();													   //Initializes all the colliders
+	void initialize_Collider(sf::RectangleShape *&pCollider, const sf::Vector2f size); //Initialize a specific collider
 
 	//================================================================//
 	// ========== Loop methods ========== //
 	void execute(const float deltaTime);
-	void draw() const;
+	void draw(MyWindow *window) const;
 
-	//================================================================//
-	// ========== State checkers ========== //
-	bool isDefending() const;
-	bool isCounterUp() const;
-	bool isDefending_with_Counter() const;
-
-private:
-	// ========== Control keys methods ========== //
-	bool leftIsKeyPressed() const;
-	bool rightIsKeyPressed() const;
-	bool jumpKeyPressed() const;
-	bool defendKeyPressed() const;
-
+private :
 	// ========== execute submethods ========== //
 	void updateAction(const float deltaTime);
 	void updateAnimation(const float deltaTime);
 	//virtual bool isWalking(const float HorizontalMovement) const;
-
-}; // end Player
+};

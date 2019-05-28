@@ -5,7 +5,12 @@
 //======================================================================================================================================//
 // === Classes Headers === //
 #include "Player.h"
+<<<<<<< HEAD
 #include "Graphical_Manager.h"
+=======
+#include "Enemy.h"
+#include "MyWindow.h"
+>>>>>>> Enemy
 #include "Block.h"
 
 //======================================================================================================================================//
@@ -19,7 +24,12 @@ bool checkCollision(Entity* player, Entity* block, sf::Vector2f* collisionDirect
 //======================================================================================================================================//
 // === Temporary Pointers === //
 Player* player1;
+<<<<<<< HEAD
 Graphical_Manager* window;
+=======
+Enemy* orc;
+MyWindow* window;
+>>>>>>> Enemy
 
 std::vector<Block*> vBlocks;
 
@@ -33,6 +43,9 @@ int main()
 
 	//Player: initial position (0, 0)
 	player1 = new Player(sf::Vector2f{ -32.0f, 0.0f });
+
+	//Orc: initial position (0, 0)
+	orc = new Enemy(sf::Vector2f{ 32.0f, 0.0f });
 	
 	//Blocks
 	for (int i = -4; i < 0; i++) {
@@ -55,11 +68,17 @@ int main()
 
 		sf::Vector2f collisionDirection;
 
+		//Check collision between the player and the orc
+		if (checkCollision(static_cast<Entity*>(player1), static_cast<Entity*>(orc), &collisionDirection, 0.5f))
+			player1->onCollision(collisionDirection);
+
 		for (Block* block : vBlocks) 
-		//Check collision between the player and all platforms
+		//Check collision with all blocks
 		{
 			if (checkCollision(static_cast<Entity*>(player1), static_cast<Entity*>(block), &collisionDirection, 0.0f))
 				player1->onCollision(collisionDirection);
+			if (checkCollision(static_cast<Entity*>(orc), static_cast<Entity*>(block), &collisionDirection, 0.0f))
+				orc->onCollision(collisionDirection);
 		}
 
 		window->execute();
@@ -83,6 +102,7 @@ void execute(float deltaTime)
 
 	// ========== Objects ========== //
 	player1->execute(deltaTime);
+	orc->execute(deltaTime);
 	
 	for (Block* block : vBlocks) //execute all platforms
 	{
@@ -92,7 +112,12 @@ void execute(float deltaTime)
 
 void drawAll()
 {
+<<<<<<< HEAD
 	player1->draw();
+=======
+	player1->draw(window);
+	orc->draw(window);
+>>>>>>> Enemy
 
 	for (Block* block : vBlocks) //draw all platforms
 	{

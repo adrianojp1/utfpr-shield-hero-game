@@ -8,9 +8,9 @@
 
 //======================================================================================================================================//
 // === Classes headers for redefinition === //
-#include "Player.h"
+#include "Entity.h"
 
-Animator::Animator(std::string texture_filePath, unsigned int nFrames, float switchTime, Player* pPlayer)
+Animator::Animator(std::string texture_filePath, unsigned int nFrames, float switchTime, Entity* pEntity)
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
@@ -20,13 +20,30 @@ Animator::Animator(std::string texture_filePath, unsigned int nFrames, float swi
 	_currentTime = 0.0f;
 	_frameCounter = 0;
 
-	_pPlayer = pPlayer;
+	_pEntity = pEntity;
 
 	initializeTexture(texture_filePath);
 	initializeSprite();
 
 } // end constr (parameters)
+/*
+Animator::Animator(std::string texture_filePath, unsigned int nFrames, float switchTime, Enemy* pEnemy)
+{
+	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
+	_nFrames = nFrames;
+	_switchTime = switchTime;
+
+	_currentTime = 0.0f;
+	_frameCounter = 0;
+
+	_pEnemy = pEnemy;
+
+	initializeTexture(texture_filePath);
+	initializeSprite();
+
+} // end constr (parameters)
+*/
 Animator::Animator()
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 1 | ");
@@ -36,7 +53,7 @@ Animator::Animator()
 	_currentTime = 0.0f;
 	_frameCounter = 0;
 	_pSprite = NULL;
-	_pPlayer = NULL;
+	_pEntity = NULL;
 } // end constr (no parameters)
 
 Animator::~Animator()
@@ -51,7 +68,7 @@ void Animator::initializeTexture(std::string texture_filePath)
 	//Load texture 
 	if( !_texture.loadFromFile(texture_filePath))
 	{
-		getchar();
+		 getchar();
 	}
 	
 	//Set canvas borders
@@ -81,7 +98,7 @@ void Animator::updateSprite(float deltaTime, bool facingRight)
 
 	_pSprite->setTexture(_texture);
 	_pSprite->setTextureRect(_canvasRect);
-	_pSprite->setPosition(_pPlayer->getPosition());
+	_pSprite->setPosition(_pEntity->getPosition());
 } // end updateSprite
 
 void Animator::setFrameCounter(unsigned int frameCounter)

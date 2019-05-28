@@ -6,7 +6,7 @@
 
 //======================================================================================================================================//
 // === Classes Declaration === //
-class Player; //Future: Entity
+class Entity;
 
 //======================================================================================================================================//
 // === Animator Class === //
@@ -26,12 +26,12 @@ private:
 	float _currentTime;
 	float _switchTime;
 
-	Player* _pPlayer; //Future: Entity
+	Entity* _pEntity;
 
 public:
 	//================================================================//
 	// ========== Constructors ========== //
-	Animator(std::string texture_filePath, unsigned int nFrames, float switchTime, Player* pPlayer);
+	Animator(std::string texture_filePath, unsigned int nFrames, float switchTime, Entity* pEntity);
 	Animator();
 	// ========== Destructors ========== //
 	virtual ~Animator();
