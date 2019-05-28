@@ -27,6 +27,7 @@
     <ClCompile Include="Menu.cpp">
       <Filter>Abstract Entities</Filter>
     </ClCompile>
+    <ClCompile Include="Game.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Character.h">
@@ -55,6 +56,7 @@
     <ClInclude Include="Menu.h">
       <Filter>Abstract Entities</Filter>
     </ClInclude>
+    <ClInclude Include="Game.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Characters">
