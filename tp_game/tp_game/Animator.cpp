@@ -7,9 +7,11 @@
 #include "Animator.h"
 
 //======================================================================================================================================//
-// === Classes headers for redefinition === //
+// === Classes headers for definition === //
 #include "Entity.h"
 
+//======================================================================================================================================//
+// === Animator methods === //
 Animator::Animator(std::string texture_filePath, unsigned int nFrames, float switchTime, Entity* pEntity)
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");

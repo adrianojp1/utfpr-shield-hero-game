@@ -6,6 +6,7 @@
 #include "Player.h"
 #include "Enemy.h"
 #include "Block.h"
+#include "Main_Menu.h"
 
 //======================================================================================================================================//
 // === Game Class === //
@@ -14,7 +15,7 @@ class Game
 private:
 	Graphical_Manager* _window;
 
-	//Main_Menu* _main_menu;
+	Main_Menu* _main_menu;
 	//Pause_Menu* _pause_menu;
 	//NewGame_Menu* _newGame_menu;
 	//Saves_Menu* _saves_menu;
@@ -56,5 +57,6 @@ public:
 	//================================================================//
 	//Temporary methods
 	bool checkCollision(Entity* player, Entity* block, sf::Vector2f* collisionDirection, float push);
+	void executeStage(float deltaTime);
 
 };

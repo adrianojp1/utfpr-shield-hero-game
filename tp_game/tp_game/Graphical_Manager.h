@@ -48,6 +48,9 @@ public:
 	static const bool CONSOLE_LOG;
 	static const bool COLLISION_DBG;
 
+	// ========== Fonts (Ft) file paths (Fp) ========== //
+	static const std::string menu_Ft_Fp;
+
 	// ========== Sprites (Sp) file paths (Fp) ========== //
 	//Player
 	static const std::string player_idle_Sp_Fp;

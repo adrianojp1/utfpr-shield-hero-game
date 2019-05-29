@@ -11,7 +11,7 @@ class Timer
 	bool _zeroed;  // true when the time ends
 
 	// ========= Time control ========= //
-	float _totalTime; //Time for which it will be reseted
+	float _totalTime; //Time for which it will be reseted (in seconds)
 	float _currentTime;
 
 public:

@@ -6,6 +6,7 @@
 
 //======================================================================================================================================//
 // === Classes Declaration === //
+class Game;
 
 //======================================================================================================================================//
 // === Derived classes from this === //
@@ -14,6 +15,8 @@
 // Pause_Menu
 // Saves_Menu
 
+//======================================================================================================================================//
+// === Menu Class === //
 class Menu : public Entity
 {
 protected:
@@ -32,12 +35,12 @@ protected:
 	public:
 		// ========== Constructors ========== //
 		Option(sf::Font* font, const sf::Vector2f position, const std::string label, const int actSize, const int deactSize, sf::Color actColor, sf::Color deactColor);
-		Option(const std::string label = "");
+		Option();
 		// ========== Destructors ========== //
 		virtual ~Option();
 
 		// ========== Initializers ========== //
-		virtual void initializeText(sf::Font* font, const std::string label, const sf::Vector2f position);
+		virtual void initializeText(sf::Font* font, const std::string label);
 
 		// ========== Loop methods ========== //
 		virtual void execute(const float deltaTime);
@@ -51,38 +54,62 @@ protected:
 		//_text
 		virtual void setText(sf::Text* text);
 		virtual sf::Text* getText();
-		//_position
-		virtual void setPosition(const sf::Vector2f position);
-		virtual sf::Vector2f getPosition() const;
 	};
+
+	static Game* _pGame;
 
 	//Vector for menu options 
 	std::vector<Option*> _vOptions;
 
-	Timer _betweenKeys;
+	Timer _betweenKeys; //Timer for delaying the key pressing
 	int _onOp;
 
 	//Animator* _animator; //Wallpaper?
 public:
 	//================================================================//
 	// ========== Constructors ========== //
-	Menu(const sf::Vector2f initPosit, const float keysCD);
+	Menu(const sf::Vector2f initPosition);
 	Menu();
 	// ========== Destructors ========== //
 	virtual ~Menu();
 
 	//================================================================//
 	// ========== Initializers ========== //
+	virtual void initializeAllOps() = 0;
+	virtual void initialize_n_addOp(Option*& pOp, const sf::Vector2f position, const std::string label, const int actSize, const int deactSize, sf::Color actColor, sf::Color deactColor, sf::Font* font = menu_font);
+	virtual void initializeOp(Option*& pOp, const sf::Vector2f position, const std::string label, const int actSize, const int deactSize, sf::Color actColor, sf::Color deactColor, sf::Font* font = menu_font);
 	
 	//================================================================//
 	// ========== Loop methods ========== //
-	virtual void execute(const float deltaTime) = 0;
+	virtual void execute(const float deltaTime);
 	virtual void draw() const;
 
+	//================================================================//
+	// ========== Selection methods ========== //
+	virtual void activate_onOp() = 0;
+	virtual void execute_onOp() = 0;
+	virtual bool selectionKey_isPressed();
+
 	// ========== Activation methods ========== //
+	virtual void close();
+	virtual void open();
+
 	virtual void activate();
 
 	// ========== Option methods ========== //
+	//virtual void execute_allOps();
+	virtual void desactivate_allOps();
 	virtual void add_option(Option* pOp);
 	virtual void operator<<(Option* pOp);
+
+	// ========== pGame methods ========== //
+	static void setpGame(Game* pGame);
+	static Game* getpGame();
+
+	//================================================================//
+	//======================== Static Consts =========================//
+private:
+	// ========== Menu ========== //
+	static const float keysCD;
+	static sf::Font* menu_font;
 };

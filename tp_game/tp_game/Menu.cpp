@@ -7,14 +7,30 @@
 #include "Menu.h"
 
 //======================================================================================================================================//
+// === Classes headers for definition === //
+#include "Game.h"
+
+//======================================================================================================================================//
+// === Static initializations === //
+Game* Menu::_pGame = NULL;
+const float Menu::keysCD = 0.010f;
+sf::Font* Menu::menu_font = NULL;
+
+//======================================================================================================================================//
 // === Menu methods === //
 
-Menu::Menu(const sf::Vector2f initPosit, const float keysCD) :
+Menu::Menu(const sf::Vector2f initPosit) :
 	Entity(initPosit), _betweenKeys(keysCD)
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
 	_onOp = 0;
+	if (!menu_font)
+	{
+		menu_font = new sf::Font;
+		if(!menu_font->loadFromFile(gMng::menu_Ft_Fp))
+			getchar();
+	}
 }
 
 Menu::Menu() : Entity(), _betweenKeys()
@@ -42,6 +58,33 @@ Menu::~Menu()
 	_vOptions.clear();
 }
 
+void Menu::initialize_n_addOp(Option*& pOp, const sf::Vector2f position, const std::string label, const int actSize, const int deactSize, sf::Color actColor, sf::Color deactColor, sf::Font* font)
+{
+	initializeOp(pOp, position, label, actSize, deactSize, actColor, deactColor);
+	this->operator<<(pOp);
+}
+
+void Menu::initializeOp(Option*& pOp, const sf::Vector2f position, const std::string label, const int actSize, const int deactSize, sf::Color actColor, sf::Color deactColor, sf::Font* font)
+{
+	pOp = new Option(font, position, label, actSize, deactSize, actColor, deactColor);
+}
+
+void Menu::execute(const float deltaTime)
+{
+	if (this->isActive())
+	{
+		desactivate_allOps();
+
+		activate_onOp();
+
+		if (selectionKey_isPressed())
+		{
+			execute_onOp();
+			this->close();
+		}
+	}
+}
+
 void Menu::draw() const
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
@@ -58,12 +101,43 @@ void Menu::draw() const
 	}
 }
 
+bool Menu::selectionKey_isPressed()
+{
+	return(sf::Keyboard::isKeyPressed(sf::Keyboard::Return));
+}
+
+void Menu::close()
+{
+	this->desactivate();
+}
+
+void Menu::open()
+{
+	this->activate();
+}
+
 void Menu::activate()
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
 	_active = true;
 	_onOp = 0;
+}
+/*
+void Menu::execute_allOps()
+{
+	for (Option* option : _vOptions)
+	{
+		option->execute();
+	}
+}*/
+
+void Menu::desactivate_allOps()
+{
+	for (Option* option : _vOptions)
+	{
+		option->desactivate();
+	}
 }
 
 void Menu::add_option(Option* pOp)
@@ -82,11 +156,21 @@ void Menu::operator<<(Option* pOp)
 		add_option(pOp);
 }
 
+void Menu::setpGame(Game* pGame)
+{
+	_pGame = pGame;
+}
+
+Game* Menu::getpGame()
+{
+	return _pGame;
+}
+
 //======================================================================================================================================//
 // === Option methods === //
 
 Menu::Option::Option(sf::Font* font, const sf::Vector2f position, const std::string label, const int actSize, const int deactSize, sf::Color actColor, sf::Color deactColor) :
-	Entity()
+	Entity(position)
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
@@ -96,10 +180,11 @@ Menu::Option::Option(sf::Font* font, const sf::Vector2f position, const std::str
 	_textColor_active = actColor;
 	_textColor_deactive = deactColor;
 
+	initializeText(font, label); //position 
 	this->desactivate();
 }
 
-Menu::Option::Option(const std::string label) : Entity(), _text()
+Menu::Option::Option() : Entity(), _text()
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 1 | ");
 
@@ -118,12 +203,12 @@ Menu::Option::~Option()
 
 }
 
-void Menu::Option::initializeText(sf::Font* font, const std::string label, const sf::Vector2f position)
+void Menu::Option::initializeText(sf::Font* font, const std::string label)
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
 	_text = new sf::Text(label, *font);
-	_text->setPosition(position);
+	_text->setPosition(this->getPosition());
 }
 
 void Menu::Option::execute(const float deltaTime)
@@ -169,18 +254,4 @@ sf::Text* Menu::Option::getText()
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
 	return _text;
-}
-
-void Menu::Option::setPosition(const sf::Vector2f position)
-{
-	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
-
-	_text->setPosition(position);
-}
-
-sf::Vector2f Menu::Option::getPosition() const
-{
-	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
-
-	return _text->getPosition();
 }

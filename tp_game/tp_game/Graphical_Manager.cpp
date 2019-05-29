@@ -13,10 +13,12 @@ const unsigned int Graphical_Manager::ratioMultiplier = 250;
 const std::string Graphical_Manager::windowName = "Shield Hero";
 const sf::Vector2u Graphical_Manager::windowSize = { windowRatio.x * ratioMultiplier, windowRatio.y * ratioMultiplier };
 
-const float Graphical_Manager::viewZoom = 5.0f;
+const float Graphical_Manager::viewZoom = 4.0f;
 
 const bool Graphical_Manager::CONSOLE_LOG = false;
 const bool Graphical_Manager::COLLISION_DBG = false;
+
+const std::string Graphical_Manager::menu_Ft_Fp = "Fonts/romulus.ttf";
 
 const std::string Graphical_Manager::player_idle_Sp_Fp = "Media/shield-hero/shield_hero-idle.png";
 const std::string Graphical_Manager::player_walk_Sp_Fp = "Media/shield-hero/shield_hero-walk.png";
