@@ -63,6 +63,7 @@ protected:
 
 	Timer _betweenKeys; //Timer for delaying the key pressing
 	int _onOp;
+	int _nOps;
 
 	//Animator* _animator; //Wallpaper?
 public:
@@ -88,7 +89,6 @@ public:
 	// ========== Selection methods ========== //
 	virtual void activate_onOp() = 0;
 	virtual void execute_onOp() = 0;
-	virtual bool selectionKey_isPressed();
 
 	// ========== Activation methods ========== //
 	virtual void close();
@@ -97,10 +97,18 @@ public:
 	virtual void activate();
 
 	// ========== Option methods ========== //
-	//virtual void execute_allOps();
-	virtual void desactivate_allOps();
 	virtual void add_option(Option* pOp);
 	virtual void operator<<(Option* pOp);
+
+	virtual void deactivate_allOps();
+
+	virtual void upOp();
+	virtual void downOp();
+
+	virtual void check_allKeys();
+	virtual bool selectionKey_isPressed();
+	virtual bool upKey_isPressed();
+	virtual bool downKey_isPressed();
 
 	// ========== pGame methods ========== //
 	static void setpGame(Game* pGame);

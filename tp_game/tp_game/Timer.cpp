@@ -6,6 +6,12 @@
 // === This Class Header === //
 #include "Timer.h"
 
+//======================================================================================================================================//
+// === Static initializations === //
+float* Timer::_pDeltaTime = NULL;
+
+//======================================================================================================================================//
+// === Timer Methods === //
 Timer::Timer(float totalTime)
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
@@ -29,13 +35,13 @@ Timer::~Timer()
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 }
 
-void Timer::decreaseTime(float deltaTime)
+void Timer::decreaseTime()
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
 	if (_ticking)
 	{
-		_currentTime -= deltaTime;
+		_currentTime -= *_pDeltaTime;
 		{
 			if (_currentTime < 0)
 			{
@@ -102,3 +108,13 @@ float Timer::getCurrentTime() const
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 	return _currentTime;
 } // end getCurrentTime
+
+void Timer::setpDeltaTime(float* pDT)
+{
+	_pDeltaTime = pDT;
+}
+
+float* Timer::getDeltaTime()
+{
+	return _pDeltaTime;
+}

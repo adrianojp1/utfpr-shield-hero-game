@@ -14,8 +14,8 @@ Player::Player(const sf::Vector2f initPosition) :
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
-	_jumpHeight = 30.0f;
-	_speed = 60.f;
+	_jumpHeight = 300.0f;
+	_speed = 200.f;
 
 	_facingRight = true;
 	_defending = false;
@@ -103,12 +103,12 @@ void Player::execute(const float deltaTime)
 
 	_velocity.x = 0.0f;
 
-	_defCounterTimer.decreaseTime(deltaTime);
+	_defCounterTimer.decreaseTime();
 
 	updateAction(deltaTime);
-	updateAnimation(deltaTime);
-
 	_position += _velocity * deltaTime;
+
+	updateAnimation(deltaTime);
 
 	_current_collider->setPosition(_position);
 } // end execute
@@ -152,7 +152,7 @@ void Player::updateAction(const float deltaTime)
 		}
 	}
 
-	_velocity.y += 300.0f * deltaTime; //constant g force
+	_velocity.y += 900.0f * deltaTime; //constant g force
 
 } // end updatePosition
 

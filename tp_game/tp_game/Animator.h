@@ -14,9 +14,9 @@ class Animator
 {
 private:
 	//Visual members
-	sf::Sprite* _pSprite;
+	sf::RectangleShape* _pSprite;
 	sf::IntRect _canvasRect;
-	sf::Texture _texture;
+	sf::Texture* _pTexture;
 
 	//Frame members
 	unsigned int _frameCounter;
@@ -38,8 +38,7 @@ public:
 
 	//================================================================//
 	// ========== Initializers ========== //
-	void initializeTexture(std::string texture_filePath);
-	void initializeSprite();
+	void initializeSprite_n_Texture(std::string texture_filePath);
 
 	//================================================================//
 	// ========== Loop methods ========== //
@@ -60,8 +59,8 @@ public:
 	void setSwitchTime(float switchTime);
 	float getSwitchTime() const;
 	//_pSprite
-	void setpSprite(sf::Sprite* pSprite);
-	sf::Sprite* getpSprite() const;	
+	void setpSprite(sf::RectangleShape* pSprite);
+	sf::RectangleShape* getpSprite() const;	
 	//spriteSize
 	sf::Vector2f getSpriteSize() const;
 private:

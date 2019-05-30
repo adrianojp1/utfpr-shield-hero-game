@@ -16,7 +16,7 @@ public:
 
 	//================================================================//
 	// ========== Initializers ========== //
-	void initializeView(sf::Vector2f center, sf::Vector2f windowSize, float zoom);
+	void initializeView(sf::Vector2f center, sf::Vector2f windowSize);
 
 	//================================================================//
 	// ========== Loop methods ========== //
@@ -30,6 +30,8 @@ public:
 	//================================================================//
 	// ========== Log method ========== //
 	static void printConsole_log(std::string log);
+	static void loadTexture(const std::string file_path, sf::Texture*& pTexture);
+	static void load_n_setTexture(sf::RectangleShape* pShape, const std::string file_path, sf::Texture*& pTexture);
 
 	//================================================================//
 	//======================== Static Consts =========================//
@@ -40,13 +42,13 @@ private:
 	static const std::string windowName;
 	static const sf::Vector2u windowSize;
 
-	// ========== View ========== //
-	static const float viewZoom;
-
 public:
 	// ========== Debug ========== //
 	static const bool CONSOLE_LOG;
 	static const bool COLLISION_DBG;
+
+	// ========== Textures ========== //
+	static const float textures_scale;
 
 	// ========== Fonts (Ft) file paths (Fp) ========== //
 	static const std::string menu_Ft_Fp;

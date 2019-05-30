@@ -6,11 +6,15 @@
 #include "Main_Menu.h"
 
 //======================================================================================================================================//
-// === Static initializations === //
-const sf::Vector2f Main_Menu::menu_position = { -64.0f, -48.0f };
+// === Classes headers for definition === //
+#include "Game.h"
 
-const int Main_Menu::ops_act_charSize(36);
-const int Main_Menu::ops_deact_charSize(24);
+//======================================================================================================================================//
+// === Static initializations === //
+const sf::Vector2f Main_Menu::menu_position = { -200.0f, -300.0f };
+
+const int Main_Menu::ops_act_charSize(120);
+const int Main_Menu::ops_deact_charSize(90);
 
 //const sf::Color Main_Menu::ops_act_fillColor(sf::Color::Red);
 //const sf::Color Main_Menu::ops_deact_fillColor(sf::Color::White);
@@ -109,5 +113,5 @@ void Main_Menu::show_ranking()
 
 void Main_Menu::close_game()
 {
-	//_pGame->close();
+	_pGame->close();
 }

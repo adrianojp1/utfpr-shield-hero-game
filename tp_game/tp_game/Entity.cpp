@@ -55,16 +55,18 @@ Entity::~Entity()
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 }
 
-void Entity::initialize_Collider(sf::RectangleShape*& pCollider, const sf::Vector2f size)
+void Entity::initialize_Collider(sf::RectangleShape*& pCollider, sf::Vector2f spriteSize)
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+	
+	spriteSize = spriteSize * gMng::textures_scale;
 
-	pCollider = new sf::RectangleShape(size);
-	pCollider->setOrigin(size / 2.0f);
+	pCollider = new sf::RectangleShape(spriteSize);
+	pCollider->setOrigin(spriteSize / 2.0f);
 
 	if (gMng::COLLISION_DBG)
 	{
-		pCollider->setOutlineThickness(0.2f);
+		pCollider->setOutlineThickness(1.0f);
 		pCollider->setOutlineColor(sf::Color::White);
 		pCollider->setFillColor(sf::Color::Transparent);
 	}

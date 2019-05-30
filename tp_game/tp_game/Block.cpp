@@ -8,7 +8,7 @@
 
 //======================================================================================================================================//
 // === Static initializations === //
-const sf::Vector2f Block::size = { 16.0f, 16.0f };
+const sf::Vector2f Block::size = sf::Vector2f{ 16.0f, 16.0f } * gMng::textures_scale;
 
 //======================================================================================================================================//
 // === Block methods === //
@@ -18,11 +18,9 @@ Block::Block(const sf::Vector2f initPosition) :
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
-	initialize_Collider(_collider, size);
+	initialize_Collider(_collider, size / gMng::textures_scale);
 	
 	//For tests porpouse
-	_collider->setOutlineThickness(-0.5f);
-	_collider->setOutlineColor(sf::Color::Color(150, 150, 150));
 	_collider->setFillColor(sf::Color::Color(40, 40, 40));
 	
 	_current_collider = _collider;

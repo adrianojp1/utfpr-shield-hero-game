@@ -39,7 +39,7 @@ public:
 
 	//================================================================//
 	// ========== Initializers ========== //
-	virtual void initialize_Collider(sf::RectangleShape*& pCollider, const sf::Vector2f size); //Initialize a specific collider
+	virtual void initialize_Collider(sf::RectangleShape*& pCollider, sf::Vector2f spriteSize); //Initialize a specific collider
 
 	//================================================================//
 	// ========== Loop methods ========== //

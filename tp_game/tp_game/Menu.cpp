@@ -13,7 +13,7 @@
 //======================================================================================================================================//
 // === Static initializations === //
 Game* Menu::_pGame = NULL;
-const float Menu::keysCD = 0.010f;
+const float Menu::keysCD = 0.20f;
 sf::Font* Menu::menu_font = NULL;
 
 //======================================================================================================================================//
@@ -25,6 +25,8 @@ Menu::Menu(const sf::Vector2f initPosit) :
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
 	_onOp = 0;
+	_nOps = 0;
+	_betweenKeys.trigger();
 	if (!menu_font)
 	{
 		menu_font = new sf::Font;
@@ -38,6 +40,7 @@ Menu::Menu() : Entity(), _betweenKeys()
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 1 | ");
 
 	_onOp = 0;
+	_nOps = 0;
 }
 
 Menu::~Menu()
@@ -73,15 +76,11 @@ void Menu::execute(const float deltaTime)
 {
 	if (this->isActive())
 	{
-		desactivate_allOps();
+		deactivate_allOps();
 
 		activate_onOp();
 
-		if (selectionKey_isPressed())
-		{
-			execute_onOp();
-			this->close();
-		}
+		check_allKeys();
 	}
 }
 
@@ -101,9 +100,46 @@ void Menu::draw() const
 	}
 }
 
+void Menu::check_allKeys()
+{
+	if (_betweenKeys.isZeroed())
+	{
+		if (selectionKey_isPressed())
+		{
+			_betweenKeys.reset_and_trigger();
+			execute_onOp();
+			this->close();
+		}
+		if (upKey_isPressed())
+		{
+			_betweenKeys.reset_and_trigger();
+			upOp();
+		}
+		if (downKey_isPressed())
+		{
+			_betweenKeys.reset_and_trigger();
+			downOp();
+		}
+	}
+	else
+	{
+		_betweenKeys.decreaseTime();
+	}
+}
+
 bool Menu::selectionKey_isPressed()
 {
 	return(sf::Keyboard::isKeyPressed(sf::Keyboard::Return));
+}
+
+bool Menu::upKey_isPressed()
+{
+	return (sf::Keyboard::isKeyPressed(sf::Keyboard::W));
+}
+
+bool Menu::downKey_isPressed()
+{
+	return (sf::Keyboard::isKeyPressed(sf::Keyboard::S));
 }
 
 void Menu::close()
@@ -132,7 +168,7 @@ void Menu::execute_allOps()
 	}
 }*/
 
-void Menu::desactivate_allOps()
+void Menu::deactivate_allOps()
 {
 	for (Option* option : _vOptions)
 	{
@@ -145,7 +181,10 @@ void Menu::add_option(Option* pOp)
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
 	if (pOp)
+	{
 		_vOptions.push_back(pOp);
+		_nOps++;
+	}
 }
 
 void Menu::operator<<(Option* pOp)
@@ -154,6 +193,18 @@ void Menu::operator<<(Option* pOp)
 
 	if (pOp)
 		add_option(pOp);
+}
+
+void Menu::upOp()
+{
+	if(_onOp != 0)
+		_onOp--;
+}
+
+void Menu::downOp()
+{
+	if (_onOp != _nOps - 1)
+		_onOp++;
 }
 
 void Menu::setpGame(Game* pGame)

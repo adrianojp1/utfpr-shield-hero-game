@@ -7,6 +7,7 @@
 // === Timer Class === //
 class Timer
 {
+private:
 	bool _ticking; // = not paused
 	bool _zeroed;  // true when the time ends
 
@@ -14,6 +15,7 @@ class Timer
 	float _totalTime; //Time for which it will be reseted (in seconds)
 	float _currentTime;
 
+	static float* _pDeltaTime;
 public:
 	//================================================================//
 	// ========== Constructors ========== //
@@ -24,7 +26,7 @@ public:
 
 	//================================================================//
 	// ========== Loop methods ========== //
-	void decreaseTime(float deltaTime);
+	void decreaseTime();
 
 	//================================================================//
 	// ========== Time control methods ========== //
@@ -42,4 +44,7 @@ public:
 	float getTotalTime() const;
 	//_currentTime
 	float getCurrentTime() const;
+	//_pDeltaTime
+	static void setpDeltaTime(float* pDT);
+	static float* getDeltaTime();
 };

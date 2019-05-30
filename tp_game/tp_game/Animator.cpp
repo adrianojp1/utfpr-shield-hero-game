@@ -24,28 +24,10 @@ Animator::Animator(std::string texture_filePath, unsigned int nFrames, float swi
 
 	_pEntity = pEntity;
 
-	initializeTexture(texture_filePath);
-	initializeSprite();
+	initializeSprite_n_Texture(texture_filePath);
 
 } // end constr (parameters)
-/*
-Animator::Animator(std::string texture_filePath, unsigned int nFrames, float switchTime, Enemy* pEnemy)
-{
-	MyWindow::console_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
-	_nFrames = nFrames;
-	_switchTime = switchTime;
-
-	_currentTime = 0.0f;
-	_frameCounter = 0;
-
-	_pEnemy = pEnemy;
-
-	initializeTexture(texture_filePath);
-	initializeSprite();
-
-} // end constr (parameters)
-*/
 Animator::Animator()
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 1 | ");
@@ -56,6 +38,7 @@ Animator::Animator()
 	_frameCounter = 0;
 	_pSprite = NULL;
 	_pEntity = NULL;
+	_pTexture = NULL;
 } // end constr (no parameters)
 
 Animator::~Animator()
@@ -63,31 +46,25 @@ Animator::~Animator()
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 } // end destr
 
-void Animator::initializeTexture(std::string texture_filePath)
+void Animator::initializeSprite_n_Texture(std::string texture_filePath)
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
-	//Load texture 
-	if( !_texture.loadFromFile(texture_filePath))
-	{
-		 getchar();
-	}
+	_pSprite = new sf::RectangleShape;
+	_pTexture = NULL;
+	//_pSprite->setSize(sf::Vector2f{ _pSprite->getTexture()->getSize().x * 4.0f, _pSprite->getTexture()->getSize().y * 4.0f });
+	gMng::load_n_setTexture(_pSprite, texture_filePath, _pTexture);
 	
+	sf::Vector2u textureSize = _pSprite->getTexture()->getSize();
 	//Set canvas borders
-	_canvasRect.width = _texture.getSize().x / _nFrames;
-	_canvasRect.height = _texture.getSize().y;
+	_canvasRect.width = (int)(textureSize.x / _nFrames);
+	_canvasRect.height = (int)(textureSize.y);
 	_canvasRect.top = 0;
 
+	_pSprite->setSize(sf::Vector2f((float)_canvasRect.width, (float)_canvasRect.height));
+	_pSprite->setOrigin(_pSprite->getSize() / 2.0f);
+
 } // end initializeTexture
-
-void Animator::initializeSprite()
-{
-	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
-
-	_pSprite = new sf::Sprite;
-	_pSprite->setTexture(_texture);
-	_pSprite->setOrigin(sf::Vector2f((float)_canvasRect.width, (float)_canvasRect.height) / 2.0f);
-} // end initializeSprite
 
 void Animator::updateSprite(float deltaTime, bool facingRight)
 {
@@ -98,7 +75,7 @@ void Animator::updateSprite(float deltaTime, bool facingRight)
 	updateFrame();
 	updateSpriteDirection(facingRight);
 
-	_pSprite->setTexture(_texture);
+	_pSprite->setTexture(_pTexture);
 	_pSprite->setTextureRect(_canvasRect);
 	_pSprite->setPosition(_pEntity->getPosition());
 } // end updateSprite
@@ -151,13 +128,13 @@ float Animator::getSwitchTime() const
 	return _switchTime;
 }
 
-void Animator::setpSprite(sf::Sprite* pSprite)
+void Animator::setpSprite(sf::RectangleShape* pSprite)
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 	_pSprite = pSprite;
 }
 
-sf::Sprite* Animator::getpSprite() const
+sf::RectangleShape* Animator::getpSprite() const
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 	return _pSprite;

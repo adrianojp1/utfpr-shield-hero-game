@@ -38,9 +38,11 @@ Game::~Game()
 void Game::initialize()
 {
 	//Background
-	_bgtexture.loadFromFile("Media/Background.png");
 	_background = new sf::RectangleShape;
-	_background->setTexture(&_bgtexture);
+	gMng::load_n_setTexture(_background, "Media/Background.png", _bgtexture);
+	/*_bgtexture.loadFromFile("Media/Background.png");
+	_background = new sf::RectangleShape;
+	_background->setTexture(&_bgtexture);*/
 	_background->setSize(sf::Vector2f((float)_background->getTexture()->getSize().x, (float)_background->getTexture()->getSize().y));
 	_background->setOrigin((float)_background->getTexture()->getSize().x / 2, (float)_background->getTexture()->getSize().y / 2);
 
@@ -53,19 +55,22 @@ void Game::initialize()
 	Main_Menu::setpGame(this);
 
 	//Player: initial position (0, 0)
-	_player1 = new Player(sf::Vector2f{ -32.0f, 0.0f });
+	_player1 = new Player(sf::Vector2f{ -128.0f, 0.0f });
 
 	//Orc: initial position (0, 0)
-	_orc = new Enemy(sf::Vector2f{ 32.0f, 0.0f });
+	_orc = new Enemy(sf::Vector2f{ 128.0f, 0.0f });
 
 	//Blocks
 	for (int i = -4; i < 0; i++)
 	{
-		_vBlocks.push_back(new Block(sf::Vector2f(float(Block::size.x * i), 20.0f)));
-		_vBlocks.push_back(new Block(sf::Vector2f(float(Block::size.x * i + Block::size.x * 6), 20.0f)));
+		_vBlocks.push_back(new Block(sf::Vector2f(float(Block::size.x * i), 200.0f)));
+		_vBlocks.push_back(new Block(sf::Vector2f(float(Block::size.x * i + Block::size.x * 6), 200.0f)));
 	}
 
 	_deltaTime = 0.0f;
+	Timer::setpDeltaTime(&_deltaTime);
+
+	_main_menu->open();
 }// end initialize
 
 void Game::main_loop()
@@ -76,7 +81,6 @@ void Game::main_loop()
 		if (_deltaTime > 1.0f / 20.f)
 			_deltaTime = 1.0f / 20.f;
 
-		_main_menu->open();
 		_main_menu->execute(_deltaTime);
 
 		executeStage(_deltaTime);
@@ -89,7 +93,12 @@ void Game::main_loop()
 
 		_window->display(); //Show current frame
 	} //end main loop
-}// end main_loop
+}
+void Game::close()
+{
+	_window->close();
+}
+// end main_loop
 
 void Game::execute(float deltaTime)
 {

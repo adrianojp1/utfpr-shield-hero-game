@@ -32,7 +32,7 @@ private:
 
 	//Temporary
 	sf::RectangleShape* _background;
-	sf::Texture _bgtexture;
+	sf::Texture* _bgtexture;
 	std::vector<Block*> _vBlocks;
 	Enemy* _orc;
 public:
@@ -48,6 +48,7 @@ public:
 
 	//================================================================//
 	void main_loop();
+	void close();
 
 	//================================================================//
 	// ========== Loop methods ========== //

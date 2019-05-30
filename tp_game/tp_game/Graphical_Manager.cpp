@@ -13,10 +13,10 @@ const unsigned int Graphical_Manager::ratioMultiplier = 250;
 const std::string Graphical_Manager::windowName = "Shield Hero";
 const sf::Vector2u Graphical_Manager::windowSize = { windowRatio.x * ratioMultiplier, windowRatio.y * ratioMultiplier };
 
-const float Graphical_Manager::viewZoom = 4.0f;
+const float Graphical_Manager::textures_scale = 4.0f;
 
 const bool Graphical_Manager::CONSOLE_LOG = false;
-const bool Graphical_Manager::COLLISION_DBG = false;
+const bool Graphical_Manager::COLLISION_DBG = true;
 
 const std::string Graphical_Manager::menu_Ft_Fp = "Fonts/romulus.ttf";
 
@@ -38,7 +38,7 @@ Graphical_Manager::Graphical_Manager() :
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
-	initializeView({ 0.0f, 0.0f }, (sf::Vector2f) this->getSize(), gMng::viewZoom);
+	initializeView({ 0.0f, 0.0f }, (sf::Vector2f) this->getSize());
 } // end constr
 
 Graphical_Manager::~Graphical_Manager()
@@ -49,13 +49,13 @@ Graphical_Manager::~Graphical_Manager()
 		delete pView;
 } // end destr
 
-void Graphical_Manager::initializeView(sf::Vector2f center, sf::Vector2f windowSize, float zoom)
+void Graphical_Manager::initializeView(sf::Vector2f center, sf::Vector2f windowSize)
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
 	pView = new sf::View;
 	pView->setCenter(center);
-	pView->setSize( windowSize / zoom);
+	pView->setSize(windowSize);
 	this->setView(*pView);
 } // end initializeView
 
@@ -70,7 +70,7 @@ void Graphical_Manager::execute()
 	while (this->pollEvent(evnt))
 	{
 		//Close window
-		if (evnt.type == sf::Event::Closed || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+		if (evnt.type == sf::Event::Closed)
 			this->close();
 	}
 } // end execute
@@ -93,4 +93,20 @@ void Graphical_Manager::printConsole_log(std::string log)
 {
 	if(CONSOLE_LOG)
 		std::cerr << log << std::endl;
+}
+
+void Graphical_Manager::loadTexture(const std::string file_path, sf::Texture*& pTexture)
+{
+	if (!pTexture->loadFromFile(file_path))
+		getchar();
+}
+
+void Graphical_Manager::load_n_setTexture(sf::RectangleShape* pShape, const std::string file_path, sf::Texture*& pTexture)
+{
+	if (!pTexture)
+		pTexture = new sf::Texture;
+
+	loadTexture(file_path, pTexture);
+	pShape->setTexture(pTexture);
+	pShape->setScale(textures_scale, textures_scale);
 }
