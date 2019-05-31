@@ -15,7 +15,7 @@ const sf::Vector2u Graphical_Manager::windowSize = { windowRatio.x * ratioMultip
 
 const float Graphical_Manager::textures_scale = 4.0f;
 
-const bool Graphical_Manager::CONSOLE_LOG = true;
+const bool Graphical_Manager::CONSOLE_LOG = false;
 const bool Graphical_Manager::COLLISION_DBG = true;
 
 const std::string Graphical_Manager::menu_Ft_Fp = "Fonts/romulus.ttf";

@@ -82,9 +82,10 @@ void Enemy::execute(const float deltaTime)
 	//_velocity.x = -25.0f;
 
 	updateAction(deltaTime);
-	updateAnimation(deltaTime);
 
 	_position += _velocity * deltaTime;
+
+	updateAnimation(deltaTime);
 
 	_current_collider->setPosition(_position);
 } // end execute
@@ -93,7 +94,7 @@ void Enemy::updateAction(const float deltaTime)
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
-	_velocity.y += 300.0f * deltaTime; //constant g force
+	_velocity.y += 900.0f * deltaTime; //constant g force
 } // end updatePosition
 
 void Enemy::updateAnimation(const float deltaTime)

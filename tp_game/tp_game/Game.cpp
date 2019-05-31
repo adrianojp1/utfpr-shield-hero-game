@@ -89,10 +89,18 @@ void Game::main_loop()
 		if (_deltaTime > 1.0f / 20.f)
 			_deltaTime = 1.0f / 20.f;
 
-		_main_menu->execute(_deltaTime);
-
-		executeStage(_deltaTime);
-
+		if (_main_menu->isActive())
+		{
+			_main_menu->execute(_deltaTime);
+		}
+		//_pause_menu;
+		//_newGame_menu;
+		//_saves_menu;
+		if(!_main_menu->isActive())
+		{
+			executeStage(_deltaTime);
+		}
+		
 		_window->execute();
 
 		_window->clear(); //Clear window buffer
@@ -129,14 +137,19 @@ void Game::draw() const
 
 	_window->draw(*_background);
 
-	_main_menu->draw();
-
-	_player1->draw();
-	_orc->draw();
-
-	for (Block* block : _vBlocks) //draw all platforms
+	if (_main_menu->isActive())
 	{
-		block->draw();
+		_main_menu->draw();
+	}
+	else
+	{
+		_player1->draw();
+		_orc->draw();
+
+		for (Block* block : _vBlocks) //draw all platforms
+		{
+			block->draw();
+		}
 	}
 }// end draw
 
