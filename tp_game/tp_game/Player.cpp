@@ -16,17 +16,18 @@ Player::Player(const sf::Vector2f initPosition) :
 
 	_jumpHeight = 300.0f;
 	_speed = 200.f;
+	_points = 0;
 
-	_facingRight = true;
+	_hp = 5;
+
 	_defCounterUp = false;
-	_canJump = true;
-	
-	_state = IDLE;
 
 	initialize_animator();
 	initialize_AllColliders();
 
 	_defCounterTimer.setTotalTime(0.3f);
+	_invulnerability.setTotalTime(2.0f);
+	_invulnerability.trigger();
 
 } // end constr (parameters)
 
@@ -40,6 +41,7 @@ Player::Player() :
 	_canJump = true;
 	_speed = 0.0f;
 	_jumpHeight = 0.0f;
+	_points = 0;
 	_position = {0.0f, 0.0f};
 
 	_defCounterTimer.setTotalTime(0.3f); //Counter defense time
@@ -63,90 +65,69 @@ void Player::initialize_animator()
 
 	*_animator << new Animation(gMng::player_idle_Sp_Fp, 1, 0.0f);
 	*_animator << new Animation(gMng::player_walk_Sp_Fp, 4, 0.250f);
-	*_animator << new Animation(gMng::player_die_Sp_Fp, 3, 0.250f);
+	*_animator << new Animation(gMng::player_die_Sp_Fp, 3, 0.350f);
 	*_animator << new Animation(gMng::player_def1_Sp_Fp, 1, 0.0f);
 	*_animator << new Animation(gMng::player_def2_Sp_Fp, 1, 0.0f);
 } // end initializeAnimators
-
-void Player::initialize_AllColliders()
-{
-	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
-
-	initialize_Collider(_idle_collider, (*_animator)[IDLE]->getCanvasSize());
-	initialize_Collider(_walk_collider, (*_animator)[WALK]->getCanvasSize());
-	initialize_Collider(_combat_collider,  (*_animator)[COMBAT]->getCanvasSize());
-}
-
-void Player::execute(const float deltaTime)
-{
-	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
-
-	_velocity.x = 0.0f;
-
-	_defCounterTimer.decreaseTime();
-
-	updateAction(deltaTime);
-	updateState();
-	_animator->updateAnimation(deltaTime, _facingRight);
-	_current_collider->setPosition(_position);
-} // end execute
 
 void Player::updateAction(const float deltaTime)
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
-	if (defendKeyPressed())
+	std::cout << "Player hp: " << _hp << std::endl;
+
+	_defCounterTimer.decreaseTime();
+	_invulnerability.decreaseTime();
+
+	if (this->isActive() && !this->isDying())
 	{
-		_state = COMBAT;
-		if (_defCounterTimer.isTicking())
-			_defCounterUp = true;
-		else if (_defCounterTimer.isZeroed())
-			_defCounterUp = false;
+		if (defendKeyPressed())
+		{
+			_state = COMBAT;
+			if (_defCounterTimer.isTicking())
+				_defCounterUp = true;
+			else if (_defCounterTimer.isZeroed())
+				_defCounterUp = false;
+			else
+				_defCounterTimer.trigger();
+		}
+		// Player is not defending
 		else
-			_defCounterTimer.trigger();
-	}
-	// Player is not defending
-	else
-	{
-		_state = IDLE;
-		_defCounterTimer.resetTimer();
-
-		if (leftIsKeyPressed() || rightIsKeyPressed())
 		{
-			_state = WALK;
+			_state = IDLE;
+			_defCounterTimer.resetTimer();
 
-			//Move the player
-			if (leftIsKeyPressed()) //Left
-				_velocity.x -= _speed;
+			if (leftIsKeyPressed() || rightIsKeyPressed())
+			{
+				_state = WALK;
 
-			if (rightIsKeyPressed()) //Right
-				_velocity.x += _speed;
+				//Move the player
+				if (leftIsKeyPressed()) //Left
+					_velocity.x -= _speed;
+
+				if (rightIsKeyPressed()) //Right
+					_velocity.x += _speed;
+			}
+
+			if (jumpKeyPressed() && _canJump) //Jump
+			{
+				_canJump = false;
+
+				//square root ( 2.0f * gravity * _jumpHeight )
+				//gravity = 9.81 m / s^2
+				//10 pixels = 1m
+				//gravity = 98.1
+				_velocity.y = -sqrtf(2.0f * 300.0f * _jumpHeight);
+			}
 		}
 
-		if (jumpKeyPressed() && _canJump) //Jump
-		{
-			_canJump = false;
+		_velocity.y += 900.0f * deltaTime; //constant g force
 
-			//square root ( 2.0f * gravity * _jumpHeight )
-			//gravity = 9.81 m / s^2
-			//10 pixels = 1m
-			//gravity = 98.1
-			_velocity.y = -sqrtf(2.0f * 300.0f * _jumpHeight);
-		}
+		_position += _velocity * deltaTime;
 	}
-
-	_velocity.y += 900.0f * deltaTime; //constant g force
-
-	_position += _velocity * deltaTime;
 } // end updatePosition
-/*
-void Player::updateAnimation(const float deltaTime)
-{
-	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
-} // end updateAnimation
-*/
-void Player::setCombat()
+void Player::setTo_combat()
 {
 	_current_collider = _combat_collider;
 	if (_defCounterUp)
@@ -186,14 +167,6 @@ bool Player::defendKeyPressed() const
 	return (sf::Keyboard::isKeyPressed(sf::Keyboard::S));
 } // end defendKeyPressed
 
-void Player::draw() const
-{
-	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
-
-	Entity::_pGraphMng->draw(*(_animator->getCurrentAnime()->getpSprite()));
-	if(gMng::COLLISION_DBG)
-		Entity::_pGraphMng->draw(*(_current_collider));
-} // end draw
 /*
 void Player::onCollision(const sf::Vector2f collisionDirection)
 {
@@ -218,6 +191,21 @@ void Player::onCollision(const sf::Vector2f collisionDirection)
 		_velocity.y = 0.0f;
 	}
 }*/
+
+void Player::setPoints(const int pts)
+{
+	_points = pts;
+}
+
+int Player::getPoints() const
+{
+	return _points;
+}
+
+void Player::add_points(const int pts)
+{
+	_points += pts;
+}
 
 bool Player::isDefending() const
 {

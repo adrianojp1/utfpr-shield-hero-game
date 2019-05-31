@@ -12,6 +12,7 @@ private:
 	// ========= State control members ========= //
 	//bool _attacking;
 
+	int _damage;
 public:
 	//================================================================//
 	// ========== Constructors ========== //
@@ -22,15 +23,10 @@ public:
 
 	//================================================================//
 	// ========== Initializers ========== //
-	void initialize_animator(); //Initializes all the animators
+	virtual void initialize_animator(); //Initializes all the animators
 
-	void initialize_AllColliders();													   //Initializes all the colliders
 
-	//================================================================//
-	// ========== Loop methods ========== //
-	void execute(const float deltaTime);
-	void draw() const;
-
+	virtual bool isVulnerable();
 private :
 	// ========== execute submethods ========== //
 	void updateAction(const float deltaTime);

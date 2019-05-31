@@ -14,8 +14,6 @@
 class Character : public Entity
 {
 protected:
-	// ========= Visual Members ========= //
-	Animator* _animator;
 	// ========= Motion Members ========= //
 	//Colliders
 	sf::RectangleShape* _idle_collider; //Idle
@@ -28,8 +26,11 @@ protected:
 
 	// ========= State control members ========= //
 	bool _canJump;
+	Timer _invulnerability;
 
 	int _state;
+
+	int _hp;
 public:
 	//================================================================//
 	// ========== Constructors ========== //
@@ -40,33 +41,40 @@ public:
 
 	//================================================================//
 	// ========== Initializers ========== //
+	virtual void initialize_AllColliders();
 
 	//================================================================//
 	// ========== Loop methods ========== //
-	virtual void execute(const float deltaTime) = 0;
-	virtual void draw() const = 0;
+	virtual void execute(const float deltaTime);
+	virtual void draw() const;
 
 	//================================================================//
 	// ========== Motion ========== //
 	virtual void onCollision(const sf::Vector2f collisionDirection);
+	virtual bool isVulnerable();
+	virtual bool isDying();
+	virtual void takeDmg(const int dmg);
+	virtual void die();
 
 	//================================================================//
 	// ========== Sets & Gets ========== //
 	// _jumpHeight
 	virtual void setJumpHeight(const float jumpHeight);
 	virtual float getJumpHeight() const;
+	// _hp
+	virtual void setHp(const int hp);
+	virtual int getHp() const;
 
 	//================================================================//
 	// ========== States ========== //
 	virtual void updateState();
-	virtual void setIdle();
-	virtual void setWalk();
-	virtual void setDeath();
-	virtual void setCombat();
+	virtual void setTo_idle();
+	virtual void setTo_walk();
+	virtual void setTo_death();
+	virtual void setTo_combat();
 protected:
 	// ========== execute submethods ========== //
 	virtual void updateAction(const float deltaTime) = 0;
-	virtual bool isWalking(const float HorizontalMovement) const;
 
 	//================================================================//
 	//======================== Static Consts =========================//

@@ -16,7 +16,7 @@ class Entity
 {
 protected:
 	// ========= Visual Members ========= //
-	Animator* _current_animator; //Pointer for current animator
+	Animator* _animator;
 	bool _facingRight; //Bool for the side direction
 
 	// ========= Motion Members ========= //
@@ -69,10 +69,5 @@ public:
 	// _pGraphMng
 	static void setGraphManager(gMng* gMng);
 	static gMng* getGraphManager();
-
-protected:
-	// ========== execute submethods ========== //
-	virtual void updateAction(const float deltaTime);
-	virtual void updateAnimation(const float deltaTime);
 };
 

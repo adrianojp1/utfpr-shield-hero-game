@@ -18,7 +18,7 @@ Entity::Entity(const sf::Vector2f initPosition, bool active)
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
 	//Pointers
-	_current_animator = NULL;
+	_animator = NULL;
 	_current_collider = NULL;
 
 	//Parameters
@@ -36,7 +36,7 @@ Entity::Entity()
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 1 | ");
 
 	//Pointers
-	_current_animator = NULL;
+	_animator = NULL;
 	_current_collider = NULL;
 
 	//Parameters
@@ -174,16 +174,4 @@ gMng* Entity::getGraphManager()
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
 	return _pGraphMng;
-}
-
-void Entity::updateAction(const float deltaTime)
-{
-	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
-
-}
-
-void Entity::updateAnimation(const float deltaTime)
-{
-	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
-
 }

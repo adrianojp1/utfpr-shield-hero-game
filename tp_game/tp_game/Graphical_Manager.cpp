@@ -23,7 +23,7 @@ const std::string Graphical_Manager::menu_Ft_Fp = "Fonts/romulus.ttf";
 const std::string Graphical_Manager::player_idle_Sp_Fp = "Media/shield-hero/shield_hero-idle.png";
 const std::string Graphical_Manager::player_walk_Sp_Fp = "Media/shield-hero/shield_hero-walk.png";
 const std::string Graphical_Manager::player_def1_Sp_Fp = "Media/shield-hero/shield_hero-def1.png";
-const std::string Graphical_Manager::player_def2_Sp_Fp = "Media/shield-hero/shield_hero-def2.png";
+const std::string Graphical_Manager::player_def2_Sp_Fp = "Media/shield-hero/shield_hero-def2-2.png";
 const std::string Graphical_Manager::player_die_Sp_Fp  = "Media/shield-hero/shield_hero-die.png";
 
 const std::string Graphical_Manager::orc_idle_Sp_Fp = "Media/orc/orc-idle.png";

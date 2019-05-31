@@ -22,7 +22,6 @@ Character::Character(const sf::Vector2f initPosition) :
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
 	//Pointers
-	_current_animator = NULL;
 	_current_collider = NULL;
 
 	_animator = NULL;
@@ -38,6 +37,9 @@ Character::Character(const sf::Vector2f initPosition) :
 	//Constants
 	_jumpHeight = 0.0f;
 	_speed = 0.0f;
+	_hp = 0;
+
+	_state = IDLE;
 
 	//Bools
 	_facingRight = true;
@@ -49,7 +51,6 @@ Character::Character()
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 1 | ");
 
 	//Pointers
-	_current_animator = NULL;
 	_current_collider = NULL;
 	
 	_animator = NULL;
@@ -65,6 +66,7 @@ Character::Character()
 	//Constants
 	_jumpHeight = 0.0f;
 	_speed = 0.0f;
+	_hp = 0;
 
 	//Bools
 	_facingRight = true;
@@ -81,6 +83,47 @@ Character::~Character()
 		delete _walk_collider;
 	if (_combat_collider != NULL)
 		delete _combat_collider;
+}
+
+void Character::initialize_AllColliders()
+{
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+
+	initialize_Collider(_idle_collider, (*_animator)[IDLE]->getCanvasSize());
+	initialize_Collider(_walk_collider, (*_animator)[WALK]->getCanvasSize());
+	initialize_Collider(_death_collider, (*_animator)[DEATH]->getCanvasSize());
+	initialize_Collider(_combat_collider, (*_animator)[COMBAT]->getCanvasSize());
+}
+
+void Character::execute(const float deltaTime)
+{
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+
+	_velocity.x = 0.0f;
+
+	updateAction(deltaTime);
+	updateState();
+	_animator->updateAnimation(deltaTime, _facingRight);
+
+	if (!isVulnerable())
+	{
+		_animator->getCurrentAnime()->getpSprite()->setFillColor(sf::Color(77, 255, 77, 255));
+	}
+	else
+	{
+		_animator->getCurrentAnime()->getpSprite()->setFillColor(sf::Color(255, 255, 255, 255));
+	}
+
+	_current_collider->setPosition(_position);
+}
+
+void Character::draw() const
+{
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+	
+	Entity::_pGraphMng->draw(*(_animator->getCurrentAnime()->getpSprite()));
+	if (gMng::COLLISION_DBG)
+		Entity::_pGraphMng->draw(*(_current_collider));
 }
 
 void Character::onCollision(const sf::Vector2f collisionDirection)
@@ -109,6 +152,42 @@ void Character::onCollision(const sf::Vector2f collisionDirection)
 	}
 }
 
+bool Character::isVulnerable()
+{
+	if (_invulnerability.isZeroed())
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+bool Character::isDying()
+{
+	if (this->isActive() && _hp <= 0)
+		return true;
+	return false;
+}
+
+void Character::takeDmg(const int dmg)
+{
+	if (this->isVulnerable())
+	{
+		_hp -= dmg;
+		_invulnerability.reset_and_trigger();
+
+		if (_hp <= 0)
+			this->die();
+	}
+}
+
+void Character::die()
+{
+	_state = DEATH;
+}
+
 void Character::setJumpHeight(const float jumpHeight)
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
@@ -121,34 +200,44 @@ float Character::getJumpHeight() const
 	return _jumpHeight;
 }
 
+void Character::setHp(const int hp)
+{
+	_hp = hp;
+}
+
+int Character::getHp() const
+{
+	return _hp;
+}
+
 void Character::updateState()
 {
 	switch (_state)
 	{
 	case 0: //IDLE
-		setIdle();
+		setTo_idle();
 		break;
 	case 1: //WALK 
-		setWalk();
+		setTo_walk();
 		break;
 	case 2: //DEATH
-		setDeath();
+		setTo_death();
 		break;
 	case 3: //COMBAT
-		setCombat();
+		setTo_combat();
 		break;
 	default:
 		break;
 	}
 }
 
-void Character::setIdle()
+void Character::setTo_idle()
 {
 	_current_collider = _idle_collider;
 	_animator->setCurrentAnime(IDLE);
 }
 
-void Character::setWalk()
+void Character::setTo_walk()
 {
 	if (_velocity.x > 0.0f)
 	{
@@ -163,25 +252,14 @@ void Character::setWalk()
 	_animator->setCurrentAnime(WALK);
 }
 
-void Character::setDeath()
+void Character::setTo_death()
 {
 	_current_collider = _death_collider;
 	_animator->setCurrentAnime(DEATH);
 }
 
-void Character::setCombat()
+void Character::setTo_combat()
 {
 	_current_collider = _combat_collider;
 	_animator->setCurrentAnime(COMBAT);
-}
-
-bool Character::isWalking(const float HorizontalMovement) const
-{
-	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
-
-	if (HorizontalMovement == 0.0f)
-	{
-		return false;
-	}
-	return true;
 }

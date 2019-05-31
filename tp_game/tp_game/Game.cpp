@@ -224,12 +224,17 @@ void Game::executeStage(float deltaTime)
 	if (_player1->isDefending())
 	{
 		if (checkCollision(static_cast<Entity*>(_player1), static_cast<Entity*>(_orc), &collisionDirection, 1.0f))
+		{
 			_player1->onCollision(collisionDirection);
+		}
 	}
 	else
 	{
 		if (checkCollision(static_cast<Entity*>(_player1), static_cast<Entity*>(_orc), &collisionDirection, 0.5f))
+		{
 			_player1->onCollision(collisionDirection);
+			_player1->takeDmg(1);
+		}
 	}
 
 	for (Block* block : _vBlocks)

@@ -14,6 +14,7 @@ private:
 
 	Timer _defCounterTimer; //Timer for the defense counter
 
+	int _points;
 public:
 	//================================================================//
 	// ========== Constructors ========== //
@@ -26,12 +27,12 @@ public:
 	// ========== Initializers ========== //
 	void initialize_animator(); //Initializes all the animators
 
-	void initialize_AllColliders(); //Initializes all the colliders
-
 	//================================================================//
-	// ========== Loop methods ========== //
-	void execute(const float deltaTime);
-	void draw() const;
+	// ========== Sets & Gets ========== //
+	// _points
+	void setPoints(const int pts);
+	int getPoints() const;
+	void add_points(const int pts);
 
 	//================================================================//
 	// ========== State checkers ========== //
@@ -41,8 +42,8 @@ public:
 
 	//================================================================//
 	// ========== States ========== //
-	//virtual void setDeath();
-	virtual void setCombat();
+	//virtual void setTo_death();
+	virtual void setTo_combat();
 private:
 	// ========== Control keys methods ========== //
 	bool leftIsKeyPressed() const;
