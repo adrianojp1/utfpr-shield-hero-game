@@ -63,17 +63,23 @@ Menu::~Menu()
 
 void Menu::initialize_n_addOp(Option*& pOp, const sf::Vector2f position, const std::string label, const int actSize, const int deactSize, sf::Color actColor, sf::Color deactColor, sf::Font* font)
 {
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+
 	initializeOp(pOp, position, label, actSize, deactSize, actColor, deactColor);
 	this->operator<<(pOp);
 }
 
 void Menu::initializeOp(Option*& pOp, const sf::Vector2f position, const std::string label, const int actSize, const int deactSize, sf::Color actColor, sf::Color deactColor, sf::Font* font)
 {
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+
 	pOp = new Option(font, position, label, actSize, deactSize, actColor, deactColor);
 }
 
 void Menu::execute(const float deltaTime)
 {
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+
 	if (this->isActive())
 	{
 		deactivate_allOps();
@@ -102,6 +108,8 @@ void Menu::draw() const
 
 void Menu::check_allKeys()
 {
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+
 	if (_betweenKeys.isZeroed())
 	{
 		if (selectionKey_isPressed())
@@ -129,26 +137,36 @@ void Menu::check_allKeys()
 
 bool Menu::selectionKey_isPressed()
 {
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+
 	return(sf::Keyboard::isKeyPressed(sf::Keyboard::Return));
 }
 
 bool Menu::upKey_isPressed()
 {
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+
 	return (sf::Keyboard::isKeyPressed(sf::Keyboard::W));
 }
 
 bool Menu::downKey_isPressed()
 {
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+
 	return (sf::Keyboard::isKeyPressed(sf::Keyboard::S));
 }
 
 void Menu::close()
 {
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+
 	this->desactivate();
 }
 
 void Menu::open()
 {
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+
 	this->activate();
 }
 
@@ -159,17 +177,11 @@ void Menu::activate()
 	_active = true;
 	_onOp = 0;
 }
-/*
-void Menu::execute_allOps()
-{
-	for (Option* option : _vOptions)
-	{
-		option->execute();
-	}
-}*/
 
 void Menu::deactivate_allOps()
 {
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+
 	for (Option* option : _vOptions)
 	{
 		option->desactivate();
@@ -197,23 +209,31 @@ void Menu::operator<<(Option* pOp)
 
 void Menu::upOp()
 {
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+
 	if(_onOp != 0)
 		_onOp--;
 }
 
 void Menu::downOp()
 {
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+
 	if (_onOp != _nOps - 1)
 		_onOp++;
 }
 
 void Menu::setpGame(Game* pGame)
 {
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+
 	_pGame = pGame;
 }
 
 Game* Menu::getpGame()
 {
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+
 	return _pGame;
 }
 
@@ -232,7 +252,6 @@ Menu::Option::Option(sf::Font* font, const sf::Vector2f position, const std::str
 	_textColor_deactive = deactColor;
 
 	initializeText(font, label); //position 
-	this->desactivate();
 }
 
 Menu::Option::Option() : Entity(), _text()
@@ -282,6 +301,7 @@ void Menu::Option::activate()
 	_active = true;
 	_text->setFillColor(_textColor_active);
 	_text->setCharacterSize(_charSize_active);
+	_text->setOrigin(_text->getLocalBounds().width / 2.0f, _text->getLocalBounds().height / 2.0f);
 }
 
 void Menu::Option::desactivate()
@@ -291,6 +311,7 @@ void Menu::Option::desactivate()
 	_active = false;
 	_text->setFillColor(_textColor_deactive);
 	_text->setCharacterSize(_charSize_deactive);
+	_text->setOrigin(_text->getLocalBounds().width / 2.0f, _text->getLocalBounds().height / 2.0f);
 }
 
 void Menu::Option::setText(sf::Text* text)

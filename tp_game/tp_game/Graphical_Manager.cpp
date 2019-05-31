@@ -15,7 +15,7 @@ const sf::Vector2u Graphical_Manager::windowSize = { windowRatio.x * ratioMultip
 
 const float Graphical_Manager::textures_scale = 4.0f;
 
-const bool Graphical_Manager::CONSOLE_LOG = false;
+const bool Graphical_Manager::CONSOLE_LOG = true;
 const bool Graphical_Manager::COLLISION_DBG = true;
 
 const std::string Graphical_Manager::menu_Ft_Fp = "Fonts/romulus.ttf";
@@ -97,12 +97,16 @@ void Graphical_Manager::printConsole_log(std::string log)
 
 void Graphical_Manager::loadTexture(const std::string file_path, sf::Texture*& pTexture)
 {
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+
 	if (!pTexture->loadFromFile(file_path))
 		getchar();
 }
 
 void Graphical_Manager::load_n_setTexture(sf::RectangleShape* pShape, const std::string file_path, sf::Texture*& pTexture)
 {
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+
 	if (!pTexture)
 		pTexture = new sf::Texture;
 

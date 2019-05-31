@@ -11,7 +11,7 @@
 
 //======================================================================================================================================//
 // === Static initializations === //
-const sf::Vector2f Main_Menu::menu_position = { -200.0f, -300.0f };
+const sf::Vector2f Main_Menu::menu_position = { 0.0f, -300.0f };
 
 const int Main_Menu::ops_act_charSize(120);
 const int Main_Menu::ops_deact_charSize(90);
@@ -36,16 +36,20 @@ const sf::Vector2f Main_Menu::op3_position = menu_position + sf::Vector2f{ 0.0f,
 Main_Menu::Main_Menu() :
 	Menu(menu_position)
 {
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+
 	initializeAllOps();
 }
 
 Main_Menu::~Main_Menu()
 {
-
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 }
 
 void Main_Menu::initializeAllOps()
 {
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+
 	Option* pOp;
 
 	initialize_n_addOp(pOp, op0_position, op0_string, ops_act_charSize, ops_deact_charSize, sf::Color::Red, sf::Color::White);
@@ -56,6 +60,8 @@ void Main_Menu::initializeAllOps()
 
 void Main_Menu::activate_onOp()
 {
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+
 	switch (_onOp)
 	{
 	case 0:
@@ -77,6 +83,8 @@ void Main_Menu::activate_onOp()
 
 void Main_Menu::execute_onOp()
 {
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+
 	switch (_onOp)
 	{
 	case 0:
@@ -98,20 +106,28 @@ void Main_Menu::execute_onOp()
 
 void Main_Menu::open_newGame_menu()
 {
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+
 	//_pGame->open_newGame_menu();
 }
 
 void Main_Menu::open_saves_menu()
 {
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+
 	//_pGame->open_saves_menu();
 }
 
 void Main_Menu::show_ranking()
 {
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+
 	//_pGame->show_ranking();
 }
 
 void Main_Menu::close_game()
 {
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+
 	_pGame->close();
 }

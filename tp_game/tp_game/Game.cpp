@@ -10,6 +10,8 @@
 // === Game methods === //
 Game::Game()
 {
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+
 	initialize();
 
 	main_loop();
@@ -17,6 +19,8 @@ Game::Game()
 
 Game::~Game()
 {
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+
 	if (_window)
 		delete _window;
 	if (_player1)
@@ -37,6 +41,8 @@ Game::~Game()
 
 void Game::initialize()
 {
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+
 	//Background
 	_background = new sf::RectangleShape;
 	gMng::load_n_setTexture(_background, "Media/Background.png", _bgtexture);
@@ -75,6 +81,8 @@ void Game::initialize()
 
 void Game::main_loop()
 {
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+
 	while (_window->isOpen())
 	{
 		_deltaTime = _clock.restart().asSeconds(); //Iteration clock
@@ -96,12 +104,16 @@ void Game::main_loop()
 }
 void Game::close()
 {
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+
 	_window->close();
 }
 // end main_loop
 
 void Game::execute(float deltaTime)
 {
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+
 	_player1->execute(deltaTime);
 	_orc->execute(deltaTime);
 
@@ -113,6 +125,8 @@ void Game::execute(float deltaTime)
 
 void Game::draw() const
 {
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+
 	_window->draw(*_background);
 
 	_main_menu->draw();
@@ -129,6 +143,8 @@ void Game::draw() const
 //Temporary methods
 bool Game::checkCollision(Entity* player, Entity* block, sf::Vector2f* collisionDirection, float push)
 {
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+
 	sf::Vector2f otherPosition = block->getPosition();
 	sf::Vector2f otherHalfSize = block->getCollider()->getSize() / 2.0f;
 	sf::Vector2f thisPosition = player->getPosition();
@@ -185,6 +201,8 @@ bool Game::checkCollision(Entity* player, Entity* block, sf::Vector2f* collision
 }
 void Game::executeStage(float deltaTime)
 {
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+
 	execute(_deltaTime); //Future game executor: execute all objects
 
 	sf::Vector2f collisionDirection;
