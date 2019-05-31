@@ -53,7 +53,4 @@ private:
 
 	// ========== execute submethods ========== //
 	void updateAction(const float deltaTime);
-	//void updateAnimation(const float deltaTime);
-	//virtual bool isWalking(const float HorizontalMovement) const;
-
 }; // end Player
