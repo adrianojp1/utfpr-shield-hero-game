@@ -9,19 +9,6 @@
 class Enemy : public Character
 {
 private:
-	// ========= Visual Members ========= //
-	//Animators
-	Animator *_idle_animator; //Idle
-	Animator *_walk_animator; //Walking
-	//Animator* _attack_animator; //Shoot (skeleton)
-	//Animator* _dead_animator; //Dying
-
-	// ========= Motion Members ========= //
-	//Colliders
-	sf::RectangleShape *_idle_collider; //Idle
-	sf::RectangleShape *_walk_collider; //Walking
-										//sf::RectangleShape* _attack_collider; //(if change when is attacking)
-
 	// ========= State control members ========= //
 	//bool _attacking;
 
@@ -35,7 +22,7 @@ public:
 
 	//================================================================//
 	// ========== Initializers ========== //
-	void initialize_AllAnimators(); //Initializes all the animators
+	void initialize_animator(); //Initializes all the animators
 
 	void initialize_AllColliders();													   //Initializes all the colliders
 
@@ -47,6 +34,6 @@ public:
 private :
 	// ========== execute submethods ========== //
 	void updateAction(const float deltaTime);
-	void updateAnimation(const float deltaTime);
+	//void updateAnimation(const float deltaTime);
 	//virtual bool isWalking(const float HorizontalMovement) const;
 };

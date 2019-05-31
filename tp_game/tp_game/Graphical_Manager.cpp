@@ -95,15 +95,17 @@ void Graphical_Manager::printConsole_log(std::string log)
 		std::cerr << log << std::endl;
 }
 
-void Graphical_Manager::loadTexture(const std::string file_path, sf::Texture*& pTexture)
+void Graphical_Manager::loadTexture(const std::string file_path, sf::Texture* pTexture)
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
+	if (!pTexture)
+		pTexture = new sf::Texture;
 	if (!pTexture->loadFromFile(file_path))
 		getchar();
 }
 
-void Graphical_Manager::load_n_setTexture(sf::RectangleShape* pShape, const std::string file_path, sf::Texture*& pTexture)
+void Graphical_Manager::load_n_setTexture(sf::RectangleShape* pShape, const std::string file_path, sf::Texture* pTexture)
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 

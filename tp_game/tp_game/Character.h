@@ -14,12 +14,22 @@
 class Character : public Entity
 {
 protected:
+	// ========= Visual Members ========= //
+	Animator* _animator;
+	// ========= Motion Members ========= //
+	//Colliders
+	sf::RectangleShape* _idle_collider; //Idle
+	sf::RectangleShape* _walk_collider; //Walking
+	sf::RectangleShape* _combat_collider; //Defense
+	sf::RectangleShape* _death_collider; //Death
+
 	// ========= Motion Members ========= //
 	float _jumpHeight;
 
 	// ========= State control members ========= //
 	bool _canJump;
 
+	int _state;
 public:
 	//================================================================//
 	// ========== Constructors ========== //
@@ -46,10 +56,26 @@ public:
 	virtual void setJumpHeight(const float jumpHeight);
 	virtual float getJumpHeight() const;
 
+	//================================================================//
+	// ========== States ========== //
+	virtual void updateState();
+	virtual void setIdle();
+	virtual void setWalk();
+	virtual void setDeath();
+	virtual void setCombat();
 protected:
 	// ========== execute submethods ========== //
 	virtual void updateAction(const float deltaTime) = 0;
-	virtual void updateAnimation(const float deltaTime) = 0;
+	//virtual void updateAnimation(const float deltaTime) = 0;
 	virtual bool isWalking(const float HorizontalMovement) const;
 
+	//================================================================//
+	//======================== Static Consts =========================//
+	//States
+	static const int IDLE;
+	static const int WALK;
+	static const int DEATH;
+	static const int COMBAT;
 };
+
+typedef Character Charc;

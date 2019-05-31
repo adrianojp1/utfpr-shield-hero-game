@@ -9,21 +9,7 @@
 class Player : public Character
 {
 private:
-	// ========= Visual Members ========= //
-	//Animators
-	Animator *_idle_animator; //Idle
-	Animator *_walk_animator; //Walking
-	Animator *_def1_animator; //Normal defense
-	Animator *_def2_animator; //Counter defense
-
-	// ========= Motion Members ========= //
-	//Colliders
-	sf::RectangleShape* _idle_collider; //Idle
-	sf::RectangleShape* _walk_collider; //Walking
-	sf::RectangleShape* _def_collider; //Defense
-
 	// ========= State control members ========= //
-	bool _defending;
 	bool _defCounterUp;
 
 	Timer _defCounterTimer; //Timer for the defense counter
@@ -38,7 +24,7 @@ public:
 
 	//================================================================//
 	// ========== Initializers ========== //
-	void initialize_AllAnimators(); //Initializes all the animators
+	void initialize_animator(); //Initializes all the animators
 
 	void initialize_AllColliders(); //Initializes all the colliders
 
@@ -53,16 +39,21 @@ public:
 	bool isCounterUp() const;
 	bool isDefending_with_Counter() const;
 
+	//================================================================//
+	// ========== States ========== //
+	//virtual void setDeath();
+	virtual void setCombat();
 private:
 	// ========== Control keys methods ========== //
 	bool leftIsKeyPressed() const;
 	bool rightIsKeyPressed() const;
 	bool jumpKeyPressed() const;
+	bool anyMoveKeyPressed() const;
 	bool defendKeyPressed() const;
 
 	// ========== execute submethods ========== //
 	void updateAction(const float deltaTime);
-	void updateAnimation(const float deltaTime);
+	//void updateAnimation(const float deltaTime);
 	//virtual bool isWalking(const float HorizontalMovement) const;
 
 }; // end Player

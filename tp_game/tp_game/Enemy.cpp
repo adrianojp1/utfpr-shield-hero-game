@@ -19,7 +19,9 @@ Enemy::Enemy(const sf::Vector2f initPosition) : Character(initPosition)
 	_facingRight = true;
 	_canJump = true;
 
-	initialize_AllAnimators();
+	_state = IDLE;
+
+	initialize_animator();
 	initialize_AllColliders();
 
 } // end constr (parameters)
@@ -33,12 +35,7 @@ Enemy::Enemy() : Character()
 	_speed = 0.0f;
 	_position = {0.0f, 0.0f};
 
-	_idle_animator = NULL;
-	_walk_animator = NULL;
-
-	_idle_collider = NULL;
-	_walk_collider = NULL;
-
+	_animator = NULL;
 } // end constr (no parameters)
 
 Enemy::~Enemy()
@@ -46,24 +43,18 @@ Enemy::~Enemy()
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
 	//Destroy animators
-	if (_idle_animator != NULL)
-		delete _idle_animator;
-	if (_walk_animator != NULL)
-		delete _walk_animator;
-
-	if (_idle_collider != NULL)
-		delete _idle_collider;
-	if (_walk_collider != NULL)
-		delete _walk_collider;
-
+	if (_animator != NULL)
+		delete _animator;
 } // end destr
 
-void Enemy::initialize_AllAnimators()
+void Enemy::initialize_animator()
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
-	_idle_animator = new Animator(gMng::orc_idle_Sp_Fp, 1, 0.0f, this);
-	_walk_animator = new Animator(gMng::orc_walk_Sp_Fp, 4, 0.250f, this);
+	_animator = new Animator(static_cast<Entity*>(this));
+
+	*_animator << new Animation(gMng::orc_idle_Sp_Fp, 1, 0.0f);
+	*_animator << new Animation(gMng::orc_walk_Sp_Fp, 4, 0.250f);
 
 } // end initializeAnimators
 
@@ -71,8 +62,8 @@ void Enemy::initialize_AllColliders()
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
-	initialize_Collider(_idle_collider, _idle_animator->getSpriteSize());
-	initialize_Collider(_walk_collider, _walk_animator->getSpriteSize());
+	initialize_Collider(_idle_collider, (*_animator)[IDLE]->getCanvasSize());
+	initialize_Collider(_walk_collider, (*_animator)[WALK]->getCanvasSize());
 }
 
 void Enemy::execute(const float deltaTime)
@@ -82,10 +73,8 @@ void Enemy::execute(const float deltaTime)
 	//_velocity.x = -25.0f;
 
 	updateAction(deltaTime);
-
-	_position += _velocity * deltaTime;
-
-	updateAnimation(deltaTime);
+	updateState();
+	_animator->updateAnimation(deltaTime, _facingRight);
 
 	_current_collider->setPosition(_position);
 } // end execute
@@ -95,19 +84,21 @@ void Enemy::updateAction(const float deltaTime)
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
 	_velocity.y += 900.0f * deltaTime; //constant g force
-} // end updatePosition
 
+	_position += _velocity * deltaTime;
+} // end updatePosition
+/*
 void Enemy::updateAnimation(const float deltaTime)
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
-	if (!isWalking(_velocity.x))
+	switch (_state)
 	{
+	case 0: //IDLE
 		_current_collider = _idle_collider;
-		_current_animator = _idle_animator;
-	}
-	else
-	{
+		_animator->setCurrentAnime(IDLE);
+		break;
+	case 1: //WALK
 		if (_velocity.x > 0.0f)
 		{
 			_facingRight = true;
@@ -117,16 +108,20 @@ void Enemy::updateAnimation(const float deltaTime)
 			_facingRight = false;
 		}
 		_current_collider = _walk_collider;
-		_current_animator = _walk_animator;
+		_animator->setCurrentAnime(WALK);
+		break;
+	default:
+		break;
 	}
-	_current_animator->updateSprite(deltaTime, _facingRight);
-}
+
+	_animator->updateAnimation(deltaTime, _facingRight);
+}*/
 
 void Enemy::draw() const
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
-	Entity::_pGraphMng->draw(*(_current_animator->getpSprite()));
+	Entity::_pGraphMng->draw(*(_animator->getCurrentAnime()->getpSprite()));
 	if(gMng::COLLISION_DBG)
 		Entity::_pGraphMng->draw(*(_current_collider));
 } // end draw

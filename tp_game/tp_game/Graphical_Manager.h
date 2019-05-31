@@ -30,8 +30,8 @@ public:
 	//================================================================//
 	// ========== Log method ========== //
 	static void printConsole_log(std::string log);
-	static void loadTexture(const std::string file_path, sf::Texture*& pTexture);
-	static void load_n_setTexture(sf::RectangleShape* pShape, const std::string file_path, sf::Texture*& pTexture);
+	static void loadTexture(const std::string file_path, sf::Texture* pTexture);
+	static void load_n_setTexture(sf::RectangleShape* pShape, const std::string file_path, sf::Texture* pTexture);
 
 	//================================================================//
 	//======================== Static Consts =========================//
