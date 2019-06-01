@@ -17,12 +17,10 @@ Enemy::Enemy(const sf::Vector2f initPosition) : Character(initPosition)
 	_speed = 40.f;
 
 	_hp = 1;
+	_damage = 1;
 
 	initialize_animator();
 	initialize_AllColliders();
-
-
-	_invulnerability.trigger();
 
 } // end constr (parameters)
 
@@ -34,15 +32,15 @@ Enemy::Enemy() : Character()
 	_canJump = true;
 	_speed = 0.0f;
 	_position = {0.0f, 0.0f};
-
-	_animator = NULL;
+	_hp = 0;
+	_damage = 0;
 } // end constr (no parameters)
 
 Enemy::~Enemy()
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
-	if (_animator != NULL)
+	if (_animator)
 		delete _animator;
 } // end destr
 
@@ -63,11 +61,18 @@ bool Enemy::isVulnerable()
 	return true;
 }
 
+void Enemy::setDmg(const int dmg)
+{
+	_damage = dmg;
+}
+
+int Enemy::getDmg() const
+{
+	return _damage;
+}
+
 void Enemy::updateAction(const float deltaTime)
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
-	_velocity.y += 900.0f * deltaTime; //constant g force
-
-	_position += _velocity * deltaTime;
 } // end updatePosition

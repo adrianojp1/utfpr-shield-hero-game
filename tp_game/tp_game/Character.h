@@ -26,7 +26,9 @@ protected:
 
 	// ========= State control members ========= //
 	bool _canJump;
+
 	Timer _invulnerability;
+	bool _vulnerable;
 
 	int _state;
 
@@ -50,11 +52,31 @@ public:
 
 	//================================================================//
 	// ========== Motion ========== //
+	virtual void updateAction(const float deltaTime) = 0;
+	virtual void updateDeath();
+	virtual void updatePosition(const float deltaTime);
+	virtual void applyGforce(const float deltaTime);
+	virtual void jump();
+	virtual void moveToLeft(const float speedMultiplier = 1.0f);
+	virtual void moveToRight(const float speedMultiplier = 1.0f);
+
 	virtual void onCollision(const sf::Vector2f collisionDirection);
+	virtual void collision_onLeft();
+	virtual void collision_onRight();
+	virtual void collision_onBottom();
+	virtual void collision_onTop();
+
+	//================================================================//
+	// ========== State ========== //
 	virtual bool isVulnerable();
+	virtual void apply_invulnerable_effect();
+	virtual void apply_default_effect();
 	virtual bool isDying();
 	virtual void takeDmg(const int dmg);
 	virtual void die();
+	virtual void ressurect();
+	virtual void resetHp();
+	virtual void decreaseTimers();
 
 	//================================================================//
 	// ========== Sets & Gets ========== //
@@ -67,15 +89,12 @@ public:
 
 	//================================================================//
 	// ========== States ========== //
-	virtual void updateState();
+	virtual void changeAnime_n_Collider();
 	virtual void setTo_idle();
 	virtual void setTo_walk();
 	virtual void setTo_death();
 	virtual void setTo_combat();
 protected:
-	// ========== execute submethods ========== //
-	virtual void updateAction(const float deltaTime) = 0;
-
 	//================================================================//
 	//======================== Static Consts =========================//
 	//States

@@ -130,6 +130,16 @@ sf::Vector2f Animation::getCanvasSize() const
 	return sf::Vector2f((float)_canvasRect.width, (float)_canvasRect.height);
 }
 
+bool Animation::isFinished() const
+{
+	return (getFrameCounter() == getnFrames() - 1);
+}
+
+void Animation::reset()
+{
+	setFrameCounter(0);
+}
+
 void Animation::updateFrame()
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");

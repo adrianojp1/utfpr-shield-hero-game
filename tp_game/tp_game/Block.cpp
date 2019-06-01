@@ -21,7 +21,7 @@ Block::Block(const sf::Vector2f initPosition) :
 	initialize_Collider(_collider, size / gMng::textures_scale);
 	
 	//For tests porpouse
-	_collider->setFillColor(sf::Color::Color(40, 40, 40));
+	_collider->setFillColor(sf::Color(40, 40, 40));
 	
 	_current_collider = _collider;
 }

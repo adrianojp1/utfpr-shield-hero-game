@@ -43,6 +43,7 @@ public:
 	void setTotalTime(float totalTime);
 	float getTotalTime() const;
 	//_currentTime
+	void setCurrentTime(const float currTime);
 	float getCurrentTime() const;
 	//_pDeltaTime
 	static void setpDeltaTime(float* pDT);

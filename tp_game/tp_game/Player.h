@@ -15,6 +15,11 @@ private:
 	Timer _defCounterTimer; //Timer for the defense counter
 
 	int _points;
+
+	sf::Keyboard::Key _jumpKey;
+	sf::Keyboard::Key _leftKey;
+	sf::Keyboard::Key _rightKey;
+	sf::Keyboard::Key _defenseKey;
 public:
 	//================================================================//
 	// ========== Constructors ========== //
@@ -33,6 +38,15 @@ public:
 	void setPoints(const int pts);
 	int getPoints() const;
 	void add_points(const int pts);
+	//Keys
+	void setJumpKey(const sf::Keyboard::Key jumpkey);
+	sf::Keyboard::Key getJumpKey() const;
+	void setRightKey(const sf::Keyboard::Key rightKey);
+	sf::Keyboard::Key getRightKey() const;
+	void setLeftKey(const sf::Keyboard::Key leftKey);
+	sf::Keyboard::Key getLeftKey() const;
+	void setDefenseKey(const sf::Keyboard::Key defenseKey);
+	sf::Keyboard::Key getDefenseKey() const;
 
 	//================================================================//
 	// ========== State checkers ========== //
@@ -42,8 +56,11 @@ public:
 
 	//================================================================//
 	// ========== States ========== //
-	//virtual void setTo_death();
 	virtual void setTo_combat();
+	virtual void resetHp();
+	virtual void decreaseTimers();
+	virtual void manageDefenseCounter();
+	virtual void ressurect();
 private:
 	// ========== Control keys methods ========== //
 	bool leftIsKeyPressed() const;

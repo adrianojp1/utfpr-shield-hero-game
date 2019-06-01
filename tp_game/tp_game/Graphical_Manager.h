@@ -47,6 +47,9 @@ public:
 	static const bool CONSOLE_LOG;
 	static const bool COLLISION_DBG;
 
+	// ========== Stage ========== //
+	static const float gravity;
+
 	// ========== Textures ========== //
 	static const float textures_scale;
 

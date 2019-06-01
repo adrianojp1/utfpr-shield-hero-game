@@ -57,7 +57,7 @@ public:
 
 	//================================================================//
 	//Temporary methods
-	bool checkCollision(Entity* player, Entity* block, sf::Vector2f* collisionDirection, float push);
+	bool checkCollision_n_push(Entity* ent1, Entity* ent2, sf::Vector2f* collisionDirection, float push);
+	bool checkCollision(Entity* ent1, Entity* ent2);
 	void executeStage(float deltaTime);
-
 };

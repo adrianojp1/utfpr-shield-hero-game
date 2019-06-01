@@ -25,8 +25,10 @@ public:
 	// ========== Initializers ========== //
 	virtual void initialize_animator(); //Initializes all the animators
 
-
 	virtual bool isVulnerable();
+
+	virtual void setDmg(const int dmg);
+	virtual int getDmg() const;
 private :
 	// ========== execute submethods ========== //
 	void updateAction(const float deltaTime);

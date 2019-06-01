@@ -103,6 +103,11 @@ float Timer::getTotalTime() const
 	return _totalTime;
 } // end getTotalTime
 
+void Timer::setCurrentTime(const float currTime)
+{
+	_currentTime = currTime;
+}
+
 float Timer::getCurrentTime() const
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");

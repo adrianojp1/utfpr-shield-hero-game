@@ -14,7 +14,7 @@ Player::Player(const sf::Vector2f initPosition) :
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
-	_jumpHeight = 300.0f;
+	_jumpHeight = 150.0f;
 	_speed = 200.f;
 	_points = 0;
 
@@ -26,8 +26,7 @@ Player::Player(const sf::Vector2f initPosition) :
 	initialize_AllColliders();
 
 	_defCounterTimer.setTotalTime(0.3f);
-	_invulnerability.setTotalTime(2.0f);
-	_invulnerability.trigger();
+	_invulnerability.setTotalTime(0.5f);
 
 } // end constr (parameters)
 
@@ -65,7 +64,7 @@ void Player::initialize_animator()
 
 	*_animator << new Animation(gMng::player_idle_Sp_Fp, 1, 0.0f);
 	*_animator << new Animation(gMng::player_walk_Sp_Fp, 4, 0.250f);
-	*_animator << new Animation(gMng::player_die_Sp_Fp, 3, 0.350f);
+	*_animator << new Animation(gMng::player_die_Sp_Fp, 3, 0.500f);
 	*_animator << new Animation(gMng::player_def1_Sp_Fp, 1, 0.0f);
 	*_animator << new Animation(gMng::player_def2_Sp_Fp, 1, 0.0f);
 } // end initializeAnimators
@@ -76,54 +75,33 @@ void Player::updateAction(const float deltaTime)
 
 	std::cout << "Player hp: " << _hp << std::endl;
 
-	_defCounterTimer.decreaseTime();
-	_invulnerability.decreaseTime();
-
-	if (this->isActive() && !this->isDying())
+	if (defendKeyPressed())
 	{
-		if (defendKeyPressed())
+		_state = COMBAT;
+		manageDefenseCounter();
+	}
+	// Player is not defending
+	else
+	{
+		_state = IDLE;
+		_defCounterTimer.resetTimer();
+
+		if (leftIsKeyPressed() || rightIsKeyPressed())
 		{
-			_state = COMBAT;
-			if (_defCounterTimer.isTicking())
-				_defCounterUp = true;
-			else if (_defCounterTimer.isZeroed())
-				_defCounterUp = false;
-			else
-				_defCounterTimer.trigger();
-		}
-		// Player is not defending
-		else
-		{
-			_state = IDLE;
-			_defCounterTimer.resetTimer();
+			_state = WALK;
+			//Move the player
+			if (leftIsKeyPressed()) //Left
+				moveToLeft();
 
-			if (leftIsKeyPressed() || rightIsKeyPressed())
-			{
-				_state = WALK;
-
-				//Move the player
-				if (leftIsKeyPressed()) //Left
-					_velocity.x -= _speed;
-
-				if (rightIsKeyPressed()) //Right
-					_velocity.x += _speed;
-			}
-
-			if (jumpKeyPressed() && _canJump) //Jump
-			{
-				_canJump = false;
-
-				//square root ( 2.0f * gravity * _jumpHeight )
-				//gravity = 9.81 m / s^2
-				//10 pixels = 1m
-				//gravity = 98.1
-				_velocity.y = -sqrtf(2.0f * 300.0f * _jumpHeight);
-			}
+			if (rightIsKeyPressed()) //Right
+				moveToRight();
 		}
 
-		_velocity.y += 900.0f * deltaTime; //constant g force
-
-		_position += _velocity * deltaTime;
+		if (jumpKeyPressed() && _canJump) //Jump
+		{
+			_canJump = false;
+			jump();
+		}
 	}
 } // end updatePosition
 
@@ -138,22 +116,55 @@ void Player::setTo_combat()
 		_animator->setCurrentAnime(COMBAT); //Def1
 }
 
+void Player::resetHp()
+{
+	_hp = 5;
+}
+
+void Player::decreaseTimers()
+{
+	_defCounterTimer.decreaseTime();
+	_invulnerability.decreaseTime();
+}
+
+void Player::manageDefenseCounter()
+{
+	if (_defCounterTimer.isTicking())
+		_defCounterUp = true;
+	else if (_defCounterTimer.isZeroed())
+		_defCounterUp = false;
+	else
+		_defCounterTimer.trigger();
+}
+
+void Player::ressurect()
+{
+	if (_state == DEATH)
+	{
+		_state = IDLE;
+		resetHp();
+		(*_animator)[DEATH]->reset();
+	}
+	
+	this->setPosition(sf::Vector2f{ -128.0f, 136.0f });
+}
+
 bool Player::leftIsKeyPressed() const
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
-	return (sf::Keyboard::isKeyPressed(sf::Keyboard::A));
+	return (sf::Keyboard::isKeyPressed(_leftKey));
 } // end leftIsKeyPressed
 
 bool Player::rightIsKeyPressed() const
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
-	return (sf::Keyboard::isKeyPressed(sf::Keyboard::D));
+	return (sf::Keyboard::isKeyPressed(_rightKey));
 } // end rightIsKeyPressed
 
 bool Player::jumpKeyPressed() const
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
-	return (sf::Keyboard::isKeyPressed(sf::Keyboard::W));
+	return (sf::Keyboard::isKeyPressed(_jumpKey));
 } // end jumpKeyPressed
 
 bool Player::anyMoveKeyPressed() const
@@ -164,33 +175,8 @@ bool Player::anyMoveKeyPressed() const
 bool Player::defendKeyPressed() const
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
-	return (sf::Keyboard::isKeyPressed(sf::Keyboard::S));
+	return (sf::Keyboard::isKeyPressed(_defenseKey));
 } // end defendKeyPressed
-
-/*
-void Player::onCollision(const sf::Vector2f collisionDirection)
-{
-	//X axe
-	if (collisionDirection.x < 0.0f)
-	{ //Collision on left
-		_velocity.x = 0.0f;
-	}
-	else if(collisionDirection.x > 0.0f)
-	{ //Collisiton on right
-		_velocity.x = 0.0f;
-	}
-
-	//Y axe
-	if (collisionDirection.y > 0.0f)
-	{ //Collisition on bottom
-		_velocity.y = 0.0f;
-		_canJump = true;
-	}
-	else if (collisionDirection.y < 0.0f)
-	{ //Collision on top
-		_velocity.y = 0.0f;
-	}
-}*/
 
 void Player::setPoints(const int pts)
 {
@@ -205,6 +191,46 @@ int Player::getPoints() const
 void Player::add_points(const int pts)
 {
 	_points += pts;
+}
+
+void Player::setJumpKey(const sf::Keyboard::Key jumpkey)
+{
+	_jumpKey = jumpkey;
+}
+
+sf::Keyboard::Key Player::getJumpKey() const
+{
+	return _jumpKey;
+}
+
+void Player::setRightKey(const sf::Keyboard::Key rightKey)
+{
+	_rightKey = rightKey;
+}
+
+sf::Keyboard::Key Player::getRightKey() const
+{
+	return _rightKey;
+}
+
+void Player::setLeftKey(const sf::Keyboard::Key leftKey)
+{
+	_leftKey = leftKey;
+}
+
+sf::Keyboard::Key Player::getLeftKey() const
+{
+	return _leftKey;
+}
+
+void Player::setDefenseKey(const sf::Keyboard::Key defenseKey)
+{
+	_defenseKey = defenseKey;
+}
+
+sf::Keyboard::Key Player::getDefenseKey() const
+{
+	return _defenseKey;
 }
 
 bool Player::isDefending() const
@@ -226,6 +252,6 @@ bool Player::isDefending_with_Counter() const
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 	if (this->isDefending() && this->isCounterUp())
 		return true;
-	else
+
 	return false;
 }

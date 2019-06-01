@@ -44,6 +44,8 @@ Character::Character(const sf::Vector2f initPosition) :
 	//Bools
 	_facingRight = true;
 	_canJump = false;
+	_vulnerable = true;
+	_invulnerability.trigger();
 }
 
 Character::Character()
@@ -52,8 +54,6 @@ Character::Character()
 
 	//Pointers
 	_current_collider = NULL;
-	
-	_animator = NULL;
 
 	_idle_collider = NULL;
 	_walk_collider = NULL;
@@ -99,22 +99,37 @@ void Character::execute(const float deltaTime)
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
-	_velocity.x = 0.0f;
-
-	updateAction(deltaTime);
-	updateState();
-	_animator->updateAnimation(deltaTime, _facingRight);
-
-	if (!isVulnerable())
+	if (this->isActive())
 	{
-		_animator->getCurrentAnime()->getpSprite()->setFillColor(sf::Color(77, 255, 77, 255));
-	}
-	else
-	{
-		_animator->getCurrentAnime()->getpSprite()->setFillColor(sf::Color(255, 255, 255, 255));
-	}
+		_velocity.x = 0.0f;
 
-	_current_collider->setPosition(_position);
+		decreaseTimers();
+
+		if (!this->isDying())
+		{
+			updateAction(deltaTime);
+			applyGforce(deltaTime);
+			updatePosition(deltaTime);
+		}
+		else
+		{
+			updateDeath();
+		}
+
+		changeAnime_n_Collider();
+
+		if (!isVulnerable())
+		{
+			apply_invulnerable_effect();
+		}
+		else
+		{
+			apply_default_effect();
+		}
+
+		_animator->updateAnimation(deltaTime, _facingRight);
+		_current_collider->setPosition(_position);
+	}
 }
 
 void Character::draw() const
@@ -132,23 +147,84 @@ void Character::onCollision(const sf::Vector2f collisionDirection)
 
 	//X axe
 	if (collisionDirection.x < 0.0f)
-	{ //Collision on left
-		_velocity.x = 0.0f;
+	{
+		collision_onLeft();
 	}
 	else if (collisionDirection.x > 0.0f)
-	{ //Collisiton on right
-		_velocity.x = 0.0f;
+	{
+		collision_onRight();
 	}
 
 	//Y axe
 	if (collisionDirection.y > 0.0f)
-	{ //Collisition on bottom
-		_velocity.y = 0.0f;
-		_canJump = true;
+	{
+		collision_onBottom();
 	}
 	else if (collisionDirection.y < 0.0f)
-	{ //Collision on top
-		_velocity.y = 0.0f;
+	{
+		collision_onTop();
+	}
+}
+
+void Character::collision_onLeft()
+{
+	_velocity.x = 0.0f;
+}
+
+void Character::collision_onRight()
+{
+	_velocity.x = 0.0f;
+}
+
+void Character::collision_onBottom()
+{
+	_velocity.y = 0.0f;
+	_canJump = true;
+}
+
+void Character::collision_onTop()
+{
+	_velocity.y = 0.0f;
+}
+
+void Character::updatePosition(const float deltaTime)
+{
+	_position += _velocity * deltaTime;
+}
+
+void Character::applyGforce(const float deltaTime)
+{
+	_velocity.y += gMng::gravity * deltaTime; //constant g force
+}
+
+void Character::jump()
+{
+	/*
+	square root ( 2.0f * gravity * _jumpHeight )
+	gravity = 9.81 m / s^2
+	10 pixels = 1m
+	gravity = 98.1*/
+	_velocity.y = -sqrtf(2.0f * gMng::gravity * _jumpHeight);
+}
+
+void Character::moveToLeft(const float speedMultiplier)
+{
+	_velocity.x -= _speed * speedMultiplier;
+}
+
+void Character::moveToRight(const float speedMultiplier)
+{
+	_velocity.x += _speed * speedMultiplier;
+}
+
+void Character::updateDeath()
+{
+	if ((*_animator)[DEATH]->isFinished())
+	{
+		/*bool Animation::isFinished() const
+			return (getFrameCounter() == getnFrames() - 1); ARRUMAR
+		*/
+		ressurect(); //mudar, só o player
 	}
 }
 
@@ -156,12 +232,24 @@ bool Character::isVulnerable()
 {
 	if (_invulnerability.isZeroed())
 	{
-		return true;
+		_vulnerable = true;
+		return _vulnerable;
 	}
 	else
 	{
-		return false;
+		_vulnerable = false;
+		return _vulnerable;
 	}
+}
+
+void Character::apply_invulnerable_effect()
+{
+	_animator->getCurrentAnime()->getpSprite()->setFillColor(sf::Color(70, 200, 100, 255));
+}
+
+void Character::apply_default_effect()
+{
+	_animator->getCurrentAnime()->getpSprite()->setFillColor(sf::Color(255, 255, 255, 255));
 }
 
 bool Character::isDying()
@@ -186,6 +274,27 @@ void Character::takeDmg(const int dmg)
 void Character::die()
 {
 	_state = DEATH;
+	_invulnerability.setCurrentTime(0.0f);
+}
+
+void Character::ressurect()
+{
+	if (_state == DEATH)
+	{
+		_state = IDLE;
+		resetHp();
+		(*_animator)[DEATH]->reset();
+	}
+}
+
+void Character::resetHp()
+{
+	_hp = 1;
+}
+
+void Character::decreaseTimers()
+{
+	_invulnerability.decreaseTime();
 }
 
 void Character::setJumpHeight(const float jumpHeight)
@@ -210,7 +319,7 @@ int Character::getHp() const
 	return _hp;
 }
 
-void Character::updateState()
+void Character::changeAnime_n_Collider()
 {
 	switch (_state)
 	{

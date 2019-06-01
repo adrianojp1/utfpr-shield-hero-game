@@ -56,6 +56,9 @@ public:
 	sf::RectangleShape* getpSprite();
 	//canvasSize
 	sf::Vector2f getCanvasSize() const;
+
+	bool isFinished() const;
+	void reset();
 private:
 	// ========== updateSprite submethods ========== //
 	void updateFrame();
