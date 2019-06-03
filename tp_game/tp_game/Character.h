@@ -90,11 +90,11 @@ public:
 
 	//================================================================//
 	// ========== States ========== //
-	virtual void changeAnime_n_Collider();
-	virtual void setTo_idle();
-	virtual void setTo_walk();
-	virtual void setTo_death();
-	virtual void setTo_combat();
+	virtual void switchAnime_n_Collider();
+	virtual void switchTo_idle();
+	virtual void switchTo_walk();
+	virtual void switchTo_death();
+	virtual void switchTo_combat();
 protected:
 	//================================================================//
 	//======================== Static Consts =========================//

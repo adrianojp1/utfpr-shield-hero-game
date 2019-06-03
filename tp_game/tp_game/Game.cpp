@@ -77,6 +77,9 @@ void Game::initialize()
 		_vBlocks.push_back(new Block(sf::Vector2f(float(Block::size.x * i), 200.0f)));
 		_vBlocks.push_back(new Block(sf::Vector2f(float(Block::size.x * i + Block::size.x * 6), 200.0f)));
 	}
+	//Orc Platform Edges
+	_vBlocks.push_back(new Block(sf::Vector2f(float(Block::size.x * 1), 136.0f))); //Left
+	_vBlocks.push_back(new Block(sf::Vector2f(float(Block::size.x * 6), 136.0f))); //Right
 
 	_deltaTime = 0.0f;
 	Timer::setpDeltaTime(&_deltaTime);

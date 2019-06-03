@@ -15,9 +15,9 @@ Orc::Orc(const sf::Vector2f initPosition) :
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
 	cd_attack.setTotalTime(1.0f);
-	_speed = 300.f;
+	_speed = 50.f;
 	_canAttack = true;
-	_velocity.x = -_speed;
+	_velocity.x = _speed;
 
 	initialize_animator();
 	initialize_AllColliders();

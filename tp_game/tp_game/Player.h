@@ -56,7 +56,7 @@ public:
 
 	//================================================================//
 	// ========== States ========== //
-	virtual void setTo_combat();
+	virtual void switchTo_combat();
 	virtual void resetHp();
 	virtual void decreaseTimers();
 	virtual void manageDefenseCounter();

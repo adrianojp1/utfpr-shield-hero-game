@@ -14,7 +14,7 @@ Player::Player(const sf::Vector2f initPosition) :
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
-	_jumpHeight = 150.0f;
+	_jumpHeight = 100.0f;
 	_speed = 200.f;
 	_points = 0;
 
@@ -75,6 +75,8 @@ void Player::updateAction(const float deltaTime)
 
 	std::cout << "Player hp: " << _hp << std::endl;
 
+	_velocity.x = 0.0f;
+
 	if (defendKeyPressed())
 	{
 		_state = COMBAT;
@@ -105,7 +107,7 @@ void Player::updateAction(const float deltaTime)
 	}
 } // end updatePosition
 
-void Player::setTo_combat()
+void Player::switchTo_combat()
 {
 	_current_collider = _combat_collider;
 	if (_defCounterUp)

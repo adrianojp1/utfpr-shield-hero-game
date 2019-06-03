@@ -101,8 +101,6 @@ void Character::execute(const float deltaTime)
 
 	if (this->isActive())
 	{
-		_velocity.x = 0.0f;
-
 		decreaseTimers();
 
 		if (!this->isDying())
@@ -116,7 +114,7 @@ void Character::execute(const float deltaTime)
 			updateDeath();
 		}
 
-		changeAnime_n_Collider();
+		switchAnime_n_Collider();
 
 		if (!isVulnerable())
 		{
@@ -319,34 +317,34 @@ int Character::getHp() const
 	return _hp;
 }
 
-void Character::changeAnime_n_Collider()
+void Character::switchAnime_n_Collider()
 {
 	switch (_state)
 	{
 	case 0: //IDLE
-		setTo_idle();
+		switchTo_idle();
 		break;
 	case 1: //WALK 
-		setTo_walk();
+		switchTo_walk();
 		break;
 	case 2: //DEATH
-		setTo_death();
+		switchTo_death();
 		break;
 	case 3: //COMBAT
-		setTo_combat();
+		switchTo_combat();
 		break;
 	default:
 		break;
 	}
 }
 
-void Character::setTo_idle()
+void Character::switchTo_idle()
 {
 	_current_collider = _idle_collider;
 	_animator->setCurrentAnime(IDLE);
 }
 
-void Character::setTo_walk()
+void Character::switchTo_walk()
 {
 	if (_velocity.x > 0.0f)
 	{
@@ -361,13 +359,13 @@ void Character::setTo_walk()
 	_animator->setCurrentAnime(WALK);
 }
 
-void Character::setTo_death()
+void Character::switchTo_death()
 {
 	_current_collider = _death_collider;
 	_animator->setCurrentAnime(DEATH);
 }
 
-void Character::setTo_combat()
+void Character::switchTo_combat()
 {
 	_current_collider = _combat_collider;
 	_animator->setCurrentAnime(COMBAT);
