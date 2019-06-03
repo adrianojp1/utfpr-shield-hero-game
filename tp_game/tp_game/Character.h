@@ -78,6 +78,8 @@ public:
 	virtual void resetHp();
 	virtual void decreaseTimers();
 
+	virtual void updateAnime_n_Collider(const float deltaTime);
+
 	//================================================================//
 	// ========== Sets & Gets ========== //
 	// _jumpHeight
@@ -89,7 +91,7 @@ public:
 
 	//================================================================//
 	// ========== States ========== //
-	virtual void changeAnime_n_Collider();
+	virtual void switchAnime_n_Collider();
 	virtual void setTo_idle();
 	virtual void setTo_walk();
 	virtual void setTo_death();

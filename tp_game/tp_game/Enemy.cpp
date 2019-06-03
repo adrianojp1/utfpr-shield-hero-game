@@ -58,16 +58,22 @@ void Enemy::initialize_animator()
 
 bool Enemy::isVulnerable()
 {
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
+
 	return true;
 }
 
 void Enemy::setDmg(const int dmg)
 {
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
+
 	_damage = dmg;
 }
 
 int Enemy::getDmg() const
 {
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
+
 	return _damage;
 }
 

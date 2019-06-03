@@ -116,7 +116,7 @@ void Character::execute(const float deltaTime)
 			updateDeath();
 		}
 
-		changeAnime_n_Collider();
+		switchAnime_n_Collider();
 
 		if (!isVulnerable())
 		{
@@ -127,8 +127,8 @@ void Character::execute(const float deltaTime)
 			apply_default_effect();
 		}
 
-		_animator->updateAnimation(deltaTime, _facingRight);
-		_current_collider->setPosition(_position);
+		//_animator->updateAnimation(deltaTime, _facingRight);
+		//_current_collider->setPosition(_position);
 	}
 }
 
@@ -297,6 +297,12 @@ void Character::decreaseTimers()
 	_invulnerability.decreaseTime();
 }
 
+void Character::updateAnime_n_Collider(const float deltaTime)
+{
+	_animator->updateAnimation(deltaTime, _facingRight);
+	_current_collider->setPosition(_position);
+}
+
 void Character::setJumpHeight(const float jumpHeight)
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
@@ -319,7 +325,7 @@ int Character::getHp() const
 	return _hp;
 }
 
-void Character::changeAnime_n_Collider()
+void Character::switchAnime_n_Collider()
 {
 	switch (_state)
 	{

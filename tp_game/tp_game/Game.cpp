@@ -168,47 +168,46 @@ bool Game::checkCollision_n_push(Entity* ent1, Entity* ent2, sf::Vector2f* colli
 	sf::Vector2f thisPosition = ent1->getPosition();
 	sf::Vector2f thisHalfSize = ent1->getCollider()->getSize() / 2.0f;
 
-	float deltaX = otherPosition.x - thisPosition.x;
-	float deltaY = otherPosition.y - thisPosition.y;
+	sf::Vector2f delta = { otherPosition.x - thisPosition.x , otherPosition.y - thisPosition.y };
 
-	float intersectX = abs(deltaX) - (otherHalfSize.x + thisHalfSize.x);
-	float intersectY = abs(deltaY) - (otherHalfSize.y + thisHalfSize.y);
+	sf::Vector2f intersection = { abs(delta.x) - (otherHalfSize.x + thisHalfSize.x),
+								  abs(delta.y) - (otherHalfSize.y + thisHalfSize.y) };
 
-	if (intersectX < 0.0f && intersectY < 0.0f)
+	if (intersection.x < 0.0f && intersection.y < 0.0f)
 	{
 		push = std::min(std::max(push, 0.0f), 1.0f); // clumping push between 0.0f and 1.0f
 
-		if (intersectX > intersectY) // = (abs(intersectX) < abs(intersectY))
+		if (intersection.x > intersection.y) // = (abs(intersectX) < abs(intersectY))
 		{							 // pushing on the X axe
-			if (deltaX > 0.0f)
+			if (delta.x > 0.0f)
 			{
 
-				ent1->move((intersectX * (1.0f - push)), 0.0f);
-				ent2->move((-intersectX * push), 0.0f);
+				ent1->move((intersection.x * (1.0f - push)), 0.0f);
+				ent2->move((-intersection.x * push), 0.0f);
 
 				*collisionDirection = sf::Vector2f(1.0f, 0.0f);
 			}
 			else
 			{
-				ent1->move((-intersectX * (1.0f - push)), 0.0f);
-				ent2->move((intersectX * push), 0.0f);
+				ent1->move((-intersection.x * (1.0f - push)), 0.0f);
+				ent2->move((intersection.x * push), 0.0f);
 
 				*collisionDirection = sf::Vector2f(-1.0f, 0.0f);
 			}
 		}
 		else
 		{ // pushing on the Y axe
-			if (deltaY > 0.0f)
+			if (delta.y > 0.0f)
 			{
-				ent1->move(0.0f, (intersectY * (1.0f - push)));
-				ent2->move(0.0f, (-intersectY * push));
+				ent1->move(0.0f, (intersection.y * (1.0f - push)));
+				ent2->move(0.0f, (-intersection.y * push));
 
 				*collisionDirection = sf::Vector2f(0.0f, 1.0f);
 			}
 			else
 			{
-				ent1->move(0.0f, (-intersectY * (1.0f - push)));
-				ent2->move(0.0f, (intersectY * push));
+				ent1->move(0.0f, (-intersection.y * (1.0f - push)));
+				ent2->move(0.0f, (intersection.y * push));
 
 				*collisionDirection = sf::Vector2f(0.0f, -1.0f);
 			}
@@ -248,25 +247,27 @@ void Game::executeStage(float deltaTime)
 
 	sf::Vector2f collisionDirection;
 
-	if (_player1->isVulnerable())
-	{
+	//if (_player1->isVulnerable())
+	//{
 		//Check collision between the ent1 and the orc
 		if (_player1->isDefending())
 		{
-			if (checkCollision_n_push(static_cast<Entity*>(_player1), static_cast<Entity*>(_orc), &collisionDirection, 1.0f))
+			if (checkCollision_n_push(static_cast<Entity*>(_orc), static_cast<Entity*>(_player1), &collisionDirection, 0.0f))
 			{
-				_player1->onCollision(collisionDirection);
+				//_player1->onCollision(collisionDirection);
+				_orc->onCollision(collisionDirection);
 			}
 		}
 		else
 		{
-			if (checkCollision(static_cast<Entity*>(_player1), static_cast<Entity*>(_orc)))
+			if (checkCollision_n_push(static_cast<Entity*>(_player1), static_cast<Entity*>(_orc), &collisionDirection, 0.0f))
 			{
-				//_player1->onCollision(collisionDirection);
-				_player1->takeDmg(_orc->getDmg());
+				_player1->onCollision(collisionDirection);
+				//_orc->onCollision(-collisionDirection);
+				//_player1->takeDmg(_orc->getDmg());
 			}
 		}
-	}
+	//}
 
 	for (Block* block : _vBlocks)
 		//Check collision with all blocks
@@ -276,4 +277,7 @@ void Game::executeStage(float deltaTime)
 		if (checkCollision_n_push(static_cast<Entity*>(_orc), static_cast<Entity*>(block), &collisionDirection, 0.0f))
 			_orc->onCollision(collisionDirection);
 	}
+
+	_player1->updateAnime_n_Collider(deltaTime);
+	_orc->updateAnime_n_Collider(deltaTime);
 }
