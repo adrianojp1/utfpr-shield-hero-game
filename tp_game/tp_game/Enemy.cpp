@@ -19,7 +19,7 @@ Enemy::Enemy(const sf::Vector2f initPosition) :
 	_hp = 1;
 	_collisionDamage = 1;
 
-	initialize_AllColliders();
+	
 
 } // end constr (parameters)
 
