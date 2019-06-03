@@ -4,7 +4,7 @@
 // === Classes Headers === //
 #include "Graphical_Manager.h"
 #include "Player.h"
-#include "Enemy.h"
+#include "Orc.h"
 #include "Block.h"
 #include "Main_Menu.h"
 
@@ -34,7 +34,7 @@ private:
 	sf::RectangleShape* _background;
 	sf::Texture* _bgtexture;
 	std::vector<Block*> _vBlocks;
-	Enemy* _orc;
+	Orc* _orc;
 public:
 	//================================================================//
 	// ========== Constructors ========== //

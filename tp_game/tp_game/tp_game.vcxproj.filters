@@ -34,6 +34,9 @@
     <ClCompile Include="Animation.cpp">
       <Filter>Graphicals</Filter>
     </ClCompile>
+    <ClCompile Include="Orc.cpp">
+      <Filter>Characters</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Character.h">
@@ -68,6 +71,9 @@
     </ClInclude>
     <ClInclude Include="Animation.h">
       <Filter>Graphicals</Filter>
+    </ClInclude>
+    <ClInclude Include="Orc.h">
+      <Filter>Characters</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

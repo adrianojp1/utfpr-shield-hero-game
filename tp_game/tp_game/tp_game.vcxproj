@@ -162,6 +162,7 @@
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="Graphical_Manager.cpp" />
     <ClCompile Include="Block.cpp" />
+    <ClCompile Include="Orc.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Timer.cpp" />
   </ItemGroup>
@@ -176,6 +177,7 @@
     <ClInclude Include="Menu.h" />
     <ClInclude Include="Graphical_Manager.h" />
     <ClInclude Include="Block.h" />
+    <ClInclude Include="Orc.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Timer.h" />

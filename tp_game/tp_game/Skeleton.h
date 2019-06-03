@@ -2,49 +2,37 @@
 
 //======================================================================================================================================//
 // === Classes Headers === //
-#include "Character.h" //Base class
+#include "Enemy.h"
 
 //======================================================================================================================================//
-// === Enemy Class === //
-class Enemy : public Character
+// === Skeleton Class === //
+class Skeleton : public Enemy
 {
-protected:
-	// ========= State control members ========= //
-	bool _attacking;
-	bool _canAttack;
+private:
 
-	Timer cd_attack;
-	int _collisionDamage;
 public:
 	//================================================================//
 	// ========== Constructors ========== //
-	Enemy(const sf::Vector2f initPosition);
-	Enemy();
+	Skeleton(const sf::Vector2f initPosition);
+	Skeleton();
 	// ========== Destructors ========== //
-	virtual ~Enemy();
+	~Skeleton();
 
 	//================================================================//
 	// ========== Initializers ========== //
-	virtual void initialize_animator() = 0; //Initializes all the animators
-
-	virtual bool isVulnerable();
-
-	virtual void setCollDmg(const int dmg);
-	virtual int getCollDmg() const;
+	void initialize_animator(); //Initializes all the animators
 
 	//================================================================//
 	// ========== Motion ========== //
-	virtual void attack() = 0;
-
-	//================================================================//
-	// ========== State ========== //
-	virtual void decreaseTimers();
+	void attack();
+	void turnArround();
 
 	//================================================================//
 	// ========== State checkers ========== //
-	
-	virtual bool isAttacking() const = 0;
-protected :
+	bool isAttacking() const;
+private:
 	// ========== execute submethods ========== //
-	virtual void updateAction(const float deltaTime) = 0;
-};
+	virtual void updateAction(const float deltaTime);
+}
+;
+

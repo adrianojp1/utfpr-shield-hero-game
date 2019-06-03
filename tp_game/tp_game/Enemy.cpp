@@ -9,17 +9,16 @@
 //======================================================================================================================================//
 // === Enemy methods === //
 
-Enemy::Enemy(const sf::Vector2f initPosition) : Character(initPosition)
+Enemy::Enemy(const sf::Vector2f initPosition) : 
+	Character(initPosition), cd_attack()
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 	
-	_jumpHeight = 30.0f;
-	_speed = 40.f;
-
+	
+	_jumpHeight = 0.0f;
 	_hp = 1;
-	_damage = 1;
+	_collisionDamage = 1;
 
-	initialize_animator();
 	initialize_AllColliders();
 
 } // end constr (parameters)
@@ -28,51 +27,39 @@ Enemy::Enemy() : Character()
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 1| ");
 
+	_attacking = false;
+	_canAttack = false;
 	_facingRight = true;
 	_canJump = true;
-	_speed = 0.0f;
 	_position = {0.0f, 0.0f};
 	_hp = 0;
-	_damage = 0;
+	_collisionDamage = 0;
 } // end constr (no parameters)
 
 Enemy::~Enemy()
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
-	if (_animator)
-		delete _animator;
 } // end destr
 
-void Enemy::initialize_animator()
-{
-	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
-
-	_animator = new Animator(static_cast<Entity*>(this));
-
-	*_animator << new Animation(gMng::orc_idle_Sp_Fp, 1, 0.0f);
-	*_animator << new Animation(gMng::orc_walk_Sp_Fp, 4, 0.250f);
-	*_animator << new Animation(gMng::orc_die_Sp_Fp, 3, 0.250f);
-	*_animator << new Animation(gMng::orc_atk_Sp_Fp, 3, 0.200f);
-} // end initializeAnimators
 
 bool Enemy::isVulnerable()
 {
 	return true;
 }
 
-void Enemy::setDmg(const int dmg)
+void Enemy::setCollDmg(const int dmg)
 {
-	_damage = dmg;
+	_collisionDamage = dmg;
 }
 
-int Enemy::getDmg() const
+int Enemy::getCollDmg() const
 {
-	return _damage;
+	return _collisionDamage;
 }
 
-void Enemy::updateAction(const float deltaTime)
+void Enemy::decreaseTimers()
 {
-	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
-
-} // end updatePosition
+	_invulnerability.decreaseTime();
+	cd_attack.decreaseTime();
+}

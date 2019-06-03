@@ -44,6 +44,7 @@ public:
 	//================================================================//
 	// ========== Initializers ========== //
 	virtual void initialize_AllColliders();
+	virtual void initialize_animator() = 0;
 
 	//================================================================//
 	// ========== Loop methods ========== //

@@ -69,7 +69,7 @@ void Game::initialize()
 	_player1->setRightKey(sf::Keyboard::D);
 
 	//Orc: initial position (0, 0)
-	_orc = new Enemy(sf::Vector2f{ 128.0f, 136.0f });
+	_orc = new Orc(sf::Vector2f{ 128.0f, 136.0f });
 
 	//Blocks
 	for (int i = -4; i < 0; i++)
@@ -263,7 +263,7 @@ void Game::executeStage(float deltaTime)
 			if (checkCollision(static_cast<Entity*>(_player1), static_cast<Entity*>(_orc)))
 			{
 				//_player1->onCollision(collisionDirection);
-				_player1->takeDmg(_orc->getDmg());
+				_player1->takeDmg(_orc->getCollDmg());
 			}
 		}
 	}
