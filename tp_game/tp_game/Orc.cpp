@@ -15,7 +15,7 @@ Orc::Orc(const sf::Vector2f initPosition) :
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
 	cd_attack.setTotalTime(1.0f);
-	_speed = 50.f;
+	_speed = 150.0f;
 	_canAttack = true;
 	_velocity.x = _speed;
 
@@ -58,8 +58,17 @@ void Orc::attack()
 
 void Orc::turnArround()
 {
-
 	_velocity.x = -_velocity.x;
+}
+
+void Orc::collision_onLeft()
+{
+	turnArround();
+}
+
+void Orc::collision_onRight()
+{
+	turnArround();
 }
 
 bool Orc::isAttacking() const
@@ -71,6 +80,18 @@ bool Orc::isAttacking() const
 void Orc::updateAction(const float deltaTime)
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
+	
+	
 
+	if (_velocity.x != 0.0f)
+	{
+		_state = WALK;
+	}
+	else if (_velocity.x == 0.0f) //to change
+	{
+		_state = IDLE;
+	}
+
+	
 
 } // end updatePosition

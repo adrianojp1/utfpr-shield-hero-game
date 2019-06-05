@@ -58,6 +58,21 @@ int Enemy::getCollDmg() const
 	return _collisionDamage;
 }
 
+/*void Enemy::turnArround()
+{
+	_velocity.x = -_velocity.x;
+}
+
+void Enemy::collision_onLeft()
+{
+	turnArround();
+}
+
+void Enemy::collision_onRight()
+{
+	turnArround();
+}*/
+
 void Enemy::decreaseTimers()
 {
 	_invulnerability.decreaseTime();

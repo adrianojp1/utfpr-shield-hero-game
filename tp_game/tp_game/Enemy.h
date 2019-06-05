@@ -36,6 +36,10 @@ public:
 	// ========== Motion ========== //
 	virtual void attack() = 0;
 
+	//virtual void onCollision(const sf::Vector2f collisionDirection);
+	//virtual void collision_onLeft() = 0;
+	//virtual void collision_onRight() = 0;
+
 	//================================================================//
 	// ========== State ========== //
 	virtual void decreaseTimers();

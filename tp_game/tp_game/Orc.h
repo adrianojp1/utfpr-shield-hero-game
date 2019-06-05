@@ -28,6 +28,8 @@ public:
 	// ========== Motion ========== //
 	void attack();
 	void turnArround();
+	void collision_onLeft();
+	void collision_onRight();
 
 	//================================================================//
 	// ========== State checkers ========== //
