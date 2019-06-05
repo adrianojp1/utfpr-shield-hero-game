@@ -56,11 +56,12 @@ public:
 
 	//================================================================//
 	// ========== States ========== //
-	virtual void switchTo_combat();
-	virtual void resetHp();
-	virtual void decreaseTimers();
-	virtual void manageDefenseCounter();
-	virtual void ressurect();
+	void switchTo_combat();
+	void resetHp();
+	void decreaseTimers();
+	void manageDefenseCounter();
+	void ressurect();
+	bool isDefendingInFront(const sf::Vector2f coll_direction) const;
 private:
 	// ========== Control keys methods ========== //
 	bool leftIsKeyPressed() const;
@@ -68,7 +69,6 @@ private:
 	bool jumpKeyPressed() const;
 	bool anyMoveKeyPressed() const;
 	bool defendKeyPressed() const;
-
 	// ========== execute submethods ========== //
 	void updateAction(const float deltaTime);
 }; // end Player

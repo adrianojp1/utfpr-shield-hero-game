@@ -69,5 +69,7 @@ public:
 	// _pGraphMng
 	static void setGraphManager(gMng* gMng);
 	static gMng* getGraphManager();
+	// _facingRight
+	virtual bool isFacingRight() const;
 };
 

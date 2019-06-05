@@ -180,6 +180,22 @@ bool Player::defendKeyPressed() const
 	return (sf::Keyboard::isKeyPressed(_defenseKey));
 } // end defendKeyPressed
 
+bool Player::isDefendingInFront(const sf::Vector2f coll_direction) const
+{
+	if (this->isDefending())
+	{
+		if (coll_direction.x > 0.0f && _facingRight)
+		{
+			return true;
+		}
+		else if (coll_direction.x < 0.0f && !_facingRight)
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
 void Player::setPoints(const int pts)
 {
 	_points = pts;

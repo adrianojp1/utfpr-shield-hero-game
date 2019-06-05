@@ -57,7 +57,11 @@ public:
 
 	//================================================================//
 	//Temporary methods
-	bool checkCollision_n_push(Entity* ent1, Entity* ent2, sf::Vector2f* collisionDirection, float push);
-	bool checkCollision(Entity* ent1, Entity* ent2);
 	void executeStage(float deltaTime);
+
+	void manage_collisions();
+	bool check_collision(Entity* ent1, Entity* ent2);
+	bool check_collision(Entity* ent1, Entity* ent2, sf::Vector2f* intersection, sf::Vector2f* coll_direction);
+	void push_entities(Entity* ent1, Entity* ent2, sf::Vector2f* intersection, sf::Vector2f* coll_direction, float push);
+	bool check_collision_n_push(Entity* ent1, Entity* ent2, sf::Vector2f* intersection, sf::Vector2f* coll_direction, float push);
 };

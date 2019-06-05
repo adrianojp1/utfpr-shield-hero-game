@@ -15,6 +15,11 @@ protected:
 
 	Timer cd_attack;
 	int _collisionDamage;
+
+	std::vector<Entity*> _vblocksUnderneath;
+
+	static Entity* pPlayer1;
+	static Entity* pPlayer2;
 public:
 	//================================================================//
 	// ========== Constructors ========== //
@@ -43,6 +48,8 @@ public:
 	//================================================================//
 	// ========== State ========== //
 	virtual void decreaseTimers();
+	virtual void add_blockUnderneath(Entity* pBlock);
+	virtual void clear_blocksUnderneath();
 
 	//================================================================//
 	// ========== State checkers ========== //

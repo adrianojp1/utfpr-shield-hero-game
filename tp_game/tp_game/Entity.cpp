@@ -175,3 +175,8 @@ gMng* Entity::getGraphManager()
 
 	return _pGraphMng;
 }
+
+bool Entity::isFacingRight() const
+{
+	return _facingRight;
+}
