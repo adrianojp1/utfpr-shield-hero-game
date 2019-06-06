@@ -9,17 +9,13 @@
 //======================================================================================================================================//
 // === Enemy methods === //
 
-Enemy::Enemy(const sf::Vector2f initPosition) : 
-	Character(initPosition), cd_attack()
+Enemy::Enemy(const sf::Vector2f initPosition) : Character(initPosition), cd_attack()
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
-	
-	
+
 	_jumpHeight = 0.0f;
 	_hp = 1;
 	_collisionDamage = 1;
-
-	
 
 } // end constr (parameters)
 
@@ -41,7 +37,6 @@ Enemy::~Enemy()
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
 } // end destr
-
 
 bool Enemy::isVulnerable()
 {
@@ -79,7 +74,7 @@ void Enemy::decreaseTimers()
 	cd_attack.decreaseTime();
 }
 
-void Enemy::add_blockUnderneath(Entity* pBlock)
+void Enemy::add_blockUnderneath(Entity *pBlock)
 {
 	if (pBlock)
 		_vblocksUnderneath.push_back(pBlock);

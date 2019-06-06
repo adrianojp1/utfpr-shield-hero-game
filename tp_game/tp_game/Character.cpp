@@ -125,8 +125,8 @@ void Character::execute(const float deltaTime)
 			apply_default_effect();
 		}
 
-		_animator->updateAnimation(deltaTime, _facingRight);
-		_current_collider->setPosition(_position);
+		//_animator->updateAnimation(deltaTime, _facingRight);
+		//_current_collider->setPosition(_position);
 	}
 }
 
@@ -293,6 +293,12 @@ void Character::resetHp()
 void Character::decreaseTimers()
 {
 	_invulnerability.decreaseTime();
+}
+
+void Character::updateAnime_n_Collider(const float deltaTime)
+{
+	_animator->updateAnimation(deltaTime, _facingRight);
+	_current_collider->setPosition(_position);
 }
 
 void Character::setJumpHeight(const float jumpHeight)

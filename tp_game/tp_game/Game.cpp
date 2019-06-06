@@ -10,16 +10,16 @@
 // === Game methods === //
 Game::Game()
 {
-	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
 	initialize();
 
 	main_loop();
-}// end constr
+} // end constr
 
 Game::~Game()
 {
-	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
 	if (_window)
 		delete _window;
@@ -31,17 +31,17 @@ Game::~Game()
 		delete _background;
 	if (_orc)
 		delete _orc;
-	for (Block* block : _vBlocks)
+	for (Block *block : _vBlocks)
 	{
 		if (block)
 			delete block;
 	}
 	_vBlocks.clear();
-}// end destr
+} // end destr
 
 void Game::initialize()
 {
-	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
 	//Background
 	_background = new sf::RectangleShape;
@@ -62,14 +62,14 @@ void Game::initialize()
 	Main_Menu::setpGame(this);
 
 	//Player: initial position (0, 0)
-	_player1 = new Player(sf::Vector2f{ -128.0f, 136.0f });
+	_player1 = new Player(sf::Vector2f{-128.0f, 136.0f});
 	_player1->setDefenseKey(sf::Keyboard::S);
 	_player1->setJumpKey(sf::Keyboard::W);
 	_player1->setLeftKey(sf::Keyboard::A);
 	_player1->setRightKey(sf::Keyboard::D);
 
 	//Orc: initial position (0, 0)
-	_orc = new Orc(sf::Vector2f{ 128.0f, 136.0f });
+	_orc = new Orc(sf::Vector2f{128.0f, 136.0f});
 
 	//Blocks
 	for (int i = -4; i < 0; i++)
@@ -85,11 +85,11 @@ void Game::initialize()
 	Timer::setpDeltaTime(&_deltaTime);
 
 	_main_menu->open();
-}// end initialize
+} // end initialize
 
 void Game::main_loop()
 {
-	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
 	while (_window->isOpen())
 	{
@@ -104,11 +104,11 @@ void Game::main_loop()
 		//_pause_menu;
 		//_newGame_menu;
 		//_saves_menu;
-		if(!_main_menu->isActive())
+		if (!_main_menu->isActive())
 		{
 			executeStage(_deltaTime);
 		}
-		
+
 		_window->execute();
 
 		_window->clear(); //Clear window buffer
@@ -116,11 +116,11 @@ void Game::main_loop()
 		draw(); //Future game drawer: draw all objects
 
 		_window->display(); //Show current frame
-	} //end main loop
+	}						//end main loop
 }
 void Game::close()
 {
-	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
 	_window->close();
 }
@@ -128,20 +128,20 @@ void Game::close()
 
 void Game::execute(float deltaTime)
 {
-	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
 	_player1->execute(deltaTime);
 	_orc->execute(deltaTime);
 
-	for (Block* block : _vBlocks) //execute all platforms
+	for (Block *block : _vBlocks) //execute all platforms
 	{
 		block->execute(deltaTime);
 	}
-}// end execute
+} // end execute
 
 void Game::draw() const
 {
-	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
 	_window->draw(*_background);
 
@@ -154,28 +154,28 @@ void Game::draw() const
 		_player1->draw();
 		_orc->draw();
 
-		for (Block* block : _vBlocks) //draw all platforms
+		for (Block *block : _vBlocks) //draw all platforms
 		{
 			block->draw();
 		}
 	}
-}// end draw
+} // end draw
 
 //Temporary methods
 
-bool Game::check_collision(Entity* ent1, Entity* ent2)
+bool Game::check_collision(Entity *ent1, Entity *ent2)
 {
-	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
 	sf::Vector2f otherPosition = ent2->getPosition();
 	sf::Vector2f otherHalfSize = ent2->getCollider()->getSize() / 2.0f;
 	sf::Vector2f thisPosition = ent1->getPosition();
 	sf::Vector2f thisHalfSize = ent1->getCollider()->getSize() / 2.0f;
 
-	sf::Vector2f delta = { otherPosition.x - thisPosition.x, otherPosition.y - thisPosition.y };
+	sf::Vector2f delta = {otherPosition.x - thisPosition.x, otherPosition.y - thisPosition.y};
 
-	sf::Vector2f intersection = { abs(delta.x) - (otherHalfSize.x + thisHalfSize.x) ,
-								  abs(delta.y) - (otherHalfSize.y + thisHalfSize.y) };
+	sf::Vector2f intersection = {abs(delta.x) - (otherHalfSize.x + thisHalfSize.x),
+								 abs(delta.y) - (otherHalfSize.y + thisHalfSize.y)};
 
 	if (intersection.x < 0.0f && intersection.y < 0.0f)
 	{
@@ -184,24 +184,24 @@ bool Game::check_collision(Entity* ent1, Entity* ent2)
 	return false;
 }
 
-bool Game::check_collision(Entity* ent1, Entity* ent2, sf::Vector2f* intersection, sf::Vector2f* coll_direction)
+bool Game::check_collision(Entity *ent1, Entity *ent2, sf::Vector2f *intersection, sf::Vector2f *coll_direction)
 {
-	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
 	sf::Vector2f otherPosition = ent2->getPosition();
 	sf::Vector2f otherHalfSize = ent2->getCollider()->getSize() / 2.0f;
 	sf::Vector2f thisPosition = ent1->getPosition();
 	sf::Vector2f thisHalfSize = ent1->getCollider()->getSize() / 2.0f;
 
-	sf::Vector2f delta = { otherPosition.x - thisPosition.x, otherPosition.y - thisPosition.y };
+	sf::Vector2f delta = {otherPosition.x - thisPosition.x, otherPosition.y - thisPosition.y};
 
-	*intersection = { abs(delta.x) - (otherHalfSize.x + thisHalfSize.x) ,
-					  abs(delta.y) - (otherHalfSize.y + thisHalfSize.y) };
+	*intersection = {abs(delta.x) - (otherHalfSize.x + thisHalfSize.x),
+					 abs(delta.y) - (otherHalfSize.y + thisHalfSize.y)};
 
 	if (intersection->x < 0.0f && intersection->y < 0.0f)
 	{
 		if (intersection->x > intersection->y) // = (abs(intersectX) < abs(intersectY))
-		{							 // pushing on the X axe
+		{									   // pushing on the X axe
 			if (delta.x > 0.0f)
 			{
 				*coll_direction = sf::Vector2f(1.0f, 0.0f);
@@ -227,12 +227,12 @@ bool Game::check_collision(Entity* ent1, Entity* ent2, sf::Vector2f* intersectio
 	return false;
 }
 
-void Game::push_entities(Entity* ent1, Entity* ent2, sf::Vector2f* intersection, sf::Vector2f* coll_direction, float push)
+void Game::push_entities(Entity *ent1, Entity *ent2, sf::Vector2f *intersection, sf::Vector2f *coll_direction, float push)
 {
 	push = std::min(std::max(push, 0.0f), 1.0f); // clumping push between 0.0f and 1.0f
 
-	if (intersection->x >intersection->y) // = (abs(intersectX) < abs(intersectY))
-	{							 // pushing on the X axe
+	if (intersection->x > intersection->y) // = (abs(intersectX) < abs(intersectY))
+	{									   // pushing on the X axe
 		if (coll_direction->x > 0.0f)
 		{
 
@@ -260,7 +260,7 @@ void Game::push_entities(Entity* ent1, Entity* ent2, sf::Vector2f* intersection,
 	}
 }
 
-bool Game::check_collision_n_push(Entity* ent1, Entity* ent2, sf::Vector2f* intersection, sf::Vector2f* coll_direction, float push)
+bool Game::check_collision_n_push(Entity *ent1, Entity *ent2, sf::Vector2f *intersection, sf::Vector2f *coll_direction, float push)
 {
 	if (check_collision(ent1, ent2, intersection, coll_direction))
 	{
@@ -272,7 +272,7 @@ bool Game::check_collision_n_push(Entity* ent1, Entity* ent2, sf::Vector2f* inte
 
 void Game::executeStage(float deltaTime)
 {
-	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
 	execute(_deltaTime);
 
@@ -287,7 +287,7 @@ void Game::manage_collisions()
 	if (_player1->isVulnerable())
 	{
 		if ((check_collision(static_cast<Entity*>(_player1), static_cast<Entity*>(_orc), &intersection, &collisionDirection)))
-		{//Check collision between the ent1 and the orc
+		{ //Check collision between the ent1 and the orc
 			if (_player1->isDefendingInFront(collisionDirection))
 			{
 				collisionDirection = -collisionDirection;
@@ -298,14 +298,15 @@ void Game::manage_collisions()
 				_player1->takeDmg(_orc->getCollDmg());
 			}
 		}
-	}
+		//}
 
-	for (Block* block : _vBlocks)
-		//Check collision with all blocks
-	{
-		if (check_collision_n_push(static_cast<Entity*>(_player1), static_cast<Entity*>(block), &intersection, &collisionDirection, 0.0f))
-			_player1->onCollision(collisionDirection);
-		if (check_collision_n_push(static_cast<Entity*>(_orc), static_cast<Entity*>(block), &intersection, &collisionDirection, 0.0f))
-			_orc->onCollision(collisionDirection);
+		for (Block* block : _vBlocks)
+			//Check collision with all blocks
+		{
+			if (check_collision_n_push(static_cast<Entity*>(_player1), static_cast<Entity*>(block), &intersection, &collisionDirection, 0.0f))
+				_player1->onCollision(collisionDirection);
+			if (check_collision_n_push(static_cast<Entity*>(_orc), static_cast<Entity*>(block), &intersection, &collisionDirection, 0.0f))
+				_orc->onCollision(collisionDirection);
+		}
 	}
 }

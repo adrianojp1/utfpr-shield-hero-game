@@ -2,7 +2,7 @@
 
 //======================================================================================================================================//
 // === Classes Headers === //
-#include "Entity.h"		//Base class
+#include "Entity.h" //Base class
 
 //======================================================================================================================================//
 // === Derived classes from this === //
@@ -16,10 +16,10 @@ class Character : public Entity
 protected:
 	// ========= Motion Members ========= //
 	//Colliders
-	sf::RectangleShape* _idle_collider; //Idle
-	sf::RectangleShape* _walk_collider; //Walking
-	sf::RectangleShape* _combat_collider; //Defense
-	sf::RectangleShape* _death_collider; //Death
+	sf::RectangleShape *_idle_collider;   //Idle
+	sf::RectangleShape *_walk_collider;   //Walking
+	sf::RectangleShape *_combat_collider; //Defense
+	sf::RectangleShape *_death_collider;  //Death
 
 	// ========= Motion Members ========= //
 	float _jumpHeight;
@@ -33,6 +33,7 @@ protected:
 	int _state;
 
 	int _hp;
+
 public:
 	//================================================================//
 	// ========== Constructors ========== //
@@ -79,6 +80,8 @@ public:
 	virtual void resetHp();
 	virtual void decreaseTimers();
 
+	virtual void updateAnime_n_Collider(const float deltaTime);
+
 	//================================================================//
 	// ========== Sets & Gets ========== //
 	// _jumpHeight
@@ -95,6 +98,7 @@ public:
 	virtual void switchTo_walk();
 	virtual void switchTo_death();
 	virtual void switchTo_combat();
+
 protected:
 	//================================================================//
 	//======================== Static Consts =========================//
