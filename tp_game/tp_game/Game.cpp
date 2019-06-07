@@ -37,23 +37,95 @@ void Game::initialize()
 	_window = new Graphical_Manager;
 	Abstract_Entity::setGraphManager(_window);
 
+	Menu::setpGame(this);
 	_main_menu = new Main_Menu();
-	Main_Menu::setpGame(this);
+	_newGame_menu = new NewGame_Menu();
 
-	//Player: initial position (0, 0)
-	_player1 = new Player(sf::Vector2f{-128.0f, 136.0f});
-	_player1->setDefenseKey(sf::Keyboard::S);
-	_player1->setJumpKey(sf::Keyboard::W);
-	_player1->setLeftKey(sf::Keyboard::A);
-	_player1->setRightKey(sf::Keyboard::D);
+	_nPlayers = 0;
+	_player1 = NULL;
+	_player2 = NULL;
+	_currentStage = NULL;
 
-	_stage1 = new Stage(_player1);
+	_stage1 = NULL;
 
 	_deltaTime = 0.0f;
 	Timer::setpDeltaTime(&_deltaTime);
 
 	_main_menu->open();
+	_currentStage = _stage1;
 } // end initialize
+
+void Game::initialize_player1()
+{
+	if (!_player1)
+	{
+		_player1 = new Player(sf::Vector2f{ -128.0f, 136.0f });
+		_player1->setDefenseKey(sf::Keyboard::S);
+		_player1->setJumpKey(sf::Keyboard::W);
+		_player1->setLeftKey(sf::Keyboard::A);
+		_player1->setRightKey(sf::Keyboard::D);
+	}
+}
+
+void Game::initialize_player2()
+{
+	if (!_player2)
+	{
+		_player2 = new Player(sf::Vector2f{ -150.0f, 136.0f });
+		_player2->setDefenseKey(sf::Keyboard::K);
+		_player2->setJumpKey(sf::Keyboard::I);
+		_player2->setLeftKey(sf::Keyboard::J);
+		_player2->setRightKey(sf::Keyboard::L);
+	}
+}
+
+void Game::initialize_stage1()
+{
+	if (!_stage1)
+	{
+		_stage1 = new Stage();
+
+		initialize_player1();
+		_stage1->setPlayer1(_player1);
+
+		if (_nPlayers == 2)
+		{
+			initialize_player2();
+			_stage1->setPlayer2(_player2);
+		}
+	}
+}
+
+void Game::set_nPlayers(int nP)
+{
+	_nPlayers = nP;
+}
+
+void Game::set_currentStage(int stg_id)
+{
+	if (stg_id == 1)
+		_currentStage = _stage1;
+	//else
+		//_currentStage = stage2;
+}
+
+void Game::open_Main_Menu()
+{
+	_main_menu->open();
+}
+
+void Game::open_NewGame_Menu()
+{
+	_newGame_menu->open();
+}
+
+void Game::open_Saves_Menu()
+{
+}
+
+void Game::open_Pause_Menu()
+{
+}
 
 void Game::main_loop()
 {
@@ -61,31 +133,27 @@ void Game::main_loop()
 
 	while (_window->isOpen())
 	{
-		_deltaTime = _clock.restart().asSeconds(); //Iteration clock
-		if (_deltaTime > 1.0f / 20.f)
-			_deltaTime = 1.0f / 20.f;
+		update_deltaTime();
 
-		if (_main_menu->isActive())
-		{
-			_main_menu->execute(_deltaTime);
-		}
-		//_pause_menu;
-		//_newGame_menu;
-		//_saves_menu;
-		if (!_main_menu->isActive())
-		{
-			_stage1->execute(_deltaTime);
-		}
+		this->execute();
 
 		_window->execute();
-
 		_window->clear(); //Clear window buffer
 
-		draw(); //Future game drawer: draw all objects
+		this->draw();
 
 		_window->display(); //Show current frame
-	}						//end main loop
+	}
 }
+
+bool Game::all_menus_closed()
+{
+	return !(_main_menu->isActive() || 
+			 _newGame_menu->isActive() /*||
+			 _pause_menu->isActive()   ||
+			 _saves_menu->isActive();*/);
+}
+
 void Game::close()
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
@@ -94,7 +162,25 @@ void Game::close()
 }
 // end main_loop
 
-void Game::draw() const
+void Game::execute()
+{
+	if (_main_menu->isActive())
+	{
+		_main_menu->execute(_deltaTime);
+	}
+	else if (_newGame_menu->isActive())
+	{
+		_newGame_menu->execute(_deltaTime);
+	}
+	//_pause_menu;
+	//_saves_menu;
+	if (all_menus_closed())
+	{
+		_stage1->execute(_deltaTime);
+	}
+}
+
+void Game::draw()
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
@@ -102,8 +188,22 @@ void Game::draw() const
 	{
 		_main_menu->draw();
 	}
-	else
+	else if (_newGame_menu->isActive())
 	{
-		_stage1->draw();
+		_newGame_menu->draw();
+	}
+	//_pause_menu;
+	//_newGame_menu;
+	//_saves_menu;
+	if (all_menus_closed())
+	{
+		_currentStage->draw();
 	}
 } // end draw
+
+void Game::update_deltaTime()
+{
+	_deltaTime = _clock.restart().asSeconds(); //Iteration clock
+	if (_deltaTime > 1.0f / 20.f)
+		_deltaTime = 1.0f / 20.f;
+}

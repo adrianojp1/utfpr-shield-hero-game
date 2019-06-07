@@ -22,7 +22,7 @@ protected:
 public:
 	// ========== Constructors ========== //
 	Stage(Player* pP1 = NULL, Player* pP2 = NULL);
-	Stage();
+	//Stage();
 	// ========== Destructors ========== //
 	virtual ~Stage();
 
@@ -33,7 +33,9 @@ public:
 	virtual void execute(const float deltaTime);
 	virtual void draw() const;
 
-	// ========== Activation methods ========== //
+	// ========== Players methods ========== //
+	virtual void executePlayers(const float deltaTime);
+	virtual void drawPlayers() const;
 
 	// ========== Sets & Gets ========== //
 	virtual void setPlayer1(Player* pP1);

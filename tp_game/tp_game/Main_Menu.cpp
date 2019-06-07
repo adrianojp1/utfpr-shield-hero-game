@@ -16,8 +16,8 @@ const sf::Vector2f Main_Menu::menu_position = { 0.0f, -300.0f };
 const int Main_Menu::ops_act_charSize(120);
 const int Main_Menu::ops_deact_charSize(90);
 
-//const sf::Color Main_Menu::ops_act_fillColor(sf::Color::Red);
-//const sf::Color Main_Menu::ops_deact_fillColor(sf::Color::White);
+sf::Color Main_Menu::ops_act_fillColor(sf::Color(255, 0, 0)); //Red
+sf::Color Main_Menu::ops_deact_fillColor(sf::Color(255, 255, 255)); //White
 
 const std::string Main_Menu::op0_string = "New Game";
 const sf::Vector2f Main_Menu::op0_position = menu_position + sf::Vector2f{ 0.0f, (float)ops_act_charSize * 0.0f };
@@ -52,10 +52,10 @@ void Main_Menu::initializeAllOps()
 
 	Option* pOp;
 
-	initialize_n_addOp(pOp, op0_position, op0_string, ops_act_charSize, ops_deact_charSize, sf::Color::Red, sf::Color::White);
-	initialize_n_addOp(pOp, op1_position, op1_string, ops_act_charSize, ops_deact_charSize, sf::Color::Red, sf::Color::White);
-	initialize_n_addOp(pOp, op2_position, op2_string, ops_act_charSize, ops_deact_charSize, sf::Color::Red, sf::Color::White);
-	initialize_n_addOp(pOp, op3_position, op3_string, ops_act_charSize, ops_deact_charSize, sf::Color::Red, sf::Color::White);
+	initialize_n_addOp(pOp, op0_position, op0_string, ops_act_charSize, ops_deact_charSize, ops_act_fillColor, ops_deact_fillColor);
+	initialize_n_addOp(pOp, op1_position, op1_string, ops_act_charSize, ops_deact_charSize, ops_act_fillColor, ops_deact_fillColor);
+	initialize_n_addOp(pOp, op2_position, op2_string, ops_act_charSize, ops_deact_charSize, ops_act_fillColor, ops_deact_fillColor);
+	initialize_n_addOp(pOp, op3_position, op3_string, ops_act_charSize, ops_deact_charSize, ops_act_fillColor, ops_deact_fillColor);
 }
 
 void Main_Menu::activate_onOp()
@@ -108,7 +108,7 @@ void Main_Menu::open_newGame_menu()
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
-	//_pGame->open_newGame_menu();
+	_pGame->open_NewGame_Menu();
 }
 
 void Main_Menu::open_saves_menu()

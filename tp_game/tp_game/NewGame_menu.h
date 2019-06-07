@@ -4,18 +4,19 @@
 #include "Menu.h" //base class
 
 //======================================================================================================================================//
-// === Main_Menu Class === //
-class Main_Menu : public Menu
+// === NewGame_Menu Class === //
+class NewGame_Menu :
+	public Menu
 {
 private:
 
 public:
 	//================================================================//
 	// ========== Constructors ========== //
-	Main_Menu();
+	NewGame_Menu();
 
 	// ========== Destructors ========== //
-	virtual ~Main_Menu();
+	virtual ~NewGame_Menu();
 
 	//================================================================//
 	// ========== Initializers ========== //
@@ -33,15 +34,16 @@ public:
 
 	//================================================================//
 	// ========== Options methods ========== //
-	void open_newGame_menu();
-	void open_saves_menu();
-	void show_ranking();
-	void close_game();
+	void set_1player();
+	void set_2players();
+	//void set_nick_p1();
+	//void set_nick_p2();
+	void exit();
 
 	//================================================================//
 	//======================== Static Consts =========================//
 private:
-	// ========== Main_Menu ========== //
+	// ========== NewGame_Menu ========== //
 	static const sf::Vector2f menu_position;
 
 	static const int ops_act_charSize;
@@ -57,11 +59,13 @@ private:
 	//op1
 	static const std::string op1_string;
 	static const sf::Vector2f op1_position;
+	/*
 	//op2
 	static const std::string op2_string;
 	static const sf::Vector2f op2_position;
 	//op3
 	static const std::string op3_string;
 	static const sf::Vector2f op3_position;
+	*/
 };
 

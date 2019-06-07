@@ -17,7 +17,7 @@ Stage::Stage(Player* pP1, Player* pP2) : Abstract_Entity()
 
 	initializeStage();
 }
-
+/*
 Stage::Stage() : Abstract_Entity()
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 1 | ");
@@ -25,7 +25,7 @@ Stage::Stage() : Abstract_Entity()
 	_pPlayer1 = NULL;
 	_pPlayer2 = NULL;
 }
-
+*/
 Stage::~Stage()
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
@@ -65,14 +65,14 @@ void Stage::initializeStage()
 	//Orc Platform Edges
 	_vBlocks.push_back(new Block(sf::Vector2f(float(Block::size.x * 1), 136.0f))); //Left
 	_vBlocks.push_back(new Block(sf::Vector2f(float(Block::size.x * 6), 136.0f))); //Right
-
 }
 
 void Stage::execute(const float deltaTime)
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
-	_pPlayer1->execute(deltaTime);
+	executePlayers(deltaTime);
+	
 	_orc->execute(deltaTime);
 
 	for (Block* block : _vBlocks) //execute all platforms
@@ -85,11 +85,11 @@ void Stage::execute(const float deltaTime)
 
 void Stage::draw() const
 {
-	//gMng::draw(*_background);
+	_pGraphMng->draw(*_background);
 
 	_pPlayer1->draw();
 	if (_pPlayer2)
-		_pPlayer2;
+		_pPlayer2->draw();
 
 	_orc->draw();
 
@@ -97,6 +97,25 @@ void Stage::draw() const
 	{
 		block->draw();
 	}
+}
+
+void Stage::executePlayers(const float deltaTime)
+{
+	_pPlayer1->execute(deltaTime);
+	if (_pPlayer2)
+		_pPlayer2->execute(deltaTime);
+
+	std::cout << "Player1 hp: " << _pPlayer1->getHp();
+	if(_pPlayer2)
+		std::cout << " | " << "Player2 hp: " << _pPlayer2->getHp();
+	std::cout << std::endl;
+}
+
+void Stage::drawPlayers() const
+{
+	_pPlayer1->draw();
+	if (_pPlayer2)
+		_pPlayer2->draw();
 }
 
 void Stage::setPlayer1(Player* pP1)
@@ -139,11 +158,32 @@ void Stage::manage_collisions()
 		}
 	}
 
+	if (_pPlayer2)
+	{
+		if (_pPlayer2->isVulnerable() && (check_collision(static_cast<Entity*>(_pPlayer2), static_cast<Entity*>(_orc), &intersection, &collisionDirection)))
+		{ //Check collision between the ent1 and the orc
+			if (_pPlayer2->isDefendingInFront(collisionDirection))
+			{
+				collisionDirection = -collisionDirection;
+				push_entities(static_cast<Entity*>(_orc), static_cast<Entity*>(_pPlayer2), &intersection, &collisionDirection, 0.0f);
+			}
+			else
+			{
+				_pPlayer2->takeDmg(_orc->getCollDmg());
+			}
+		}
+	}
+
 	for (Block* block : _vBlocks)
 		//Check collision with all blocks
 	{
 		if (check_collision_n_push(static_cast<Entity*>(_pPlayer1), static_cast<Entity*>(block), &intersection, &collisionDirection, 0.0f))
 			_pPlayer1->onCollision(collisionDirection);
+		if (_pPlayer2)
+		{
+			if (check_collision_n_push(static_cast<Entity*>(_pPlayer2), static_cast<Entity*>(block), &intersection, &collisionDirection, 0.0f))
+				_pPlayer2->onCollision(collisionDirection);
+		}
 		if (check_collision_n_push(static_cast<Entity*>(_orc), static_cast<Entity*>(block), &intersection, &collisionDirection, 0.0f))
 			_orc->onCollision(collisionDirection);
 	}

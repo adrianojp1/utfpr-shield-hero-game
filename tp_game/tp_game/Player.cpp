@@ -73,8 +73,6 @@ void Player::updateAction(const float deltaTime)
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
-	std::cout << "Player hp: " << _hp << std::endl;
-
 	_velocity.x = 0.0f;
 
 	if (defendKeyPressed())

@@ -163,6 +163,7 @@
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="Graphical_Manager.cpp" />
     <ClCompile Include="Block.cpp" />
+    <ClCompile Include="NewGame_Menu.cpp" />
     <ClCompile Include="Orc.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Stage.cpp" />
@@ -180,6 +181,7 @@
     <ClInclude Include="Menu.h" />
     <ClInclude Include="Graphical_Manager.h" />
     <ClInclude Include="Block.h" />
+    <ClInclude Include="NewGame_Menu.h" />
     <ClInclude Include="Orc.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Stage.h" />
