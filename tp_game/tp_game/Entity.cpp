@@ -7,13 +7,9 @@
 #include "Entity.h"
 
 //======================================================================================================================================//
-// === Static initializations === //
-Graphical_Manager* Entity::_pGraphMng = NULL;
-
-//======================================================================================================================================//
 // === Entity methods === //
 
-Entity::Entity(const sf::Vector2f initPosition, bool active)
+Entity::Entity(const sf::Vector2f initPosition, bool active) : Abstract_Entity(initPosition, active)
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
@@ -21,17 +17,13 @@ Entity::Entity(const sf::Vector2f initPosition, bool active)
 	_animator = NULL;
 	_current_collider = NULL;
 
-	//Parameters
-	_position = initPosition;
-
 	_speed = 0.0f;
 
 	//Bools
 	_facingRight = true;
-	_active = active;
 }
 
-Entity::Entity()
+Entity::Entity() : Abstract_Entity()
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 1 | ");
 
@@ -39,14 +31,10 @@ Entity::Entity()
 	_animator = NULL;
 	_current_collider = NULL;
 
-	//Parameters
-	_position = { 0.0f, 0.0f };
-
 	_speed = 0.0f;
 
 	//Bools
 	_facingRight = true;
-	_active = false;
 }
 
 
@@ -123,57 +111,10 @@ float Entity::getSpeed() const
 	return _speed;
 }
 
-void Entity::setPosition(const sf::Vector2f position)
-{
-	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
-	_position = position;
-}
-
-sf::Vector2f Entity::getPosition() const
-{
-	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
-	return _position;
-}
-
 sf::RectangleShape* Entity::getCollider() const
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 	return _current_collider;
-}
-
-void Entity::activate()
-{
-	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
-
-	_active = true;
-}
-
-void Entity::desactivate()
-{
-	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
-
-	_active = false;
-}
-
-bool Entity::isActive() const
-{
-	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
-
-	return _active;
-}
-
-void Entity::setGraphManager(gMng* gMng)
-{
-	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
-
-	_pGraphMng = gMng;
-}
-
-gMng* Entity::getGraphManager()
-{
-	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
-
-	return _pGraphMng;
 }
 
 bool Entity::isFacingRight() const

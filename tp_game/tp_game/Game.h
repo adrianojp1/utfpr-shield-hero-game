@@ -2,10 +2,7 @@
 
 //======================================================================================================================================//
 // === Classes Headers === //
-#include "Graphical_Manager.h"
-#include "Player.h"
-#include "Orc.h"
-#include "Block.h"
+#include "Stage.h"
 #include "Main_Menu.h"
 
 //======================================================================================================================================//
@@ -23,18 +20,13 @@ private:
 	Player* _player1;
 	//Player* _player2;
 
-	//Stage1* _stage1;
+	Stage* _stage1;
 	//Stage1* _stage2;
 
 	//Time control
 	float _deltaTime;
 	sf::Clock _clock; //To get the deltaTime
 
-	//Temporary
-	sf::RectangleShape* _background;
-	sf::Texture* _bgtexture;
-	std::vector<Block*> _vBlocks;
-	Orc* _orc;
 public:
 	//================================================================//
 	// ========== Constructors ========== //
@@ -54,14 +46,4 @@ public:
 	// ========== Loop methods ========== //
 	void execute(float deltaTime);
 	void draw() const;
-
-	//================================================================//
-	//Temporary methods
-	void executeStage(float deltaTime);
-
-	void manage_collisions();
-	bool check_collision(Entity* ent1, Entity* ent2);
-	bool check_collision(Entity* ent1, Entity* ent2, sf::Vector2f* intersection, sf::Vector2f* coll_direction);
-	void push_entities(Entity* ent1, Entity* ent2, sf::Vector2f* intersection, sf::Vector2f* coll_direction, float push);
-	bool check_collision_n_push(Entity* ent1, Entity* ent2, sf::Vector2f* intersection, sf::Vector2f* coll_direction, float push);
 };

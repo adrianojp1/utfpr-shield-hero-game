@@ -125,8 +125,7 @@ void Character::execute(const float deltaTime)
 			apply_default_effect();
 		}
 
-		//_animator->updateAnimation(deltaTime, _facingRight);
-		//_current_collider->setPosition(_position);
+		updateAnime_n_Collider(deltaTime);
 	}
 }
 

@@ -2,7 +2,7 @@
 
 //======================================================================================================================================//
 // === Classes Headers === //
-#include "Entity.h"		//Base class
+#include "Abstract_Entity.h"		//Base class
 
 //======================================================================================================================================//
 // === Classes Declaration === //
@@ -17,11 +17,11 @@ class Game;
 
 //======================================================================================================================================//
 // === Menu Class === //
-class Menu : public Entity
+class Menu : public Abstract_Entity
 {
 protected:
 	//Menu option class
-	class Option : public Entity
+	class Option : public Abstract_Entity
 	{
 	private:
 		sf::Text* _text;

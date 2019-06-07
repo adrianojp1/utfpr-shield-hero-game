@@ -13,7 +13,7 @@ const unsigned int Graphical_Manager::ratioMultiplier = 250;
 const std::string Graphical_Manager::windowName = "Shield Hero";
 const sf::Vector2u Graphical_Manager::windowSize = { windowRatio.x * ratioMultiplier, windowRatio.y * ratioMultiplier };
 
-const float Graphical_Manager::gravity(500.0f);
+const float Graphical_Manager::gravity(1400.0f);
 
 const float Graphical_Manager::textures_scale = 4.0f;
 

@@ -55,6 +55,9 @@ public:
 	// ========== State checkers ========== //
 	
 	virtual bool isAttacking() const = 0;
+
+	static void setpPlayer1(Entity* pP1);
+	
 protected :
 	// ========== execute submethods ========== //
 	virtual void updateAction(const float deltaTime) = 0;

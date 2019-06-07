@@ -20,7 +20,7 @@ sf::Font* Menu::menu_font = NULL;
 // === Menu methods === //
 
 Menu::Menu(const sf::Vector2f initPosit) :
-	Entity(initPosit), _betweenKeys(keysCD)
+	Abstract_Entity(initPosit), _betweenKeys(keysCD)
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
@@ -35,7 +35,7 @@ Menu::Menu(const sf::Vector2f initPosit) :
 	}
 }
 
-Menu::Menu() : Entity(), _betweenKeys()
+Menu::Menu() : Abstract_Entity(), _betweenKeys()
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 1 | ");
 
@@ -241,7 +241,7 @@ Game* Menu::getpGame()
 // === Option methods === //
 
 Menu::Option::Option(sf::Font* font, const sf::Vector2f position, const std::string label, const int actSize, const int deactSize, sf::Color actColor, sf::Color deactColor) :
-	Entity(position)
+	Abstract_Entity(position)
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
@@ -254,7 +254,7 @@ Menu::Option::Option(sf::Font* font, const sf::Vector2f position, const std::str
 	initializeText(font, label); //position 
 }
 
-Menu::Option::Option() : Entity(), _text()
+Menu::Option::Option() : Abstract_Entity(), _text()
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 1 | ");
 
