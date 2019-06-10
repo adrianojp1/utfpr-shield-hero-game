@@ -178,6 +178,7 @@
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="List.h" />
     <ClInclude Include="Main_Menu.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="Graphical_Manager.h" />

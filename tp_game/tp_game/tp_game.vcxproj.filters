@@ -99,6 +99,7 @@
     <ClInclude Include="Pause_Menu.h">
       <Filter>Abstract Entities</Filter>
     </ClInclude>
+    <ClInclude Include="List.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Characters">
