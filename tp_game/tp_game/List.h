@@ -1,6 +1,7 @@
 #pragma once
+#include "stdafx.h"
 
-template<class T>
+template<class TYPE>
 class List
 {
 private:
@@ -30,6 +31,13 @@ private:
 
 	template<class T>
 	inline Element<T>::Element()
+	{
+		pNext = NULL;
+		pPrevious = NULL;
+	}
+
+	template<class T>
+	inline Element<T>::~Element()
 	{
 		pNext = NULL;
 		pPrevious = NULL;
@@ -73,8 +81,8 @@ private:
 
 
 
-	Element<T>* pFirst;
-	Element<T>* pCurrent;
+	Element<TYPE>* pFirst;
+	Element<TYPE>* pCurrent;
 
 
 public:
@@ -82,32 +90,32 @@ public:
 	~List();
 
 	void initialize();
-	bool includeElement(Element<T>* pElement);
-	bool includeObject(T* pObj);
+	bool includeElement(Element<TYPE>* pElement);
+	bool includeObject(TYPE* pObj);
 
 };
 
-template<class T>
-inline List<T>::List()
+template<class TYPE>
+inline List<TYPE>::List()
 {
 	initialize();
 }
 
-template<class T>
-inline List<T>::~List()
+template<class TYPE>
+inline List<TYPE>::~List()
 {
 	//Código que desaloca os elementos
 }
 
-template<class T>
-inline void List<T>::initialize()
+template<class TYPE>
+inline void List<TYPE>::initialize()
 {
 	pFirst = NULL;
 	pCurrent = NULL;
 }
 
-template<class T>
-inline bool List<T>::includeElement(Element<T>* pElement)
+template<class TYPE>
+inline bool List<TYPE>::includeElement(Element<TYPE>* pElement)
 {
 	if (pElement != NULL)
 	{
@@ -131,13 +139,13 @@ inline bool List<T>::includeElement(Element<T>* pElement)
 	}
 }
 
-template<class T>
-inline bool List<T>::includeObject(T* pObj)
+template<class TYPE>
+inline bool List<TYPE>::includeObject(TYPE* pObj)
 {
 	if (pObj != NULL)
 	{
-		Element<T>* pElement;
-		pElement = new Element<T>();
+		Element<TYPE>* pElement;
+		pElement = new Element<TYPE>();
 		pElement->setObject(pObj);
 		includeElement(pElement);
 		return true;
