@@ -6,6 +6,10 @@
 #include "Graphical_Manager.h"		//Drawer
 
 //======================================================================================================================================//
+// === Classes Declaration === //
+class Game;
+
+//======================================================================================================================================//
 // === Derived classes from this === //
 // Character
 // Menu
@@ -16,6 +20,7 @@ class Abstract_Entity
 {
 protected:
 	static Graphical_Manager* _pGraphMng;
+	static Game* _pGame;
 
 	bool _active;
 
@@ -48,5 +53,8 @@ public:
 	// _pGraphMng
 	static void setGraphManager(gMng* gMng);
 	static gMng* getGraphManager();
+	// _pGame
+	static void setpGame(Game* pGame);
+	static Game* getpGame();
 };
 

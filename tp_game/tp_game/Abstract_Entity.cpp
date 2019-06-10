@@ -7,8 +7,13 @@
 #include "Abstract_Entity.h"
 
 //======================================================================================================================================//
+// === Classes headers for definition === //
+//#include "Game.h"
+
+//======================================================================================================================================//
 // === Static initializations === //
 Graphical_Manager* Abstract_Entity::_pGraphMng = NULL;
+Game* Abstract_Entity::_pGame = NULL;
 
 //======================================================================================================================================//
 // === Entity methods === //
@@ -76,4 +81,18 @@ gMng* Abstract_Entity::getGraphManager()
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
 	return _pGraphMng;
+}
+
+void Abstract_Entity::setpGame(Game* pGame)
+{
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+
+	_pGame = pGame;
+}
+
+Game* Abstract_Entity::getpGame()
+{
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+
+	return _pGame;
 }

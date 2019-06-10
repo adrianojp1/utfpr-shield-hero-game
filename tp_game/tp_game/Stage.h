@@ -19,6 +19,7 @@ protected:
 
 	Player* _pPlayer1;
 	Player* _pPlayer2;
+
 public:
 	// ========== Constructors ========== //
 	Stage(Player* pP1 = NULL, Player* pP2 = NULL);
@@ -36,6 +37,13 @@ public:
 	// ========== Players methods ========== //
 	virtual void executePlayers(const float deltaTime);
 	virtual void drawPlayers() const;
+
+	// ========== State ========== //
+	virtual void pause();
+	virtual void unpause();
+	virtual bool isPaused();
+	virtual void check_pauseKey();
+	virtual bool pauseKey_isPressed();
 
 	// ========== Sets & Gets ========== //
 	virtual void setPlayer1(Player* pP1);

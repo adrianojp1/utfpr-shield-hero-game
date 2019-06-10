@@ -7,12 +7,7 @@
 #include "Menu.h"
 
 //======================================================================================================================================//
-// === Classes headers for definition === //
-#include "Game.h"
-
-//======================================================================================================================================//
 // === Static initializations === //
-Game* Menu::_pGame = NULL;
 const float Menu::keysCD = 0.20f;
 sf::Font* Menu::menu_font = NULL;
 
@@ -106,6 +101,13 @@ void Menu::draw() const
 	}
 }
 
+void Menu::activate_onOp()
+{
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+
+	_vOptions[_onOp]->activate();
+}
+
 void Menu::check_allKeys()
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
@@ -168,14 +170,14 @@ void Menu::open()
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
 	this->activate();
+	_onOp = 0;
 }
 
-void Menu::activate()
+bool Menu::isOpen()
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
-	_active = true;
-	_onOp = 0;
+	return this->isActive();
 }
 
 void Menu::deactivate_allOps()
@@ -221,20 +223,6 @@ void Menu::downOp()
 
 	if (_onOp != _nOps - 1)
 		_onOp++;
-}
-
-void Menu::setpGame(Game* pGame)
-{
-	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
-
-	_pGame = pGame;
-}
-
-Game* Menu::getpGame()
-{
-	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
-
-	return _pGame;
 }
 
 //======================================================================================================================================//
@@ -291,7 +279,7 @@ void Menu::Option::draw() const
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
-	Entity::_pGraphMng->draw(*_text);
+	Abstract_Entity::_pGraphMng->draw(*_text);
 }
 
 void Menu::Option::activate()

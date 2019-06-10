@@ -58,29 +58,6 @@ void Main_Menu::initializeAllOps()
 	initialize_n_addOp(pOp, op3_position, op3_string, ops_act_charSize, ops_deact_charSize, ops_act_fillColor, ops_deact_fillColor);
 }
 
-void Main_Menu::activate_onOp()
-{
-	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
-
-	switch (_onOp)
-	{
-	case 0:
-		_vOptions[0]->activate();
-		break;
-	case 1:
-		_vOptions[1]->activate();
-		break;
-	case 2:
-		_vOptions[2]->activate();
-		break;
-	case 3:
-		_vOptions[3]->activate();
-		break;
-	default:
-		break;
-	}
-}
-
 void Main_Menu::execute_onOp()
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");

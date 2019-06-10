@@ -37,9 +37,10 @@ void Game::initialize()
 	_window = new Graphical_Manager;
 	Abstract_Entity::setGraphManager(_window);
 
-	Menu::setpGame(this);
+	Abstract_Entity::setpGame(this);
 	_main_menu = new Main_Menu();
 	_newGame_menu = new NewGame_Menu();
+	_pause_menu = new Pause_Menu();
 
 	_nPlayers = 0;
 	_player1 = NULL;
@@ -51,6 +52,7 @@ void Game::initialize()
 	_deltaTime = 0.0f;
 	Timer::setpDeltaTime(&_deltaTime);
 
+	_runningStage = false;
 	_main_menu->open();
 	_currentStage = _stage1;
 } // end initialize
@@ -109,6 +111,38 @@ void Game::set_currentStage(int stg_id)
 		//_currentStage = stage2;
 }
 
+void Game::pause_stage()
+{
+	if (_runningStage)
+	{
+		_currentStage->pause();
+	}
+}
+
+void Game::unpause_stage()
+{
+	if (_runningStage)
+	{
+		_currentStage->unpause();
+	}
+}
+
+bool Game::isRunning_stage()
+{
+	return _runningStage;
+}
+
+void Game::run_stage()
+{
+	_runningStage = true;
+	unpause_stage();
+}
+
+void Game::stop_runningStage()
+{
+	_runningStage = false;
+}
+
 void Game::open_Main_Menu()
 {
 	_main_menu->open();
@@ -125,6 +159,7 @@ void Game::open_Saves_Menu()
 
 void Game::open_Pause_Menu()
 {
+	_pause_menu->open();
 }
 
 void Game::main_loop()
@@ -146,14 +181,6 @@ void Game::main_loop()
 	}
 }
 
-bool Game::all_menus_closed()
-{
-	return !(_main_menu->isActive() || 
-			 _newGame_menu->isActive() /*||
-			 _pause_menu->isActive()   ||
-			 _saves_menu->isActive();*/);
-}
-
 void Game::close()
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
@@ -164,19 +191,32 @@ void Game::close()
 
 void Game::execute()
 {
-	if (_main_menu->isActive())
+	if (!_runningStage)
 	{
-		_main_menu->execute(_deltaTime);
+		if (_main_menu->isOpen())
+		{
+			_main_menu->execute(_deltaTime);
+		}
+		else if (_newGame_menu->isOpen())
+		{
+			_newGame_menu->execute(_deltaTime);
+		}/*
+		else if (_saves_menu->isActive())
+		{
+			_saves_menu->execute(_deltaTime);
+		}*/
 	}
-	else if (_newGame_menu->isActive())
+
+	if (_runningStage)
 	{
-		_newGame_menu->execute(_deltaTime);
-	}
-	//_pause_menu;
-	//_saves_menu;
-	if (all_menus_closed())
-	{
-		_stage1->execute(_deltaTime);
+		if (_currentStage->isPaused())
+		{
+			_pause_menu->execute(_deltaTime);
+		}
+		else
+		{
+			_stage1->execute(_deltaTime);
+		}
 	}
 }
 
@@ -184,20 +224,32 @@ void Game::draw()
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
-	if (_main_menu->isActive())
+	if (!_runningStage)
 	{
-		_main_menu->draw();
+		if (_main_menu->isOpen())
+		{
+			_main_menu->draw();
+		}
+		else if (_newGame_menu->isOpen())
+		{
+			_newGame_menu->draw();
+		}/*
+		else if (_saves_menu->isActive())
+		{
+			_saves_menu->draw();
+		}*/
 	}
-	else if (_newGame_menu->isActive())
+
+	if (_runningStage)
 	{
-		_newGame_menu->draw();
-	}
-	//_pause_menu;
-	//_newGame_menu;
-	//_saves_menu;
-	if (all_menus_closed())
-	{
-		_currentStage->draw();
+		if (_currentStage->isPaused())
+		{
+			_pause_menu->draw();
+		}
+		else
+		{
+			_stage1->draw();
+		}
 	}
 } // end draw
 

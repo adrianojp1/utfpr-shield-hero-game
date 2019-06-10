@@ -7,6 +7,10 @@
 #include "Stage.h"
 
 //======================================================================================================================================//
+// === Classes headers for definition === //
+#include "Game.h"
+
+//======================================================================================================================================//
 // === Stage methods === //
 
 Stage::Stage(Player* pP1, Player* pP2) : Abstract_Entity()
@@ -45,6 +49,8 @@ Stage::~Stage()
 
 void Stage::initializeStage()
 {
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
+
 	//Background
 	_background = new sf::RectangleShape;
 	_bgtexture = NULL;
@@ -71,6 +77,8 @@ void Stage::execute(const float deltaTime)
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
+	check_pauseKey();
+
 	executePlayers(deltaTime);
 	
 	_orc->execute(deltaTime);
@@ -85,11 +93,9 @@ void Stage::execute(const float deltaTime)
 
 void Stage::draw() const
 {
-	_pGraphMng->draw(*_background);
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
-	_pPlayer1->draw();
-	if (_pPlayer2)
-		_pPlayer2->draw();
+	_pGraphMng->draw(*_background);
 
 	_orc->draw();
 
@@ -97,10 +103,14 @@ void Stage::draw() const
 	{
 		block->draw();
 	}
+
+	drawPlayers();
 }
 
 void Stage::executePlayers(const float deltaTime)
 {
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
+
 	_pPlayer1->execute(deltaTime);
 	if (_pPlayer2)
 		_pPlayer2->execute(deltaTime);
@@ -113,35 +123,86 @@ void Stage::executePlayers(const float deltaTime)
 
 void Stage::drawPlayers() const
 {
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
+
 	_pPlayer1->draw();
 	if (_pPlayer2)
 		_pPlayer2->draw();
 }
 
+void Stage::pause()
+{
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
+
+	this->desactivate();
+}
+
+void Stage::unpause()
+{
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
+
+	this->activate();
+}
+
+bool Stage::isPaused()
+{
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
+
+	return !this->isActive();
+}
+
+void Stage::check_pauseKey()
+{
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
+
+	if (pauseKey_isPressed())
+	{
+		this->pause();
+		_pGame->open_Pause_Menu();
+	}
+}
+
+bool Stage::pauseKey_isPressed()
+{
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
+
+	return (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape));
+}
+
 void Stage::setPlayer1(Player* pP1)
 {
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
+
 	if (pP1)
 		_pPlayer1 = pP1;
 }
 
 Player* Stage::getPlayer1()
 {
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
+
 	return _pPlayer1;
 }
 
 void Stage::setPlayer2(Player* pP2)
 {
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
+
 	if (pP2)
 		_pPlayer2 = pP2;
 }
 
 Player* Stage::getPlayer2()
 {
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
+
 	return _pPlayer2;
 }
 
 void Stage::manage_collisions()
 {
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
+
 	sf::Vector2f collisionDirection;
 	sf::Vector2f intersection;
 
@@ -255,6 +316,8 @@ bool Stage::check_collision(Entity* ent1, Entity* ent2, sf::Vector2f* intersecti
 
 void Stage::push_entities(Entity* ent1, Entity* ent2, sf::Vector2f* intersection, sf::Vector2f* coll_direction, float push)
 {
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
+
 	push = std::min(std::max(push, 0.0f), 1.0f); // clumping push between 0.0f and 1.0f
 
 	if (intersection->x > intersection->y) // = (abs(intersectX) < abs(intersectY))
@@ -288,6 +351,8 @@ void Stage::push_entities(Entity* ent1, Entity* ent2, sf::Vector2f* intersection
 
 bool Stage::check_collision_n_push(Entity* ent1, Entity* ent2, sf::Vector2f* intersection, sf::Vector2f* coll_direction, float push)
 {
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
+
 	if (check_collision(ent1, ent2, intersection, coll_direction))
 	{
 		push_entities(ent1, ent2, intersection, coll_direction, push);

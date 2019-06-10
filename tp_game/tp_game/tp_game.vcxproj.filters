@@ -46,6 +46,9 @@
     <ClCompile Include="NewGame_Menu.cpp">
       <Filter>Abstract Entities</Filter>
     </ClCompile>
+    <ClCompile Include="Pause_Menu.cpp">
+      <Filter>Abstract Entities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Character.h">
@@ -91,6 +94,9 @@
       <Filter>Abstract Entities</Filter>
     </ClInclude>
     <ClInclude Include="NewGame_Menu.h">
+      <Filter>Abstract Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Pause_Menu.h">
       <Filter>Abstract Entities</Filter>
     </ClInclude>
   </ItemGroup>

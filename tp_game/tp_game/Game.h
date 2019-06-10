@@ -5,6 +5,7 @@
 #include "Stage.h"
 #include "Main_Menu.h"
 #include "NewGame_menu.h"
+#include "Pause_Menu.h"
 
 //======================================================================================================================================//
 // === Game Class === //
@@ -16,7 +17,7 @@ private:
 	Main_Menu* _main_menu;
 	NewGame_Menu* _newGame_menu;
 	//Saves_Menu* _saves_menu;
-	//Pause_Menu* _pause_menu;
+	Pause_Menu* _pause_menu;
 
 	int _nPlayers;
 	Player* _player1;
@@ -28,6 +29,9 @@ private:
 
 	//Save* _currentSave;
 
+	//State control
+	bool _runningStage; //True if a stage is running, paused or not
+	
 	//Time control
 	float _deltaTime;
 	sf::Clock _clock; //To get the deltaTime
@@ -46,22 +50,27 @@ public:
 	void initialize_player2();
 	void initialize_stage1();
 
-	void set_nPlayers(int nP);
-	void set_currentStage(int stg_id);
-
+	//================================================================//
+	// ========== Menus ========== //
 	void open_Main_Menu();
 	void open_NewGame_Menu();
 	void open_Saves_Menu();
 	void open_Pause_Menu();
+
 	//================================================================//
 	void main_loop();
-
-	bool all_menus_closed();
+	void execute();
+	void draw();
+	void update_deltaTime();
 
 	void close();
 
-	void execute();
-	void draw();
+	void set_nPlayers(int nP);
+	void set_currentStage(int stg_id);
 
-	void update_deltaTime();
+	void pause_stage();
+	void unpause_stage();
+	bool isRunning_stage();
+	void run_stage();
+	void stop_runningStage();
 };

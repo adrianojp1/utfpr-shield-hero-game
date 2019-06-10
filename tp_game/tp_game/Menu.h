@@ -5,10 +5,6 @@
 #include "Abstract_Entity.h"		//Base class
 
 //======================================================================================================================================//
-// === Classes Declaration === //
-class Game;
-
-//======================================================================================================================================//
 // === Derived classes from this === //
 // Main_Menu
 // NewGame_Menu
@@ -23,7 +19,7 @@ protected:
 	//Menu option class
 	class Option : public Abstract_Entity
 	{
-	private:
+	protected:
 		sf::Text* _text;
 
 		int _charSize_active;
@@ -56,8 +52,6 @@ protected:
 		virtual sf::Text* getText();
 	};
 
-	static Game* _pGame;
-
 	//Vector for menu options 
 	std::vector<Option*> _vOptions;
 
@@ -87,14 +81,14 @@ public:
 
 	//================================================================//
 	// ========== Selection methods ========== //
-	virtual void activate_onOp() = 0;
+	virtual void activate_onOp();
 	virtual void execute_onOp() = 0;
 
 	// ========== Activation methods ========== //
 	virtual void close();
 	virtual void open();
 
-	virtual void activate();
+	virtual bool isOpen();
 
 	// ========== Option methods ========== //
 	virtual void add_option(Option* pOp);
@@ -109,10 +103,6 @@ public:
 	virtual bool selectionKey_isPressed();
 	virtual bool upKey_isPressed();
 	virtual bool downKey_isPressed();
-
-	// ========== pGame methods ========== //
-	static void setpGame(Game* pGame);
-	static Game* getpGame();
 
 	//================================================================//
 	//======================== Static Consts =========================//

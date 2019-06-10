@@ -23,21 +23,15 @@ public:
 	void initializeAllOps();
 
 	//================================================================//
-	// ========== Loop methods ========== //
-	//void execute(const float deltaTime);
-	//void draw() const;
-
-	//================================================================//
 	// ========== Selection methods ========== //
-	void activate_onOp();
 	void execute_onOp();
 
 	//================================================================//
 	// ========== Options methods ========== //
 	void set_1player();
 	void set_2players();
-	//void set_nick_p1();
-	//void set_nick_p2();
+	void set_n_run_stage1();
+	//void set_nick();
 	void exit();
 
 	//================================================================//
