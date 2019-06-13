@@ -49,6 +49,7 @@
     <ClCompile Include="Pause_Menu.cpp">
       <Filter>Abstract Entities</Filter>
     </ClCompile>
+    <ClCompile Include="CEnt_List.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Character.h">
@@ -100,6 +101,7 @@
       <Filter>Abstract Entities</Filter>
     </ClInclude>
     <ClInclude Include="List.h" />
+    <ClInclude Include="CEnt_List.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Characters">

@@ -14,145 +14,218 @@ private:
 		T* _Object;
 
 	public:
-		Element();
-		~Element();
+		Element()
+		{
+			_pNext = NULL;
+			_pPrevious = NULL;
+		}
 
-		void setNext(Element<T>* pn);
-		Element<T>* getNext();
+		~Element()
+		{
+			_pNext = NULL;
+			_pPrevious = NULL;
+		}
 
-		void setPrevious(Element<T>* pp);
-		Element<T>* getPrevious();
+		void setpNext(Element<T>* pn)
+		{
+			_pNext = pn;
+		}
 
-		void setObject(T* obj);
-		T* getObject();
+		Element<T>* getpNext()
+		{
+			return _pNext;
+		}
+
+
+		void setpPrevious(Element<T>* pp)
+		{
+			_pPrevious = pp;
+		}
+
+		Element<T>* getpPrevious()
+		{
+			return _pPrevious;
+		}
+
+		void setObject(T* obj)
+		{
+			_Object = obj;
+		}
+
+		T* getObject()
+		{
+			return _Object;
+		}
 
 
 	};
 
-	template<class T>
-	inline Element<T>::Element()
-	{
-		pNext = NULL;
-		pPrevious = NULL;
-	}
-
-	template<class T>
-	inline Element<T>::~Element()
-	{
-		pNext = NULL;
-		pPrevious = NULL;
-	}
-
-	template<class T>
-	inline void Element<T>::setNext(Element<T>* pn)
-	{
-		_pNext = pn;
-	}
-
-	template<class T>
-	inline Element<T>* Element<T>::getNext()
-	{
-		return _pNext;
-	}
-
-	template<class T>
-	inline void Element<T>::setPrevious(Element<T>* pp)
-	{
-		_pPrevious = pp;
-	}
-
-	template<class T>
-	inline Element<T>* Element<T>::getPrevious()
-	{
-		return _pPrevious;
-	}
-
-	template<class T>
-	inline void setObject(T* obj)
-	{
-		_Object = obj;
-	}
-
-	template<class T>
-	inline T* getObject()
-	{
-		return _Object;
-	}
-
-
-
-	Element<TYPE>* pFirst;
-	Element<TYPE>* pCurrent;
+// List private
+private:
+	Element<TYPE>* _pFirst;
+	Element<TYPE>* _pCurrent;
 
 
 public:
-	List();
-	~List();
-
-	void initialize();
-	bool includeElement(Element<TYPE>* pElement);
-	bool includeObject(TYPE* pObj);
-
-};
-
-template<class TYPE>
-inline List<TYPE>::List()
-{
-	initialize();
-}
-
-template<class TYPE>
-inline List<TYPE>::~List()
-{
-	//Código que desaloca os elementos
-}
-
-template<class TYPE>
-inline void List<TYPE>::initialize()
-{
-	pFirst = NULL;
-	pCurrent = NULL;
-}
-
-template<class TYPE>
-inline bool List<TYPE>::includeElement(Element<TYPE>* pElement)
-{
-	if (pElement != NULL)
+	// Iterator //
+	class iterator
 	{
-		if (pFirst == NULL)
+	public:
+		friend class List<TYPE>;
+		typedef TYPE& reference;
+		typedef Element<TYPE>* pointer;
+
+		iterator() : _elem(NULL)
 		{
-			pFirst = pElement;
-			pCurrent = pFirst;
+		}
+		iterator(pointer ptr) : _elem(ptr)
+		{
+		}
+		reference operator*()
+		{
+			return (_elem->getObject());
+		}
+		reference operator->()
+		{
+			return (*(*this));
+		}
+
+		// iterator++;
+		iterator& operator++()
+		{
+			if (_elem)
+			{
+				_elem = _elem->getpNext();
+			}
+			return (*this);
+		}
+
+		iterator operator++ (int)
+		{
+			iterator it = *this;
+			++(*this);
+			return it;
+		}
+
+		iterator& operator--()
+		{
+			if (_elem)
+			{
+				_elem = _elem->getpPrevious();
+			}
+			return (*this);
+		}
+
+		iterator operator--(int)
+		{
+			iterator it = *this;
+			--(*this);
+			return it;
+		}
+
+		bool operator != (const iterator& iterator) const
+		{
+			return (_elem != iterator._elem);
+		}
+
+		bool operator == (const iterator& iterator) const
+		{
+			return (_elem == iterator._elem);
+		}
+
+	private:
+		pointer _elem;
+	};
+
+//List public
+public:
+	List()
+	{
+		initialize();
+	}
+
+	~List()
+	{
+		clear();
+	}
+
+
+	void initialize()
+	{
+		_pFirst = NULL;
+		_pCurrent = NULL;
+	}
+
+	void clear()
+	{
+		Element<TYPE>* paux1;
+		Element<TYPE>* paux2;
+
+		paux1 = _pFirst;
+		paux2 = paux1;
+
+		while (paux1 != NULL)
+		{
+			paux2 = paux1->getpNext();
+			delete (paux1);
+			paux1 = paux2;
+		}
+		_pFirst = NULL;
+		_pCurrent = NULL;
+	}
+
+
+	bool includeElement(Element<TYPE>* pElement)
+	{
+		if (pElement != NULL)
+		{
+			if (_pFirst == NULL)
+			{
+				_pFirst = pElement;
+				_pFirst->setpPrevious(NULL);
+				_pFirst->setpNext(NULL);
+				_pCurrent = _pFirst;
+			}
+			else
+			{
+				pElement->setpPrevious(_pCurrent);
+				pElement->setpNext(NULL);
+				_pCurrent->setpNext(pElement);
+				_pCurrent = _pCurrent->getpNext();
+			}
+			return true;
 		}
 		else
 		{
-			pElement->setPrevious(pCurrent);
-			pElement->setNext(NULL);
-			pCurrent->setNext(pElement);
-			pCurrent = pCurrent->getNext();
+			return false;
 		}
-		return true;
 	}
-	else
-	{
-		return false;
-	}
-}
 
-template<class TYPE>
-inline bool List<TYPE>::includeObject(TYPE* pObj)
-{
-	if (pObj != NULL)
+	bool includeObject(TYPE* pObj)
 	{
-		Element<TYPE>* pElement;
-		pElement = new Element<TYPE>();
-		pElement->setObject(pObj);
-		includeElement(pElement);
-		return true;
+		if (pObj != NULL)
+		{
+			Element<TYPE>* pElement;
+			pElement = new Element<TYPE>();
+			pElement->setObject(pObj);
+			includeElement(pElement);
+			return true;
+		}
+		else
+		{
+			return false;
+		}
 	}
-	else
+
+
+	Element<TYPE>* getpFirst()
 	{
-		return false;
+		return _pFirst;
 	}
-}
+
+	Element<TYPE>* getpCurrent()
+	{
+		return _pCurrent;
+	}
+};
 
