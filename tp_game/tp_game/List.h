@@ -264,7 +264,7 @@ public:
 		}
 	}
 
-	bool remove(TYPE Objt)
+	void remove(TYPE Objt)
 	{
 		for (iterator it = begin(); it != end(); it++)
 		{

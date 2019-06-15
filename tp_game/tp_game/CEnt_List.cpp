@@ -20,11 +20,11 @@ void CEnt_List::includeEntity(Entity* pe)
 {
 	_CEnt_List.pushBack(pe);
 }
-/*
+
 void CEnt_List::removeEntity(Entity* pe)
 {
 	_CEnt_List.remove(pe);
-}*/
+}
 
 void CEnt_List::drawList()
 {
