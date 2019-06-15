@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "CEnt_List.h"
 
+
 CEnt_List::CEnt_List()
 {
 }
@@ -12,13 +13,23 @@ CEnt_List::~CEnt_List()
 
 void CEnt_List::clearList()
 {
-	CE_List.clear();
+	_CEnt_List.clear();
 }
 
 void CEnt_List::includeEntity(Entity* pe)
 {
-	if (pe != NULL)
-		CE_List.includeObject(pe);
-	else
-		std::cout << "Error! Invalid Element pointer" << std::endl;
+	_CEnt_List.pushBack(pe);
+}
+
+void CEnt_List::removeEntity(Entity* pe)
+{
+	_CEnt_List.remove(pe);
+}
+
+void CEnt_List::drawList()
+{
+	for (List<Entity*>::iterator it = _CEnt_List.begin(); it != _CEnt_List.end(); it++)
+	{
+		it->draw();
+	}
 }

@@ -1,20 +1,23 @@
 #pragma once
 #include "stdafx.h"
 
-template<class TYPE>
+//Doubly Linked List template
+template <class TYPE>
 class List
 {
 private:
-	template<class T>
+	//Element
+	template <class T>
 	class Element
 	{
 	private:
 		Element<T>* _pNext;
 		Element<T>* _pPrevious;
-		T* _Object;
+		T _Object;
 
+		Element() { }
 	public:
-		Element()
+		Element(T Objt) : _Object(Objt)
 		{
 			_pNext = NULL;
 			_pPrevious = NULL;
@@ -26,48 +29,46 @@ private:
 			_pPrevious = NULL;
 		}
 
-		void setpNext(Element<T>* pn)
-		{
-			_pNext = pn;
+
+		void setpNext(Element<T>* pn) 
+		{ 
+			_pNext = pn; 
 		}
 
-		Element<T>* getpNext()
-		{
-			return _pNext;
+		Element<T>* getpNext() const 
+		{ 
+			return _pNext; 
 		}
 
 
-		void setpPrevious(Element<T>* pp)
-		{
+		void setpPrev(Element<T>* pp) 
+		{ 
 			_pPrevious = pp;
 		}
 
-		Element<T>* getpPrevious()
-		{
+		Element<T>* getpPrev() const 
+		{ 
 			return _pPrevious;
 		}
 
-		void setObject(T* obj)
-		{
-			_Object = obj;
+
+		void setObjt(const T& Objt)
+		{ 
+			_Object = &Objt; 
 		}
 
-		T* getObject()
-		{
+		T& getObjt() 
+		{ 
 			return _Object;
 		}
-
-
 	};
 
-// List private
-private:
-	Element<TYPE>* _pFirst;
-	Element<TYPE>* _pCurrent;
-
+	Element<TYPE>* _pTop;
+	Element<TYPE>* _pEnd;
+	unsigned int size;
 
 public:
-	// Iterator //
+	// Iterator
 	class iterator
 	{
 	public:
@@ -78,13 +79,16 @@ public:
 		iterator() : _elem(NULL)
 		{
 		}
+
 		iterator(pointer ptr) : _elem(ptr)
 		{
 		}
+
 		reference operator*()
 		{
-			return (_elem->getObject());
+			return (_elem->getObjt());
 		}
+
 		reference operator->()
 		{
 			return (*(*this));
@@ -111,7 +115,7 @@ public:
 		{
 			if (_elem)
 			{
-				_elem = _elem->getpPrevious();
+				_elem = _elem->getpPrev();
 			}
 			return (*this);
 		}
@@ -137,95 +141,150 @@ public:
 		pointer _elem;
 	};
 
-//List public
-public:
-	List()
+	List() 
 	{
-		initialize();
+		_pTop = NULL; 
+		_pEnd = NULL;
+		size = 0;
 	}
 
 	~List()
-	{
-		clear();
-	}
-
-
-	void initialize()
-	{
-		_pFirst = NULL;
-		_pCurrent = NULL;
+	{ 
+		clear(); 
 	}
 
 	void clear()
 	{
-		Element<TYPE>* paux1;
-		Element<TYPE>* paux2;
-
-		paux1 = _pFirst;
-		paux2 = paux1;
-
-		while (paux1 != NULL)
-		{
-			paux2 = paux1->getpNext();
-			delete (paux1);
-			paux1 = paux2;
-		}
-		_pFirst = NULL;
-		_pCurrent = NULL;
+		while (!empty())
+			popFront();
+		_pEnd = NULL;
 	}
 
-
-	bool includeElement(Element<TYPE>* pElement)
+	void popFront()
 	{
-		if (pElement != NULL)
+		if (!empty())
 		{
-			if (_pFirst == NULL)
-			{
-				_pFirst = pElement;
-				_pFirst->setpPrevious(NULL);
-				_pFirst->setpNext(NULL);
-				_pCurrent = _pFirst;
-			}
-			else
-			{
-				pElement->setpPrevious(_pCurrent);
-				pElement->setpNext(NULL);
-				_pCurrent->setpNext(pElement);
-				_pCurrent = _pCurrent->getpNext();
-			}
-			return true;
+			Element<TYPE>* pElAux = _pTop;
+			_pTop = _pTop->getpNext();
+			delete pElAux;
+			if (size == 1)
+				_pEnd = NULL;
+			size--;
+		}
+	}
+
+	void popBack()
+	{
+		if (!empty())
+		{
+			Element<TYPE>* pElAux = _pEnd;
+			_pEnd = _pEnd->getpPrev();
+			delete pElAux;
+			if (size == 1)
+				_pTop = NULL;
+			size--;
+		}
+	}
+
+	void pushFront(TYPE Objt)
+	{
+		if (empty())
+		{
+			_pTop = new Element<TYPE>(Objt);
+			_pEnd = _pTop;
 		}
 		else
 		{
-			return false;
+			Element<TYPE>* pAux = _pTop;
+			_pTop = new Element<TYPE>(Objt);
+			_pTop->setpNext(pAux);
+			pAux->setpPrev(_pTop);
 		}
+		size++;
 	}
 
-	bool includeObject(TYPE* pObj)
+	void pushBack(TYPE Objt)
 	{
-		if (pObj != NULL)
+		if (empty())
 		{
-			Element<TYPE>* pElement;
-			pElement = new Element<TYPE>();
-			pElement->setObject(pObj);
-			includeElement(pElement);
-			return true;
+			_pEnd = new Element<TYPE>(Objt);
+			_pTop = _pEnd;
 		}
 		else
 		{
-			return false;
+			Element<TYPE>* pAux = _pEnd;
+			_pEnd = new Element<TYPE>(Objt);
+			_pEnd->setpPrev(pAux);
+			pAux->setpNext(_pEnd);
+		}
+		size++;
+	}
+
+	iterator begin()
+	{
+		return iterator(_pTop);
+	}
+
+	const iterator begin() const
+	{
+		return iterator(_pTop);
+	}
+
+	iterator end()
+	{
+		return NULL;
+	}
+
+	const iterator end() const
+	{
+		return NULL;
+	}
+
+	void erase(iterator it)
+	{
+		if (it == begin())
+		{
+			popFront();
+		}
+		else if (it._elem == _pEnd)
+		{
+			popBack();
+		}
+		else
+		{
+			Element<TYPE>* pAux = it._elem;
+			while (pAux->getObjt() != it._elem->getObjt())
+			{
+				pAux = pAux->getpNext();
+			}
+			pAux->getpPrev()->setpNext(pAux->getpNext());
+			pAux->getpNext()->setpPrev(pAux->getpPrev());
+			delete pAux;
+			size--;
 		}
 	}
 
-
-	Element<TYPE>* getpFirst()
+	bool remove(TYPE Objt)
 	{
-		return _pFirst;
+		for (iterator it = begin(); it != end(); it++)
+		{
+			if ((*it) == Objt)
+			{
+				erase(it);
+				break;
+			}
+		}
 	}
 
-	Element<TYPE>* getpCurrent()
-	{
-		return _pCurrent;
+	unsigned int getSize() 
+	{ 
+		return size; 
+	}
+
+	bool empty() 
+	{ 
+		if (size) 
+			return false; 
+		return true; 
 	}
 };
-
