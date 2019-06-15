@@ -264,16 +264,17 @@ public:
 		}
 	}
 
-	void remove(TYPE Objt)
+	bool remove(TYPE Objt)
 	{
 		for (iterator it = begin(); it != end(); it++)
 		{
 			if ((*it) == Objt)
 			{
 				erase(it);
-				break;
+				return true;
 			}
 		}
+		return false;
 	}
 
 	unsigned int getSize() 
