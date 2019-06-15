@@ -1,7 +1,7 @@
 #pragma once
 #include "stdafx.h"
 
-//Doubly Linked List template
+
 template <class TYPE>
 class List
 {
