@@ -60,7 +60,13 @@ void Stage::initializeStage()
 	_background->setPosition(0.0f, -30.0f);
 
 	//Orc: initial position (0, 0)
-	_orc = new Orc(sf::Vector2f{ 128.0f, 136.0f });
+	_orc = new Orc(sf::Vector2f{ 128.0f, 150.0f });
+
+	//WhiteSkeleton:
+	_WSklt = new WhiteSkeleton(sf::Vector2f{ 60.0f, 100.0f });
+
+	//BlackSkeleton:
+	_BSklt = new BlackSkeleton(sf::Vector2f{ 380.0f, 100.0f });
 
 	//Blocks
 	for (int i = -4; i < 0; i++)
@@ -82,6 +88,9 @@ void Stage::execute(const float deltaTime)
 	executePlayers(deltaTime);
 	
 	_orc->execute(deltaTime);
+	_WSklt->execute(deltaTime);
+	_BSklt->execute(deltaTime);
+	
 
 	for (Block* block : _vBlocks) //execute all platforms
 	{
@@ -98,6 +107,8 @@ void Stage::draw() const
 	_pGraphMng->draw(*_background);
 
 	_orc->draw();
+	_WSklt->draw();
+	_BSklt->draw();
 
 	for (Block* block : _vBlocks) //draw all platforms
 	{
@@ -207,7 +218,7 @@ void Stage::manage_collisions()
 	sf::Vector2f intersection;
 
 	if (_pPlayer1->isVulnerable() && (check_collision(static_cast<Entity*>(_pPlayer1), static_cast<Entity*>(_orc), &intersection, &collisionDirection)))
-	{ //Check collision between the ent1 and the orc
+	{ //Check collision between the Player1 and the orc
 		if (_pPlayer1->isDefendingInFront(collisionDirection))
 		{
 			collisionDirection = -collisionDirection;
@@ -222,7 +233,7 @@ void Stage::manage_collisions()
 	if (_pPlayer2)
 	{
 		if (_pPlayer2->isVulnerable() && (check_collision(static_cast<Entity*>(_pPlayer2), static_cast<Entity*>(_orc), &intersection, &collisionDirection)))
-		{ //Check collision between the ent1 and the orc
+		{ //Check collision between the Player2 and the orc
 			if (_pPlayer2->isDefendingInFront(collisionDirection))
 			{
 				collisionDirection = -collisionDirection;
@@ -231,6 +242,64 @@ void Stage::manage_collisions()
 			else
 			{
 				_pPlayer2->takeDmg(_orc->getCollDmg());
+			}
+		}
+	}
+
+	if (_pPlayer1->isVulnerable() && (check_collision(static_cast<Entity*>(_pPlayer1), static_cast<Entity*>(_WSklt), &intersection, &collisionDirection)))
+	{ //Check collision between the Player1 and the WhiteSkeleton
+		if (_pPlayer1->isDefendingInFront(collisionDirection))
+		{
+			collisionDirection = -collisionDirection;
+			push_entities(static_cast<Entity*>(_WSklt), static_cast<Entity*>(_pPlayer1), &intersection, &collisionDirection, 0.0f);
+		}
+		else
+		{
+			_pPlayer1->takeDmg(_WSklt->getCollDmg());
+		}
+	}
+
+	if (_pPlayer2)
+	{
+		if (_pPlayer2->isVulnerable() && (check_collision(static_cast<Entity*>(_pPlayer2), static_cast<Entity*>(_WSklt), &intersection, &collisionDirection)))
+		{ //Check collision between the Player2 and the WhiteSkeleton
+			if (_pPlayer2->isDefendingInFront(collisionDirection))
+			{
+				collisionDirection = -collisionDirection;
+				push_entities(static_cast<Entity*>(_WSklt), static_cast<Entity*>(_pPlayer2), &intersection, &collisionDirection, 0.0f);
+			}
+			else
+			{
+				_pPlayer2->takeDmg(_WSklt->getCollDmg());
+			}
+		}
+	}
+
+	if (_pPlayer1->isVulnerable() && (check_collision(static_cast<Entity*>(_pPlayer1), static_cast<Entity*>(_BSklt), &intersection, &collisionDirection)))
+	{ //Check collision between the Player1 and the BlackSkeleton
+		if (_pPlayer1->isDefendingInFront(collisionDirection))
+		{
+			collisionDirection = -collisionDirection;
+			push_entities(static_cast<Entity*>(_BSklt), static_cast<Entity*>(_pPlayer1), &intersection, &collisionDirection, 0.0f);
+		}
+		else
+		{
+			_pPlayer1->takeDmg(_BSklt->getCollDmg());
+		}
+	}
+
+	if (_pPlayer2)
+	{
+		if (_pPlayer2->isVulnerable() && (check_collision(static_cast<Entity*>(_pPlayer2), static_cast<Entity*>(_BSklt), &intersection, &collisionDirection)))
+		{ //Check collision between the Player2 and the BlackSkeleton
+			if (_pPlayer2->isDefendingInFront(collisionDirection))
+			{
+				collisionDirection = -collisionDirection;
+				push_entities(static_cast<Entity*>(_BSklt), static_cast<Entity*>(_pPlayer2), &intersection, &collisionDirection, 0.0f);
+			}
+			else
+			{
+				_pPlayer2->takeDmg(_BSklt->getCollDmg());
 			}
 		}
 	}
@@ -247,6 +316,10 @@ void Stage::manage_collisions()
 		}
 		if (check_collision_n_push(static_cast<Entity*>(_orc), static_cast<Entity*>(block), &intersection, &collisionDirection, 0.0f))
 			_orc->onCollision(collisionDirection);
+		if (check_collision_n_push(static_cast<Entity*>(_WSklt), static_cast<Entity*>(block), &intersection, &collisionDirection, 0.0f))
+			_WSklt->onCollision(collisionDirection);
+		if (check_collision_n_push(static_cast<Entity*>(_BSklt), static_cast<Entity*>(block), &intersection, &collisionDirection, 0.0f))
+			_BSklt->onCollision(collisionDirection);
 	}
 }
 

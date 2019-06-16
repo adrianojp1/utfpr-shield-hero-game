@@ -52,6 +52,7 @@ void Orc::initialize_animator()
 	*_animator << new Animation(gMng::orc_atk_Sp_Fp, 3, 0.200f);
 } // end initializeAnimators
 
+
 void Orc::attack()
 {
 }
@@ -69,11 +70,6 @@ void Orc::collision_onLeft()
 void Orc::collision_onRight()
 {
 	turnArround();
-}
-
-bool Orc::isAttacking() const
-{
-	return _attacking;
 }
 
 

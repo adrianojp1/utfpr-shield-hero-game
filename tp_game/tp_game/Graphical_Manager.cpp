@@ -33,6 +33,18 @@ const std::string Graphical_Manager::orc_walk_Sp_Fp = "Media/orc/orc-walk.png";
 const std::string Graphical_Manager::orc_atk_Sp_Fp  = "Media/orc/orc-atk.png";
 const std::string Graphical_Manager::orc_die_Sp_Fp  = "Media/orc/orc-die.png";
 
+const std::string Graphical_Manager::white_skeleton_idle_Sp_Fp = "Media/skeleton/skeleton_1-idle.png";
+const std::string Graphical_Manager::white_skeleton_walk_Sp_Fp = "Media/skeleton/skeleton_1-walk.png";
+const std::string Graphical_Manager::white_skeleton_atk_Sp_Fp = "Media/skeleton/skeleton_1-atk.png";
+const std::string Graphical_Manager::white_skeleton_die_Sp_Fp = "Media/skeleton/skeleton_1-die.png";
+const std::string Graphical_Manager::white_skeleton_proj_Sp_Fp = "Media/skeleton/skeleton_1-proj.png";
+
+const std::string Graphical_Manager::black_skeleton_idle_Sp_Fp = "Media/skeleton/skeleton_2-idle.png";
+const std::string Graphical_Manager::black_skeleton_walk_Sp_Fp = "Media/skeleton/skeleton_2-walk.png";
+const std::string Graphical_Manager::black_skeleton_atk_Sp_Fp = "Media/skeleton/skeleton_2-atk.png";
+const std::string Graphical_Manager::black_skeleton_die_Sp_Fp = "Media/skeleton/skeleton_2-die.png";
+const std::string Graphical_Manager::black_skeleton_proj_Sp_Fp = "Media/skeleton/skeleton_2-proj.png";
+
 //======================================================================================================================================//
 // === Graphical_Manager methods === //
 Graphical_Manager::Graphical_Manager() :

@@ -50,6 +50,15 @@
       <Filter>Abstract Entities</Filter>
     </ClCompile>
     <ClCompile Include="CEnt_List.cpp" />
+    <ClCompile Include="Skeleton.cpp">
+      <Filter>Characters</Filter>
+    </ClCompile>
+    <ClCompile Include="WhiteSkeleton.cpp">
+      <Filter>Characters</Filter>
+    </ClCompile>
+    <ClCompile Include="BlackSkeleton.cpp">
+      <Filter>Characters</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Character.h">
@@ -102,6 +111,15 @@
     </ClInclude>
     <ClInclude Include="List.h" />
     <ClInclude Include="CEnt_List.h" />
+    <ClInclude Include="Skeleton.h">
+      <Filter>Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="WhiteSkeleton.h">
+      <Filter>Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="BlackSkeleton.h">
+      <Filter>Characters</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Characters">

@@ -40,6 +40,7 @@ public:
 	//================================================================//
 	// ========== Motion ========== //
 	virtual void attack() = 0;
+	
 
 	//virtual void onCollision(const sf::Vector2f collisionDirection);
 	//virtual void collision_onLeft() = 0;
@@ -54,7 +55,7 @@ public:
 	//================================================================//
 	// ========== State checkers ========== //
 	
-	virtual bool isAttacking() const = 0;
+	virtual bool isAttacking() const;
 
 	static void setpPlayer1(Entity* pP1);
 	

@@ -6,6 +6,8 @@
 #include "Player.h"
 #include "Orc.h"
 #include "Block.h"
+#include "WhiteSkeleton.h"
+#include "BlackSkeleton.h"
 
 //======================================================================================================================================//
 // === Stage Class === //
@@ -16,6 +18,10 @@ protected:
 	sf::Texture* _bgtexture;
 	std::vector<Block*> _vBlocks;
 	Orc* _orc;
+	WhiteSkeleton* _WSklt;
+	BlackSkeleton* _BSklt;
+
+
 
 	Player* _pPlayer1;
 	Player* _pPlayer2;

@@ -71,6 +71,7 @@ Character::Character()
 	//Bools
 	_facingRight = true;
 	_canJump = false;
+
 }
 
 Character::~Character()
