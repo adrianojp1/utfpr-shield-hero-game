@@ -280,7 +280,7 @@ void Character::ressurect()
 	{
 		_state = IDLE;
 		resetHp();
-		(*_animator)[DEATH]->reset();
+		(*_animator)[DEATH]->resetFrameCounter();
 	}
 }
 

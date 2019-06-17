@@ -12,17 +12,16 @@
 
 //======================================================================================================================================//
 // === Animation Methods === //
-Animation::Animation(const std::string texture_filePath, unsigned int nFrames, float switchTime)
+Animation::Animation(const std::string texture_filePath, unsigned int nFrames, float switchTime) : 
+	_switchTimer(switchTime)
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
 	_nFrames = nFrames;
-	_switchTime = switchTime;
-
-	_currentTime = 0.0f;
 	_frameCounter = 0;
-
 	initialize(texture_filePath);
+
+	_switchTimer.trigger();
 }
 
 Animation::Animation()
@@ -30,8 +29,6 @@ Animation::Animation()
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 1 | ");
 
 	_nFrames = 0;
-	_switchTime = 0;
-	_currentTime = 0.0f;
 	_frameCounter = 0;
 }
 
@@ -61,9 +58,7 @@ void Animation::initialize(std::string texture_filePath)
 void Animation::updateAnimation(float deltaTime, bool facingRight)
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
-
-	_currentTime += deltaTime;
-
+	
 	updateFrame();
 	updateCanvasDirection(facingRight);
 
@@ -97,25 +92,25 @@ unsigned int Animation::getnFrames() const
 void Animation::setCurrentTime(float currentTime)
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
-	_currentTime = currentTime;
+	_switchTimer.setCurrentTime(currentTime);
 }
 
 float Animation::getCurrentTime() const
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
-	return _currentTime;
+	return _switchTimer.getCurrentTime();
 }
 
 void Animation::setSwitchTime(float switchTime)
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
-	_switchTime = switchTime;
+	_switchTimer.setTotalTime(switchTime);
 }
 
 float Animation::getSwitchTime() const
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
-	return _switchTime;
+	return _switchTimer.getTotalTime();
 }
 
 sf::RectangleShape* Animation::getpSprite()
@@ -132,11 +127,13 @@ sf::Vector2f Animation::getCanvasSize() const
 
 bool Animation::isFinished() const
 {
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 	return (getFrameCounter() == getnFrames() - 1);
 }
 
-void Animation::reset()
+void Animation::resetFrameCounter()
 {
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 	setFrameCounter(0);
 }
 
@@ -144,17 +141,23 @@ void Animation::updateFrame()
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
+	const float remanescentTime = _switchTimer.getCurrentTime() - *_switchTimer.getDeltaTime();
+
 	//Enough time to change the frame
-	if (_currentTime >= _switchTime)
+	if (remanescentTime < 0)
 	{
-		_currentTime -= _switchTime; //Discount the time
+		_switchTimer.setCurrentTime(_switchTimer.getTotalTime() + remanescentTime);
 		_frameCounter++;
 
 		//The animation is over
 		if (_frameCounter >= _nFrames)
 		{
-			_frameCounter = 0;
+			this->resetFrameCounter();
 		}
+	}
+	else
+	{
+		_switchTimer.decreaseTime();
 	}
 } // end updateFrame
 

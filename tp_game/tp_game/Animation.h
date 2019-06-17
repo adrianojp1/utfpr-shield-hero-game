@@ -4,6 +4,10 @@
 #include "stdafx.h"
 
 //======================================================================================================================================//
+// === Classes Headers === //
+#include "Timer.h"
+
+//======================================================================================================================================//
 // === Animation Class === //
 class Animation
 {
@@ -18,8 +22,7 @@ private:
 	unsigned int _nFrames;
 
 	//Time members
-	float _currentTime;
-	float _switchTime;
+	Timer _switchTimer;
 
 public:
 	//================================================================//
@@ -58,7 +61,7 @@ public:
 	sf::Vector2f getCanvasSize() const;
 
 	bool isFinished() const;
-	void reset();
+	void resetFrameCounter();
 private:
 	// ========== updateSprite submethods ========== //
 	void updateFrame();
