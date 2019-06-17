@@ -1,158 +1,291 @@
 #pragma once
 #include "stdafx.h"
 
-template<class TYPE>
+
+template <class TYPE>
 class List
 {
 private:
-	template<class T>
+	//Element
+	template <class T>
 	class Element
 	{
 	private:
 		Element<T>* _pNext;
 		Element<T>* _pPrevious;
-		T* _Object;
+		T _Object;
 
+		Element() { }
 	public:
-		Element();
-		~Element();
+		Element(T Objt) : _Object(Objt)
+		{
+			_pNext = NULL;
+			_pPrevious = NULL;
+		}
 
-		void setNext(Element<T>* pn);
-		Element<T>* getNext();
-
-		void setPrevious(Element<T>* pp);
-		Element<T>* getPrevious();
-
-		void setObject(T* obj);
-		T* getObject();
+		~Element()
+		{
+			_pNext = NULL;
+			_pPrevious = NULL;
+		}
 
 
+		void setpNext(Element<T>* pn) 
+		{ 
+			_pNext = pn; 
+		}
+
+		Element<T>* getpNext() const 
+		{ 
+			return _pNext; 
+		}
+
+
+		void setpPrev(Element<T>* pp) 
+		{ 
+			_pPrevious = pp;
+		}
+
+		Element<T>* getpPrev() const 
+		{ 
+			return _pPrevious;
+		}
+
+
+		void setObjt(const T& Objt)
+		{ 
+			_Object = &Objt; 
+		}
+
+		T& getObjt() 
+		{ 
+			return _Object;
+		}
 	};
 
-	template<class T>
-	inline Element<T>::Element()
-	{
-		pNext = NULL;
-		pPrevious = NULL;
-	}
-
-	template<class T>
-	inline Element<T>::~Element()
-	{
-		pNext = NULL;
-		pPrevious = NULL;
-	}
-
-	template<class T>
-	inline void Element<T>::setNext(Element<T>* pn)
-	{
-		_pNext = pn;
-	}
-
-	template<class T>
-	inline Element<T>* Element<T>::getNext()
-	{
-		return _pNext;
-	}
-
-	template<class T>
-	inline void Element<T>::setPrevious(Element<T>* pp)
-	{
-		_pPrevious = pp;
-	}
-
-	template<class T>
-	inline Element<T>* Element<T>::getPrevious()
-	{
-		return _pPrevious;
-	}
-
-	template<class T>
-	inline void setObject(T* obj)
-	{
-		_Object = obj;
-	}
-
-	template<class T>
-	inline T* getObject()
-	{
-		return _Object;
-	}
-
-
-
-	Element<TYPE>* pFirst;
-	Element<TYPE>* pCurrent;
-
+	Element<TYPE>* _pTop;
+	Element<TYPE>* _pEnd;
+	unsigned int size;
 
 public:
-	List();
-	~List();
-
-	void initialize();
-	bool includeElement(Element<TYPE>* pElement);
-	bool includeObject(TYPE* pObj);
-
-};
-
-template<class TYPE>
-inline List<TYPE>::List()
-{
-	initialize();
-}
-
-template<class TYPE>
-inline List<TYPE>::~List()
-{
-	//Código que desaloca os elementos
-}
-
-template<class TYPE>
-inline void List<TYPE>::initialize()
-{
-	pFirst = NULL;
-	pCurrent = NULL;
-}
-
-template<class TYPE>
-inline bool List<TYPE>::includeElement(Element<TYPE>* pElement)
-{
-	if (pElement != NULL)
+	// Iterator
+	class iterator
 	{
-		if (pFirst == NULL)
+	public:
+		friend class List<TYPE>;
+		typedef TYPE& reference;
+		typedef Element<TYPE>* pointer;
+
+		iterator() : _elem(NULL)
 		{
-			pFirst = pElement;
-			pCurrent = pFirst;
+		}
+
+		iterator(pointer ptr) : _elem(ptr)
+		{
+		}
+
+		reference operator*()
+		{
+			return (_elem->getObjt());
+		}
+
+		reference operator->()
+		{
+			return (*(*this));
+		}
+
+		// iterator++;
+		iterator& operator++()
+		{
+			if (_elem)
+			{
+				_elem = _elem->getpNext();
+			}
+			return (*this);
+		}
+
+		iterator operator++ (int)
+		{
+			iterator it = *this;
+			++(*this);
+			return it;
+		}
+
+		iterator& operator--()
+		{
+			if (_elem)
+			{
+				_elem = _elem->getpPrev();
+			}
+			return (*this);
+		}
+
+		iterator operator--(int)
+		{
+			iterator it = *this;
+			--(*this);
+			return it;
+		}
+
+		bool operator != (const iterator& iterator) const
+		{
+			return (_elem != iterator._elem);
+		}
+
+		bool operator == (const iterator& iterator) const
+		{
+			return (_elem == iterator._elem);
+		}
+
+	private:
+		pointer _elem;
+	};
+
+	List() 
+	{
+		_pTop = NULL; 
+		_pEnd = NULL;
+		size = 0;
+	}
+
+	~List()
+	{ 
+		clear(); 
+	}
+
+	void clear()
+	{
+		while (!empty())
+			popFront();
+		_pEnd = NULL;
+	}
+
+	void popFront()
+	{
+		if (!empty())
+		{
+			Element<TYPE>* pElAux = _pTop;
+			_pTop = _pTop->getpNext();
+			delete pElAux;
+			if (size == 1)
+				_pEnd = NULL;
+			size--;
+		}
+	}
+
+	void popBack()
+	{
+		if (!empty())
+		{
+			Element<TYPE>* pElAux = _pEnd;
+			_pEnd = _pEnd->getpPrev();
+			delete pElAux;
+			if (size == 1)
+				_pTop = NULL;
+			size--;
+		}
+	}
+
+	void pushFront(TYPE Objt)
+	{
+		if (empty())
+		{
+			_pTop = new Element<TYPE>(Objt);
+			_pEnd = _pTop;
 		}
 		else
 		{
-			pElement->setPrevious(pCurrent);
-			pElement->setNext(NULL);
-			pCurrent->setNext(pElement);
-			pCurrent = pCurrent->getNext();
+			Element<TYPE>* pAux = _pTop;
+			_pTop = new Element<TYPE>(Objt);
+			_pTop->setpNext(pAux);
+			pAux->setpPrev(_pTop);
 		}
-		return true;
+		size++;
 	}
-	else
+
+	void pushBack(TYPE Objt)
 	{
+		if (empty())
+		{
+			_pEnd = new Element<TYPE>(Objt);
+			_pTop = _pEnd;
+		}
+		else
+		{
+			Element<TYPE>* pAux = _pEnd;
+			_pEnd = new Element<TYPE>(Objt);
+			_pEnd->setpPrev(pAux);
+			pAux->setpNext(_pEnd);
+		}
+		size++;
+	}
+
+	iterator begin()
+	{
+		return iterator(_pTop);
+	}
+
+	const iterator begin() const
+	{
+		return iterator(_pTop);
+	}
+
+	iterator end()
+	{
+		return NULL;
+	}
+
+	const iterator end() const
+	{
+		return NULL;
+	}
+
+	void erase(iterator it)
+	{
+		if (it == begin())
+		{
+			popFront();
+		}
+		else if (it._elem == _pEnd)
+		{
+			popBack();
+		}
+		else
+		{
+			Element<TYPE>* pAux = it._elem;
+			while (pAux->getObjt() != it._elem->getObjt())
+			{
+				pAux = pAux->getpNext();
+			}
+			pAux->getpPrev()->setpNext(pAux->getpNext());
+			pAux->getpNext()->setpPrev(pAux->getpPrev());
+			delete pAux;
+			size--;
+		}
+	}
+
+	bool remove(TYPE Objt)
+	{
+		for (iterator it = begin(); it != end(); it++)
+		{
+			if ((*it) == Objt)
+			{
+				erase(it);
+				return true;
+			}
+		}
 		return false;
 	}
-}
 
-template<class TYPE>
-inline bool List<TYPE>::includeObject(TYPE* pObj)
-{
-	if (pObj != NULL)
-	{
-		Element<TYPE>* pElement;
-		pElement = new Element<TYPE>();
-		pElement->setObject(pObj);
-		includeElement(pElement);
-		return true;
+	unsigned int getSize() 
+	{ 
+		return size; 
 	}
-	else
-	{
-		return false;
-	}
-}
 
+	bool empty() 
+	{ 
+		if (size) 
+			return false; 
+		return true; 
+	}
+};
