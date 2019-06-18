@@ -10,7 +10,7 @@
 // === Main === //
 int main()
 {
-	Game game;
+	Game::getInstance();
 
 	return 0;
 }// end main

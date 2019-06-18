@@ -74,24 +74,24 @@ void NewGame_Menu::execute_onOp()
 
 void NewGame_Menu::set_1player()
 {
-	_pGame->set_nPlayers(1);
+	Game::getInstance()->set_nPlayers(1);
 	set_n_run_stage1();
 }
 
 void NewGame_Menu::set_2players()
 {
-	_pGame->set_nPlayers(2);
+	Game::getInstance()->set_nPlayers(2);
 	set_n_run_stage1();
 }
 
 void NewGame_Menu::set_n_run_stage1()
 {
-	_pGame->initialize_stage1();
-	_pGame->set_currentStage(1);
-	_pGame->run_stage();
+	Game::getInstance()->initialize_stage1();
+	Game::getInstance()->set_currentStage(1);
+	Game::getInstance()->run_stage();
 }
 
 void NewGame_Menu::exit()
 {
-	_pGame->open_Main_Menu();
+	Game::getInstance()->open_Main_Menu();
 }

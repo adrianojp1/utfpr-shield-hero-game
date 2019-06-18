@@ -39,7 +39,8 @@ void Stage::execute(const float deltaTime)
 
 	check_pauseKey();
 
-	_vScenarios[_currentScenarioId]->execute(deltaTime);
+	if(!this->isPaused())
+		_vScenarios[_currentScenarioId]->execute(deltaTime);
 }
 
 void Stage::draw() const
@@ -77,7 +78,6 @@ void Stage::check_pauseKey()
 	if (pauseKey_isPressed())
 	{
 		this->pause();
-		_pGame->open_Pause_Menu();
 	}
 }
 

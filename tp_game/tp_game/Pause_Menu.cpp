@@ -82,7 +82,7 @@ void Pause_Menu::execute_onOp()
 
 void Pause_Menu::unpause_game()
 {
-	_pGame->unpause_stage();
+	Game::getInstance()->unpause_stage();
 }
 
 void Pause_Menu::save_game()
@@ -92,6 +92,6 @@ void Pause_Menu::save_game()
 
 void Pause_Menu::exit_to_main_menu()
 {
-	_pGame->open_Main_Menu();
-	_pGame->stop_runningStage();
+	Game::getInstance()->open_Main_Menu();
+	Game::getInstance()->stop_runningStage();
 }

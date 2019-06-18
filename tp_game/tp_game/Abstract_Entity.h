@@ -7,7 +7,6 @@
 
 //======================================================================================================================================//
 // === Classes Declaration === //
-class Game;
 class Player;
 
 //======================================================================================================================================//
@@ -21,7 +20,6 @@ class Abstract_Entity
 {
 protected:
 	static Graphical_Manager* _pGraphMng;
-	static Game* _pGame;
 
 	bool _active;
 
@@ -57,9 +55,6 @@ public:
 	// _pGraphMng
 	static void setGraphManager(gMng* gMng);
 	static gMng* getGraphManager();
-	// _pGame
-	static void setpGame(Game* pGame);
-	static Game* getpGame();
 	// _pPlayer1
 	static void setpPlayer1(Player* pP1);
 	static Player* getpPlayer1();

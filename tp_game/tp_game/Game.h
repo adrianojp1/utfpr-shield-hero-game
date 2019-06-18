@@ -6,12 +6,14 @@
 #include "Main_Menu.h"
 #include "NewGame_menu.h"
 #include "Pause_Menu.h"
+#include "Game_State.h"
 
 //======================================================================================================================================//
 // === Game Class === //
 class Game
 {
 private:
+	static Game* _instance;
 	Graphical_Manager* _window;
 
 	Main_Menu* _main_menu;
@@ -35,13 +37,20 @@ private:
 	//Time control
 	float _deltaTime;
 	sf::Clock _clock; //To get the deltaTime
+	
+	Game_State* _state;
 
-public:
+private:
 	//================================================================//
 	// ========== Constructors ========== //
 	Game();
+public:
 	// ========== Destructors ========== //
 	~Game();
+	
+	//================================================================//
+	// ========== Singleton ========== //
+	static Game* getInstance();
 
 	//================================================================//
 	// ========== Initializers ========== //
@@ -58,19 +67,26 @@ public:
 	void open_Pause_Menu();
 
 	//================================================================//
-	void main_loop();
+	static void main_loop();
 	void execute();
 	void draw();
 	void update_deltaTime();
 
-	void close();
+	void changeState(Game_State* state);
 
-	void set_nPlayers(int nP);
-	void set_currentStage(int stg_id);
+	void close();
 
 	void pause_stage();
 	void unpause_stage();
 	bool isRunning_stage();
 	void run_stage();
 	void stop_runningStage();
+
+	void set_nPlayers(int nP);
+	void set_currentStage(int stg_id);
+	Stage* get_currentStage();
+	Main_Menu* get_main_menu();
+	NewGame_Menu* get_newGame_menu();
+	//Saves_Menu* get_saves_menu();
+	Pause_Menu* get_pause_menu();
 };

@@ -85,7 +85,7 @@ void Main_Menu::open_newGame_menu()
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
-	_pGame->open_NewGame_Menu();
+ 	Game::getInstance()->open_NewGame_Menu();
 }
 
 void Main_Menu::open_saves_menu()
@@ -106,5 +106,5 @@ void Main_Menu::close_game()
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
-	_pGame->close();
+	Game::getInstance()->close();
 }

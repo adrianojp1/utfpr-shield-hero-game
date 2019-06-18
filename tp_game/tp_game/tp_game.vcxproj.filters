@@ -54,6 +54,7 @@
       <Filter>Abstract Entities</Filter>
     </ClCompile>
     <ClCompile Include="stdafx.cpp" />
+    <ClCompile Include="Game_State.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Character.h">
@@ -109,6 +110,7 @@
     <ClInclude Include="Scenario.h">
       <Filter>Abstract Entities</Filter>
     </ClInclude>
+    <ClInclude Include="Game_State.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Characters">
