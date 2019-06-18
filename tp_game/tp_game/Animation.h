@@ -59,7 +59,9 @@ public:
 	//canvasSize
 	sf::Vector2f getCanvasSize() const;
 
-	bool isFinished() const;
+	bool isGoingToChangeFrame() const;
+	bool isRunning();
+	bool isFinished();
 	void resetFrameCounter();
 private:
 	// ========== updateSprite submethods ========== //

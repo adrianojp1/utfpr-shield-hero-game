@@ -76,6 +76,7 @@ public:
 	virtual bool isDying();
 	virtual void takeDmg(const int dmg);
 	virtual void die();
+	virtual void doAfterDeath();
 	virtual void ressurect();
 	virtual void resetHp();
 	virtual void decreaseTimers();

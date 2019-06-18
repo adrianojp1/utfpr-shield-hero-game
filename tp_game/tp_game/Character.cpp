@@ -106,14 +106,16 @@ void Character::execute(const float deltaTime)
 		if (!this->isDying())
 		{
 			updateAction(deltaTime);
-			applyGforce(deltaTime);
-			updatePosition(deltaTime);
 		}
 		else
 		{
 			updateDeath();
+			_velocity = { 0.0f, 0.0f };
 		}
 
+		applyGforce(deltaTime);
+		updatePosition(deltaTime);
+		
 		switchAnime_n_Collider();
 
 		if (!isVulnerable())
@@ -218,10 +220,7 @@ void Character::updateDeath()
 {
 	if ((*_animator)[DEATH]->isFinished())
 	{
-		/*bool Animation::isFinished() const
-			return (getFrameCounter() == getnFrames() - 1); ARRUMAR
-		*/
-		ressurect(); //mudar, só o player
+		doAfterDeath();
 	}
 }
 
@@ -241,7 +240,7 @@ bool Character::isVulnerable()
 
 void Character::apply_invulnerable_effect()
 {
-	_animator->getCurrentAnime()->getpSprite()->setFillColor(sf::Color(70, 200, 100, 255));
+	_animator->getCurrentAnime()->getpSprite()->setFillColor(sf::Color(255, 100, 100, 255));
 }
 
 void Character::apply_default_effect()
@@ -251,9 +250,7 @@ void Character::apply_default_effect()
 
 bool Character::isDying()
 {
-	if (this->isActive() && _hp <= 0)
-		return true;
-	return false;
+	return (this->isActive() && _hp <= 0);
 }
 
 void Character::takeDmg(const int dmg)
@@ -271,7 +268,12 @@ void Character::takeDmg(const int dmg)
 void Character::die()
 {
 	_state = DEATH;
-	_invulnerability.setCurrentTime(0.0f);
+	_invulnerability.zeroTimer();
+}
+
+void Character::doAfterDeath()
+{
+	this->desactivate();
 }
 
 void Character::ressurect()
@@ -280,7 +282,6 @@ void Character::ressurect()
 	{
 		_state = IDLE;
 		resetHp();
-		(*_animator)[DEATH]->resetFrameCounter();
 	}
 }
 

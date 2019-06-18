@@ -61,6 +61,7 @@ public:
 	void decreaseTimers();
 	void manageDefenseCounter();
 	void ressurect();
+	void doAfterDeath();
 	bool isDefendingInFront(const sf::Vector2f coll_direction) const;
 private:
 	// ========== Control keys methods ========== //

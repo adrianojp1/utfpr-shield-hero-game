@@ -143,10 +143,14 @@ void Player::ressurect()
 	{
 		_state = IDLE;
 		resetHp();
-		(*_animator)[DEATH]->resetFrameCounter();
 	}
 	
 	this->setPosition(sf::Vector2f{ -128.0f, 136.0f });
+}
+
+void Player::doAfterDeath()
+{
+	ressurect();
 }
 
 bool Player::leftIsKeyPressed() const

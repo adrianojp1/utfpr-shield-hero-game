@@ -124,10 +124,26 @@ sf::Vector2f Animation::getCanvasSize() const
 	return sf::Vector2f((float)_canvasRect.width, (float)_canvasRect.height);
 }
 
-bool Animation::isFinished() const
+bool Animation::isGoingToChangeFrame() const
+{
+	return (_switchTimer.getCurrentTime() - *_switchTimer.getDeltaTime()) < 0;
+}
+
+bool Animation::isRunning()
+{
+	return _switchTimer.isTicking();
+}
+
+bool Animation::isFinished()
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
-	return (getFrameCounter() == getnFrames() - 1);
+	if ((getFrameCounter() == (getnFrames() - 1)) && isGoingToChangeFrame())
+	{
+		_switchTimer.reset_and_trigger();
+		resetFrameCounter();
+		return true;
+	}
+	return false;
 }
 
 void Animation::resetFrameCounter()
@@ -143,7 +159,7 @@ void Animation::updateFrame()
 	const float remanescentTime = _switchTimer.getCurrentTime() - *_switchTimer.getDeltaTime();
 
 	//Enough time to change the frame
-	if (remanescentTime < 0)
+	if (isGoingToChangeFrame())
 	{
 		_switchTimer.setCurrentTime(_switchTimer.getTotalTime() + remanescentTime);
 		_frameCounter++;
