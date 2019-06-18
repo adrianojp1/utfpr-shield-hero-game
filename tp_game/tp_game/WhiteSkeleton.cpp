@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "WhiteSkeleton.h"
+#include "Projectile.h"
 
 WhiteSkeleton::WhiteSkeleton(const sf::Vector2f initPosition):
 	Skeleton(initPosition)
@@ -31,9 +32,12 @@ void WhiteSkeleton::initialize_animator()
 	*_animator << new Animation(gMng::white_skeleton_walk_Sp_Fp, 4, 0.250f);
 	*_animator << new Animation(gMng::white_skeleton_die_Sp_Fp, 3, 0.250f);
 	*_animator << new Animation(gMng::white_skeleton_atk_Sp_Fp, 3, 0.200f);
-	*_animator << new Animation(gMng::white_skeleton_proj_Sp_Fp, 1, 0.0f);
 }
 
 void WhiteSkeleton::updateAction(const float deltaTime)
 {
+	if (_facingRight)
+		_velocity.x = _speed;
+	else
+		_velocity.x = -_speed;
 }

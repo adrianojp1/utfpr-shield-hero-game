@@ -68,6 +68,9 @@ void Stage::initializeStage()
 	//BlackSkeleton:
 	_BSklt = new BlackSkeleton(sf::Vector2f{ 380.0f, 100.0f });
 
+	//Projectile WhiteSkeleton:
+	_WSproj = new Projectile(sf::Vector2f{ 60.0f, 90.0f });
+
 	//Blocks
 	for (int i = -4; i < 0; i++)
 	{
@@ -90,6 +93,8 @@ void Stage::execute(const float deltaTime)
 	_orc->execute(deltaTime);
 	_WSklt->execute(deltaTime);
 	_BSklt->execute(deltaTime);
+	_WSproj->execute(deltaTime);
+	
 	
 
 	for (Block* block : _vBlocks) //execute all platforms
@@ -109,6 +114,7 @@ void Stage::draw() const
 	_orc->draw();
 	_WSklt->draw();
 	_BSklt->draw();
+	_WSproj->draw();
 
 	for (Block* block : _vBlocks) //draw all platforms
 	{
@@ -219,6 +225,9 @@ void Stage::manage_collisions()
 
 	if (_pPlayer1->isVulnerable() && (check_collision(static_cast<Entity*>(_pPlayer1), static_cast<Entity*>(_orc), &intersection, &collisionDirection)))
 	{ //Check collision between the Player1 and the orc
+		//Orc attack
+		_orc->attack();
+
 		if (_pPlayer1->isDefendingInFront(collisionDirection))
 		{
 			collisionDirection = -collisionDirection;
@@ -227,6 +236,7 @@ void Stage::manage_collisions()
 		else
 		{
 			_pPlayer1->takeDmg(_orc->getCollDmg());
+			_orc->takeDmg(_orc->getAttackDmg());
 		}
 	}
 

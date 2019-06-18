@@ -55,6 +55,8 @@ void Orc::initialize_animator()
 
 void Orc::attack()
 {
+	_velocity.x = 0.0f;
+	_state = COMBAT;
 }
 
 void Orc::turnArround()
@@ -77,15 +79,17 @@ void Orc::updateAction(const float deltaTime)
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 	
-	
+	if (isDying())
+	{
+		_velocity.x = 0.0f;
+		die();
+		(*_animator)[DEATH]->reset();
+	}
+		
 
 	if (_velocity.x != 0.0f)
 	{
 		_state = WALK;
-	}
-	else if (_velocity.x == 0.0f) //to change
-	{
-		_state = IDLE;
 	}
 
 	

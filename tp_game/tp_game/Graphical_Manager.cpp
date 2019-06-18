@@ -18,7 +18,7 @@ const float Graphical_Manager::gravity(1400.0f);
 const float Graphical_Manager::textures_scale = 4.0f;
 
 const bool Graphical_Manager::CONSOLE_LOG = false;
-const bool Graphical_Manager::COLLISION_DBG = false;
+const bool Graphical_Manager::COLLISION_DBG = true;
 
 const std::string Graphical_Manager::menu_Ft_Fp = "Fonts/romulus.ttf";
 
@@ -37,12 +37,13 @@ const std::string Graphical_Manager::white_skeleton_idle_Sp_Fp = "Media/skeleton
 const std::string Graphical_Manager::white_skeleton_walk_Sp_Fp = "Media/skeleton/skeleton_1-walk.png";
 const std::string Graphical_Manager::white_skeleton_atk_Sp_Fp = "Media/skeleton/skeleton_1-atk.png";
 const std::string Graphical_Manager::white_skeleton_die_Sp_Fp = "Media/skeleton/skeleton_1-die.png";
-const std::string Graphical_Manager::white_skeleton_proj_Sp_Fp = "Media/skeleton/skeleton_1-proj.png";
 
 const std::string Graphical_Manager::black_skeleton_idle_Sp_Fp = "Media/skeleton/skeleton_2-idle.png";
 const std::string Graphical_Manager::black_skeleton_walk_Sp_Fp = "Media/skeleton/skeleton_2-walk.png";
 const std::string Graphical_Manager::black_skeleton_atk_Sp_Fp = "Media/skeleton/skeleton_2-atk.png";
 const std::string Graphical_Manager::black_skeleton_die_Sp_Fp = "Media/skeleton/skeleton_2-die.png";
+
+const std::string Graphical_Manager::white_skeleton_proj_Sp_Fp = "Media/skeleton/skeleton_1-proj.png";
 const std::string Graphical_Manager::black_skeleton_proj_Sp_Fp = "Media/skeleton/skeleton_2-proj.png";
 
 //======================================================================================================================================//

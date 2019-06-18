@@ -9,7 +9,8 @@
 //======================================================================================================================================//
 // === Entity methods === //
 
-Entity::Entity(const sf::Vector2f initPosition, bool active) : Abstract_Entity(initPosition, active)
+Entity::Entity(const sf::Vector2f initPosition, bool active) : 
+	Abstract_Entity(initPosition, active)
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
@@ -58,6 +59,16 @@ void Entity::initialize_Collider(sf::RectangleShape*& pCollider, sf::Vector2f sp
 		pCollider->setOutlineColor(sf::Color::White);
 		pCollider->setFillColor(sf::Color::Transparent);
 	}
+}
+
+void Entity::draw() const
+{
+
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+
+	Entity::_pGraphMng->draw(*(_animator->getCurrentAnime()->getpSprite()));
+	if (gMng::COLLISION_DBG)
+		Entity::_pGraphMng->draw(*(_current_collider));
 }
 
 void Entity::move(const float dx, const float dy)

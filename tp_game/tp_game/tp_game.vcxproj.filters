@@ -59,6 +59,7 @@
     <ClCompile Include="BlackSkeleton.cpp">
       <Filter>Characters</Filter>
     </ClCompile>
+    <ClCompile Include="Projectile.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Character.h">
@@ -120,6 +121,7 @@
     <ClInclude Include="BlackSkeleton.h">
       <Filter>Characters</Filter>
     </ClInclude>
+    <ClInclude Include="Projectile.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Characters">

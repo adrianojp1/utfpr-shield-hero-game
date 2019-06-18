@@ -169,6 +169,7 @@
     <ClCompile Include="Orc.cpp" />
     <ClCompile Include="Pause_Menu.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="Skeleton.cpp" />
     <ClCompile Include="Stage.cpp" />
     <ClCompile Include="Timer.cpp" />
@@ -193,6 +194,7 @@
     <ClInclude Include="Orc.h" />
     <ClInclude Include="Pause_Menu.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="Projectile.h" />
     <ClInclude Include="Skeleton.h" />
     <ClInclude Include="Stage.h" />
     <ClInclude Include="stdafx.h" />

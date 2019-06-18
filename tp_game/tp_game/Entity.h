@@ -36,7 +36,7 @@ public:
 	//================================================================//
 	// ========== Loop methods ========== //
 	virtual void execute(const float deltaTime) = 0;
-	virtual void draw() const = 0;
+	virtual void draw() const;
 
 	//================================================================//
 	// ========== Motion ========== //

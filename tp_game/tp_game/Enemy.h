@@ -15,6 +15,7 @@ protected:
 
 	Timer cd_attack;
 	int _collisionDamage;
+	int _attackDamage;
 
 	std::vector<Entity*> _vblocksUnderneath;
 
@@ -36,6 +37,9 @@ public:
 
 	virtual void setCollDmg(const int dmg);
 	virtual int getCollDmg() const;
+
+	virtual void setAttackDmg(const int dmg);
+	virtual int getAttackDmg() const;
 
 	//================================================================//
 	// ========== Motion ========== //

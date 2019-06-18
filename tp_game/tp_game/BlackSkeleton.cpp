@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "BlackSkeleton.h"
+#include "Projectile.h"
 
 BlackSkeleton::BlackSkeleton(const sf::Vector2f initPosition) :
 	Skeleton(initPosition)
@@ -31,7 +32,6 @@ void BlackSkeleton::initialize_animator()
 	*_animator << new Animation(gMng::black_skeleton_walk_Sp_Fp, 4, 0.250f);
 	*_animator << new Animation(gMng::black_skeleton_die_Sp_Fp, 3, 0.250f);
 	*_animator << new Animation(gMng::black_skeleton_atk_Sp_Fp, 3, 0.200f);
-	*_animator << new Animation(gMng::black_skeleton_proj_Sp_Fp, 1, 0.0f);
 }
 
 void BlackSkeleton::updateAction(const float deltaTime)

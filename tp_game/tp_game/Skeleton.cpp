@@ -28,5 +28,6 @@ Skeleton::~Skeleton()
 //Define attack of both Skeletons
 void Skeleton::attack()
 {
+
 }
 

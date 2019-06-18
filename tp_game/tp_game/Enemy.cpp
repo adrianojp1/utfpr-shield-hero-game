@@ -17,6 +17,7 @@ Enemy::Enemy(const sf::Vector2f initPosition) :
 	_jumpHeight = 0.0f;
 	_hp = 1;
 	_collisionDamage = 1;
+	_attackDamage = 2;
 	_canAttack = true;
 	_attacking = false;
 
@@ -54,6 +55,16 @@ void Enemy::setCollDmg(const int dmg)
 int Enemy::getCollDmg() const
 {
 	return _collisionDamage;
+}
+
+void Enemy::setAttackDmg(const int dmg)
+{
+	_attackDamage = dmg;
+}
+
+int Enemy::getAttackDmg() const
+{
+	return _attackDamage;
 }
 
 /*void Enemy::turnArround()

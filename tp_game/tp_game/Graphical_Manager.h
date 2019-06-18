@@ -75,13 +75,15 @@ public:
 	static const std::string white_skeleton_walk_Sp_Fp;
 	static const std::string white_skeleton_atk_Sp_Fp;
 	static const std::string white_skeleton_die_Sp_Fp;
-	static const std::string white_skeleton_proj_Sp_Fp;
 
 	//Black_Skeleton
 	static const std::string black_skeleton_idle_Sp_Fp;
 	static const std::string black_skeleton_walk_Sp_Fp;
 	static const std::string black_skeleton_atk_Sp_Fp;
 	static const std::string black_skeleton_die_Sp_Fp;
+
+	//Projectile
+	static const std::string white_skeleton_proj_Sp_Fp;
 	static const std::string black_skeleton_proj_Sp_Fp;
 
 };

@@ -8,6 +8,7 @@
 #include "Block.h"
 #include "WhiteSkeleton.h"
 #include "BlackSkeleton.h"
+#include "Projectile.h"
 
 //======================================================================================================================================//
 // === Stage Class === //
@@ -20,6 +21,7 @@ protected:
 	Orc* _orc;
 	WhiteSkeleton* _WSklt;
 	BlackSkeleton* _BSklt;
+	Projectile* _WSproj;
 
 
 
