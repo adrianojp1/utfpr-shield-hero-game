@@ -17,9 +17,6 @@ protected:
 	int _collisionDamage;
 
 	std::vector<Entity*> _vblocksUnderneath;
-
-	static Entity* pPlayer1;
-	static Entity* pPlayer2;
 public:
 	//================================================================//
 	// ========== Constructors ========== //
@@ -55,8 +52,6 @@ public:
 	// ========== State checkers ========== //
 	
 	virtual bool isAttacking() const = 0;
-
-	static void setpPlayer1(Entity* pP1);
 	
 protected :
 	// ========== execute submethods ========== //

@@ -62,11 +62,11 @@ void Player::initialize_animator()
 
 	_animator = new Animator(static_cast<Entity*>(this));
 
-	*_animator << new Animation(gMng::player_idle_Sp_Fp, 1, 0.0f);
-	*_animator << new Animation(gMng::player_walk_Sp_Fp, 4, 0.250f);
-	*_animator << new Animation(gMng::player_die_Sp_Fp, 3, 0.500f);
-	*_animator << new Animation(gMng::player_def1_Sp_Fp, 1, 0.0f);
-	*_animator << new Animation(gMng::player_def2_Sp_Fp, 1, 0.0f);
+	*_animator << new Animation(gMng::player_idle_texture, 1, 0.0f);
+	*_animator << new Animation(gMng::player_walk_texture, 4, 0.250f);
+	*_animator << new Animation(gMng::player_die_texture, 3, 0.500f);
+	*_animator << new Animation(gMng::player_def1_texture, 1, 0.0f);
+	*_animator << new Animation(gMng::player_def2_texture, 1, 0.0f);
 } // end initializeAnimators
 
 void Player::updateAction(const float deltaTime)

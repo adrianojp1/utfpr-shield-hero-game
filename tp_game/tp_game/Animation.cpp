@@ -12,14 +12,14 @@
 
 //======================================================================================================================================//
 // === Animation Methods === //
-Animation::Animation(const std::string texture_filePath, unsigned int nFrames, float switchTime) : 
+Animation::Animation(sf::Texture* pTexture, unsigned int nFrames, float switchTime) : 
 	_switchTimer(switchTime)
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
 	_nFrames = nFrames;
 	_frameCounter = 0;
-	initialize(texture_filePath);
+	initialize(pTexture);
 
 	_switchTimer.trigger();
 }
@@ -37,13 +37,13 @@ Animation::~Animation()
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 }
 
-void Animation::initialize(std::string texture_filePath)
+void Animation::initialize(sf::Texture* pTexture)
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
-	gMng::load_n_setTexture(&_sprite, texture_filePath, &_texture);
-
-	sf::Vector2u textureSize = _texture.getSize();
+	_sprite.setTexture(pTexture);
+	_sprite.setScale(gMng::textures_scale);
+	sf::Vector2u textureSize = _sprite.getTexture()->getSize();
 
 	//Set canvas borders
 	_canvasRect.width = (int)(textureSize.x / _nFrames);
@@ -52,7 +52,6 @@ void Animation::initialize(std::string texture_filePath)
 
 	_sprite.setSize(this->getCanvasSize());
 	_sprite.setOrigin(_sprite.getSize() / 2.0f);
-	_sprite.setTexture(&_texture);
 }
 
 void Animation::updateAnimation(float deltaTime, bool facingRight)

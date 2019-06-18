@@ -50,6 +50,10 @@
       <Filter>Abstract Entities</Filter>
     </ClCompile>
     <ClCompile Include="CEnt_List.cpp" />
+    <ClCompile Include="Scenario.cpp">
+      <Filter>Abstract Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Character.h">
@@ -102,6 +106,9 @@
     </ClInclude>
     <ClInclude Include="List.h" />
     <ClInclude Include="CEnt_List.h" />
+    <ClInclude Include="Scenario.h">
+      <Filter>Abstract Entities</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Characters">

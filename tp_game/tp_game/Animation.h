@@ -13,7 +13,6 @@ class Animation
 {
 private:
 	//Visual members
-	sf::Texture _texture;
 	sf::RectangleShape _sprite;
 	sf::IntRect _canvasRect;
 
@@ -27,7 +26,7 @@ private:
 public:
 	//================================================================//
 	// ========== Constructors ========== //
-	Animation(const std::string texture_filePath, unsigned int nFrames, float switchTime);
+	Animation(sf::Texture* pTexture, unsigned int nFrames, float switchTime);
 	Animation();
 
 	// ========== Destructors ========== //
@@ -35,7 +34,7 @@ public:
 
 	//================================================================//
 	// ========== Initializers ========== //
-	void initialize(std::string texture_filePath);
+	void initialize(sf::Texture* pTexture);
 
 	//================================================================//
 	// ========== Loop methods ========== //

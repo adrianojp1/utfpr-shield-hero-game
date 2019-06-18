@@ -33,11 +33,12 @@ void Game::initialize()
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
+	Abstract_Entity::setpGame(this);
+
 	//Window: zoom(5x), ratio (4:3), ratio multiplier (250)
 	_window = new Graphical_Manager;
 	Abstract_Entity::setGraphManager(_window);
 
-	Abstract_Entity::setpGame(this);
 	_main_menu = new Main_Menu();
 	_newGame_menu = new NewGame_Menu();
 	_pause_menu = new Pause_Menu();
@@ -88,12 +89,12 @@ void Game::initialize_stage1()
 		_stage1 = new Stage();
 
 		initialize_player1();
-		_stage1->setPlayer1(_player1);
+		_stage1->setpPlayer1(_player1);
 
 		if (_nPlayers == 2)
 		{
 			initialize_player2();
-			_stage1->setPlayer2(_player2);
+			_stage1->setpPlayer2(_player2);
 		}
 	}
 }

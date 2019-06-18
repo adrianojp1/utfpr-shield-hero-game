@@ -8,6 +8,7 @@
 //======================================================================================================================================//
 // === Classes Declaration === //
 class Game;
+class Player;
 
 //======================================================================================================================================//
 // === Derived classes from this === //
@@ -25,6 +26,9 @@ protected:
 	bool _active;
 
 	sf::Vector2f _position;
+
+	static Player* _pPlayer1;
+	static Player* _pPlayer2;
 public:
 	//================================================================//
 	// ========== Constructors ========== //
@@ -56,5 +60,11 @@ public:
 	// _pGame
 	static void setpGame(Game* pGame);
 	static Game* getpGame();
+	// _pPlayer1
+	static void setpPlayer1(Player* pP1);
+	static Player* getpPlayer1();
+	// _pPlayer2
+	static void setpPlayer2(Player* pP2);
+	static Player* getpPlayer2();
 };
 

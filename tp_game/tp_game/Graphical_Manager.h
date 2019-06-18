@@ -7,6 +7,7 @@ class Graphical_Manager : public sf::RenderWindow
 private:
 	sf::View* pView;
 
+	static std::vector<sf::Texture*> _vTextures;
 public:
 	//================================================================//
 	// ========== Constructors ========== //
@@ -17,6 +18,7 @@ public:
 	//================================================================//
 	// ========== Initializers ========== //
 	void initializeView(sf::Vector2f center, sf::Vector2f windowSize);
+	void loadAllTextures();
 
 	//================================================================//
 	// ========== Loop methods ========== //
@@ -30,7 +32,7 @@ public:
 	//================================================================//
 	// ========== Log method ========== //
 	static void printConsole_log(std::string log);
-	static void loadTexture(const std::string file_path, sf::Texture* pTexture);
+	static void loadTexture(const std::string file_path, sf::Texture** pTexture);
 	static void load_n_setTexture(sf::RectangleShape* pShape, const std::string file_path, sf::Texture* pTexture);
 
 	//================================================================//
@@ -51,7 +53,7 @@ public:
 	static const float gravity;
 
 	// ========== Textures ========== //
-	static const float textures_scale;
+	static const sf::Vector2f textures_scale;
 
 	// ========== Fonts (Ft) file paths (Fp) ========== //
 	static const std::string menu_Ft_Fp;
@@ -64,11 +66,22 @@ public:
 	static const std::string player_def2_Sp_Fp;
 	static const std::string player_die_Sp_Fp;
 
+	static sf::Texture* player_idle_texture;
+	static sf::Texture* player_walk_texture;
+	static sf::Texture* player_def1_texture;
+	static sf::Texture* player_def2_texture;
+	static sf::Texture* player_die_texture;
+
 	//Orc
 	static const std::string orc_idle_Sp_Fp;
 	static const std::string orc_walk_Sp_Fp;
 	static const std::string orc_atk_Sp_Fp;
 	static const std::string orc_die_Sp_Fp;
+
+	static sf::Texture* orc_idle_texture;
+	static sf::Texture* orc_walk_texture;
+	static sf::Texture* orc_atk_texture;
+	static sf::Texture* orc_die_texture;
 
 	//White_Skeleton
 

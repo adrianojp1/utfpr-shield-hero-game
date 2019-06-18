@@ -14,3 +14,7 @@
 /* === Notification Subtitles === //
 	<-ov: int>		If the method is overloaded, shows the definition ordinal.
 */
+
+sf::Vector2f dot_product(sf::Vector2f v1, sf::Vector2f v2); //Or scalar product
+sf::Vector2f operator*(sf::Vector2f v1, sf::Vector2f v2);
+sf::Vector2f operator/(sf::Vector2f v1, sf::Vector2f v2);

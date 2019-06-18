@@ -46,10 +46,10 @@ void Orc::initialize_animator()
 
 	_animator = new Animator(static_cast<Entity*>(this));
 
-	*_animator << new Animation(gMng::orc_idle_Sp_Fp, 1, 0.0f);
-	*_animator << new Animation(gMng::orc_walk_Sp_Fp, 4, 0.250f);
-	*_animator << new Animation(gMng::orc_die_Sp_Fp, 3, 0.250f);
-	*_animator << new Animation(gMng::orc_atk_Sp_Fp, 3, 0.200f);
+	*_animator << new Animation(gMng::orc_idle_texture, 1, 0.0f);
+	*_animator << new Animation(gMng::orc_walk_texture, 4, 0.250f);
+	*_animator << new Animation(gMng::orc_die_texture, 3, 0.250f);
+	*_animator << new Animation(gMng::orc_atk_texture, 3, 0.200f);
 } // end initializeAnimators
 
 void Orc::attack()

@@ -1,7 +1,6 @@
 #pragma once
 #include "List.h"
 #include "Entity.h"
-#include "Player.h"
 
 class CEnt_List
 {
