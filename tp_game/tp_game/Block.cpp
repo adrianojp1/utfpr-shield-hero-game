@@ -8,22 +8,21 @@
 
 //======================================================================================================================================//
 // === Static initializations === //
-const sf::Vector2f Block::size = sf::Vector2f{ 16.0f, 16.0f } * gMng::textures_scale;
+const sf::Vector2f Block::size = sf::Vector2f{ 16.0f, 16.0f };
 
 //======================================================================================================================================//
 // === Block methods === //
 
-Block::Block(const sf::Vector2f initPosition) :
-	Entity(initPosition, true)
+Block::Block(const sf::Vector2f initPosition, const int id) :
+	Entity(initPosition, true, id)
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
-	initialize_Collider(_collider, size / gMng::textures_scale);
-	
-	//For tests porpouse
-	_collider->setFillColor(sf::Color(40, 40, 40));
+	initialize_animator();
+	initialize_Collider(_collider, (*_animator)[0]->getCanvasSize());
 	
 	_current_collider = _collider;
+	_current_collider->setPosition(_position);
 }
 
 Block::Block() : Entity()
@@ -37,18 +36,40 @@ Block::~Block()
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 	if (_collider)
 		delete _collider;
+	if (_animator)
+		delete _animator;
+}
+
+void Block::initialize_animator()
+{
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+
+	_animator = new Animator(static_cast<Entity*>(this));
+
+	Animation* pAnime = new Animation(gMng::tileset_texture, 1, 0.0f);
+
+	sf::Vector2i blockRectPosition = sf::Vector2i{_id % 24, _id / 24 } * size;
+	pAnime->setCanvasRect(sf::IntRect(blockRectPosition, sf::Vector2i{ size }));
+	pAnime->initializeSprite();
+
+	(*_animator) << pAnime;
+	(*_animator).setCurrentAnime(0);
+	_animator->getCurrentAnime()->getpSprite()->setPosition(_position);
 }
 
 void Block::execute(float deltaTime)
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
-
-	_collider->setPosition(_position);
 }
 
-void Block::draw() const
+void Block::draw()
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
-	Entity::_pGraphMng->draw(*(this->_collider));
+	if (this->isActive())
+	{
+		Entity::_pGraphMng->draw(*(_animator->getCurrentAnime()->getpSprite()));
+		if (gMng::COLLISION_DBG)
+			Entity::_pGraphMng->draw(*(_current_collider));
+	}
 }

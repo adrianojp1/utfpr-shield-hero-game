@@ -85,7 +85,7 @@ void Menu::execute(const float deltaTime)
 	}
 }
 
-void Menu::draw() const
+void Menu::draw()
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
@@ -275,7 +275,7 @@ void Menu::Option::execute(const float deltaTime)
 
 }
 
-void Menu::Option::draw() const
+void Menu::Option::draw()
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 

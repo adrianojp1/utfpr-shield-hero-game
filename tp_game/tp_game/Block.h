@@ -15,15 +15,19 @@ private:
 public:
 	//================================================================//
 	// ========== Constructors ========== //
-	Block(const sf::Vector2f initPosition);
+	Block(const sf::Vector2f initPosition, const int id = 2);
 	Block();
 	// ========== Destructors ========== //
 	virtual ~Block();
 
 	//================================================================//
+	// ========== Initializers ========== //
+	void initialize_animator();
+
+	//================================================================//
 	// ========== Loop methods ========== //
 	virtual void execute(const float deltaTime);
-	virtual void draw() const;
+	virtual void draw();
 
 	//================================================================//
 	//======================== Static Consts =========================//

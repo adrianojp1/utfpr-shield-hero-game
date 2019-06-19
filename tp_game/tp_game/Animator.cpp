@@ -41,11 +41,11 @@ Animator::~Animator()
 	_vAnimes.clear();
 } // end destr
 
-void Animator::updateAnimation(float deltaTime, bool facingRight)
+void Animator::updateAnimation(bool facingRight)
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
-	_currentAnime->updateAnimation(deltaTime, facingRight);
+	_currentAnime->updateAnimation(facingRight);
 	_currentAnime->getpSprite()->setPosition(_pEntity->getPosition());
 } // end updateSprite
 

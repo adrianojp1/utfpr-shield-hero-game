@@ -11,6 +11,16 @@ CEnt_List::~CEnt_List()
 	clearList();
 }
 
+CEnt_List::iterator CEnt_List::begin()
+{
+	return _CEnt_List.begin();
+}
+
+CEnt_List::iterator CEnt_List::end()
+{
+	return _CEnt_List.end();
+}
+
 void CEnt_List::clearList()
 {
 	_CEnt_List.clear();

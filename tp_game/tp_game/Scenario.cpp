@@ -8,7 +8,7 @@
 
 //======================================================================================================================================//
 // === Scenario methods === //
-Scenario::Scenario()
+Scenario::Scenario() : Abstract_Entity({-420, -350})
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
@@ -20,24 +20,34 @@ Scenario::~Scenario()
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
 	//Temporary
-	if (_background)
-		delete _background;
+	//if (_background)
+	//	delete _background;
 
 	if (_orc)
 		delete _orc;
 
-	for (Block* block : _vBlocks)
+	for (Entity* pEnt : _block_list)
 	{
-		if (block)
-			delete block;
+		if (pEnt)
+			delete pEnt;
 	}
-	_vBlocks.clear();
+	_block_list.clearList();
 }
 
 void Scenario::initializeScenario()
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
-
+	/*
+	_background = new int*[_matrixSize.x];
+	for (uint32_t i = 0; i < _matrixSize.x ; i++)
+	{
+		_background[i] = new int[_matrixSize.y];
+		for (uint32_t j = 0; j < _matrixSize.y; j++)
+		{
+			_background[i][j] = 60;
+		}
+	}*/
+	/*
 	//Background
 	_background = new sf::RectangleShape;
 	_bgtexture = NULL;
@@ -45,19 +55,39 @@ void Scenario::initializeScenario()
 	_background->setSize(sf::Vector2f((float)_background->getTexture()->getSize().x, (float)_background->getTexture()->getSize().y));
 	_background->setOrigin((float)_background->getTexture()->getSize().x / 2.0f, (float)_background->getTexture()->getSize().y / 2.0f);
 	_background->setPosition(0.0f, -30.0f);
-
-	//Orc: initial position (0, 0)
-	_orc = new Orc(sf::Vector2f{ 128.0f, 136.0f });
+	*/
+	_matrixSize = { 14, 12 };
+	sf::Vector2f block_realSize = Block::size * gMng::textures_scale;
+	Block* pBlock = NULL;
+	for (int i = 0; i < _matrixSize.x ; i++)
+	{
+		for (unsigned int j = 0; j < _matrixSize.y; j++)
+		{
+			pBlock = new Block(sf::Vector2f{ i* block_realSize.x + _position.x, j*block_realSize.y + _position.y}, 56);
+			_all_EntList.includeEntity(pBlock);
+		}
+	}
 
 	//Blocks
 	for (int i = -4; i < 0; i++)
 	{
-		_vBlocks.push_back(new Block(sf::Vector2f(float(Block::size.x * i), 200.0f)));
-		_vBlocks.push_back(new Block(sf::Vector2f(float(Block::size.x * i + Block::size.x * 6), 200.0f)));
+		pBlock = new Block(sf::Vector2f(float(block_realSize.x * i), 200.0f), 14);
+		_block_list.includeEntity(pBlock);
+		_all_EntList.includeEntity(pBlock);
+		pBlock = new Block(sf::Vector2f(float(block_realSize.x * i + block_realSize.x * 6), 200.0f), 14);
+		_block_list.includeEntity(pBlock);
+		_all_EntList.includeEntity(pBlock);
 	}
 	//Orc Platform Edges
-	_vBlocks.push_back(new Block(sf::Vector2f(float(Block::size.x * 1), 136.0f))); //Left
-	_vBlocks.push_back(new Block(sf::Vector2f(float(Block::size.x * 6), 136.0f))); //Right
+	pBlock = new Block(sf::Vector2f(float(block_realSize.x * 1), 136.0f), 12);
+	_block_list.includeEntity(pBlock); //Left
+	_all_EntList.includeEntity(pBlock);
+	pBlock = new Block(sf::Vector2f(float(block_realSize.x * 6), 136.0f), 12);
+	_block_list.includeEntity(pBlock); //Right
+	_all_EntList.includeEntity(pBlock);
+
+	_orc = new Orc(sf::Vector2f{ 128.0f, 136.0f });
+	_all_EntList.includeEntity(_orc);
 }
 
 void Scenario::execute(const float deltaTime)
@@ -68,25 +98,23 @@ void Scenario::execute(const float deltaTime)
 
 	_orc->execute(deltaTime);
 
-	for (Block* block : _vBlocks) //execute all platforms
+	for (Entity* pEnt : _block_list)
 	{
-		block->execute(deltaTime);
+		pEnt->execute(deltaTime);
 	}
 
 	manage_collisions();
 }
 
-void Scenario::draw() const
+void Scenario::draw()
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
-	_pGraphMng->draw(*_background);
+	//_pGraphMng->draw(*_background);
 
-	_orc->draw();
-
-	for (Block* block : _vBlocks) //draw all platforms
+	for (Entity* pEnt : _all_EntList)
 	{
-		block->draw();
+		pEnt->draw();
 	}
 
 	drawPlayers();
@@ -113,6 +141,26 @@ void Scenario::drawPlayers() const
 	_pPlayer1->draw();
 	if (_pPlayer2)
 		_pPlayer2->draw();
+}
+
+void Scenario::setBlock_id_matrix(int** matrix)
+{
+	_concreteBlocks = matrix;
+}
+
+int** Scenario::getBlock_id_matrix()
+{
+	return _concreteBlocks;
+}
+
+void Scenario::setMatrixSize(sf::Vector2u size)
+{
+	_matrixSize = size;
+}
+
+sf::Vector2u Scenario::getMatrixSize()
+{
+	return _matrixSize;
 }
 
 void Scenario::manage_collisions()
@@ -151,17 +199,17 @@ void Scenario::manage_collisions()
 		}
 	}
 
-	for (Block* block : _vBlocks)
+	for (Entity* pEnt : _block_list)
 		//Check collision with all blocks
 	{
-		if (check_collision_n_push(static_cast<Entity*>(_pPlayer1), static_cast<Entity*>(block), &intersection, &collisionDirection, 0.0f))
+		if (check_collision_n_push(static_cast<Entity*>(_pPlayer1), pEnt, &intersection, &collisionDirection, 0.0f))
 			_pPlayer1->onCollision(collisionDirection);
 		if (_pPlayer2)
 		{
-			if (check_collision_n_push(static_cast<Entity*>(_pPlayer2), static_cast<Entity*>(block), &intersection, &collisionDirection, 0.0f))
+			if (check_collision_n_push(static_cast<Entity*>(_pPlayer2), pEnt, &intersection, &collisionDirection, 0.0f))
 				_pPlayer2->onCollision(collisionDirection);
 		}
-		if (check_collision_n_push(static_cast<Entity*>(_orc), static_cast<Entity*>(block), &intersection, &collisionDirection, 0.0f))
+		if (check_collision_n_push(static_cast<Entity*>(_orc), pEnt, &intersection, &collisionDirection, 0.0f))
 			_orc->onCollision(collisionDirection);
 	}
 }

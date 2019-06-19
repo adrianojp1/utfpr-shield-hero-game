@@ -24,6 +24,9 @@ const bool Graphical_Manager::COLLISION_DBG = false;
 
 const std::string Graphical_Manager::menu_Ft_Fp = "Fonts/romulus.ttf";
 
+const std::string Graphical_Manager::tileset_Fp = "Media/tileset.png";
+sf::Texture* Graphical_Manager::tileset_texture = NULL;
+
 const std::string Graphical_Manager::player_idle_Sp_Fp = "Media/shield-hero/shield_hero-idle.png";
 const std::string Graphical_Manager::player_walk_Sp_Fp = "Media/shield-hero/shield_hero-walk.png";
 const std::string Graphical_Manager::player_def1_Sp_Fp = "Media/shield-hero/shield_hero-def1.png";
@@ -85,6 +88,9 @@ void Graphical_Manager::initializeView(sf::Vector2f center, sf::Vector2f windowS
 void Graphical_Manager::loadAllTextures()
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+
+	//Tilet
+	loadTexture(tileset_Fp, &tileset_texture);
 
 	//Player
 	loadTexture(player_idle_Sp_Fp, &player_idle_texture);

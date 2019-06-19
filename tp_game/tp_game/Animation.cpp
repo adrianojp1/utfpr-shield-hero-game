@@ -42,19 +42,20 @@ void Animation::initialize(sf::Texture* pTexture)
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
 	_sprite.setTexture(pTexture);
-	_sprite.setScale(gMng::textures_scale);
-	sf::Vector2u textureSize = _sprite.getTexture()->getSize();
 
-	//Set canvas borders
-	_canvasRect.width = (int)(textureSize.x / _nFrames);
-	_canvasRect.height = (int)(textureSize.y);
-	_canvasRect.top = 0;
-
-	_sprite.setSize(this->getCanvasSize());
-	_sprite.setOrigin(_sprite.getSize() / 2.0f);
+	setCanvasSize(sf::Vector2u{ (pTexture->getSize().x / _nFrames), pTexture->getSize().y });
+	initializeSprite();
 }
 
-void Animation::updateAnimation(float deltaTime, bool facingRight)
+void Animation::initializeSprite()
+{
+	_sprite.setScale(gMng::textures_scale);
+	_sprite.setSize(this->getCanvasSize());
+	_sprite.setOrigin(_sprite.getSize() / 2.0f);
+	_sprite.setTextureRect(getCanvasRect());
+}
+
+void Animation::updateAnimation(bool facingRight)
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 	
@@ -116,6 +117,22 @@ sf::RectangleShape* Animation::getpSprite()
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 	return &_sprite;
+}
+
+void Animation::setCanvasRect(sf::IntRect rect)
+{
+	_canvasRect = rect;
+}
+
+sf::IntRect Animation::getCanvasRect()
+{
+	return _canvasRect;
+}
+
+void Animation::setCanvasSize(const sf::Vector2u size)
+{
+	_canvasRect.height = size.y;
+	_canvasRect.width = size.x;
 }
 
 sf::Vector2f Animation::getCanvasSize() const

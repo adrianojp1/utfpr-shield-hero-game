@@ -43,7 +43,7 @@ void Stage::execute(const float deltaTime)
 		_vScenarios[_currentScenarioId]->execute(deltaTime);
 }
 
-void Stage::draw() const
+void Stage::draw()
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 

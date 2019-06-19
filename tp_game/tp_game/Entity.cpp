@@ -9,7 +9,8 @@
 //======================================================================================================================================//
 // === Entity methods === //
 
-Entity::Entity(const sf::Vector2f initPosition, bool active) : Abstract_Entity(initPosition, active)
+Entity::Entity(const sf::Vector2f initPosition, const bool active, const int id) : 
+	Abstract_Entity(initPosition, active, id)
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 

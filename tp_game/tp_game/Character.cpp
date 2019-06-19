@@ -110,7 +110,7 @@ void Character::execute(const float deltaTime)
 		else
 		{
 			updateDeath();
-			_velocity = { 0.0f, 0.0f };
+			_velocity.x = 0.0f;
 		}
 
 		applyGforce(deltaTime);
@@ -131,13 +131,16 @@ void Character::execute(const float deltaTime)
 	}
 }
 
-void Character::draw() const
+void Character::draw()
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 	
-	Entity::_pGraphMng->draw(*(_animator->getCurrentAnime()->getpSprite()));
-	if (gMng::COLLISION_DBG)
-		Entity::_pGraphMng->draw(*(_current_collider));
+	if (this->isActive())
+	{
+		Entity::_pGraphMng->draw(*(_animator->getCurrentAnime()->getpSprite()));
+		if (gMng::COLLISION_DBG)
+			Entity::_pGraphMng->draw(*(_current_collider));
+	}
 }
 
 void Character::onCollision(const sf::Vector2f collisionDirection)
@@ -297,7 +300,7 @@ void Character::decreaseTimers()
 
 void Character::updateAnime_n_Collider(const float deltaTime)
 {
-	_animator->updateAnimation(deltaTime, _facingRight);
+	_animator->updateAnimation(_facingRight);
 	_current_collider->setPosition(_position);
 }
 

@@ -12,10 +12,16 @@
 class Scenario : public Abstract_Entity
 {
 private:
-	sf::RectangleShape* _background;
-	sf::Texture* _bgtexture;
-	std::vector<Block*> _vBlocks;
+	//sf::RectangleShape* _background;
+	//sf::Texture* _bgtexture;
+	CEnt_List _block_list;
+	CEnt_List _enemy_list;
 	Orc* _orc;
+
+	CEnt_List _all_EntList;
+	int** _background;
+	int** _concreteBlocks;
+	sf::Vector2u _matrixSize;
 public:
 	// ========== Constructors ========== //
 	Scenario();
@@ -27,7 +33,7 @@ public:
 
 	// ========== Loop methods ========== //
 	virtual void execute(const float deltaTime);
-	virtual void draw() const;
+	virtual void draw();
 
 	// ========== Players methods ========== //
 	virtual void executePlayers(const float deltaTime);
@@ -36,6 +42,12 @@ public:
 	// ========== State ========== //
 
 	// ========== Sets & Gets ========== //
+	//_block_ids_matrix
+	void setBlock_id_matrix(int** matrix);
+	int** getBlock_id_matrix();
+	//_matrixSize
+	void setMatrixSize(sf::Vector2u size);
+	sf::Vector2u getMatrixSize();
 
 	// ========== Collision Management ========== //
 	virtual void manage_collisions();

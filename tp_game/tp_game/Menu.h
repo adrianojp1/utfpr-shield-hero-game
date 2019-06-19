@@ -40,7 +40,7 @@ protected:
 
 		// ========== Loop methods ========== //
 		virtual void execute(const float deltaTime);
-		virtual void draw() const;
+		virtual void draw();
 
 		// ========== Activation methods ========== //
 		virtual void activate();
@@ -77,7 +77,7 @@ public:
 	//================================================================//
 	// ========== Loop methods ========== //
 	virtual void execute(const float deltaTime);
-	virtual void draw() const;
+	virtual void draw();
 
 	//================================================================//
 	// ========== Selection methods ========== //

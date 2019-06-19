@@ -22,7 +22,7 @@ public:
 
 	// ========== Loop methods ========== //
 	virtual void execute(const float deltaTime);
-	virtual void draw() const;
+	virtual void draw();
 
 	// ========== State ========== //
 	virtual void pause();

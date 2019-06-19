@@ -59,6 +59,10 @@ public:
 	static const std::string menu_Ft_Fp;
 
 	// ========== Sprites (Sp) file paths (Fp) ========== //
+	//Tiled
+	static const std::string tileset_Fp;
+	static sf::Texture* tileset_texture;
+
 	//Player
 	static const std::string player_idle_Sp_Fp;
 	static const std::string player_walk_Sp_Fp;

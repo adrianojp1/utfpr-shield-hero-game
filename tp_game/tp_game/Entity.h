@@ -24,7 +24,7 @@ protected:
 public:
 	//================================================================//
 	// ========== Constructors ========== //
-	Entity(const sf::Vector2f initPosition, bool active = false);
+	Entity(const sf::Vector2f initPosition, const bool active = false, const int id = -1);
 	Entity();
 	// ========== Destructors ========== //
 	virtual ~Entity();
@@ -32,11 +32,12 @@ public:
 	//================================================================//
 	// ========== Initializers ========== //
 	virtual void initialize_Collider(sf::RectangleShape*& pCollider, sf::Vector2f spriteSize); //Initialize a specific collider
+	virtual void initialize_animator() = 0;
 
 	//================================================================//
 	// ========== Loop methods ========== //
 	virtual void execute(const float deltaTime) = 0;
-	virtual void draw() const = 0;
+	virtual void draw() = 0;
 
 	//================================================================//
 	// ========== Motion ========== //
