@@ -2,7 +2,6 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Timer.cpp" />
     <ClCompile Include="Animator.cpp">
       <Filter>Graphicals</Filter>
     </ClCompile>
@@ -15,7 +14,6 @@
     <ClCompile Include="Character.cpp">
       <Filter>Characters</Filter>
     </ClCompile>
-    <ClCompile Include="Game.cpp" />
     <ClCompile Include="Animation.cpp">
       <Filter>Graphicals</Filter>
     </ClCompile>
@@ -27,7 +25,6 @@
     </ClCompile>
     <ClCompile Include="CEnt_List.cpp" />
     <ClCompile Include="stdafx.cpp" />
-    <ClCompile Include="Game_State.cpp" />
     <ClCompile Include="Block.cpp" />
     <ClCompile Include="Main_Menu.cpp">
       <Filter>Abstract Entities\Menus</Filter>
@@ -51,20 +48,24 @@
     <ClCompile Include="Player.cpp">
       <Filter>Characters</Filter>
     </ClCompile>
-<<<<<<< HEAD
-=======
-    <ClCompile Include="CEnt_List.cpp" />
-    <ClCompile Include="Skeleton.cpp">
-      <Filter>Characters</Filter>
-    </ClCompile>
     <ClCompile Include="WhiteSkeleton.cpp">
       <Filter>Characters</Filter>
     </ClCompile>
     <ClCompile Include="BlackSkeleton.cpp">
       <Filter>Characters</Filter>
     </ClCompile>
-    <ClCompile Include="Projectile.cpp" />
->>>>>>> Enemy
+    <ClCompile Include="Timer.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Game_State.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Skeleton.cpp">
+      <Filter>Characters</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Character.h">
@@ -79,9 +80,7 @@
     <ClInclude Include="Graphical_Manager.h">
       <Filter>Graphicals</Filter>
     </ClInclude>
-    <ClInclude Include="Timer.h" />
     <ClInclude Include="stdafx.h" />
-    <ClInclude Include="Game.h" />
     <ClInclude Include="Animation.h">
       <Filter>Graphicals</Filter>
     </ClInclude>
@@ -93,7 +92,6 @@
     </ClInclude>
     <ClInclude Include="List.h" />
     <ClInclude Include="CEnt_List.h" />
-    <ClInclude Include="Game_State.h" />
     <ClInclude Include="Block.h" />
     <ClInclude Include="Main_Menu.h">
       <Filter>Abstract Entities\Menus</Filter>
@@ -117,21 +115,24 @@
     <ClInclude Include="Player.h">
       <Filter>Characters</Filter>
     </ClInclude>
-<<<<<<< HEAD
-=======
-    <ClInclude Include="List.h" />
-    <ClInclude Include="CEnt_List.h" />
-    <ClInclude Include="Skeleton.h">
-      <Filter>Characters</Filter>
-    </ClInclude>
     <ClInclude Include="WhiteSkeleton.h">
       <Filter>Characters</Filter>
     </ClInclude>
     <ClInclude Include="BlackSkeleton.h">
       <Filter>Characters</Filter>
     </ClInclude>
-    <ClInclude Include="Projectile.h" />
->>>>>>> Enemy
+    <ClInclude Include="Timer.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Game_State.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Skeleton.h">
+      <Filter>Characters</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Characters">
@@ -151,6 +152,9 @@
     </Filter>
     <Filter Include="Abstract Entities\Stages">
       <UniqueIdentifier>{96418809-229b-4d4a-b6ec-fb87a4e1b794}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game">
+      <UniqueIdentifier>{909280cc-a180-4e26-8e90-9c2f39d8bd64}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

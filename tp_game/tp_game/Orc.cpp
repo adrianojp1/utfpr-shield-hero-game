@@ -83,7 +83,6 @@ void Orc::updateAction(const float deltaTime)
 	{
 		_velocity.x = 0.0f;
 		die();
-		(*_animator)[DEATH]->reset();
 	}
 		
 
