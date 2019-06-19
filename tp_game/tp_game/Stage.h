@@ -8,7 +8,7 @@
 class Stage : public Abstract_Entity
 {
 protected:
-	std::vector<Scenario*> _vScenarios;
+	std::vector<Scenario *> _vScenarios;
 	int _currentScenarioId;
 
 public:
@@ -32,6 +32,4 @@ public:
 	virtual bool pauseKey_isPressed();
 
 	// ========== Sets & Gets ========== //
-
 };
-

@@ -51,6 +51,20 @@
     <ClCompile Include="Player.cpp">
       <Filter>Characters</Filter>
     </ClCompile>
+<<<<<<< HEAD
+=======
+    <ClCompile Include="CEnt_List.cpp" />
+    <ClCompile Include="Skeleton.cpp">
+      <Filter>Characters</Filter>
+    </ClCompile>
+    <ClCompile Include="WhiteSkeleton.cpp">
+      <Filter>Characters</Filter>
+    </ClCompile>
+    <ClCompile Include="BlackSkeleton.cpp">
+      <Filter>Characters</Filter>
+    </ClCompile>
+    <ClCompile Include="Projectile.cpp" />
+>>>>>>> Enemy
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Character.h">
@@ -103,6 +117,21 @@
     <ClInclude Include="Player.h">
       <Filter>Characters</Filter>
     </ClInclude>
+<<<<<<< HEAD
+=======
+    <ClInclude Include="List.h" />
+    <ClInclude Include="CEnt_List.h" />
+    <ClInclude Include="Skeleton.h">
+      <Filter>Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="WhiteSkeleton.h">
+      <Filter>Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="BlackSkeleton.h">
+      <Filter>Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="Projectile.h" />
+>>>>>>> Enemy
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Characters">

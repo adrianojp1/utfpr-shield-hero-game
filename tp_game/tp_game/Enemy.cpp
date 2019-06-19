@@ -9,13 +9,17 @@
 //======================================================================================================================================//
 // === Enemy methods === //
 
-Enemy::Enemy(const sf::Vector2f initPosition) : Character(initPosition), cd_attack()
+Enemy::Enemy(const sf::Vector2f initPosition) : 
+	Character(initPosition), cd_attack()
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
 	_jumpHeight = 0.0f;
 	_hp = 1;
 	_collisionDamage = 1;
+	_attackDamage = 2;
+	_canAttack = true;
+	_attacking = false;
 
 } // end constr (parameters)
 
@@ -25,8 +29,8 @@ Enemy::Enemy() : Character()
 
 	_attacking = false;
 	_canAttack = false;
-	_facingRight = true;
-	_canJump = true;
+	_facingRight = false;
+	_canJump = false;
 	_position = {0.0f, 0.0f};
 	_hp = 0;
 	_collisionDamage = 0;
@@ -51,6 +55,16 @@ void Enemy::setCollDmg(const int dmg)
 int Enemy::getCollDmg() const
 {
 	return _collisionDamage;
+}
+
+void Enemy::setAttackDmg(const int dmg)
+{
+	_attackDamage = dmg;
+}
+
+int Enemy::getAttackDmg() const
+{
+	return _attackDamage;
 }
 
 /*void Enemy::turnArround()
@@ -83,4 +97,9 @@ void Enemy::add_blockUnderneath(Entity *pBlock)
 void Enemy::clear_blocksUnderneath()
 {
 	_vblocksUnderneath.clear();
+}
+
+bool Enemy::isAttacking() const
+{
+	return _attacking;
 }

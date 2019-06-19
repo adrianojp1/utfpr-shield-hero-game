@@ -15,6 +15,7 @@ protected:
 
 	Timer cd_attack;
 	int _collisionDamage;
+	int _attackDamage;
 
 	std::vector<Entity*> _vblocksUnderneath;
 public:
@@ -34,9 +35,13 @@ public:
 	virtual void setCollDmg(const int dmg);
 	virtual int getCollDmg() const;
 
+	virtual void setAttackDmg(const int dmg);
+	virtual int getAttackDmg() const;
+
 	//================================================================//
 	// ========== Motion ========== //
 	virtual void attack() = 0;
+	
 
 	//virtual void onCollision(const sf::Vector2f collisionDirection);
 	//virtual void collision_onLeft() = 0;
@@ -51,7 +56,7 @@ public:
 	//================================================================//
 	// ========== State checkers ========== //
 	
-	virtual bool isAttacking() const = 0;
+	virtual bool isAttacking() const;
 	
 protected :
 	// ========== execute submethods ========== //

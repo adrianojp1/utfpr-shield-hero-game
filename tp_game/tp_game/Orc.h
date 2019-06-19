@@ -33,7 +33,7 @@ public:
 
 	//================================================================//
 	// ========== State checkers ========== //
-	bool isAttacking() const;
+	//bool isAttacking() const;
 private:
 	// ========== execute submethods ========== //
 	void updateAction(const float deltaTime);

@@ -29,7 +29,7 @@ Stage::~Stage()
 void Stage::initializeStage()
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
-	
+
 	_vScenarios.push_back(new Scenario);
 }
 
@@ -39,7 +39,7 @@ void Stage::execute(const float deltaTime)
 
 	check_pauseKey();
 
-	if(!this->isPaused())
+	if (!this->isPaused())
 		_vScenarios[_currentScenarioId]->execute(deltaTime);
 }
 

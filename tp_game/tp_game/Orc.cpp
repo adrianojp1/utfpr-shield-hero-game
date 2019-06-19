@@ -52,8 +52,11 @@ void Orc::initialize_animator()
 	*_animator << new Animation(gMng::orc_atk_texture, 3, 0.200f);
 } // end initializeAnimators
 
+
 void Orc::attack()
 {
+	_velocity.x = 0.0f;
+	_state = COMBAT;
 }
 
 void Orc::turnArround()
@@ -71,25 +74,22 @@ void Orc::collision_onRight()
 	turnArround();
 }
 
-bool Orc::isAttacking() const
-{
-	return _attacking;
-}
-
 
 void Orc::updateAction(const float deltaTime)
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 	
-	
+	if (isDying())
+	{
+		_velocity.x = 0.0f;
+		die();
+		(*_animator)[DEATH]->reset();
+	}
+		
 
 	if (_velocity.x != 0.0f)
 	{
 		_state = WALK;
-	}
-	else if (_velocity.x == 0.0f) //to change
-	{
-		_state = IDLE;
 	}
 
 	

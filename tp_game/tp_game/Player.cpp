@@ -103,7 +103,7 @@ void Player::updateAction(const float deltaTime)
 			jump();
 		}
 	}
-} // end updatePosition
+} // end updateAction
 
 void Player::switchTo_combat()
 {

@@ -14,13 +14,14 @@ class Entity : public Abstract_Entity
 {
 protected:
 	// ========= Visual Members ========= //
-	Animator* _animator;
+	Animator *_animator;
 	bool _facingRight; //Bool for the side direction
 
 	// ========= Motion Members ========= //
-	sf::RectangleShape* _current_collider; //Pointer for current collider
+	sf::RectangleShape *_current_collider; //Pointer for current collider
 	float _speed;
 	sf::Vector2f _velocity;
+
 public:
 	//================================================================//
 	// ========== Constructors ========== //
@@ -31,7 +32,7 @@ public:
 
 	//================================================================//
 	// ========== Initializers ========== //
-	virtual void initialize_Collider(sf::RectangleShape*& pCollider, sf::Vector2f spriteSize); //Initialize a specific collider
+	virtual void initialize_Collider(sf::RectangleShape *&pCollider, sf::Vector2f spriteSize); //Initialize a specific collider
 	virtual void initialize_animator() = 0;
 
 	//================================================================//
@@ -51,8 +52,7 @@ public:
 	virtual void setSpeed(const float speed);
 	virtual float getSpeed() const;
 	// _collider
-	virtual sf::RectangleShape* getCollider() const;
+	virtual sf::RectangleShape *getCollider() const;
 	// _facingRight
 	virtual bool isFacingRight() const;
 };
-
