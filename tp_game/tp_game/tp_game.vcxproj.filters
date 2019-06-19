@@ -55,6 +55,9 @@
     </ClCompile>
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="Game_State.cpp" />
+    <ClCompile Include="Obstacle.cpp">
+      <Filter>Obstacles</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Character.h">
@@ -111,6 +114,9 @@
       <Filter>Abstract Entities</Filter>
     </ClInclude>
     <ClInclude Include="Game_State.h" />
+    <ClInclude Include="Obstacle.h">
+      <Filter>Obstacles</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Characters">
