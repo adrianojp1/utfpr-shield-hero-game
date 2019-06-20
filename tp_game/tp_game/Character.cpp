@@ -102,6 +102,8 @@ void Character::execute(const float deltaTime)
 
 	if (this->isActive())
 	{
+		checkColls();
+
 		decreaseTimers();
 
 		if (!this->isDying())
@@ -116,7 +118,8 @@ void Character::execute(const float deltaTime)
 
 		applyGforce(deltaTime);
 		updatePosition(deltaTime);
-		
+	
+
 		switchAnime_n_Collider();
 
 		if (!isVulnerable())
@@ -129,6 +132,8 @@ void Character::execute(const float deltaTime)
 		}
 
 		updateAnime_n_Collider(deltaTime);
+
+		resetColls();
 	}
 }
 
@@ -144,50 +149,10 @@ void Character::draw()
 	}
 }
 
-void Character::onCollision(const sf::Vector2f collisionDirection)
-{
-	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
-
-	//X axe
-	if (collisionDirection.x < 0.0f)
-	{
-		collision_onLeft();
-	}
-	else if (collisionDirection.x > 0.0f)
-	{
-		collision_onRight();
-	}
-
-	//Y axe
-	if (collisionDirection.y > 0.0f)
-	{
-		collision_onBottom();
-	}
-	else if (collisionDirection.y < 0.0f)
-	{
-		collision_onTop();
-	}
-}
-
-void Character::collision_onLeft()
-{
-	_velocity.x = 0.0f;
-}
-
-void Character::collision_onRight()
-{
-	_velocity.x = 0.0f;
-}
-
-void Character::collision_onBottom()
+void Character::colliding_onBottom()
 {
 	_velocity.y = 0.0f;
 	_canJump = true;
-}
-
-void Character::collision_onTop()
-{
-	_velocity.y = 0.0f;
 }
 
 void Character::updatePosition(const float deltaTime)
@@ -218,6 +183,14 @@ void Character::moveToLeft(const float speedMultiplier)
 void Character::moveToRight(const float speedMultiplier)
 {
 	_velocity.x += _speed * speedMultiplier;
+}
+
+void Character::moveFoward()
+{
+	if (_facingRight)
+		moveToRight();
+	else
+		moveToLeft();
 }
 
 void Character::updateDeath()

@@ -21,6 +21,8 @@ Entity::Entity(const sf::Vector2f initPosition, const bool active, const int id)
 
 	//Bools
 	_facingRight = true;
+
+	resetColls();
 }
 
 Entity::Entity() : Abstract_Entity()
@@ -83,6 +85,54 @@ void Entity::move(const sf::Vector2f offset)
 	_position += offset;
 }
 
+void Entity::checkColls()
+{
+	if (_coll_onLeft)
+	{
+		colliding_onLeft();
+	}
+	else if (_coll_onRight)
+	{
+		colliding_onRight();
+	}
+	if (_coll_onBot)
+	{
+		colliding_onBottom();
+	}
+	else if (_coll_onTop)
+	{
+		colliding_onTop();
+	}
+}
+
+void Entity::resetColls()
+{
+	_coll_onBot = false;
+	_coll_onLeft = false;
+	_coll_onRight = false;
+	_coll_onTop = false;
+}
+
+void Entity::colliding_onLeft()
+{
+	_velocity.x = 0.0f;
+}
+
+void Entity::colliding_onRight()
+{
+	_velocity.x = 0.0f;
+}
+
+void Entity::colliding_onBottom()
+{
+	_velocity.y = 0.0f;
+}
+
+void Entity::colliding_onTop()
+{
+	_velocity.y = 0.0f;
+}
+
 void Entity::onCollision(const sf::Vector2f collisionDirection)
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
@@ -90,21 +140,21 @@ void Entity::onCollision(const sf::Vector2f collisionDirection)
 	//X axe
 	if (collisionDirection.x < 0.0f)
 	{ //Collision on left
-		_velocity.x = 0.0f;
+		_coll_onLeft = true;
 	}
 	else if (collisionDirection.x > 0.0f)
 	{ //Collisiton on right
-		_velocity.x = 0.0f;
+		_coll_onRight = true;
 	}
 
 	//Y axe
 	if (collisionDirection.y > 0.0f)
 	{ //Collisition on bottom
-		_velocity.y = 0.0f;
+		_coll_onBot = true;
 	}
 	else if (collisionDirection.y < 0.0f)
 	{ //Collision on top
-		_velocity.y = 0.0f;
+		_coll_onTop = true;
 	}
 }
 

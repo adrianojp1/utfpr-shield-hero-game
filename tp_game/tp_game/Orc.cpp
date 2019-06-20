@@ -61,16 +61,21 @@ void Orc::attack()
 
 void Orc::turnArround()
 {
-	_velocity.x = -_velocity.x;
+	if (_facingRight)
+		_facingRight = false;
+	else
+		_facingRight = true;
 }
 
-void Orc::collision_onLeft()
+void Orc::colliding_onLeft()
 {
+	_velocity.x = 0.0f;
 	turnArround();
 }
 
-void Orc::collision_onRight()
+void Orc::colliding_onRight()
 {
+	_velocity.x = 0.0f;
 	turnArround();
 }
 
@@ -79,18 +84,10 @@ void Orc::updateAction(const float deltaTime)
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 	
-	if (isDying())
-	{
-		_velocity.x = 0.0f;
-		die();
-	}
+	_velocity.x = 0.0f;
 		
-
-	if (_velocity.x != 0.0f)
-	{
-		_state = WALK;
-	}
-
+	_state = WALK;
+	moveFoward();
 	
 
 } // end updatePosition

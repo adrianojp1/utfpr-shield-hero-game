@@ -22,6 +22,12 @@ protected:
 	float _speed;
 	sf::Vector2f _velocity;
 
+	// ========= Colliding bools ========= //
+	bool _coll_onTop;
+	bool _coll_onBot;
+	bool _coll_onLeft;
+	bool _coll_onRight;
+
 public:
 	//================================================================//
 	// ========== Constructors ========== //
@@ -45,6 +51,12 @@ public:
 	void move(const float dx, const float dy);
 	virtual void move(const sf::Vector2f offset);
 	virtual void onCollision(const sf::Vector2f collisionDirection);
+	virtual void checkColls();
+	virtual void resetColls();
+	virtual void colliding_onLeft();
+	virtual void colliding_onRight();
+	virtual void colliding_onBottom();
+	virtual void colliding_onTop();
 
 	//================================================================//
 	// ========== Sets & Gets ========== //

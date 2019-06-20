@@ -61,12 +61,8 @@ public:
 	virtual void jump();
 	virtual void moveToLeft(const float speedMultiplier = 1.0f);
 	virtual void moveToRight(const float speedMultiplier = 1.0f);
-
-	virtual void onCollision(const sf::Vector2f collisionDirection);
-	virtual void collision_onLeft();
-	virtual void collision_onRight();
-	virtual void collision_onBottom();
-	virtual void collision_onTop();
+	virtual void moveFoward();
+	virtual void colliding_onBottom();
 
 	//================================================================//
 	// ========== State ========== //

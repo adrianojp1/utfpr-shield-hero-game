@@ -170,6 +170,20 @@ void Scenario::manage_collisions()
 	sf::Vector2f collisionDirection;
 	sf::Vector2f intersection;
 
+	for (Entity* pEnt : _block_list)
+		//Check collision with all blocks
+	{
+		if (check_collision_n_push(static_cast<Entity*>(_pPlayer1), pEnt, &intersection, &collisionDirection, 0.0f))
+			_pPlayer1->onCollision(collisionDirection);
+		if (_pPlayer2)
+		{
+			if (check_collision_n_push(static_cast<Entity*>(_pPlayer2), pEnt, &intersection, &collisionDirection, 0.0f))
+				_pPlayer2->onCollision(collisionDirection);
+		}
+		if (check_collision_n_push(static_cast<Entity*>(_orc), pEnt, &intersection, &collisionDirection, 0.0f))
+			_orc->onCollision(collisionDirection);
+	}
+
 	if (_pPlayer1->isVulnerable() && (check_collision(static_cast<Entity*>(_pPlayer1), static_cast<Entity*>(_orc), &intersection, &collisionDirection)))
 	{ //Check collision between the ent1 and the orc
 		if (_pPlayer1->isDefendingInFront(collisionDirection))
@@ -197,20 +211,6 @@ void Scenario::manage_collisions()
 				_pPlayer2->takeDmg(_orc->getCollDmg());
 			}
 		}
-	}
-
-	for (Entity* pEnt : _block_list)
-		//Check collision with all blocks
-	{
-		if (check_collision_n_push(static_cast<Entity*>(_pPlayer1), pEnt, &intersection, &collisionDirection, 0.0f))
-			_pPlayer1->onCollision(collisionDirection);
-		if (_pPlayer2)
-		{
-			if (check_collision_n_push(static_cast<Entity*>(_pPlayer2), pEnt, &intersection, &collisionDirection, 0.0f))
-				_pPlayer2->onCollision(collisionDirection);
-		}
-		if (check_collision_n_push(static_cast<Entity*>(_orc), pEnt, &intersection, &collisionDirection, 0.0f))
-			_orc->onCollision(collisionDirection);
 	}
 }
 

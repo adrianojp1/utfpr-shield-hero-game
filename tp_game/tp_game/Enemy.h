@@ -44,14 +44,12 @@ public:
 	
 
 	//virtual void onCollision(const sf::Vector2f collisionDirection);
-	//virtual void collision_onLeft() = 0;
-	//virtual void collision_onRight() = 0;
+	//virtual void colliding_onLeft() = 0;
+	//virtual void colliding_onRight() = 0;
 
 	//================================================================//
 	// ========== State ========== //
 	virtual void decreaseTimers();
-	virtual void add_blockUnderneath(Entity* pBlock);
-	virtual void clear_blocksUnderneath();
 
 	//================================================================//
 	// ========== State checkers ========== //

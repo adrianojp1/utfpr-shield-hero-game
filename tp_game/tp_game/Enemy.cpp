@@ -72,12 +72,12 @@ int Enemy::getAttackDmg() const
 	_velocity.x = -_velocity.x;
 }
 
-void Enemy::collision_onLeft()
+void Enemy::colliding_onLeft()
 {
 	turnArround();
 }
 
-void Enemy::collision_onRight()
+void Enemy::colliding_onRight()
 {
 	turnArround();
 }*/
@@ -86,17 +86,6 @@ void Enemy::decreaseTimers()
 {
 	_invulnerability.decreaseTime();
 	cd_attack.decreaseTime();
-}
-
-void Enemy::add_blockUnderneath(Entity *pBlock)
-{
-	if (pBlock)
-		_vblocksUnderneath.push_back(pBlock);
-}
-
-void Enemy::clear_blocksUnderneath()
-{
-	_vblocksUnderneath.clear();
 }
 
 bool Enemy::isAttacking() const
