@@ -9,7 +9,7 @@
 const int Level::BACKGROUND_0(0);
 const int Level::BACKGROUND_1(1);
 const int Level::CONCRETE(2);
-const int Level::FRONTGROUND(3);
+const int Level::FOREGROUND(3);
 
 //======================================================================================================================================//
 // === Level methods === //
@@ -117,7 +117,6 @@ void Level::serializeLayer(std::ifstream& level_reader, int** matrix)
 		{
 			matrix[j][k] = extractNextInt(layer_string, iterator) - 1;
 		}
-
 	}
 }
 
@@ -234,10 +233,10 @@ void Level::initializeEntities()
 	{
 		for (int k = 0; k < _matrixSize.x; k++)
 		{
-			id = _tilesIds_matrix[FRONTGROUND][j][k];
+			id = _tilesIds_matrix[FOREGROUND][j][k];
 			if (id != -1)
 			{
-				pBlock = new Block(block_realSize * sf::Vector2i{ k, j } +_position, _tilesIds_matrix[FRONTGROUND][j][k]);
+				pBlock = new Block(block_realSize * sf::Vector2i{ k, j } +_position, _tilesIds_matrix[FOREGROUND][j][k]);
 				_all_EntList.includeEntity(pBlock);
 			}
 		}

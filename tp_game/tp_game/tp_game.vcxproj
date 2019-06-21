@@ -171,6 +171,7 @@
     <ClCompile Include="Pause_Menu.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Level.cpp" />
+    <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="Skeleton.cpp" />
     <ClCompile Include="Stage.cpp" />
     <ClCompile Include="stdafx.cpp" />
@@ -198,6 +199,7 @@
     <ClInclude Include="Pause_Menu.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Level.h" />
+    <ClInclude Include="Projectile.h" />
     <ClInclude Include="Skeleton.h" />
     <ClInclude Include="Stage.h" />
     <ClInclude Include="stdafx.h" />

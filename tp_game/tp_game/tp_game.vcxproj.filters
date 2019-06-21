@@ -66,6 +66,9 @@
     <ClCompile Include="Orc.cpp">
       <Filter>Characters\Enemies</Filter>
     </ClCompile>
+    <ClCompile Include="Projectile.cpp">
+      <Filter>Characters\Enemies</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Character.h">
@@ -131,6 +134,9 @@
       <Filter>Characters\Enemies</Filter>
     </ClInclude>
     <ClInclude Include="Enemy.h">
+      <Filter>Characters\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="Projectile.h">
       <Filter>Characters\Enemies</Filter>
     </ClInclude>
   </ItemGroup>

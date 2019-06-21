@@ -38,8 +38,8 @@ void Projectile::initialize_animator()
 
 	_animator = new Animator(static_cast<Entity*>(this));
 
-	*_animator << new Animation(gMng::white_skeleton_proj_Sp_Fp, 2, 0.1f); 
-	*_animator << new Animation(gMng::black_skeleton_proj_Sp_Fp, 2, 0.1f); 
+	*_animator << new Animation(gMng::white_skeleton_proj_texture, 2, 0.1f); 
+	*_animator << new Animation(gMng::black_skeleton_proj_texture, 2, 0.1f);
 }
 
 void Projectile::execute(const float deltaTime)
@@ -81,6 +81,6 @@ void Projectile::updateAction(const float deltaTime)
 
 void Projectile::updateAnime_n_Collider(const float deltaTime)
 {
-	_animator->updateAnimation(deltaTime, _facingRight);
+	_animator->updateAnimation(_facingRight);
 	_current_collider->setPosition(_position);
 }

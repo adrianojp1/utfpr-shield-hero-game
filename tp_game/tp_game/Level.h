@@ -81,5 +81,5 @@ private:
 	static const int BACKGROUND_0;
 	static const int BACKGROUND_1;
 	static const int CONCRETE;
-	static const int FRONTGROUND;
+	static const int FOREGROUND;
 };
