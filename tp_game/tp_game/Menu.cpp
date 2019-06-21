@@ -9,7 +9,6 @@
 //======================================================================================================================================//
 // === Static initializations === //
 const float Menu::keysCD = 0.20f;
-sf::Font* Menu::menu_font = NULL;
 
 //======================================================================================================================================//
 // === Menu methods === //
@@ -22,12 +21,6 @@ Menu::Menu(const sf::Vector2f initPosit) :
 	_onOp = 0;
 	_nOps = 0;
 	_betweenKeys.trigger();
-	if (!menu_font)
-	{
-		menu_font = new sf::Font;
-		if(!menu_font->loadFromFile(gMng::menu_Ft_Fp))
-			getchar();
-	}
 }
 
 Menu::Menu() : Abstract_Entity(), _betweenKeys()
@@ -54,6 +47,16 @@ Menu::~Menu()
 			delete option;
 	}
 	_vOptions.clear();
+}
+
+void Menu::initializeTitle(const std::string str, const int charSize, const sf::Vector2f pos, sf::Color fillColor, sf::Color olColor, const float olThickness, sf::Font* ft)
+{
+	_title_text = new sf::Text(str, *ft, charSize);
+	_title_text->setOrigin(_title_text->getGlobalBounds().width / 2.0f, _title_text->getGlobalBounds().height / 2.0f);
+	_title_text->setPosition(pos);
+	_title_text->setOutlineThickness(olThickness);
+	_title_text->setOutlineColor(olColor);
+	_title_text->setFillColor(fillColor);
 }
 
 void Menu::initialize_n_addOp(Option*& pOp, const sf::Vector2f position, const std::string label, const int actSize, const int deactSize, sf::Color actColor, sf::Color deactColor, sf::Font* font)
@@ -99,6 +102,8 @@ void Menu::draw()
 	{
 		option->draw();
 	}
+
+	_pGraphMng->draw(*_title_text);
 }
 
 void Menu::activate_onOp()

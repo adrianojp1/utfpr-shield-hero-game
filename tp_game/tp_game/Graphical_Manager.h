@@ -19,6 +19,7 @@ public:
 	// ========== Initializers ========== //
 	void initializeView(sf::Vector2f center, sf::Vector2f windowSize);
 	void loadAllTextures();
+	void loadAllFonts();
 
 	//================================================================//
 	// ========== Loop methods ========== //
@@ -32,6 +33,7 @@ public:
 	//================================================================//
 	// ========== Log method ========== //
 	static void printConsole_log(std::string log);
+	static void loadFont(const std::string file_path, sf::Font** pFont);
 	static void loadTexture(const std::string file_path, sf::Texture** pTexture);
 	static void load_n_setTexture(sf::RectangleShape* pShape, const std::string file_path, sf::Texture* pTexture);
 
@@ -49,25 +51,44 @@ public:
 	static const bool CONSOLE_LOG;
 	static const bool COLLISION_DBG;
 
+	// ========== Directories ========== //
+	static const std::string textures_dir;
+	static const std::string fonts_dir;
+	static const std::string levels_dir;
+	//static const std::string sound_dir;
+
+	static const std::string stage1_dir;
+	static const std::string stage2_dir;
+
 	// ========== Stage ========== //
 	static const float gravity;
 
 	// ========== Levels ========== //
 	//Stage 1
-
+	
+	static const std::string st1_lv1_tile_layers_Fp;
+	static const std::string st1_lv2_tile_layers_Fp;
+	static const std::string st1_lv3_tile_layers_Fp;
+	static const std::string st1_lv4_tile_layers_Fp;
+	static const std::string st1_lv5_tile_layers_Fp;
+	static const std::string st1_lv6_tile_layers_Fp;
+	
 	//Stage 2
-	static const std::string st2_lv1_Fp;
-	static const std::string st2_lv2_Fp;
-	static const std::string st2_lv3_Fp;
-	static const std::string st2_lv4_Fp;
-	static const std::string st2_lv5_Fp;
-	static const std::string st2_lv6_Fp;
+	static const std::string st2_lv1_tile_layers_Fp;
+	static const std::string st2_lv2_tile_layers_Fp;
+	static const std::string st2_lv3_tile_layers_Fp;
+	static const std::string st2_lv4_tile_layers_Fp;
+	static const std::string st2_lv5_tile_layers_Fp;
+	static const std::string st2_lv6_tile_layers_Fp;
 
-	// ========== Textures ========== //
+	// ========== Tileset ========== //
 	static const sf::Vector2f textures_scale;
 
-	// ========== Fonts (Ft) file paths (Fp) ========== //
-	static const std::string menu_Ft_Fp;
+	// ========== Menu (Ft) file paths (Fp) ========== //
+	static const std::string menu_ops_Ft_Fp;
+	static const std::string menu_title_Ft_Fp;
+	static sf::Font* menu_ops_ft;
+	static sf::Font* menu_title_ft;
 
 	// ========== Sprites (Sp) file paths (Fp) ========== //
 	//Tiled

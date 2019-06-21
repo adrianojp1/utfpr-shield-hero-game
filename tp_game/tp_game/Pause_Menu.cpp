@@ -11,22 +11,28 @@
 
 //======================================================================================================================================//
 // === Static initializations === //
-const sf::Vector2f Pause_Menu::menu_position = { 0.0f, -200.0f };
+const sf::Vector2f Pause_Menu::menu_position = { 0.0f, -300.0f };
+
+const std::string Pause_Menu::title_str = "- Pause -";
+const int Pause_Menu::title_charSize(140);
+sf::Color Pause_Menu::title_textColor(sf::Color(255, 255, 255));
+sf::Color Pause_Menu::title_outLine_color(sf::Color(105, 210, 0));
+const float Pause_Menu::title_outLine_thickness(5.0f);
 
 const int Pause_Menu::ops_act_charSize(120);
 const int Pause_Menu::ops_deact_charSize(90);
 
-sf::Color Pause_Menu::ops_act_fillColor(sf::Color(255, 0, 0)); //Red
+sf::Color Pause_Menu::ops_act_fillColor(sf::Color(105, 210, 0)); //Green
 sf::Color Pause_Menu::ops_deact_fillColor(sf::Color(255, 255, 255)); //White
 
 const std::string Pause_Menu::op0_string = "Continue";
-const sf::Vector2f Pause_Menu::op0_position = menu_position + sf::Vector2f{ 0.0f, (float)ops_act_charSize * 0.0f };
+const sf::Vector2f Pause_Menu::op0_position = menu_position + sf::Vector2f{ 0.0f, (float)ops_act_charSize * 1.0f };
 
 const std::string Pause_Menu::op1_string = "Save";
-const sf::Vector2f Pause_Menu::op1_position = menu_position + sf::Vector2f{ 0.0f, (float)ops_act_charSize * 1.0f };
+const sf::Vector2f Pause_Menu::op1_position = menu_position + sf::Vector2f{ 0.0f, (float)ops_act_charSize * 2.0f };
 
 const std::string Pause_Menu::op2_string = "Exit to main menu";
-const sf::Vector2f Pause_Menu::op2_position = menu_position + sf::Vector2f{ 0.0f, (float)ops_act_charSize * 2.0f };
+const sf::Vector2f Pause_Menu::op2_position = menu_position + sf::Vector2f{ 0.0f, (float)ops_act_charSize * 3.0f };
 /*
 const std::string Main_Menu::op3_string = "Exit";
 const sf::Vector2f Main_Menu::op3_position = menu_position + sf::Vector2f{ 0.0f, (float)ops_act_charSize * 3.0f };
@@ -37,6 +43,7 @@ const sf::Vector2f Main_Menu::op3_position = menu_position + sf::Vector2f{ 0.0f,
 Pause_Menu::Pause_Menu() : Menu(menu_position)
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+	initializeTitle(title_str, title_charSize, menu_position, title_textColor, title_outLine_color, title_outLine_thickness);
 	initializeAllOps();
 }
 
