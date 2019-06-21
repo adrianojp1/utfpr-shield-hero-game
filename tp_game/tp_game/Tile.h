@@ -5,7 +5,7 @@
 #include "Entity.h" //Base class
 
 //======================================================================================================================================//
-// === Block Class === //
+// === Tile Class === //
 class Tile : public Entity
 {
 private:
@@ -28,7 +28,7 @@ public:
 	//================================================================//
 	// ========== Loop methods ========== //
 	virtual void execute(const float deltaTime);
-	virtual void draw();
+	//virtual void draw();
 
 	//_realSize
 	static void setRealSize(const sf::Vector2f realSize);

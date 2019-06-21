@@ -4,17 +4,17 @@
 
 //======================================================================================================================================//
 // === This Class Header === //
-#include "Block.h"
+#include "Tile.h"
 
 //======================================================================================================================================//
 // === Static initializations === //
-const sf::Vector2f Block::OriginalSize = sf::Vector2f{ 16.0f, 16.0f };
-sf::Vector2f Block::_realSize = OriginalSize;
+const sf::Vector2f Tile::OriginalSize = sf::Vector2f{ 16.0f, 16.0f };
+sf::Vector2f Tile::_realSize = OriginalSize;
 
 //======================================================================================================================================//
-// === Block methods === //
+// === Tile methods === //
 
-Block::Block(const sf::Vector2f initPosition, const int id) :
+Tile::Tile(const sf::Vector2f initPosition, const int id) :
 	Entity(initPosition, true, id)
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
@@ -26,13 +26,13 @@ Block::Block(const sf::Vector2f initPosition, const int id) :
 	_current_collider->setPosition(_position);
 }
 
-Block::Block() : Entity()
+Tile::Tile() : Entity()
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 1 | ");
 	_collider = NULL;
 }
 
-Block::~Block()
+Tile::~Tile()
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 	if (_collider)
@@ -41,7 +41,7 @@ Block::~Block()
 		delete _animator;
 }
 
-void Block::initialize_animator()
+void Tile::initialize_animator()
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
@@ -49,8 +49,8 @@ void Block::initialize_animator()
 
 	Animation* pAnime = new Animation(gMng::tileset_texture, 1, 0.0f);
 
-	sf::Vector2i blockRectPosition = sf::Vector2i{_id % 24, _id / 24 } * OriginalSize;
-	pAnime->setCanvasRect(sf::IntRect(blockRectPosition, sf::Vector2i{ OriginalSize }));
+	sf::Vector2i TileRectPosition = sf::Vector2i{_id % 24, _id / 24 } * OriginalSize;
+	pAnime->setCanvasRect(sf::IntRect(TileRectPosition, sf::Vector2i{ OriginalSize }));
 	pAnime->initializeSprite();
 
 	(*_animator) << pAnime;
@@ -58,29 +58,17 @@ void Block::initialize_animator()
 	_animator->getCurrentAnime()->getpSprite()->setPosition(_position);
 }
 
-void Block::execute(float deltaTime)
+void Tile::execute(float deltaTime)
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 }
 
-void Block::draw()
-{
-	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
-
-	if (this->isActive())
-	{
-		Entity::_pGraphMng->draw(*(_animator->getCurrentAnime()->getpSprite()));
-		if (gMng::COLLISION_DBG)
-			Entity::_pGraphMng->draw(*(_current_collider));
-	}
-}
-
-void Block::setBlockRealSize(const sf::Vector2f realSize)
+void Tile::setRealSize(const sf::Vector2f realSize)
 {
 	_realSize = realSize;
 }
 
-const sf::Vector2f Block::getBlockRealSize()
+const sf::Vector2f Tile::getRealSize()
 {
 	return _realSize;
 }

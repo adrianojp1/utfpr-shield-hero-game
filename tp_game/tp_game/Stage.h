@@ -35,4 +35,6 @@ public:
 	virtual bool pauseKey_isPressed();
 
 	// ========== Sets & Gets ========== //
+	virtual const std::string get_stg_fp(const int stg_id) const;
+	virtual const std::string get_lv_fp(const int stg_id, const int lv_id) const;
 };

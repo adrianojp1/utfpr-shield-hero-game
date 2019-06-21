@@ -138,18 +138,6 @@ void Character::execute(const float deltaTime)
 	}
 }
 
-void Character::draw()
-{
-	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
-	
-	if (this->isActive())
-	{
-		Entity::_pGraphMng->draw(*(_animator->getCurrentAnime()->getpSprite()));
-		if (gMng::COLLISION_DBG)
-			Entity::_pGraphMng->draw(*(_current_collider));
-	}
-}
-
 void Character::colliding_onBottom()
 {
 	_velocity.y = 0.0f;

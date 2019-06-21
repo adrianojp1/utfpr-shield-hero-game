@@ -68,7 +68,7 @@
     <ClCompile Include="Projectile.cpp">
       <Filter>Characters\Enemies</Filter>
     </ClCompile>
-    <ClCompile Include="Block.cpp" />
+    <ClCompile Include="Tile.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Character.h">
@@ -89,7 +89,6 @@
     </ClInclude>
     <ClInclude Include="List.h" />
     <ClInclude Include="CEnt_List.h" />
-    <ClInclude Include="Block.h" />
     <ClInclude Include="Main_Menu.h">
       <Filter>Abstract Entities\Menus</Filter>
     </ClInclude>
@@ -139,6 +138,7 @@
     <ClInclude Include="Projectile.h">
       <Filter>Characters\Enemies</Filter>
     </ClInclude>
+    <ClInclude Include="Tile.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Characters">

@@ -13,7 +13,7 @@ class Level : public Abstract_Entity
 {
 private:
 	//Temp
-	CEnt_List _block_list;
+	CEnt_List _concreteTile_list;
 	CEnt_List _enemy_list;
 	Orc* _orc;
 	//

@@ -66,9 +66,12 @@ void Entity::draw()
 
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
-	Entity::_pGraphMng->draw(*(_animator->getCurrentAnime()->getpSprite()));
-	if (gMng::COLLISION_DBG)
-		Entity::_pGraphMng->draw(*(_current_collider));
+	if (this->isActive())
+	{
+		Entity::_pGraphMng->draw(*(_animator->getCurrentAnime()->getpSprite()));
+		if (gMng::COLLISION_DBG)
+			Entity::_pGraphMng->draw(*(_current_collider));
+	}
 }
 
 void Entity::move(const float dx, const float dy)

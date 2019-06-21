@@ -56,12 +56,12 @@ Level::~Level()
 	if (_orc)
 		delete _orc;
 
-	for (Entity* pEnt : _block_list)
+	for (Entity* pEnt : _concreteTile_list)
 	{
 		if (pEnt)
 			delete pEnt;
 	}
-	_block_list.clearList();
+	_concreteTile_list.clearList();
 }
 
 void Level::serializePositions(const std::string level_filePath)
@@ -209,7 +209,7 @@ void Level::initializeEntities()
 	setPlayersSpawnPoint();
 	movePlayersToSpawn();
 
-	Tile* pBlock = NULL;
+	Tile* pTile = NULL;
 	int id;
 	for (int i = 0; i < 2; i++)
 	{
@@ -220,8 +220,8 @@ void Level::initializeEntities()
 				id = _tilesIds_matrix[i][j][k];
 				if (id != -1)
 				{
-					pBlock = new Tile(Tile::getRealSize() * sf::Vector2i{ k, j } +_position, _tilesIds_matrix[i][j][k]);
-					_all_EntList.includeEntity(pBlock);
+					pTile = new Tile(Tile::getRealSize() * sf::Vector2i{ k, j } +_position, _tilesIds_matrix[i][j][k]);
+					_all_EntList.includeEntity(pTile);
 				}
 			}
 		}
@@ -234,9 +234,9 @@ void Level::initializeEntities()
 			id = _tilesIds_matrix[CONCRETE][j][k];
 			if (id != -1)
 			{
-				pBlock = new Tile(Tile::getRealSize() * sf::Vector2i{ k, j } +_position, _tilesIds_matrix[CONCRETE][j][k]);
-				_all_EntList.includeEntity(pBlock);
-				_block_list.includeEntity(pBlock);
+				pTile = new Tile(Tile::getRealSize() * sf::Vector2i{ k, j } +_position, _tilesIds_matrix[CONCRETE][j][k]);
+				_all_EntList.includeEntity(pTile);
+				_concreteTile_list.includeEntity(pTile);
 			}
 		}
 	}
@@ -254,8 +254,8 @@ void Level::initializeEntities()
 			id = _tilesIds_matrix[FOREGROUND][j][k];
 			if (id != -1)
 			{
-				pBlock = new Tile(Tile::getRealSize() * sf::Vector2i{ k, j } +_position, _tilesIds_matrix[FOREGROUND][j][k]);
-				_all_EntList.includeEntity(pBlock);
+				pTile = new Tile(Tile::getRealSize() * sf::Vector2i{ k, j } +_position, _tilesIds_matrix[FOREGROUND][j][k]);
+				_all_EntList.includeEntity(pTile);
 			}
 		}
 	}
@@ -276,7 +276,7 @@ void Level::execute(const float deltaTime)
 
 	_orc->execute(deltaTime);
 
-	for (Entity* pEnt : _block_list)
+	for (Entity* pEnt : _concreteTile_list)
 	{
 		pEnt->execute(deltaTime);
 	}
@@ -356,7 +356,7 @@ void Level::manage_collisions()
 	sf::Vector2f collisionDirection;
 	sf::Vector2f intersection;
 
-	for (Entity* pEnt : _block_list)
+	for (Entity* pEnt : _concreteTile_list)
 		//Check collision with all blocks
 	{
 		if (check_collision_n_push(static_cast<Entity*>(_pPlayer1), pEnt, &intersection, &collisionDirection, 0.0f))
