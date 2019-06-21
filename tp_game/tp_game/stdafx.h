@@ -9,6 +9,8 @@
 #include <iostream>
 #include <math.h>
 #include <vector>
+#include <time.h>
+#include <fstream>
 
 //======================================================================================================================================//
 /* === Notification Subtitles === //

@@ -1,15 +1,18 @@
 #pragma once
 //======================================================================================================================================//
 // === Classes Headers === //
-#include "Scenario.h"
+#include "Level.h"
 
 //======================================================================================================================================//
 // === Stage Class === //
 class Stage : public Abstract_Entity
 {
 protected:
-	std::vector<Scenario *> _vScenarios;
+	std::vector<Level*> _vScenarios;
 	int _currentScenarioId;
+
+	int _nObstacles;
+	int _nEnemies;
 
 public:
 	// ========== Constructors ========== //

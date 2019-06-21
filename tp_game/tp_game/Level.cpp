@@ -4,24 +4,53 @@
 
 //======================================================================================================================================//
 // === This Class Header === //
-#include "Scenario.h"
+#include "Level.h"
+
+const int Level::BACKGROUND_0(0);
+const int Level::BACKGROUND_1(1);
+const int Level::CONCRETE(2);
+const int Level::FRONTGROUND(3);
 
 //======================================================================================================================================//
-// === Scenario methods === //
-Scenario::Scenario() : Abstract_Entity({-420, -350})
+// === Level methods === //
+Level::Level(const std::string level_filePath, sf::Vector2f initPosition, const int nEnemies, const int nObstacles) : Abstract_Entity(initPosition)
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
-	initializeScenario();
+	_nTotalEnemies = nEnemies;
+	_nTotalObstacles = nObstacles;
+	_tilesIds_matrix = NULL;
+
+	serializeLayers(level_filePath);
+	initializeEntities();
 }
 
-Scenario::~Scenario()
+Level::Level()
+{
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
+	_matrixSize = { 0, 0 };
+	_playerSpawn = { 0.0f, 0.0f };
+	_nTotalEnemies = 0;
+	_nTotalObstacles = 0;
+	_tilesIds_matrix = NULL;
+}
+
+Level::~Level()
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
-	//Temporary
-	//if (_background)
-	//	delete _background;
+	if (_tilesIds_matrix)
+	{
+		for (int i = 0; i < 4; i++)
+		{
+			for (int j = 0; j < _matrixSize.y; j++)
+			{
+				delete _tilesIds_matrix[i][j];
+			}
+			delete _tilesIds_matrix[i];
+		}
+		delete _tilesIds_matrix;
+	}
 
 	if (_orc)
 		delete _orc;
@@ -34,63 +63,159 @@ Scenario::~Scenario()
 	_block_list.clearList();
 }
 
-void Scenario::initializeScenario()
+void Level::serializeLayers(const std::string level_filePath)
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
-	/*
-	_background = new int*[_matrixSize.x];
-	for (uint32_t i = 0; i < _matrixSize.x ; i++)
+
+	std::ifstream level_reader(level_filePath, std::ios::in);
+	if (!level_reader)
 	{
-		_background[i] = new int[_matrixSize.y];
-		for (uint32_t j = 0; j < _matrixSize.y; j++)
+		std::cerr << "File couldn't be opened!" << std::endl;
+		fflush(stdin);
+		getchar();
+	}
+
+	std::string matrix_line = "";
+	std::string id = "";
+	std::string::iterator iterator;
+
+	std::getline(level_reader, matrix_line);
+	iterator = matrix_line.begin();
+
+	int layerWidth = extractInt(matrix_line, iterator);
+	iterator++;
+	int layerHeight = extractInt(matrix_line, iterator);
+	std::getline(level_reader, matrix_line);
+	
+	_matrixSize = { layerWidth, layerHeight };
+
+	_tilesIds_matrix = new int** [4];
+	
+	for (int i = 0; i < 4; i++)
+	{
+		_tilesIds_matrix[i] = new int* [_matrixSize.y];
+		
+		for (int j = 0; j < _matrixSize.y; j++)
 		{
-			_background[i][j] = 60;
+			std::getline(level_reader, matrix_line);
+
+			if (matrix_line.begin() == matrix_line.end())
+			{
+				j--;
+				continue;
+			}
+
+			_tilesIds_matrix[i][j] = new int[_matrixSize.x];
+
+			std::string::iterator iterator = matrix_line.begin();
+
+			for (int k = 0; k < _matrixSize.x; k++)
+			{
+				_tilesIds_matrix[i][j][k] = extractInt(matrix_line, iterator) - 1;
+
+				if(iterator != matrix_line.end())
+					iterator++;
+			}
 		}
+	}
+	/*
+	//printing first layer
+	for (int i = 0; i < 4; i++)
+	{
+		for (int j = 0; j < _matrixSize.y; j++)
+		{
+			for (int k = 0; k < _matrixSize.x; k++)
+			{
+				std::cout << _tilesIds_matrix[i][j][k] << " ";
+			}
+			std::cout << std::endl;
+		}
+		std::cout << std::endl << std::endl;
 	}*/
-	/*
-	//Background
-	_background = new sf::RectangleShape;
-	_bgtexture = NULL;
-	gMng::load_n_setTexture(_background, "Media/Background.png", _bgtexture);
-	_background->setSize(sf::Vector2f((float)_background->getTexture()->getSize().x, (float)_background->getTexture()->getSize().y));
-	_background->setOrigin((float)_background->getTexture()->getSize().x / 2.0f, (float)_background->getTexture()->getSize().y / 2.0f);
-	_background->setPosition(0.0f, -30.0f);
-	*/
-	_matrixSize = { 14, 12 };
-	sf::Vector2f block_realSize = Block::size * gMng::textures_scale;
-	Block* pBlock = NULL;
-	for (int i = 0; i < _matrixSize.x ; i++)
-	{
-		for (unsigned int j = 0; j < _matrixSize.y; j++)
-		{
-			pBlock = new Block(sf::Vector2f{ i* block_realSize.x + _position.x, j*block_realSize.y + _position.y}, 56);
-			_all_EntList.includeEntity(pBlock);
-		}
-	}
 
-	//Blocks
-	for (int i = -4; i < 0; i++)
-	{
-		pBlock = new Block(sf::Vector2f(float(block_realSize.x * i), 200.0f), 14);
-		_block_list.includeEntity(pBlock);
-		_all_EntList.includeEntity(pBlock);
-		pBlock = new Block(sf::Vector2f(float(block_realSize.x * i + block_realSize.x * 6), 200.0f), 14);
-		_block_list.includeEntity(pBlock);
-		_all_EntList.includeEntity(pBlock);
-	}
-	//Orc Platform Edges
-	pBlock = new Block(sf::Vector2f(float(block_realSize.x * 1), 136.0f), 12);
-	_block_list.includeEntity(pBlock); //Left
-	_all_EntList.includeEntity(pBlock);
-	pBlock = new Block(sf::Vector2f(float(block_realSize.x * 6), 136.0f), 12);
-	_block_list.includeEntity(pBlock); //Right
-	_all_EntList.includeEntity(pBlock);
-
-	_orc = new Orc(sf::Vector2f{ 128.0f, 136.0f });
-	_all_EntList.includeEntity(_orc);
+	level_reader.close();
 }
 
-void Scenario::execute(const float deltaTime)
+int Level::extractInt(std::string& str, std::string::iterator& it)
+{
+	std::string id;
+	for (id = ""; it != str.end() && *it != ','; it++)
+	{
+		id += *it;
+	}
+	return (std::stoi(id));
+}
+
+void Level::initializeEntities()
+{
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
+
+	sf::Vector2f block_realSize = Block::size * gMng::textures_scale;
+
+	_playerSpawn = { block_realSize * sf::Vector2i{ 3, 8 } +_position};
+	setPlayersSpawnPoint();
+	movePlayersToSpawn();
+
+	Block* pBlock = NULL;
+	int id;
+	for (int i = 0; i < 2; i++)
+	{
+		for (int j = 0; j < _matrixSize.y; j++)
+		{
+			for (int k = 0; k < _matrixSize.x; k++)
+			{
+				id = _tilesIds_matrix[i][j][k];
+				if (id != -1)
+				{
+					pBlock = new Block(block_realSize * sf::Vector2i{ k, j } +_position, _tilesIds_matrix[i][j][k]);
+					_all_EntList.includeEntity(pBlock);
+				}
+			}
+		}
+	}
+
+	for (int j = 0; j < _matrixSize.y; j++)
+	{
+		for (int k = 0; k < _matrixSize.x; k++)
+		{
+			id = _tilesIds_matrix[CONCRETE][j][k];
+			if (id != -1)
+			{
+				pBlock = new Block(block_realSize * sf::Vector2i{ k, j } +_position, _tilesIds_matrix[CONCRETE][j][k]);
+				_all_EntList.includeEntity(pBlock);
+				_block_list.includeEntity(pBlock);
+			}
+		}
+	}
+
+	_orc = new Orc(block_realSize * sf::Vector2i{ 10, 8 } + _position);
+	_all_EntList.includeEntity(_orc);
+	_all_EntList.includeEntity(_pPlayer1);
+	if (_pPlayer2)
+		_all_EntList.includeEntity(_pPlayer2);
+
+	for (int j = 0; j < _matrixSize.y; j++)
+	{
+		for (int k = 0; k < _matrixSize.x; k++)
+		{
+			id = _tilesIds_matrix[FRONTGROUND][j][k];
+			if (id != -1)
+			{
+				pBlock = new Block(block_realSize * sf::Vector2i{ k, j } +_position, _tilesIds_matrix[FRONTGROUND][j][k]);
+				_all_EntList.includeEntity(pBlock);
+			}
+		}
+	}
+}
+
+void Level::setPlayersSpawnPoint()
+{
+	_pPlayer1->setCurrSpawnPoint(_playerSpawn);
+	if (_pPlayer2)
+		_pPlayer2->setCurrSpawnPoint(_playerSpawn);
+}
+
+void Level::execute(const float deltaTime)
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
@@ -106,21 +231,22 @@ void Scenario::execute(const float deltaTime)
 	manage_collisions();
 }
 
-void Scenario::draw()
+void Level::draw()
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
 	//_pGraphMng->draw(*_background);
 
+	
 	for (Entity* pEnt : _all_EntList)
 	{
 		pEnt->draw();
 	}
 
-	drawPlayers();
+	//drawPlayers();
 }
 
-void Scenario::executePlayers(const float deltaTime)
+void Level::executePlayers(const float deltaTime)
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
@@ -134,7 +260,7 @@ void Scenario::executePlayers(const float deltaTime)
 	std::cout << std::endl;
 }
 
-void Scenario::drawPlayers() const
+void Level::drawPlayers() const
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
@@ -143,27 +269,34 @@ void Scenario::drawPlayers() const
 		_pPlayer2->draw();
 }
 
-void Scenario::setBlock_id_matrix(int** matrix)
+void Level::movePlayersToSpawn()
 {
-	_concreteBlocks = matrix;
+	_pPlayer1->setPosition(_playerSpawn);
+	if (_pPlayer2)
+		_pPlayer2->setPosition(_playerSpawn);
 }
 
-int** Scenario::getBlock_id_matrix()
+void Level::setTiles_ids_matrix(int*** matrix)
 {
-	return _concreteBlocks;
+	_tilesIds_matrix = matrix;
 }
 
-void Scenario::setMatrixSize(sf::Vector2u size)
+int*** Level::getTiles_ids_matrix()
+{
+	return _tilesIds_matrix;
+}
+
+void Level::setMatrixSize(sf::Vector2i size)
 {
 	_matrixSize = size;
 }
 
-sf::Vector2u Scenario::getMatrixSize()
+sf::Vector2i Level::getMatrixSize() const
 {
 	return _matrixSize;
 }
 
-void Scenario::manage_collisions()
+void Level::manage_collisions()
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
@@ -214,7 +347,7 @@ void Scenario::manage_collisions()
 	}
 }
 
-bool Scenario::check_collision(Entity* ent1, Entity* ent2)
+bool Level::check_collision(Entity* ent1, Entity* ent2)
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
@@ -235,7 +368,7 @@ bool Scenario::check_collision(Entity* ent1, Entity* ent2)
 	return false;
 }
 
-bool Scenario::check_collision(Entity* ent1, Entity* ent2, sf::Vector2f* intersection, sf::Vector2f* coll_direction)
+bool Level::check_collision(Entity* ent1, Entity* ent2, sf::Vector2f* intersection, sf::Vector2f* coll_direction)
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
@@ -278,7 +411,7 @@ bool Scenario::check_collision(Entity* ent1, Entity* ent2, sf::Vector2f* interse
 	return false;
 }
 
-void Scenario::push_entities(Entity* ent1, Entity* ent2, sf::Vector2f* intersection, sf::Vector2f* coll_direction, float push)
+void Level::push_entities(Entity* ent1, Entity* ent2, sf::Vector2f* intersection, sf::Vector2f* coll_direction, float push)
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
@@ -313,7 +446,7 @@ void Scenario::push_entities(Entity* ent1, Entity* ent2, sf::Vector2f* intersect
 	}
 }
 
-bool Scenario::check_collision_n_push(Entity* ent1, Entity* ent2, sf::Vector2f* intersection, sf::Vector2f* coll_direction, float push)
+bool Level::check_collision_n_push(Entity* ent1, Entity* ent2, sf::Vector2f* intersection, sf::Vector2f* coll_direction, float push)
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 

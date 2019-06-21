@@ -17,7 +17,7 @@ sf::Vector2f operator/(sf::Vector2f v1, sf::Vector2f v2)
 
 sf::Vector2i operator*(sf::Vector2i vi, sf::Vector2f vf)
 {
-	return sf::Vector2i(vi.x * vf.x, vi.y * vf.y);
+	return sf::Vector2i(int(vi.x * vf.x), int(vi.y * vf.y));
 }
 
 sf::Vector2f operator*(sf::Vector2f vf, sf::Vector2i vi)

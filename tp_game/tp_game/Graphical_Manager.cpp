@@ -8,8 +8,8 @@
 
 //======================================================================================================================================//
 // === Static initializations === //
-const sf::Vector2u Graphical_Manager::windowRatio = {4, 3};
-const unsigned int Graphical_Manager::ratioMultiplier = 250;
+const sf::Vector2u Graphical_Manager::windowRatio = {16, 9};
+const unsigned int Graphical_Manager::ratioMultiplier = 84;
 const std::string Graphical_Manager::windowName = "Shield Hero";
 const sf::Vector2u Graphical_Manager::windowSize = {windowRatio.x * ratioMultiplier, windowRatio.y *ratioMultiplier};
 
@@ -17,10 +17,17 @@ std::vector<sf::Texture *> Graphical_Manager::_vTextures;
 
 const float Graphical_Manager::gravity(1400.0f);
 
-const sf::Vector2f Graphical_Manager::textures_scale = {4.0f, 4.0f};
+const std::string Graphical_Manager::st2_lv1_Fp = "Levels/st2_lv1.txt";
+const std::string Graphical_Manager::st2_lv2_Fp = "Levels/st2_lv2.txt";
+const std::string Graphical_Manager::st2_lv3_Fp = "Levels/st2_lv3.txt";
+const std::string Graphical_Manager::st2_lv4_Fp = "Levels/st2_lv4.txt";
+const std::string Graphical_Manager::st2_lv5_Fp = "Levels/st2_lv5.txt";
+const std::string Graphical_Manager::st2_lv6_Fp = "Levels/st2_lv6.txt";
+
+const sf::Vector2f Graphical_Manager::textures_scale = {3.5f, 3.5f};
 
 const bool Graphical_Manager::CONSOLE_LOG = false;
-const bool Graphical_Manager::COLLISION_DBG = true;
+const bool Graphical_Manager::COLLISION_DBG = false;
 
 const std::string Graphical_Manager::menu_Ft_Fp = "Fonts/romulus.ttf";
 
@@ -80,7 +87,7 @@ sf::Texture* Graphical_Manager::black_skeleton_proj_texture = NULL;
 Graphical_Manager::Graphical_Manager() : sf::RenderWindow(sf::VideoMode(windowSize.x, windowSize.y), gMng::windowName, sf::Style::Close | sf::Style::Titlebar)
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
-
+	
 	loadAllTextures();
 	initializeView({0.0f, 0.0f}, (sf::Vector2f)this->getSize());
 } // end constr

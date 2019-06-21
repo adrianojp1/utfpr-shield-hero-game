@@ -38,6 +38,7 @@ Character::Character(const sf::Vector2f initPosition) :
 	_jumpHeight = 0.0f;
 	_speed = 0.0f;
 	_hp = 0;
+	_maxHp = 0;
 
 	_state = IDLE;
 
@@ -264,7 +265,7 @@ void Character::ressurect()
 
 void Character::resetHp()
 {
-	_hp = 1;
+	_hp = _maxHp;
 }
 
 void Character::decreaseTimers()
@@ -298,6 +299,16 @@ void Character::setHp(const int hp)
 int Character::getHp() const
 {
 	return _hp;
+}
+
+void Character::setMaxHp(const int maxHp)
+{
+	_maxHp = maxHp;
+}
+
+int Character::getMaxHp() const
+{
+	return _maxHp;
 }
 
 void Character::switchAnime_n_Collider()

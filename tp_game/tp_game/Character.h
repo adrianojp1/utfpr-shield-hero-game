@@ -33,6 +33,7 @@ protected:
 	int _state;
 
 	int _hp;
+	int _maxHp;
 
 public:
 	//================================================================//
@@ -87,6 +88,9 @@ public:
 	// _hp
 	virtual void setHp(const int hp);
 	virtual int getHp() const;
+	//_maxHp;
+	virtual void setMaxHp(const int maxHp);
+	virtual int getMaxHp() const;
 
 	//================================================================//
 	// ========== States ========== //

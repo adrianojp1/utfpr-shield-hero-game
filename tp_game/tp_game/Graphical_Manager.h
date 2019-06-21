@@ -52,6 +52,17 @@ public:
 	// ========== Stage ========== //
 	static const float gravity;
 
+	// ========== Levels ========== //
+	//Stage 1
+
+	//Stage 2
+	static const std::string st2_lv1_Fp;
+	static const std::string st2_lv2_Fp;
+	static const std::string st2_lv3_Fp;
+	static const std::string st2_lv4_Fp;
+	static const std::string st2_lv5_Fp;
+	static const std::string st2_lv6_Fp;
+
 	// ========== Textures ========== //
 	static const sf::Vector2f textures_scale;
 
@@ -118,4 +129,3 @@ public:
 };
 
 typedef Graphical_Manager gMng;
-

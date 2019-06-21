@@ -8,17 +8,11 @@
     <ClCompile Include="Graphical_Manager.cpp">
       <Filter>Graphicals</Filter>
     </ClCompile>
-    <ClCompile Include="Enemy.cpp">
-      <Filter>Characters</Filter>
-    </ClCompile>
     <ClCompile Include="Character.cpp">
       <Filter>Characters</Filter>
     </ClCompile>
     <ClCompile Include="Animation.cpp">
       <Filter>Graphicals</Filter>
-    </ClCompile>
-    <ClCompile Include="Orc.cpp">
-      <Filter>Characters</Filter>
     </ClCompile>
     <ClCompile Include="Abstract_Entity.cpp">
       <Filter>Abstract Entities</Filter>
@@ -41,17 +35,8 @@
     <ClCompile Include="Stage.cpp">
       <Filter>Abstract Entities\Stages</Filter>
     </ClCompile>
-    <ClCompile Include="Scenario.cpp">
-      <Filter>Abstract Entities\Stages</Filter>
-    </ClCompile>
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="Player.cpp">
-      <Filter>Characters</Filter>
-    </ClCompile>
-    <ClCompile Include="WhiteSkeleton.cpp">
-      <Filter>Characters</Filter>
-    </ClCompile>
-    <ClCompile Include="BlackSkeleton.cpp">
       <Filter>Characters</Filter>
     </ClCompile>
     <ClCompile Include="Timer.cpp">
@@ -63,15 +48,27 @@
     <ClCompile Include="Game.cpp">
       <Filter>Game</Filter>
     </ClCompile>
+    <ClCompile Include="Level.cpp">
+      <Filter>Abstract Entities\Stages</Filter>
+    </ClCompile>
     <ClCompile Include="Skeleton.cpp">
-      <Filter>Characters</Filter>
+      <Filter>Characters\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="WhiteSkeleton.cpp">
+      <Filter>Characters\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Characters\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="BlackSkeleton.cpp">
+      <Filter>Characters\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="Orc.cpp">
+      <Filter>Characters\Enemies</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Character.h">
-      <Filter>Characters</Filter>
-    </ClInclude>
-    <ClInclude Include="Enemy.h">
       <Filter>Characters</Filter>
     </ClInclude>
     <ClInclude Include="Animator.h">
@@ -83,9 +80,6 @@
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Animation.h">
       <Filter>Graphicals</Filter>
-    </ClInclude>
-    <ClInclude Include="Orc.h">
-      <Filter>Characters</Filter>
     </ClInclude>
     <ClInclude Include="Abstract_Entity.h">
       <Filter>Abstract Entities</Filter>
@@ -105,20 +99,11 @@
     <ClInclude Include="Pause_Menu.h">
       <Filter>Abstract Entities\Menus</Filter>
     </ClInclude>
-    <ClInclude Include="Scenario.h">
-      <Filter>Abstract Entities\Stages</Filter>
-    </ClInclude>
     <ClInclude Include="Stage.h">
       <Filter>Abstract Entities\Stages</Filter>
     </ClInclude>
     <ClInclude Include="Entity.h" />
     <ClInclude Include="Player.h">
-      <Filter>Characters</Filter>
-    </ClInclude>
-    <ClInclude Include="WhiteSkeleton.h">
-      <Filter>Characters</Filter>
-    </ClInclude>
-    <ClInclude Include="BlackSkeleton.h">
       <Filter>Characters</Filter>
     </ClInclude>
     <ClInclude Include="Timer.h">
@@ -130,8 +115,23 @@
     <ClInclude Include="Game.h">
       <Filter>Game</Filter>
     </ClInclude>
+    <ClInclude Include="Level.h">
+      <Filter>Abstract Entities\Stages</Filter>
+    </ClInclude>
     <ClInclude Include="Skeleton.h">
-      <Filter>Characters</Filter>
+      <Filter>Characters\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="WhiteSkeleton.h">
+      <Filter>Characters\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="Orc.h">
+      <Filter>Characters\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="BlackSkeleton.h">
+      <Filter>Characters\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>Characters\Enemies</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -155,6 +155,9 @@
     </Filter>
     <Filter Include="Game">
       <UniqueIdentifier>{909280cc-a180-4e26-8e90-9c2f39d8bd64}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Characters\Enemies">
+      <UniqueIdentifier>{4d24f02c-5183-40fa-bb2c-6ad6cbd80b4c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

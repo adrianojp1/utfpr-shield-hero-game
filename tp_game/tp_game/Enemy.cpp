@@ -15,7 +15,8 @@ Enemy::Enemy(const sf::Vector2f initPosition) :
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
 	_jumpHeight = 0.0f;
-	_hp = 1;
+	_maxHp = 1;
+	resetHp();
 	_collisionDamage = 1;
 	_attackDamage = 2;
 	_canAttack = true;

@@ -105,8 +105,6 @@ void Game::initialize_stage1()
 
 	if (!_stage1)
 	{
-		_stage1 = new Stage();
-
 		initialize_player1();
 		_stage1->setpPlayer1(_player1);
 
@@ -115,6 +113,7 @@ void Game::initialize_stage1()
 			initialize_player2();
 			_stage1->setpPlayer2(_player2);
 		}
+		_stage1 = new Stage();
 	}
 }
 
