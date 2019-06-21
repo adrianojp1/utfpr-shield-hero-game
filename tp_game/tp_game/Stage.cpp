@@ -34,7 +34,7 @@ void Stage::initializeStage()
 	_nEnemies = (rand() % 11) + 5;
 	_nObstacles = (rand() % 11) + 5;
 
-	_vScenarios.push_back(new Level(gMng::st2_lv1_tile_layers_Fp, { -400.0f, -300.0f }, _nEnemies, _nObstacles));
+	_vScenarios.push_back(new Level(gMng::st2_lv1_positions_Fp, gMng::st2_lv1_tile_layers_Fp, { -400.0f, -300.0f }, _nEnemies, _nObstacles));
 }
 
 void Stage::execute(const float deltaTime)

@@ -60,12 +60,24 @@ public:
 	static const std::string stage1_dir;
 	static const std::string stage2_dir;
 
+	static const std::string stg1_prefix;
+	static const std::string stg2_prefix;
+
+	static const std::string pos_sufix;
+	static const std::string tile_sufix;
+
 	// ========== Stage ========== //
 	static const float gravity;
 
 	// ========== Levels ========== //
 	//Stage 1
-	
+	static const std::string st1_lv1_positions_Fp;
+	static const std::string st1_lv2_positions_Fp;
+	static const std::string st1_lv3_positions_Fp;
+	static const std::string st1_lv4_positions_Fp;
+	static const std::string st1_lv5_positions_Fp;
+	static const std::string st1_lv6_positions_Fp;
+
 	static const std::string st1_lv1_tile_layers_Fp;
 	static const std::string st1_lv2_tile_layers_Fp;
 	static const std::string st1_lv3_tile_layers_Fp;
@@ -74,6 +86,13 @@ public:
 	static const std::string st1_lv6_tile_layers_Fp;
 	
 	//Stage 2
+	static const std::string st2_lv1_positions_Fp;
+	static const std::string st2_lv2_positions_Fp;
+	static const std::string st2_lv3_positions_Fp;
+	static const std::string st2_lv4_positions_Fp;
+	static const std::string st2_lv5_positions_Fp;
+	static const std::string st2_lv6_positions_Fp;
+
 	static const std::string st2_lv1_tile_layers_Fp;
 	static const std::string st2_lv2_tile_layers_Fp;
 	static const std::string st2_lv3_tile_layers_Fp;

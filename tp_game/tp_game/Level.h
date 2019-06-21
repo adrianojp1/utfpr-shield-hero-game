@@ -5,7 +5,7 @@
 #include "CEnt_List.h"
 #include "Player.h"
 #include "Orc.h"
-#include "Block.h"
+#include "Tile.h"
 
 //======================================================================================================================================//
 // === Stage Class === //
@@ -34,12 +34,14 @@ private:
 
 public:
 	// ========== Constructors ========== //
-	Level(const std::string level_filePath, sf::Vector2f initPosition, const int nEnemies, const int nObstacles);
+	Level(const std::string level_positions_filePath, std::string level_tiles_filePath, sf::Vector2f initPosition, const int nEnemies, const int nObstacles);
 	Level();
 	// ========== Destructors ========== //
 	virtual ~Level();
 
 	// ========== Initializers ========== //
+	//Serializers
+	virtual void serializePositions(const std::string level_filePath);
 	virtual void serializeTiles(const std::string level_filePath);
 	virtual void serializeLayer(std::ifstream& level_reader, int** matrix);
 	virtual void serializeDimensions(std::ifstream& level_reader);
@@ -47,7 +49,8 @@ public:
 	virtual void jumpToNext_number(std::ifstream& level_reader);
 	virtual void jumpLine(std::ifstream& level_reader);
 	virtual int extractNextInt(std::string& str, std::string::iterator& it);
-	
+	//
+
 	virtual void initializeEntities();
 	virtual void setPlayersSpawnPoint();
 

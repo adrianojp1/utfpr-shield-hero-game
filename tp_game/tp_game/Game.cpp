@@ -49,6 +49,7 @@ void Game::initialize()
 	//Window: zoom(5x), ratio (4:3), ratio multiplier (250)
 	_window = new Graphical_Manager;
 	Abstract_Entity::setGraphManager(_window);
+	Tile::setRealSize(Tile::OriginalSize * gMng::textures_scale);
 
 	_main_menu = new Main_Menu();
 	_newGame_menu = new NewGame_Menu();

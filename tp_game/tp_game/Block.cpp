@@ -8,7 +8,8 @@
 
 //======================================================================================================================================//
 // === Static initializations === //
-const sf::Vector2f Block::size = sf::Vector2f{ 16.0f, 16.0f };
+const sf::Vector2f Block::OriginalSize = sf::Vector2f{ 16.0f, 16.0f };
+sf::Vector2f Block::_realSize = OriginalSize;
 
 //======================================================================================================================================//
 // === Block methods === //
@@ -48,8 +49,8 @@ void Block::initialize_animator()
 
 	Animation* pAnime = new Animation(gMng::tileset_texture, 1, 0.0f);
 
-	sf::Vector2i blockRectPosition = sf::Vector2i{_id % 24, _id / 24 } * size;
-	pAnime->setCanvasRect(sf::IntRect(blockRectPosition, sf::Vector2i{ size }));
+	sf::Vector2i blockRectPosition = sf::Vector2i{_id % 24, _id / 24 } * OriginalSize;
+	pAnime->setCanvasRect(sf::IntRect(blockRectPosition, sf::Vector2i{ OriginalSize }));
 	pAnime->initializeSprite();
 
 	(*_animator) << pAnime;
@@ -72,4 +73,14 @@ void Block::draw()
 		if (gMng::COLLISION_DBG)
 			Entity::_pGraphMng->draw(*(_current_collider));
 	}
+}
+
+void Block::setBlockRealSize(const sf::Vector2f realSize)
+{
+	_realSize = realSize;
+}
+
+const sf::Vector2f Block::getBlockRealSize()
+{
+	return _realSize;
 }

@@ -19,7 +19,6 @@
     </ClCompile>
     <ClCompile Include="CEnt_List.cpp" />
     <ClCompile Include="stdafx.cpp" />
-    <ClCompile Include="Block.cpp" />
     <ClCompile Include="Main_Menu.cpp">
       <Filter>Abstract Entities\Menus</Filter>
     </ClCompile>
@@ -69,6 +68,7 @@
     <ClCompile Include="Projectile.cpp">
       <Filter>Characters\Enemies</Filter>
     </ClCompile>
+    <ClCompile Include="Block.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Character.h">

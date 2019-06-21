@@ -18,27 +18,47 @@ std::vector<sf::Texture *> Graphical_Manager::_vTextures;
 const bool Graphical_Manager::CONSOLE_LOG = false;
 const bool Graphical_Manager::COLLISION_DBG = true;
 
+const float Graphical_Manager::gravity(1400.0f);
+
 const std::string Graphical_Manager::textures_dir = "Textures/";
 const std::string Graphical_Manager::fonts_dir = "Fonts/";
 const std::string Graphical_Manager::levels_dir = "Levels/";
 const std::string Graphical_Manager::stage1_dir = "Stage_1/";
 const std::string Graphical_Manager::stage2_dir = "Stage_2/";
 
-const float Graphical_Manager::gravity(1400.0f);
+const std::string Graphical_Manager::stg1_prefix = "st1_lv";
+const std::string Graphical_Manager::stg2_prefix = "st2_lv";
 
-const std::string Graphical_Manager::st1_lv1_tile_layers_Fp = levels_dir + stage1_dir + "st1_lv1_tile_layers.txt";
-const std::string Graphical_Manager::st1_lv2_tile_layers_Fp = levels_dir + stage1_dir + "st1_lv2_tile_layers.txt";
-const std::string Graphical_Manager::st1_lv3_tile_layers_Fp = levels_dir + stage1_dir + "st1_lv3_tile_layers.txt";
-const std::string Graphical_Manager::st1_lv4_tile_layers_Fp = levels_dir + stage1_dir + "st1_lv4_tile_layers.txt";
-const std::string Graphical_Manager::st1_lv5_tile_layers_Fp = levels_dir + stage1_dir + "st1_lv5_tile_layers.txt";
-const std::string Graphical_Manager::st1_lv6_tile_layers_Fp = levels_dir + stage1_dir + "st1_lv6_tile_layers.txt";
+const std::string Graphical_Manager::pos_sufix = "_positions.txt";
+const std::string Graphical_Manager::tile_sufix = "_tile_layers.txt";
 
-const std::string Graphical_Manager::st2_lv1_tile_layers_Fp = levels_dir + stage2_dir + "st2_lv1_tile_layers.txt";
-const std::string Graphical_Manager::st2_lv2_tile_layers_Fp = levels_dir + stage2_dir + "st2_lv2_tile_layers.txt";
-const std::string Graphical_Manager::st2_lv3_tile_layers_Fp = levels_dir + stage2_dir + "st2_lv3_tile_layers.txt";
-const std::string Graphical_Manager::st2_lv4_tile_layers_Fp = levels_dir + stage2_dir + "st2_lv4_tile_layers.txt";
-const std::string Graphical_Manager::st2_lv5_tile_layers_Fp = levels_dir + stage2_dir + "st2_lv5_tile_layers.txt";
-const std::string Graphical_Manager::st2_lv6_tile_layers_Fp = levels_dir + stage2_dir + "st2_lv6_tile_layers.txt";
+const std::string Graphical_Manager::st1_lv1_positions_Fp = levels_dir + stage1_dir + stg1_prefix + "1" + pos_sufix;
+const std::string Graphical_Manager::st1_lv2_positions_Fp = levels_dir + stage1_dir + stg1_prefix + "2" + pos_sufix;
+const std::string Graphical_Manager::st1_lv3_positions_Fp = levels_dir + stage1_dir + stg1_prefix + "3" + pos_sufix;
+const std::string Graphical_Manager::st1_lv4_positions_Fp = levels_dir + stage1_dir + stg1_prefix + "4" + pos_sufix;
+const std::string Graphical_Manager::st1_lv5_positions_Fp = levels_dir + stage1_dir + stg1_prefix + "5" + pos_sufix;
+const std::string Graphical_Manager::st1_lv6_positions_Fp = levels_dir + stage1_dir + stg1_prefix + "6" + pos_sufix;
+
+const std::string Graphical_Manager::st1_lv1_tile_layers_Fp = levels_dir + stage1_dir + stg1_prefix + "1" + tile_sufix;
+const std::string Graphical_Manager::st1_lv2_tile_layers_Fp = levels_dir + stage1_dir + stg1_prefix + "2" + tile_sufix;
+const std::string Graphical_Manager::st1_lv3_tile_layers_Fp = levels_dir + stage1_dir + stg1_prefix + "3" + tile_sufix;
+const std::string Graphical_Manager::st1_lv4_tile_layers_Fp = levels_dir + stage1_dir + stg1_prefix + "4" + tile_sufix;
+const std::string Graphical_Manager::st1_lv5_tile_layers_Fp = levels_dir + stage1_dir + stg1_prefix + "5" + tile_sufix;
+const std::string Graphical_Manager::st1_lv6_tile_layers_Fp = levels_dir + stage1_dir + stg1_prefix + "6" + tile_sufix;
+
+const std::string Graphical_Manager::st2_lv1_positions_Fp = levels_dir + stage2_dir + stg2_prefix + "1" + pos_sufix;
+const std::string Graphical_Manager::st2_lv2_positions_Fp = levels_dir + stage2_dir + stg2_prefix + "2" + pos_sufix;
+const std::string Graphical_Manager::st2_lv3_positions_Fp = levels_dir + stage2_dir + stg2_prefix + "3" + pos_sufix;
+const std::string Graphical_Manager::st2_lv4_positions_Fp = levels_dir + stage2_dir + stg2_prefix + "4" + pos_sufix;
+const std::string Graphical_Manager::st2_lv5_positions_Fp = levels_dir + stage2_dir + stg2_prefix + "5" + pos_sufix;
+const std::string Graphical_Manager::st2_lv6_positions_Fp = levels_dir + stage2_dir + stg2_prefix + "6" + pos_sufix;
+
+const std::string Graphical_Manager::st2_lv1_tile_layers_Fp = levels_dir + stage2_dir + stg2_prefix + "1" + tile_sufix;
+const std::string Graphical_Manager::st2_lv2_tile_layers_Fp = levels_dir + stage2_dir + stg2_prefix + "2" + tile_sufix;
+const std::string Graphical_Manager::st2_lv3_tile_layers_Fp = levels_dir + stage2_dir + stg2_prefix + "3" + tile_sufix;
+const std::string Graphical_Manager::st2_lv4_tile_layers_Fp = levels_dir + stage2_dir + stg2_prefix + "4" + tile_sufix;
+const std::string Graphical_Manager::st2_lv5_tile_layers_Fp = levels_dir + stage2_dir + stg2_prefix + "5" + tile_sufix;
+const std::string Graphical_Manager::st2_lv6_tile_layers_Fp = levels_dir + stage2_dir + stg2_prefix + "6" + tile_sufix;
 
 const sf::Vector2f Graphical_Manager::textures_scale = {3.5f, 3.5f};
 

@@ -13,15 +13,16 @@ const int Level::FOREGROUND(3);
 
 //======================================================================================================================================//
 // === Level methods === //
-Level::Level(const std::string level_filePath, sf::Vector2f initPosition, const int nEnemies, const int nObstacles) : Abstract_Entity(initPosition)
+Level::Level(const std::string level_positions_filePath, const std::string level_tiles_filePath, sf::Vector2f initPosition, const int nEnemies, const int nObstacles) : Abstract_Entity(initPosition)
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
 	_nTotalEnemies = nEnemies;
 	_nTotalObstacles = nObstacles;
 	_tilesIds_matrix = NULL;
-
-	serializeTiles(level_filePath);
+	
+	serializePositions(level_positions_filePath);
+	serializeTiles(level_tiles_filePath);
 	initializeEntities();
 }
 
@@ -61,6 +62,13 @@ Level::~Level()
 			delete pEnt;
 	}
 	_block_list.clearList();
+}
+
+void Level::serializePositions(const std::string level_filePath)
+{
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
+
+
 }
 
 void Level::serializeTiles(const std::string level_filePath)
@@ -106,6 +114,8 @@ void Level::serializeTiles(const std::string level_filePath)
 
 void Level::serializeLayer(std::ifstream& level_reader, int** matrix)
 {
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
+
 	std::string layer_string = getNumberSequenceStr(level_reader);
 	std::string::iterator iterator = layer_string.begin();
 
@@ -122,6 +132,8 @@ void Level::serializeLayer(std::ifstream& level_reader, int** matrix)
 
 void Level::serializeDimensions(std::ifstream& level_reader)
 {
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
+
 	std::string sizeString = getNumberSequenceStr(level_reader);
 	std::string::iterator it = sizeString.begin();
 
@@ -131,6 +143,8 @@ void Level::serializeDimensions(std::ifstream& level_reader)
 
 std::string Level::getNumberSequenceStr(std::ifstream& level_reader)
 {
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
+
 	std::string str_layer = "";
 	std::string new_line = "";
 
@@ -147,6 +161,8 @@ std::string Level::getNumberSequenceStr(std::ifstream& level_reader)
 
 void Level::jumpToNext_number(std::ifstream& level_reader)
 {
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
+
 	while (!(std::isdigit(level_reader.peek()) || level_reader.eof()))
 	{
 		level_reader.ignore(1);
@@ -155,12 +171,16 @@ void Level::jumpToNext_number(std::ifstream& level_reader)
 
 void Level::jumpLine(std::ifstream& level_reader)
 {
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
+
 	if(!level_reader.eof())
 		level_reader.ignore('\n');
 }
 
 int Level::extractNextInt(std::string& str, std::string::iterator& it)
 {
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
+
 	typedef std::string::size_type pos;
 
 	pos firstNumberPos = it - str.begin();
@@ -184,14 +204,12 @@ int Level::extractNextInt(std::string& str, std::string::iterator& it)
 void Level::initializeEntities()
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
-
-	sf::Vector2f block_realSize = Block::size * gMng::textures_scale;
-
-	_playerSpawn = { block_realSize * sf::Vector2i{ 3, 8 } +_position};
+	
+	_playerSpawn = { Tile::getRealSize() * sf::Vector2i{ 3, 8 } +_position};
 	setPlayersSpawnPoint();
 	movePlayersToSpawn();
 
-	Block* pBlock = NULL;
+	Tile* pBlock = NULL;
 	int id;
 	for (int i = 0; i < 2; i++)
 	{
@@ -202,7 +220,7 @@ void Level::initializeEntities()
 				id = _tilesIds_matrix[i][j][k];
 				if (id != -1)
 				{
-					pBlock = new Block(block_realSize * sf::Vector2i{ k, j } +_position, _tilesIds_matrix[i][j][k]);
+					pBlock = new Tile(Tile::getRealSize() * sf::Vector2i{ k, j } +_position, _tilesIds_matrix[i][j][k]);
 					_all_EntList.includeEntity(pBlock);
 				}
 			}
@@ -216,14 +234,14 @@ void Level::initializeEntities()
 			id = _tilesIds_matrix[CONCRETE][j][k];
 			if (id != -1)
 			{
-				pBlock = new Block(block_realSize * sf::Vector2i{ k, j } +_position, _tilesIds_matrix[CONCRETE][j][k]);
+				pBlock = new Tile(Tile::getRealSize() * sf::Vector2i{ k, j } +_position, _tilesIds_matrix[CONCRETE][j][k]);
 				_all_EntList.includeEntity(pBlock);
 				_block_list.includeEntity(pBlock);
 			}
 		}
 	}
 
-	_orc = new Orc(block_realSize * sf::Vector2i{ 10, 8 } + _position);
+	_orc = new Orc(Tile::getRealSize() * sf::Vector2i{ 10, 8 } + _position);
 	_all_EntList.includeEntity(_orc);
 	_all_EntList.includeEntity(_pPlayer1);
 	if (_pPlayer2)
@@ -236,7 +254,7 @@ void Level::initializeEntities()
 			id = _tilesIds_matrix[FOREGROUND][j][k];
 			if (id != -1)
 			{
-				pBlock = new Block(block_realSize * sf::Vector2i{ k, j } +_position, _tilesIds_matrix[FOREGROUND][j][k]);
+				pBlock = new Tile(Tile::getRealSize() * sf::Vector2i{ k, j } +_position, _tilesIds_matrix[FOREGROUND][j][k]);
 				_all_EntList.includeEntity(pBlock);
 			}
 		}
