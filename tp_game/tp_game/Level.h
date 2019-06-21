@@ -40,8 +40,14 @@ public:
 	virtual ~Level();
 
 	// ========== Initializers ========== //
-	virtual void serializeLayers(const std::string level_filePath);
-	virtual int extractInt(std::string& str, std::string::iterator& it);
+	virtual void serializeTiles(const std::string level_filePath);
+	virtual void serializeLayer(std::ifstream& level_reader, int** matrix);
+	virtual void serializeDimensions(std::ifstream& level_reader);
+	virtual std::string getNumberSequenceStr(std::ifstream& level_reader);
+	virtual void jumpToNext_number(std::ifstream& level_reader);
+	virtual void jumpLine(std::ifstream& level_reader);
+	virtual int extractNextInt(std::string& str, std::string::iterator& it);
+	
 	virtual void initializeEntities();
 	virtual void setPlayersSpawnPoint();
 

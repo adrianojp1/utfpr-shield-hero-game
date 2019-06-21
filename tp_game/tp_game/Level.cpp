@@ -21,7 +21,7 @@ Level::Level(const std::string level_filePath, sf::Vector2f initPosition, const 
 	_nTotalObstacles = nObstacles;
 	_tilesIds_matrix = NULL;
 
-	serializeLayers(level_filePath);
+	serializeTiles(level_filePath);
 	initializeEntities();
 }
 
@@ -63,7 +63,7 @@ Level::~Level()
 	_block_list.clearList();
 }
 
-void Level::serializeLayers(const std::string level_filePath)
+void Level::serializeTiles(const std::string level_filePath)
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
@@ -75,48 +75,16 @@ void Level::serializeLayers(const std::string level_filePath)
 		getchar();
 	}
 
-	std::string matrix_line = "";
-	std::string id = "";
-	std::string::iterator iterator;
-
-	std::getline(level_reader, matrix_line);
-	iterator = matrix_line.begin();
-
-	int layerWidth = extractInt(matrix_line, iterator);
-	iterator++;
-	int layerHeight = extractInt(matrix_line, iterator);
-	std::getline(level_reader, matrix_line);
-	
-	_matrixSize = { layerWidth, layerHeight };
+	jumpToNext_number(level_reader);
+	serializeDimensions(level_reader);
 
 	_tilesIds_matrix = new int** [4];
-	
 	for (int i = 0; i < 4; i++)
 	{
 		_tilesIds_matrix[i] = new int* [_matrixSize.y];
 		
-		for (int j = 0; j < _matrixSize.y; j++)
-		{
-			std::getline(level_reader, matrix_line);
-
-			if (matrix_line.begin() == matrix_line.end())
-			{
-				j--;
-				continue;
-			}
-
-			_tilesIds_matrix[i][j] = new int[_matrixSize.x];
-
-			std::string::iterator iterator = matrix_line.begin();
-
-			for (int k = 0; k < _matrixSize.x; k++)
-			{
-				_tilesIds_matrix[i][j][k] = extractInt(matrix_line, iterator) - 1;
-
-				if(iterator != matrix_line.end())
-					iterator++;
-			}
-		}
+		jumpToNext_number(level_reader);
+		serializeLayer(level_reader, _tilesIds_matrix[i]);
 	}
 	/*
 	//printing first layer
@@ -136,14 +104,82 @@ void Level::serializeLayers(const std::string level_filePath)
 	level_reader.close();
 }
 
-int Level::extractInt(std::string& str, std::string::iterator& it)
+void Level::serializeLayer(std::ifstream& level_reader, int** matrix)
 {
-	std::string id;
-	for (id = ""; it != str.end() && *it != ','; it++)
+	std::string layer_string = getNumberSequenceStr(level_reader);
+	std::string::iterator iterator = layer_string.begin();
+
+	for (int j = 0; j < _matrixSize.y; j++)
 	{
-		id += *it;
+		matrix[j] = new int[_matrixSize.x];
+
+		for (int k = 0; k < _matrixSize.x; k++)
+		{
+			matrix[j][k] = extractNextInt(layer_string, iterator) - 1;
+		}
+
 	}
-	return (std::stoi(id));
+}
+
+void Level::serializeDimensions(std::ifstream& level_reader)
+{
+	std::string sizeString = getNumberSequenceStr(level_reader);
+	std::string::iterator it = sizeString.begin();
+
+	_matrixSize.x = extractNextInt(sizeString, it);
+	_matrixSize.y = extractNextInt(sizeString, it);
+}
+
+std::string Level::getNumberSequenceStr(std::ifstream& level_reader)
+{
+	std::string str_layer = "";
+	std::string new_line = "";
+
+	jumpToNext_number(level_reader);
+
+	while (std::isdigit(level_reader.peek()) && !level_reader.eof())
+	{
+		std::getline(level_reader, new_line);
+		str_layer += new_line;
+	}
+
+	return str_layer;
+}
+
+void Level::jumpToNext_number(std::ifstream& level_reader)
+{
+	while (!(std::isdigit(level_reader.peek()) || level_reader.eof()))
+	{
+		level_reader.ignore(1);
+	}
+}
+
+void Level::jumpLine(std::ifstream& level_reader)
+{
+	if(!level_reader.eof())
+		level_reader.ignore('\n');
+}
+
+int Level::extractNextInt(std::string& str, std::string::iterator& it)
+{
+	typedef std::string::size_type pos;
+
+	pos firstNumberPos = it - str.begin();
+	pos nextCommaPos = str.find(',', firstNumberPos);
+		
+	pos numberLenght = 0;
+	if (nextCommaPos == str.npos)
+		numberLenght = str.end() - it;
+	else
+		numberLenght = nextCommaPos - firstNumberPos;
+
+	int id = std::stoi(str.substr(firstNumberPos, numberLenght));
+	
+	it += numberLenght; //jump the number
+	if (it != str.end()) //jump the comma if there's one
+		it++;
+
+	return id;
 }
 
 void Level::initializeEntities()

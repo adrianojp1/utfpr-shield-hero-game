@@ -30,7 +30,7 @@ void Stage::initializeStage()
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
-	srand(unsigned int(time(NULL)));
+	srand(static_cast<unsigned int>(time(NULL)));
 	_nEnemies = (rand() % 11) + 5;
 	_nObstacles = (rand() % 11) + 5;
 
