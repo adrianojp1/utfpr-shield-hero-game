@@ -34,14 +34,13 @@ private:
 
 public:
 	// ========== Constructors ========== //
-	Level(const std::string level_positions_filePath, std::string level_tiles_filePath, sf::Vector2f initPosition, const int nEnemies, const int nObstacles);
+	Level(std::string level_tiles_filePath, sf::Vector2f initPosition, const int nEnemies, const int nObstacles);
 	Level();
 	// ========== Destructors ========== //
 	virtual ~Level();
 
 	// ========== Initializers ========== //
 	//Serializers
-	virtual void serializePositions(const std::string level_filePath);
 	virtual void serializeTiles(const std::string level_filePath);
 	virtual void serializeLayer(std::ifstream& level_reader, int** matrix);
 	virtual void serializeDimensions(std::ifstream& level_reader);
@@ -77,8 +76,12 @@ public:
 	virtual void manage_collisions();
 
 private:
-	static const int BACKGROUND_0;
-	static const int BACKGROUND_1;
-	static const int CONCRETE;
-	static const int FOREGROUND;
+	enum Layers
+	{
+		BACKGROUND_0,
+		BACKGROUND_1,
+		CONCRETE,
+		FOREGROUND,
+		ARB_POSITIONS
+	};
 };

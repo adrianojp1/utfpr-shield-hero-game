@@ -37,10 +37,9 @@ void Stage::initializeStage()
 	//levels_dir + stage2_dir + stg2_prefix + "id" + pos_sufix;
 	int lv_id = 1;
 	int stg_id = 2;
-	std::string pos_fp = get_lv_fp(stg_id, lv_id) + gMng::pos_sufix;
 	std::string tiles_fp = get_lv_fp(stg_id, lv_id) + gMng::tile_sufix;
 
-	_vScenarios.push_back(new Level(pos_fp, tiles_fp, { -400.0f, -300.0f }, _nEnemies, _nObstacles));
+	_vScenarios.push_back(new Level(tiles_fp, { -400.0f, -300.0f }, _nEnemies, _nObstacles));
 }
 
 void Stage::execute(const float deltaTime)

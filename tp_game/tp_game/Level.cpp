@@ -6,14 +6,9 @@
 // === This Class Header === //
 #include "Level.h"
 
-const int Level::BACKGROUND_0(0);
-const int Level::BACKGROUND_1(1);
-const int Level::CONCRETE(2);
-const int Level::FOREGROUND(3);
-
 //======================================================================================================================================//
 // === Level methods === //
-Level::Level(const std::string level_positions_filePath, const std::string level_tiles_filePath, sf::Vector2f initPosition, const int nEnemies, const int nObstacles) : Abstract_Entity(initPosition)
+Level::Level(const std::string level_tiles_filePath, sf::Vector2f initPosition, const int nEnemies, const int nObstacles) : Abstract_Entity(initPosition)
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
@@ -21,7 +16,6 @@ Level::Level(const std::string level_positions_filePath, const std::string level
 	_nTotalObstacles = nObstacles;
 	_tilesIds_matrix = NULL;
 	
-	serializePositions(level_positions_filePath);
 	serializeTiles(level_tiles_filePath);
 	initializeEntities();
 }
@@ -62,13 +56,6 @@ Level::~Level()
 			delete pEnt;
 	}
 	_concreteTile_list.clearList();
-}
-
-void Level::serializePositions(const std::string level_filePath)
-{
-	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
-
-
 }
 
 void Level::serializeTiles(const std::string level_filePath)

@@ -24,7 +24,6 @@ const std::string Graphical_Manager::textures_dir = "Textures/";
 const std::string Graphical_Manager::fonts_dir = "Fonts/";
 const std::string Graphical_Manager::levels_dir = "Levels/";
 
-const std::string Graphical_Manager::pos_sufix = "_positions.txt";
 const std::string Graphical_Manager::tile_sufix = "_tile_layers.txt";
 
 const sf::Vector2f Graphical_Manager::textures_scale = {3.5f, 3.5f};
