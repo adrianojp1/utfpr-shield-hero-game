@@ -22,7 +22,7 @@ const float Graphical_Manager::gravity(1400.0f);
 
 const std::string Graphical_Manager::textures_dir = "Textures/";
 const std::string Graphical_Manager::fonts_dir = "Fonts/";
-const std::string Graphical_Manager::levels_dir = "Levels/";
+const std::string Graphical_Manager::levels_dir = "Stages/";
 
 const std::string Graphical_Manager::tile_sufix = "_tile_layers.txt";
 

@@ -21,13 +21,20 @@ private:
 	//Lists
 	CEnt_List _all_EntList;
 	//
+	
+	//Totals
+	int _nTotalEnemies;
+	int _nTotalObstacles;
+	//
 
 	//Tiles
 	sf::Vector2i _matrixSize;
 	int*** _tilesIds_matrix;
+	//
+
+	//Positions
 	sf::Vector2f _playerSpawn;
-	int _nTotalEnemies;
-	int _nTotalObstacles;
+	sf::RectangleShape _levelEnd;
 	std::vector<sf::Vector2f> _enemiesSpawns;
 	std::vector<sf::Vector2f> _obstaclesSpawns;
 	//
@@ -48,6 +55,7 @@ public:
 	virtual void jumpToNext_number(std::ifstream& level_reader);
 	virtual void jumpLine(std::ifstream& level_reader);
 	virtual int extractNextInt(std::string& str, std::string::iterator& it);
+	virtual const sf::Vector2f getRealPosition(const sf::Vector2i pos_inLayer) const;
 	//
 
 	virtual void initializeEntities();
@@ -82,6 +90,12 @@ private:
 		BACKGROUND_1,
 		CONCRETE,
 		FOREGROUND,
-		ARB_POSITIONS
+		POSITIONS
 	};
+	static const int nLayers;
+
+#define PLAYER_SP	168
+#define ENEMY_SP	169
+#define OBSTACLE_SP 193
+#define LEVEL_END	192
 };

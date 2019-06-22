@@ -7,6 +7,10 @@
 #include "Level.h"
 
 //======================================================================================================================================//
+// === Statics Initialization === //
+const int Level::nLayers(5);
+
+//======================================================================================================================================//
 // === Level methods === //
 Level::Level(const std::string level_tiles_filePath, sf::Vector2f initPosition, const int nEnemies, const int nObstacles) : Abstract_Entity(initPosition)
 {
@@ -36,7 +40,7 @@ Level::~Level()
 
 	if (_tilesIds_matrix)
 	{
-		for (int i = 0; i < 4; i++)
+		for (int i = 0; i < nLayers; i++)
 		{
 			for (int j = 0; j < _matrixSize.y; j++)
 			{
@@ -73,8 +77,8 @@ void Level::serializeTiles(const std::string level_filePath)
 	jumpToNext_number(level_reader);
 	serializeDimensions(level_reader);
 
-	_tilesIds_matrix = new int** [4];
-	for (int i = 0; i < 4; i++)
+	_tilesIds_matrix = new int** [nLayers];
+	for (int i = 0; i < nLayers; i++)
 	{
 		_tilesIds_matrix[i] = new int* [_matrixSize.y];
 		
@@ -83,7 +87,7 @@ void Level::serializeTiles(const std::string level_filePath)
 	}
 	/*
 	//printing first layer
-	for (int i = 0; i < 4; i++)
+	for (int i = 0; i < nLayers; i++)
 	{
 		for (int j = 0; j < _matrixSize.y; j++)
 		{
@@ -188,13 +192,14 @@ int Level::extractNextInt(std::string& str, std::string::iterator& it)
 	return id;
 }
 
+const sf::Vector2f Level::getRealPosition(const sf::Vector2i pos_inLayer) const
+{
+	return (Tile::getRealSize() * pos_inLayer +_position);
+}
+
 void Level::initializeEntities()
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
-	
-	_playerSpawn = { Tile::getRealSize() * sf::Vector2i{ 3, 8 } +_position};
-	setPlayersSpawnPoint();
-	movePlayersToSpawn();
 
 	Tile* pTile = NULL;
 	int id;
@@ -207,7 +212,7 @@ void Level::initializeEntities()
 				id = _tilesIds_matrix[i][j][k];
 				if (id != -1)
 				{
-					pTile = new Tile(Tile::getRealSize() * sf::Vector2i{ k, j } +_position, _tilesIds_matrix[i][j][k]);
+					pTile = new Tile(getRealPosition({ k, j }), _tilesIds_matrix[i][j][k]);
 					_all_EntList.includeEntity(pTile);
 				}
 			}
@@ -221,14 +226,51 @@ void Level::initializeEntities()
 			id = _tilesIds_matrix[CONCRETE][j][k];
 			if (id != -1)
 			{
-				pTile = new Tile(Tile::getRealSize() * sf::Vector2i{ k, j } +_position, _tilesIds_matrix[CONCRETE][j][k]);
+				pTile = new Tile(getRealPosition({ k, j }), _tilesIds_matrix[CONCRETE][j][k]);
 				_all_EntList.includeEntity(pTile);
 				_concreteTile_list.includeEntity(pTile);
 			}
 		}
 	}
 
-	_orc = new Orc(Tile::getRealSize() * sf::Vector2i{ 10, 8 } + _position);
+	for (int j = 0; j < _matrixSize.y; j++)
+	{
+		for (int k = 0; k < _matrixSize.x; k++)
+		{
+			id = _tilesIds_matrix[POSITIONS][j][k];
+			if (id != -1)
+			{
+				switch (id)
+				{
+				case PLAYER_SP:
+					_playerSpawn = getRealPosition({ k, j });
+					setPlayersSpawnPoint();
+					movePlayersToSpawn();
+					break;
+
+				case ENEMY_SP:
+					_enemiesSpawns.push_back(getRealPosition({ k, j }));
+					break;
+
+				case OBSTACLE_SP:
+					_obstaclesSpawns.push_back(getRealPosition({ k, j }));
+					break;
+
+				case LEVEL_END:
+					_levelEnd.setSize(Tile::getRealSize());
+					_levelEnd.setOrigin(_levelEnd.getSize() / 2.0f);
+					_levelEnd.setPosition(getRealPosition({ k, j }));
+					break;
+
+				default:
+					break;
+				}
+			}
+		}
+	}
+
+	srand(static_cast<unsigned int>(time(NULL)));
+	_orc = new Orc(_enemiesSpawns[rand() % _enemiesSpawns.size()]);
 	_all_EntList.includeEntity(_orc);
 	_all_EntList.includeEntity(_pPlayer1);
 	if (_pPlayer2)
@@ -241,7 +283,7 @@ void Level::initializeEntities()
 			id = _tilesIds_matrix[FOREGROUND][j][k];
 			if (id != -1)
 			{
-				pTile = new Tile(Tile::getRealSize() * sf::Vector2i{ k, j } +_position, _tilesIds_matrix[FOREGROUND][j][k]);
+				pTile = new Tile(getRealPosition({ k, j }), _tilesIds_matrix[FOREGROUND][j][k]);
 				_all_EntList.includeEntity(pTile);
 			}
 		}

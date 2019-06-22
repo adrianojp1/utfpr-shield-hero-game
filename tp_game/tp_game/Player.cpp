@@ -14,7 +14,7 @@ Player::Player(const sf::Vector2f initPosition) :
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
-	_jumpHeight = 100.0f;
+	_jumpHeight = 120.0f;
 	_speed = 200.f;
 	_points = 0;
 

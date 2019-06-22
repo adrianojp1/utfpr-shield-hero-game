@@ -39,13 +39,13 @@
       <Filter>Characters</Filter>
     </ClCompile>
     <ClCompile Include="Timer.cpp">
-      <Filter>Characters\Game</Filter>
+      <Filter>Game</Filter>
     </ClCompile>
     <ClCompile Include="Game_State.cpp">
-      <Filter>Characters\Game</Filter>
+      <Filter>Game</Filter>
     </ClCompile>
     <ClCompile Include="Game.cpp">
-      <Filter>Characters\Game</Filter>
+      <Filter>Game</Filter>
     </ClCompile>
     <ClCompile Include="Level.cpp">
       <Filter>Abstract Entities\Stages</Filter>
@@ -112,13 +112,13 @@
       <Filter>Characters</Filter>
     </ClInclude>
     <ClInclude Include="Timer.h">
-      <Filter>Characters\Game</Filter>
+      <Filter>Game</Filter>
     </ClInclude>
     <ClInclude Include="Game_State.h">
-      <Filter>Characters\Game</Filter>
+      <Filter>Game</Filter>
     </ClInclude>
     <ClInclude Include="Game.h">
-      <Filter>Characters\Game</Filter>
+      <Filter>Game</Filter>
     </ClInclude>
     <ClInclude Include="Level.h">
       <Filter>Abstract Entities\Stages</Filter>
@@ -168,7 +168,7 @@
     <Filter Include="Characters\Enemies">
       <UniqueIdentifier>{4d24f02c-5183-40fa-bb2c-6ad6cbd80b4c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Characters\Game">
+    <Filter Include="Game">
       <UniqueIdentifier>{909280cc-a180-4e26-8e90-9c2f39d8bd64}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
