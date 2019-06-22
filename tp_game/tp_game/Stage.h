@@ -8,7 +8,7 @@
 class Stage : public Abstract_Entity
 {
 protected:
-	std::vector<Level*> _vScenarios;
+	std::vector<Level*> _vLevels;
 	int _currentScenarioId;
 
 	int _nObstacles;

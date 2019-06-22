@@ -8,10 +8,6 @@
 
 //======================================================================================================================================//
 // === Static initializations === //
-const int Character::IDLE(0);
-const int Character::WALK(1);
-const int Character::DEATH(2);
-const int Character::COMBAT(3);
 
 //======================================================================================================================================//
 // === Character methods === //
@@ -303,16 +299,16 @@ void Character::switchAnime_n_Collider()
 {
 	switch (_state)
 	{
-	case 0: //IDLE
+	case IDLE:
 		switchTo_idle();
 		break;
-	case 1: //WALK 
+	case WALK: 
 		switchTo_walk();
 		break;
-	case 2: //DEATH
+	case DEATH:
 		switchTo_death();
 		break;
-	case 3: //COMBAT
+	case COMBAT:
 		switchTo_combat();
 		break;
 	default:

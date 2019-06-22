@@ -57,7 +57,6 @@ public:
 	static const std::string levels_dir;
 	//static const std::string sound_dir;
 
-	static const std::string pos_sufix;
 	static const std::string tile_sufix;
 
 	// ========== Stage ========== //

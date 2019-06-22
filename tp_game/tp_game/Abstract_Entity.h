@@ -1,9 +1,10 @@
 #pragma once
 //======================================================================================================================================//
 // === Classes Headers === //
-#include "Animator.h"		//Animations
-#include "Timer.h"			//Timing effects
-#include "Graphical_Manager.h"		//Drawer
+#include "Animator.h"			//Animations
+#include "Timer.h"				//Timing effects
+#include "Graphical_Manager.h"	//Drawer
+#include "Collision_Manager.h"
 
 //======================================================================================================================================//
 // === Classes Declaration === //

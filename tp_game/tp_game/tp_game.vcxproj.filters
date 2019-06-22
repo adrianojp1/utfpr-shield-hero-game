@@ -69,6 +69,9 @@
       <Filter>Characters\Enemies</Filter>
     </ClCompile>
     <ClCompile Include="Tile.cpp" />
+    <ClCompile Include="Collision_Manager.cpp">
+      <Filter>Abstract Entities\Stages</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Character.h">
@@ -139,6 +142,9 @@
       <Filter>Characters\Enemies</Filter>
     </ClInclude>
     <ClInclude Include="Tile.h" />
+    <ClInclude Include="Collision_Manager.h">
+      <Filter>Abstract Entities\Stages</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Characters">
@@ -159,11 +165,11 @@
     <Filter Include="Abstract Entities\Stages">
       <UniqueIdentifier>{96418809-229b-4d4a-b6ec-fb87a4e1b794}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Game">
-      <UniqueIdentifier>{909280cc-a180-4e26-8e90-9c2f39d8bd64}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Characters\Enemies">
       <UniqueIdentifier>{4d24f02c-5183-40fa-bb2c-6ad6cbd80b4c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game">
+      <UniqueIdentifier>{909280cc-a180-4e26-8e90-9c2f39d8bd64}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

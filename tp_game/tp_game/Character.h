@@ -103,11 +103,12 @@ public:
 protected:
 	//================================================================//
 	//======================== Static Consts =========================//
-	//States
-	static const int IDLE;
-	static const int WALK;
-	static const int DEATH;
-	static const int COMBAT;
+	enum States {
+		IDLE,
+		WALK,
+		DEATH,
+		COMBAT
+	};
 };
 
 typedef Character Charc;

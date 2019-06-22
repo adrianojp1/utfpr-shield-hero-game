@@ -37,10 +37,9 @@ void Stage::initializeStage()
 	//levels_dir + stage2_dir + stg2_prefix + "id" + pos_sufix;
 	int lv_id = 1;
 	int stg_id = 2;
-	std::string pos_fp = get_lv_fp(stg_id, lv_id) + gMng::pos_sufix;
 	std::string tiles_fp = get_lv_fp(stg_id, lv_id) + gMng::tile_sufix;
-
-	_vScenarios.push_back(new Level(pos_fp, tiles_fp, { -400.0f, -300.0f }, _nEnemies, _nObstacles));
+	
+	_vLevels.push_back(new Level(tiles_fp, { -400.0f, -300.0f }, _nEnemies, _nObstacles));
 }
 
 void Stage::execute(const float deltaTime)
@@ -50,14 +49,14 @@ void Stage::execute(const float deltaTime)
 	check_pauseKey();
 
 	if (!this->isPaused())
-		_vScenarios[_currentScenarioId]->execute(deltaTime);
+		_vLevels[_currentScenarioId]->execute(deltaTime);
 }
 
 void Stage::draw()
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
-	_vScenarios[_currentScenarioId]->draw();
+	_vLevels[_currentScenarioId]->draw();
 }
 
 void Stage::pause()

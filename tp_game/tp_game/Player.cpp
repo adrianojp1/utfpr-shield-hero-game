@@ -14,7 +14,7 @@ Player::Player(const sf::Vector2f initPosition) :
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
-	_jumpHeight = 100.0f;
+	_jumpHeight = 120.0f;
 	_speed = 200.f;
 	_points = 0;
 
@@ -264,6 +264,22 @@ void Player::setCurrSpawnPoint(const sf::Vector2f spawnPoint)
 const sf::Vector2f Player::getCurrSpawnPoint() const
 {
 	return _curr_spawnPoint;
+}
+
+void Player::setPlayer1_configs()
+{
+	this->setDefenseKey(sf::Keyboard::S);
+	this->setJumpKey(sf::Keyboard::W);
+	this->setLeftKey(sf::Keyboard::A);
+	this->setRightKey(sf::Keyboard::D);
+}
+
+void Player::setPlayer2_configs()
+{
+	this->setDefenseKey(sf::Keyboard::K);
+	this->setJumpKey(sf::Keyboard::I);
+	this->setLeftKey(sf::Keyboard::J);
+	this->setRightKey(sf::Keyboard::L);
 }
 
 bool Player::isDefending() const

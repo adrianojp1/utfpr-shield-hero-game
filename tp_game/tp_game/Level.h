@@ -21,27 +21,33 @@ private:
 	//Lists
 	CEnt_List _all_EntList;
 	//
+	
+	//Totals
+	int _nTotalEnemies;
+	int _nTotalObstacles;
+	//
 
 	//Tiles
 	sf::Vector2i _matrixSize;
 	int*** _tilesIds_matrix;
+	//
+
+	//Positions
 	sf::Vector2f _playerSpawn;
-	int _nTotalEnemies;
-	int _nTotalObstacles;
+	sf::RectangleShape _levelEnd;
 	std::vector<sf::Vector2f> _enemiesSpawns;
 	std::vector<sf::Vector2f> _obstaclesSpawns;
 	//
 
 public:
 	// ========== Constructors ========== //
-	Level(const std::string level_positions_filePath, std::string level_tiles_filePath, sf::Vector2f initPosition, const int nEnemies, const int nObstacles);
+	Level(std::string level_tiles_filePath, sf::Vector2f initPosition, const int nEnemies, const int nObstacles);
 	Level();
 	// ========== Destructors ========== //
 	virtual ~Level();
 
 	// ========== Initializers ========== //
 	//Serializers
-	virtual void serializePositions(const std::string level_filePath);
 	virtual void serializeTiles(const std::string level_filePath);
 	virtual void serializeLayer(std::ifstream& level_reader, int** matrix);
 	virtual void serializeDimensions(std::ifstream& level_reader);
@@ -49,6 +55,7 @@ public:
 	virtual void jumpToNext_number(std::ifstream& level_reader);
 	virtual void jumpLine(std::ifstream& level_reader);
 	virtual int extractNextInt(std::string& str, std::string::iterator& it);
+	virtual const sf::Vector2f getRealPosition(const sf::Vector2i pos_inLayer) const;
 	//
 
 	virtual void initializeEntities();
@@ -75,14 +82,20 @@ public:
 
 	// ========== Collision Management ========== //
 	virtual void manage_collisions();
-	virtual bool check_collision(Entity* ent1, Entity* ent2);
-	virtual bool check_collision(Entity* ent1, Entity* ent2, sf::Vector2f* intersection, sf::Vector2f* coll_direction);
-	virtual void push_entities(Entity* ent1, Entity* ent2, sf::Vector2f* intersection, sf::Vector2f* coll_direction, float push);
-	virtual bool check_collision_n_push(Entity* ent1, Entity* ent2, sf::Vector2f* intersection, sf::Vector2f* coll_direction, float push);
 
 private:
-	static const int BACKGROUND_0;
-	static const int BACKGROUND_1;
-	static const int CONCRETE;
-	static const int FOREGROUND;
+	enum Layers
+	{
+		BACKGROUND_0,
+		BACKGROUND_1,
+		CONCRETE,
+		FOREGROUND,
+		POSITIONS
+	};
+	static const int nLayers;
+
+#define PLAYER_SP	168
+#define ENEMY_SP	169
+#define OBSTACLE_SP 193
+#define LEVEL_END	192
 };
