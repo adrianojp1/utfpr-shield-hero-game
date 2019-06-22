@@ -3,6 +3,7 @@
 // === Classes Headers === //
 #include "Abstract_Entity.h" //base class
 #include "CEnt_List.h"
+#include "Enemy_List.h"
 #include "Player.h"
 #include "Orc.h"
 #include "Tile.h"
@@ -14,12 +15,12 @@ class Level : public Abstract_Entity
 private:
 	//Temp
 	CEnt_List _concreteTile_list;
-	CEnt_List _enemy_list;
 	Orc* _orc;
 	//
 	
 	//Lists
 	CEnt_List _all_EntList;
+	Enemy_List _enemies_list;
 	//
 	
 	//Totals

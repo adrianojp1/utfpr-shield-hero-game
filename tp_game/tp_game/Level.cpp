@@ -59,7 +59,7 @@ Level::~Level()
 		if (pEnt)
 			delete pEnt;
 	}
-	_concreteTile_list.clearList();
+	_concreteTile_list.clear();
 }
 
 void Level::serializeTiles(const std::string level_filePath)
@@ -203,11 +203,12 @@ void Level::initializeEntities()
 
 	Tile* pTile = NULL;
 	int id;
-	for (int i = 0; i < 2; i++)
+
+	for (int j = 0; j < _matrixSize.y; j++)
 	{
-		for (int j = 0; j < _matrixSize.y; j++)
+		for (int k = 0; k < _matrixSize.x; k++)
 		{
-			for (int k = 0; k < _matrixSize.x; k++)
+			for (int i = 0; i < 2; i++)
 			{
 				id = _tilesIds_matrix[i][j][k];
 				if (id != -1)
@@ -216,13 +217,7 @@ void Level::initializeEntities()
 					_all_EntList.includeEntity(pTile);
 				}
 			}
-		}
-	}
 
-	for (int j = 0; j < _matrixSize.y; j++)
-	{
-		for (int k = 0; k < _matrixSize.x; k++)
-		{
 			id = _tilesIds_matrix[CONCRETE][j][k];
 			if (id != -1)
 			{
@@ -230,13 +225,7 @@ void Level::initializeEntities()
 				_all_EntList.includeEntity(pTile);
 				_concreteTile_list.includeEntity(pTile);
 			}
-		}
-	}
 
-	for (int j = 0; j < _matrixSize.y; j++)
-	{
-		for (int k = 0; k < _matrixSize.x; k++)
-		{
 			id = _tilesIds_matrix[POSITIONS][j][k];
 			if (id != -1)
 			{
@@ -271,7 +260,9 @@ void Level::initializeEntities()
 
 	srand(static_cast<unsigned int>(time(NULL)));
 	_orc = new Orc(_enemiesSpawns[rand() % _enemiesSpawns.size()]);
-	_all_EntList.includeEntity(_orc);
+	_enemies_list.includeEnemy(static_cast<Enemy*>(_orc));
+	_all_EntList.includeEntity(static_cast<Entity*>(_orc));
+
 	_all_EntList.includeEntity(_pPlayer1);
 	if (_pPlayer2)
 		_all_EntList.includeEntity(_pPlayer2);
@@ -303,7 +294,10 @@ void Level::execute(const float deltaTime)
 	
 	executePlayers(deltaTime);
 
-	_orc->execute(deltaTime);
+	for (Enemy* pEne : _enemies_list)
+	{
+		pEne->execute(deltaTime);
+	}
 
 	for (Entity* pEnt : _concreteTile_list)
 	{
@@ -317,15 +311,10 @@ void Level::draw()
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
-	//_pGraphMng->draw(*_background);
-
-	
 	for (Entity* pEnt : _all_EntList)
 	{
 		pEnt->draw();
 	}
-
-	//drawPlayers();
 }
 
 void Level::executePlayers(const float deltaTime)
@@ -406,34 +395,6 @@ void Level::manage_collisions()
 		}
 	}
 
-	if (_pPlayer1->isVulnerable() && (collMng->check_collision(static_cast<Entity*>(_pPlayer1), static_cast<Entity*>(_orc), &intersection, &collisionDirection)))
-	{ //Check collision between the ent1 and the orc
-		if (_pPlayer1->isDefendingInFront(collisionDirection))
-		{
-			collisionDirection = -collisionDirection;
-			collMng->push_entities(static_cast<Entity*>(_orc), static_cast<Entity*>(_pPlayer1), &intersection, &collisionDirection, 0.0f);
-			_orc->onCollision(collisionDirection);
-		}
-		else
-		{
-			_pPlayer1->takeDmg(_orc->getCollDmg());
-		}
-	}
-
-	if (_pPlayer2)
-	{
-		if (_pPlayer2->isVulnerable() && (collMng->check_collision(static_cast<Entity*>(_pPlayer2), static_cast<Entity*>(_orc), &intersection, &collisionDirection)))
-		{ //Check collision between the ent1 and the orc
-			if (_pPlayer2->isDefendingInFront(collisionDirection))
-			{
-				collisionDirection = -collisionDirection;
-				collMng->push_entities(static_cast<Entity*>(_orc), static_cast<Entity*>(_pPlayer2), &intersection, &collisionDirection, 0.0f);
-				_orc->onCollision(collisionDirection);
-			}
-			else
-			{
-				_pPlayer2->takeDmg(_orc->getCollDmg());
-			}
-		}
-	}
+	_enemies_list.mngCollision_player(_pPlayer1);
+	_enemies_list.mngCollision_player(_pPlayer2);
 }

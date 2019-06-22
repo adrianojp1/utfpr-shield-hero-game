@@ -2,7 +2,7 @@
 
 //======================================================================================================================================//
 // === MyWindow Class === //
-class Graphical_Manager : public sf::RenderWindow
+typedef class Graphical_Manager : public sf::RenderWindow
 {
 private:
 	sf::View* pView;
@@ -133,6 +133,4 @@ public:
 
 	static sf::Texture* white_skeleton_proj_texture;
 	static sf::Texture* black_skeleton_proj_texture;
-};
-
-typedef Graphical_Manager gMng;
+}gMng;

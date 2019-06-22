@@ -72,6 +72,7 @@
     <ClCompile Include="Collision_Manager.cpp">
       <Filter>Abstract Entities\Stages</Filter>
     </ClCompile>
+    <ClCompile Include="Enemy_List.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Character.h">
@@ -145,6 +146,7 @@
     <ClInclude Include="Collision_Manager.h">
       <Filter>Abstract Entities\Stages</Filter>
     </ClInclude>
+    <ClInclude Include="Enemy_List.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Characters">
@@ -170,6 +172,9 @@
     </Filter>
     <Filter Include="Game">
       <UniqueIdentifier>{909280cc-a180-4e26-8e90-9c2f39d8bd64}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lists">
+      <UniqueIdentifier>{5993b3ab-b20e-4c73-b9fd-61dfb9affc50}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

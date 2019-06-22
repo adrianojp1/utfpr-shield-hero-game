@@ -9,6 +9,7 @@
 #include <iostream>
 #include <math.h>
 #include <vector>
+#include <list>
 #include <time.h>
 #include <fstream>
 
