@@ -52,6 +52,9 @@ public:
 	void setCurrSpawnPoint(const sf::Vector2f spawnPoint);
 	const sf::Vector2f getCurrSpawnPoint() const;
 
+	//configs
+	void setPlayer1_configs();
+	void setPlayer2_configs();
 	//================================================================//
 	// ========== State checkers ========== //
 	bool isDefending() const;

@@ -75,10 +75,6 @@ public:
 
 	// ========== Collision Management ========== //
 	virtual void manage_collisions();
-	virtual bool check_collision(Entity* ent1, Entity* ent2);
-	virtual bool check_collision(Entity* ent1, Entity* ent2, sf::Vector2f* intersection, sf::Vector2f* coll_direction);
-	virtual void push_entities(Entity* ent1, Entity* ent2, sf::Vector2f* intersection, sf::Vector2f* coll_direction, float push);
-	virtual bool check_collision_n_push(Entity* ent1, Entity* ent2, sf::Vector2f* intersection, sf::Vector2f* coll_direction, float push);
 
 private:
 	static const int BACKGROUND_0;

@@ -266,6 +266,22 @@ const sf::Vector2f Player::getCurrSpawnPoint() const
 	return _curr_spawnPoint;
 }
 
+void Player::setPlayer1_configs()
+{
+	this->setDefenseKey(sf::Keyboard::S);
+	this->setJumpKey(sf::Keyboard::W);
+	this->setLeftKey(sf::Keyboard::A);
+	this->setRightKey(sf::Keyboard::D);
+}
+
+void Player::setPlayer2_configs()
+{
+	this->setDefenseKey(sf::Keyboard::K);
+	this->setJumpKey(sf::Keyboard::I);
+	this->setLeftKey(sf::Keyboard::J);
+	this->setRightKey(sf::Keyboard::L);
+}
+
 bool Player::isDefending() const
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
