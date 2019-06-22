@@ -16,7 +16,9 @@ protected:
 	//Colliders
 	sf::RectangleShape* _obs_collider;
 
-	Timer cd_action;
+	Timer _cd_action;
+
+	int _state;
 
 public:
 	//================================================================//
@@ -32,6 +34,14 @@ public:
 	virtual void initialize_AllColliders();
 	virtual void initialize_animator() = 0;
 
+	//================================================================//
+	// ========== Loop methods ========== //
+	virtual void execute(const float deltaTime);
+	virtual void draw() const;
 
+	//================================================================//
+	// ========== Motion ========== //
+	virtual void updateAction(const float deltaTime);
+	virtual void updatePosition(const float deltaTime);
 };
 

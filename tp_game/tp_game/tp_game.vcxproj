@@ -156,6 +156,7 @@
     <ClCompile Include="Animator.cpp" />
     <ClCompile Include="CEnt_List.cpp" />
     <ClCompile Include="Character.cpp" />
+    <ClCompile Include="Dynamic_Spike.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -172,8 +173,10 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Scenario.cpp" />
     <ClCompile Include="Stage.cpp" />
+    <ClCompile Include="Static_Spike.cpp" />
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="Timer.cpp" />
+    <ClCompile Include="Weak_Block.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Abstract_Entity.h" />
@@ -181,6 +184,7 @@
     <ClInclude Include="Animator.h" />
     <ClInclude Include="CEnt_List.h" />
     <ClInclude Include="Character.h" />
+    <ClInclude Include="Dynamic_Spike.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="Game.h" />
@@ -197,8 +201,10 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="Scenario.h" />
     <ClInclude Include="Stage.h" />
+    <ClInclude Include="Static_Spike.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Timer.h" />
+    <ClInclude Include="Weak_Block.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
