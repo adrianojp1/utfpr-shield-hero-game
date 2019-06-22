@@ -15,6 +15,9 @@ public:
 
 	typedef List<Entity*>::iterator iterator;
 
+	iterator begin();
+	iterator end();
+
 	void clearList();
 	void includeEntity(Entity* pe);
 	void removeEntity(Entity* pe);

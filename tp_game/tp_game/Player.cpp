@@ -18,7 +18,10 @@ Player::Player(const sf::Vector2f initPosition) :
 	_speed = 200.f;
 	_points = 0;
 
-	_hp = 5;
+	_maxHp = 5;
+	resetHp();
+
+	_curr_spawnPoint = {initPosition};
 
 	_defCounterUp = false;
 
@@ -103,7 +106,7 @@ void Player::updateAction(const float deltaTime)
 			jump();
 		}
 	}
-} // end updatePosition
+} // end updateAction
 
 void Player::switchTo_combat()
 {
@@ -143,10 +146,14 @@ void Player::ressurect()
 	{
 		_state = IDLE;
 		resetHp();
-		(*_animator)[DEATH]->resetFrameCounter();
 	}
 	
-	this->setPosition(sf::Vector2f{ -128.0f, 136.0f });
+	this->setPosition(_curr_spawnPoint);
+}
+
+void Player::doAfterDeath()
+{
+	ressurect();
 }
 
 bool Player::leftIsKeyPressed() const
@@ -247,6 +254,16 @@ void Player::setDefenseKey(const sf::Keyboard::Key defenseKey)
 sf::Keyboard::Key Player::getDefenseKey() const
 {
 	return _defenseKey;
+}
+
+void Player::setCurrSpawnPoint(const sf::Vector2f spawnPoint)
+{
+	_curr_spawnPoint = spawnPoint;
+}
+
+const sf::Vector2f Player::getCurrSpawnPoint() const
+{
+	return _curr_spawnPoint;
 }
 
 bool Player::isDefending() const

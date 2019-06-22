@@ -40,7 +40,7 @@ protected:
 
 		// ========== Loop methods ========== //
 		virtual void execute(const float deltaTime);
-		virtual void draw() const;
+		virtual void draw();
 
 		// ========== Activation methods ========== //
 		virtual void activate();
@@ -59,6 +59,13 @@ protected:
 	int _onOp;
 	int _nOps;
 
+	//Title
+	sf::Text* _title_text;
+	int _title_charSize;
+	sf::Color _title_textColor;
+	sf::Color _title_outLine_color;
+	float _title_outLine_thickness;
+
 	//Animator* _animator; //Wallpaper?
 public:
 	//================================================================//
@@ -70,14 +77,15 @@ public:
 
 	//================================================================//
 	// ========== Initializers ========== //
+	virtual void initializeTitle(const std::string str, const int charSize, const sf::Vector2f pos, sf::Color fillColor, sf::Color olColor, const float olThickness, sf::Font* ft = gMng::menu_title_ft);
 	virtual void initializeAllOps() = 0;
-	virtual void initialize_n_addOp(Option*& pOp, const sf::Vector2f position, const std::string label, const int actSize, const int deactSize, sf::Color actColor, sf::Color deactColor, sf::Font* font = menu_font);
-	virtual void initializeOp(Option*& pOp, const sf::Vector2f position, const std::string label, const int actSize, const int deactSize, sf::Color actColor, sf::Color deactColor, sf::Font* font = menu_font);
+	virtual void initialize_n_addOp(Option*& pOp, const sf::Vector2f position, const std::string label, const int actSize, const int deactSize, sf::Color actColor, sf::Color deactColor, sf::Font* font = gMng::menu_ops_ft);
+	virtual void initializeOp(Option*& pOp, const sf::Vector2f position, const std::string label, const int actSize, const int deactSize, sf::Color actColor, sf::Color deactColor, sf::Font* font = gMng::menu_ops_ft);
 	
 	//================================================================//
 	// ========== Loop methods ========== //
 	virtual void execute(const float deltaTime);
-	virtual void draw() const;
+	virtual void draw();
 
 	//================================================================//
 	// ========== Selection methods ========== //
@@ -106,8 +114,7 @@ public:
 
 	//================================================================//
 	//======================== Static Consts =========================//
-private:
+protected:
 	// ========== Menu ========== //
 	static const float keysCD;
-	static sf::Font* menu_font;
 };

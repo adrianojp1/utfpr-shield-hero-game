@@ -19,10 +19,11 @@ Player* Abstract_Entity::_pPlayer2 = NULL;
 
 //======================================================================================================================================//
 // === Entity methods === //
-Abstract_Entity::Abstract_Entity(const sf::Vector2f initPosition, bool active)
+Abstract_Entity::Abstract_Entity(const sf::Vector2f initPosition, const bool active, const int id)
 {
 	_position = initPosition;
 	_active = active;
+	_id = id;
 }
 
 Abstract_Entity::Abstract_Entity()
@@ -104,4 +105,14 @@ void Abstract_Entity::setpPlayer2(Player* pP2)
 Player* Abstract_Entity::getpPlayer2()
 {
 	return _pPlayer2;
+}
+
+void Abstract_Entity::setId(const int id)
+{
+	_id = id;
+}
+
+const int Abstract_Entity::getId()
+{
+	return _id;
 }

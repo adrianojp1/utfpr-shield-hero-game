@@ -35,10 +35,11 @@ public:
 	//================================================================//
 	// ========== Initializers ========== //
 	void initialize(sf::Texture* pTexture);
+	void initializeSprite();
 
 	//================================================================//
 	// ========== Loop methods ========== //
-	void updateAnimation(float deltaTime, bool facingRight);
+	void updateAnimation(bool facingRight);
 
 	//================================================================//
 	// ========== Sets & Gets ========== //
@@ -56,10 +57,16 @@ public:
 	float getSwitchTime() const;
 	//_sprite
 	sf::RectangleShape* getpSprite();
+	//_canvasRect
+	void setCanvasRect(sf::IntRect rect);
+	sf::IntRect getCanvasRect();
 	//canvasSize
+	void setCanvasSize(const sf::Vector2u size);
 	sf::Vector2f getCanvasSize() const;
 
-	bool isFinished() const;
+	bool isGoingToChangeFrame() const;
+	bool isRunning();
+	bool isFinished();
 	void resetFrameCounter();
 private:
 	// ========== updateSprite submethods ========== //

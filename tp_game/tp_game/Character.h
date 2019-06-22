@@ -33,6 +33,7 @@ protected:
 	int _state;
 
 	int _hp;
+	int _maxHp;
 
 public:
 	//================================================================//
@@ -50,7 +51,7 @@ public:
 	//================================================================//
 	// ========== Loop methods ========== //
 	virtual void execute(const float deltaTime);
-	virtual void draw() const;
+	//virtual void draw();
 
 	//================================================================//
 	// ========== Motion ========== //
@@ -61,12 +62,8 @@ public:
 	virtual void jump();
 	virtual void moveToLeft(const float speedMultiplier = 1.0f);
 	virtual void moveToRight(const float speedMultiplier = 1.0f);
-
-	virtual void onCollision(const sf::Vector2f collisionDirection);
-	virtual void collision_onLeft();
-	virtual void collision_onRight();
-	virtual void collision_onBottom();
-	virtual void collision_onTop();
+	virtual void moveFoward();
+	virtual void colliding_onBottom();
 
 	//================================================================//
 	// ========== State ========== //
@@ -76,6 +73,7 @@ public:
 	virtual bool isDying();
 	virtual void takeDmg(const int dmg);
 	virtual void die();
+	virtual void doAfterDeath();
 	virtual void ressurect();
 	virtual void resetHp();
 	virtual void decreaseTimers();
@@ -90,6 +88,9 @@ public:
 	// _hp
 	virtual void setHp(const int hp);
 	virtual int getHp() const;
+	//_maxHp;
+	virtual void setMaxHp(const int maxHp);
+	virtual int getMaxHp() const;
 
 	//================================================================//
 	// ========== States ========== //

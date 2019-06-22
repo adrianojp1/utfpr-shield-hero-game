@@ -49,6 +49,7 @@ void Game::initialize()
 	//Window: zoom(5x), ratio (4:3), ratio multiplier (250)
 	_window = new Graphical_Manager;
 	Abstract_Entity::setGraphManager(_window);
+	Tile::setRealSize(Tile::OriginalSize * gMng::textures_scale);
 
 	_main_menu = new Main_Menu();
 	_newGame_menu = new NewGame_Menu();
@@ -105,8 +106,6 @@ void Game::initialize_stage1()
 
 	if (!_stage1)
 	{
-		_stage1 = new Stage();
-
 		initialize_player1();
 		_stage1->setpPlayer1(_player1);
 
@@ -115,6 +114,7 @@ void Game::initialize_stage1()
 			initialize_player2();
 			_stage1->setpPlayer2(_player2);
 		}
+		_stage1 = new Stage();
 	}
 }
 

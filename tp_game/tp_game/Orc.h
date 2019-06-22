@@ -28,12 +28,12 @@ public:
 	// ========== Motion ========== //
 	void attack();
 	void turnArround();
-	void collision_onLeft();
-	void collision_onRight();
+	void colliding_onLeft();
+	void colliding_onRight();
 
 	//================================================================//
 	// ========== State checkers ========== //
-	bool isAttacking() const;
+	//bool isAttacking() const;
 private:
 	// ========== execute submethods ========== //
 	void updateAction(const float deltaTime);

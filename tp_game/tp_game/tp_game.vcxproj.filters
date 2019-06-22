@@ -2,68 +2,76 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Timer.cpp" />
     <ClCompile Include="Animator.cpp">
       <Filter>Graphicals</Filter>
     </ClCompile>
     <ClCompile Include="Graphical_Manager.cpp">
       <Filter>Graphicals</Filter>
     </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>Characters</Filter>
-    </ClCompile>
-    <ClCompile Include="Enemy.cpp">
-      <Filter>Characters</Filter>
-    </ClCompile>
     <ClCompile Include="Character.cpp">
       <Filter>Characters</Filter>
-    </ClCompile>
-    <ClCompile Include="Block.cpp">
-      <Filter>Blocks</Filter>
-    </ClCompile>
-    <ClCompile Include="Entity.cpp">
-      <Filter>Abstract Entities</Filter>
-    </ClCompile>
-    <ClCompile Include="Menu.cpp">
-      <Filter>Abstract Entities</Filter>
-    </ClCompile>
-    <ClCompile Include="Game.cpp" />
-    <ClCompile Include="Main_Menu.cpp">
-      <Filter>Abstract Entities</Filter>
     </ClCompile>
     <ClCompile Include="Animation.cpp">
       <Filter>Graphicals</Filter>
     </ClCompile>
-    <ClCompile Include="Orc.cpp">
-      <Filter>Characters</Filter>
-    </ClCompile>
-    <ClCompile Include="Stage.cpp">
-      <Filter>Abstract Entities</Filter>
-    </ClCompile>
     <ClCompile Include="Abstract_Entity.cpp">
       <Filter>Abstract Entities</Filter>
     </ClCompile>
+    <ClCompile Include="CEnt_List.cpp" />
+    <ClCompile Include="stdafx.cpp" />
+    <ClCompile Include="Main_Menu.cpp">
+      <Filter>Abstract Entities\Menus</Filter>
+    </ClCompile>
+    <ClCompile Include="Menu.cpp">
+      <Filter>Abstract Entities\Menus</Filter>
+    </ClCompile>
     <ClCompile Include="NewGame_Menu.cpp">
-      <Filter>Abstract Entities</Filter>
+      <Filter>Abstract Entities\Menus</Filter>
     </ClCompile>
     <ClCompile Include="Pause_Menu.cpp">
-      <Filter>Abstract Entities</Filter>
+      <Filter>Abstract Entities\Menus</Filter>
     </ClCompile>
-    <ClCompile Include="CEnt_List.cpp" />
-    <ClCompile Include="Scenario.cpp">
-      <Filter>Abstract Entities</Filter>
+    <ClCompile Include="Stage.cpp">
+      <Filter>Abstract Entities\Stages</Filter>
     </ClCompile>
-    <ClCompile Include="stdafx.cpp" />
-    <ClCompile Include="Game_State.cpp" />
+    <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="Player.cpp">
+      <Filter>Characters</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Game_State.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Level.cpp">
+      <Filter>Abstract Entities\Stages</Filter>
+    </ClCompile>
+    <ClCompile Include="Skeleton.cpp">
+      <Filter>Characters\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="WhiteSkeleton.cpp">
+      <Filter>Characters\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Characters\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="BlackSkeleton.cpp">
+      <Filter>Characters\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="Orc.cpp">
+      <Filter>Characters\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="Projectile.cpp">
+      <Filter>Characters\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="Tile.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Character.h">
-      <Filter>Characters</Filter>
-    </ClInclude>
-    <ClInclude Include="Enemy.h">
-      <Filter>Characters</Filter>
-    </ClInclude>
-    <ClInclude Include="Player.h">
       <Filter>Characters</Filter>
     </ClInclude>
     <ClInclude Include="Animator.h">
@@ -72,52 +80,69 @@
     <ClInclude Include="Graphical_Manager.h">
       <Filter>Graphicals</Filter>
     </ClInclude>
-    <ClInclude Include="Block.h">
-      <Filter>Blocks</Filter>
-    </ClInclude>
-    <ClInclude Include="Timer.h" />
     <ClInclude Include="stdafx.h" />
-    <ClInclude Include="Entity.h">
-      <Filter>Abstract Entities</Filter>
-    </ClInclude>
-    <ClInclude Include="Menu.h">
-      <Filter>Abstract Entities</Filter>
-    </ClInclude>
-    <ClInclude Include="Game.h" />
-    <ClInclude Include="Main_Menu.h">
-      <Filter>Abstract Entities</Filter>
-    </ClInclude>
     <ClInclude Include="Animation.h">
       <Filter>Graphicals</Filter>
-    </ClInclude>
-    <ClInclude Include="Orc.h">
-      <Filter>Characters</Filter>
-    </ClInclude>
-    <ClInclude Include="Stage.h">
-      <Filter>Abstract Entities</Filter>
     </ClInclude>
     <ClInclude Include="Abstract_Entity.h">
       <Filter>Abstract Entities</Filter>
     </ClInclude>
-    <ClInclude Include="NewGame_Menu.h">
-      <Filter>Abstract Entities</Filter>
-    </ClInclude>
-    <ClInclude Include="Pause_Menu.h">
-      <Filter>Abstract Entities</Filter>
-    </ClInclude>
     <ClInclude Include="List.h" />
     <ClInclude Include="CEnt_List.h" />
-    <ClInclude Include="Scenario.h">
-      <Filter>Abstract Entities</Filter>
+    <ClInclude Include="Main_Menu.h">
+      <Filter>Abstract Entities\Menus</Filter>
     </ClInclude>
-    <ClInclude Include="Game_State.h" />
+    <ClInclude Include="Menu.h">
+      <Filter>Abstract Entities\Menus</Filter>
+    </ClInclude>
+    <ClInclude Include="NewGame_Menu.h">
+      <Filter>Abstract Entities\Menus</Filter>
+    </ClInclude>
+    <ClInclude Include="Pause_Menu.h">
+      <Filter>Abstract Entities\Menus</Filter>
+    </ClInclude>
+    <ClInclude Include="Stage.h">
+      <Filter>Abstract Entities\Stages</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity.h" />
+    <ClInclude Include="Player.h">
+      <Filter>Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Game_State.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Level.h">
+      <Filter>Abstract Entities\Stages</Filter>
+    </ClInclude>
+    <ClInclude Include="Skeleton.h">
+      <Filter>Characters\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="WhiteSkeleton.h">
+      <Filter>Characters\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="Orc.h">
+      <Filter>Characters\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="BlackSkeleton.h">
+      <Filter>Characters\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>Characters\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="Projectile.h">
+      <Filter>Characters\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="Tile.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Characters">
       <UniqueIdentifier>{7982dda9-e580-46e5-abed-5aa2cc2fc3d9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Blocks">
-      <UniqueIdentifier>{96fd9ad3-e8b2-4940-a6c2-83e162df66c2}</UniqueIdentifier>
     </Filter>
     <Filter Include="Obstacles">
       <UniqueIdentifier>{9c453660-aca3-47d6-90f7-fe2f726a71ee}</UniqueIdentifier>
@@ -127,6 +152,18 @@
     </Filter>
     <Filter Include="Abstract Entities">
       <UniqueIdentifier>{d8e314f9-9d7b-4a4d-a421-1a8419665539}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Abstract Entities\Menus">
+      <UniqueIdentifier>{01fe4653-20bd-4199-bb35-3a53f0a2a4c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Abstract Entities\Stages">
+      <UniqueIdentifier>{96418809-229b-4d4a-b6ec-fb87a4e1b794}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game">
+      <UniqueIdentifier>{909280cc-a180-4e26-8e90-9c2f39d8bd64}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Characters\Enemies">
+      <UniqueIdentifier>{4d24f02c-5183-40fa-bb2c-6ad6cbd80b4c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -38,6 +38,12 @@ private:
 	// ========== NewGame_Menu ========== //
 	static const sf::Vector2f menu_position;
 
+	static const std::string title_str;
+	static const int title_charSize;
+	static sf::Color title_textColor;
+	static sf::Color title_outLine_color;
+	static const float title_outLine_thickness;
+
 	static const int ops_act_charSize;
 	static const int ops_deact_charSize;
 
