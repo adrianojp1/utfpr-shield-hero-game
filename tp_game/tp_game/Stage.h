@@ -1,15 +1,18 @@
 #pragma once
 //======================================================================================================================================//
 // === Classes Headers === //
-#include "Scenario.h"
+#include "Level.h"
 
 //======================================================================================================================================//
 // === Stage Class === //
 class Stage : public Abstract_Entity
 {
 protected:
-	std::vector<Scenario*> _vScenarios;
+	std::vector<Level*> _vScenarios;
 	int _currentScenarioId;
+
+	int _nObstacles;
+	int _nEnemies;
 
 public:
 	// ========== Constructors ========== //
@@ -22,7 +25,7 @@ public:
 
 	// ========== Loop methods ========== //
 	virtual void execute(const float deltaTime);
-	virtual void draw() const;
+	virtual void draw();
 
 	// ========== State ========== //
 	virtual void pause();
@@ -32,6 +35,6 @@ public:
 	virtual bool pauseKey_isPressed();
 
 	// ========== Sets & Gets ========== //
-
+	virtual const std::string get_stg_fp(const int stg_id) const;
+	virtual const std::string get_lv_fp(const int stg_id, const int lv_id) const;
 };
-

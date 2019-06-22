@@ -91,6 +91,11 @@ void Timer::reset_and_trigger()
 	this->trigger();
 } // end reset_and_trigger
 
+void Timer::zeroTimer()
+{
+	setCurrentTime(0.0f);
+}
+
 void Timer::setTotalTime(float totalTime)
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");

@@ -34,7 +34,7 @@ public:
 
 	//================================================================//
 	// ========== Loop methods ========== //
-	void updateAnimation(float deltaTime, bool facingRight);
+	void updateAnimation(bool facingRight);
 
 	//================================================================//
 	// ========== Sets & Gets ========== //

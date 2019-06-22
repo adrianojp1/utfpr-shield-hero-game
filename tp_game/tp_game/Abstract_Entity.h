@@ -1,9 +1,10 @@
 #pragma once
 //======================================================================================================================================//
 // === Classes Headers === //
-#include "Animator.h"		//Animations
-#include "Timer.h"			//Timing effects
-#include "Graphical_Manager.h"		//Drawer
+#include "Animator.h"			//Animations
+#include "Timer.h"				//Timing effects
+#include "Graphical_Manager.h"	//Drawer
+#include "Collision_Manager.h"
 
 //======================================================================================================================================//
 // === Classes Declaration === //
@@ -27,10 +28,12 @@ protected:
 
 	static Player* _pPlayer1;
 	static Player* _pPlayer2;
+
+	int _id;
 public:
 	//================================================================//
 	// ========== Constructors ========== //
-	Abstract_Entity(const sf::Vector2f initPosition, bool active = false);
+	Abstract_Entity(const sf::Vector2f initPosition, const bool active = false, const int id = -1);
 	Abstract_Entity();
 	// ========== Destructors ========== //
 	virtual ~Abstract_Entity();
@@ -41,7 +44,7 @@ public:
 	//================================================================//
 	// ========== Loop methods ========== //
 	virtual void execute(const float deltaTime) = 0;
-	virtual void draw() const = 0;
+	virtual void draw() = 0;
 
 	//================================================================//
 	// ========== Sets & Gets ========== //
@@ -61,5 +64,8 @@ public:
 	// _pPlayer2
 	static void setpPlayer2(Player* pP2);
 	static Player* getpPlayer2();
+	//_id
+	void setId(const int id);
+	const int getId();
 };
 

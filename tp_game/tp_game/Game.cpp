@@ -49,6 +49,7 @@ void Game::initialize()
 	//Window: zoom(5x), ratio (4:3), ratio multiplier (250)
 	_window = new Graphical_Manager;
 	Abstract_Entity::setGraphManager(_window);
+	Tile::setRealSize(Tile::OriginalSize * gMng::textures_scale);
 
 	_main_menu = new Main_Menu();
 	_newGame_menu = new NewGame_Menu();
@@ -78,10 +79,7 @@ void Game::initialize_player1()
 	if (!_player1)
 	{
 		_player1 = new Player(sf::Vector2f{ -128.0f, 136.0f });
-		_player1->setDefenseKey(sf::Keyboard::S);
-		_player1->setJumpKey(sf::Keyboard::W);
-		_player1->setLeftKey(sf::Keyboard::A);
-		_player1->setRightKey(sf::Keyboard::D);
+		_player1->setPlayer1_configs();
 	}
 }
 
@@ -92,10 +90,7 @@ void Game::initialize_player2()
 	if (!_player2)
 	{
 		_player2 = new Player(sf::Vector2f{ -150.0f, 136.0f });
-		_player2->setDefenseKey(sf::Keyboard::K);
-		_player2->setJumpKey(sf::Keyboard::I);
-		_player2->setLeftKey(sf::Keyboard::J);
-		_player2->setRightKey(sf::Keyboard::L);
+		_player2->setPlayer2_configs();
 	}
 }
 
@@ -105,8 +100,6 @@ void Game::initialize_stage1()
 
 	if (!_stage1)
 	{
-		_stage1 = new Stage();
-
 		initialize_player1();
 		_stage1->setpPlayer1(_player1);
 
@@ -115,6 +108,7 @@ void Game::initialize_stage1()
 			initialize_player2();
 			_stage1->setpPlayer2(_player2);
 		}
+		_stage1 = new Stage();
 	}
 }
 

@@ -20,19 +20,19 @@ public:
 
 	//================================================================//
 	// ========== Initializers ========== //
-	void initialize_animator(); //Initializes all the animators
+	void initialize_animator() = 0; //Initializes all the animators
 
 	//================================================================//
 	// ========== Motion ========== //
-	void attack();
-	void turnArround();
+	virtual void attack(); //Attack of both skeletons
+	
 
 	//================================================================//
 	// ========== State checkers ========== //
-	bool isAttacking() const;
+	//bool isAttacking() const;
 private:
 	// ========== execute submethods ========== //
-	virtual void updateAction(const float deltaTime);
+	virtual void updateAction(const float deltaTime) = 0;
 }
 ;
 

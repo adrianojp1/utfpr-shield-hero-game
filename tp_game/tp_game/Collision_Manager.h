@@ -1,46 +1,30 @@
 #pragma once
 //======================================================================================================================================//
-// === Classes Headers === //
-#include "Abstract_Entity.h" //base class
-#include "CEnt_List.h"
-#include "Player.h"
-#include "Orc.h"
-#include "Block.h"
+// === Classes Declaration === //
+class Entity;
 
 //======================================================================================================================================//
-// === Stage Class === //
-class Scenario : public Abstract_Entity
+// === Collision_Manager Class === //
+class Collision_Manager
 {
 private:
-	sf::RectangleShape* _background;
-	sf::Texture* _bgtexture;
-	std::vector<Block*> _vBlocks;
-	Orc* _orc;
-public:
+	static Collision_Manager* _instance;
+
+private:
+	//================================================================//
 	// ========== Constructors ========== //
-	Scenario();
+	Collision_Manager();
+public:
 	// ========== Destructors ========== //
-	virtual ~Scenario();
+	virtual ~Collision_Manager();
 
-	// ========== Initializers ========== //
-	virtual void initializeScenario();
-
-	// ========== Loop methods ========== //
-	virtual void execute(const float deltaTime);
-	virtual void draw() const;
-
-	// ========== Players methods ========== //
-	virtual void executePlayers(const float deltaTime);
-	virtual void drawPlayers() const;
-
-	// ========== State ========== //
-
-	// ========== Sets & Gets ========== //
+	// ========== Singleton ========== //
+	static Collision_Manager* getInstance();
 
 	// ========== Collision Management ========== //
-	virtual void manage_collisions();
 	virtual bool check_collision(Entity* ent1, Entity* ent2);
 	virtual bool check_collision(Entity* ent1, Entity* ent2, sf::Vector2f* intersection, sf::Vector2f* coll_direction);
 	virtual void push_entities(Entity* ent1, Entity* ent2, sf::Vector2f* intersection, sf::Vector2f* coll_direction, float push);
 	virtual bool check_collision_n_push(Entity* ent1, Entity* ent2, sf::Vector2f* intersection, sf::Vector2f* coll_direction, float push);
 };
+

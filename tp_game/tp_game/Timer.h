@@ -36,6 +36,7 @@ public:
 	void pause();
 	void trigger();
 	void reset_and_trigger();
+	void zeroTimer();
 
 	//================================================================//
 	// ========== Sets & Gets ========== //

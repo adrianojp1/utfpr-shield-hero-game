@@ -11,10 +11,11 @@ class Player : public Character
 private:
 	// ========= State control members ========= //
 	bool _defCounterUp;
-
 	Timer _defCounterTimer; //Timer for the defense counter
 
 	int _points;
+
+	sf::Vector2f _curr_spawnPoint;
 
 	sf::Keyboard::Key _jumpKey;
 	sf::Keyboard::Key _leftKey;
@@ -47,7 +48,13 @@ public:
 	sf::Keyboard::Key getLeftKey() const;
 	void setDefenseKey(const sf::Keyboard::Key defenseKey);
 	sf::Keyboard::Key getDefenseKey() const;
+	//spawn_point
+	void setCurrSpawnPoint(const sf::Vector2f spawnPoint);
+	const sf::Vector2f getCurrSpawnPoint() const;
 
+	//configs
+	void setPlayer1_configs();
+	void setPlayer2_configs();
 	//================================================================//
 	// ========== State checkers ========== //
 	bool isDefending() const;
@@ -61,6 +68,7 @@ public:
 	void decreaseTimers();
 	void manageDefenseCounter();
 	void ressurect();
+	void doAfterDeath();
 	bool isDefendingInFront(const sf::Vector2f coll_direction) const;
 private:
 	// ========== Control keys methods ========== //

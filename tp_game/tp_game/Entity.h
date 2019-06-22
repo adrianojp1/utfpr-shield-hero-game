@@ -6,7 +6,7 @@
 //======================================================================================================================================//
 // === Derived classes from this === //
 // Character
-// Menu
+// Tile
 
 //======================================================================================================================================//
 // === Entity Class === //
@@ -14,35 +14,49 @@ class Entity : public Abstract_Entity
 {
 protected:
 	// ========= Visual Members ========= //
-	Animator* _animator;
+	Animator *_animator;
 	bool _facingRight; //Bool for the side direction
 
 	// ========= Motion Members ========= //
-	sf::RectangleShape* _current_collider; //Pointer for current collider
+	sf::RectangleShape *_current_collider; //Pointer for current collider
 	float _speed;
 	sf::Vector2f _velocity;
+
+	// ========= Colliding bools ========= //
+	bool _coll_onTop;
+	bool _coll_onBot;
+	bool _coll_onLeft;
+	bool _coll_onRight;
+
 public:
 	//================================================================//
 	// ========== Constructors ========== //
-	Entity(const sf::Vector2f initPosition, bool active = false);
+	Entity(const sf::Vector2f initPosition, const bool active = false, const int id = -1);
 	Entity();
 	// ========== Destructors ========== //
 	virtual ~Entity();
 
 	//================================================================//
 	// ========== Initializers ========== //
-	virtual void initialize_Collider(sf::RectangleShape*& pCollider, sf::Vector2f spriteSize); //Initialize a specific collider
+	virtual void initialize_Collider(sf::RectangleShape *&pCollider, sf::Vector2f spriteSize); //Initialize a specific collider
+	virtual void initialize_animator() = 0;
 
 	//================================================================//
 	// ========== Loop methods ========== //
 	virtual void execute(const float deltaTime) = 0;
-	virtual void draw() const = 0;
+	virtual void draw();
 
 	//================================================================//
 	// ========== Motion ========== //
 	void move(const float dx, const float dy);
 	virtual void move(const sf::Vector2f offset);
 	virtual void onCollision(const sf::Vector2f collisionDirection);
+	virtual void checkColls();
+	virtual void resetColls();
+	virtual void colliding_onLeft();
+	virtual void colliding_onRight();
+	virtual void colliding_onBottom();
+	virtual void colliding_onTop();
 
 	//================================================================//
 	// ========== Sets & Gets ========== //
@@ -50,8 +64,7 @@ public:
 	virtual void setSpeed(const float speed);
 	virtual float getSpeed() const;
 	// _collider
-	virtual sf::RectangleShape* getCollider() const;
+	virtual sf::RectangleShape *getCollider() const;
 	// _facingRight
 	virtual bool isFacingRight() const;
 };
-
