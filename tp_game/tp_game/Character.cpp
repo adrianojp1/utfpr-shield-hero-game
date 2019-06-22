@@ -38,6 +38,7 @@ Character::Character(const sf::Vector2f initPosition) :
 	_jumpHeight = 0.0f;
 	_speed = 0.0f;
 	_hp = 0;
+	_maxHp = 0;
 
 	_state = IDLE;
 
@@ -71,6 +72,7 @@ Character::Character()
 	//Bools
 	_facingRight = true;
 	_canJump = false;
+
 }
 
 Character::~Character()
@@ -101,18 +103,23 @@ void Character::execute(const float deltaTime)
 
 	if (this->isActive())
 	{
+		checkColls();
+
 		decreaseTimers();
 
 		if (!this->isDying())
 		{
 			updateAction(deltaTime);
-			applyGforce(deltaTime);
-			updatePosition(deltaTime);
 		}
 		else
 		{
 			updateDeath();
+			_velocity.x = 0.0f;
 		}
+
+		applyGforce(deltaTime);
+		updatePosition(deltaTime);
+	
 
 		switchAnime_n_Collider();
 
@@ -126,62 +133,15 @@ void Character::execute(const float deltaTime)
 		}
 
 		updateAnime_n_Collider(deltaTime);
+
+		resetColls();
 	}
 }
 
-void Character::draw() const
-{
-	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
-	
-	Entity::_pGraphMng->draw(*(_animator->getCurrentAnime()->getpSprite()));
-	if (gMng::COLLISION_DBG)
-		Entity::_pGraphMng->draw(*(_current_collider));
-}
-
-void Character::onCollision(const sf::Vector2f collisionDirection)
-{
-	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
-
-	//X axe
-	if (collisionDirection.x < 0.0f)
-	{
-		collision_onLeft();
-	}
-	else if (collisionDirection.x > 0.0f)
-	{
-		collision_onRight();
-	}
-
-	//Y axe
-	if (collisionDirection.y > 0.0f)
-	{
-		collision_onBottom();
-	}
-	else if (collisionDirection.y < 0.0f)
-	{
-		collision_onTop();
-	}
-}
-
-void Character::collision_onLeft()
-{
-	_velocity.x = 0.0f;
-}
-
-void Character::collision_onRight()
-{
-	_velocity.x = 0.0f;
-}
-
-void Character::collision_onBottom()
+void Character::colliding_onBottom()
 {
 	_velocity.y = 0.0f;
 	_canJump = true;
-}
-
-void Character::collision_onTop()
-{
-	_velocity.y = 0.0f;
 }
 
 void Character::updatePosition(const float deltaTime)
@@ -214,14 +174,19 @@ void Character::moveToRight(const float speedMultiplier)
 	_velocity.x += _speed * speedMultiplier;
 }
 
+void Character::moveFoward()
+{
+	if (_facingRight)
+		moveToRight();
+	else
+		moveToLeft();
+}
+
 void Character::updateDeath()
 {
 	if ((*_animator)[DEATH]->isFinished())
 	{
-		/*bool Animation::isFinished() const
-			return (getFrameCounter() == getnFrames() - 1); ARRUMAR
-		*/
-		ressurect(); //mudar, só o player
+		doAfterDeath();
 	}
 }
 
@@ -241,7 +206,7 @@ bool Character::isVulnerable()
 
 void Character::apply_invulnerable_effect()
 {
-	_animator->getCurrentAnime()->getpSprite()->setFillColor(sf::Color(70, 200, 100, 255));
+	_animator->getCurrentAnime()->getpSprite()->setFillColor(sf::Color(255, 100, 100, 255));
 }
 
 void Character::apply_default_effect()
@@ -251,9 +216,7 @@ void Character::apply_default_effect()
 
 bool Character::isDying()
 {
-	if (this->isActive() && _hp <= 0)
-		return true;
-	return false;
+	return (this->isActive() && _hp <= 0);
 }
 
 void Character::takeDmg(const int dmg)
@@ -271,7 +234,12 @@ void Character::takeDmg(const int dmg)
 void Character::die()
 {
 	_state = DEATH;
-	_invulnerability.setCurrentTime(0.0f);
+	_invulnerability.zeroTimer();
+}
+
+void Character::doAfterDeath()
+{
+	this->desactivate();
 }
 
 void Character::ressurect()
@@ -280,13 +248,12 @@ void Character::ressurect()
 	{
 		_state = IDLE;
 		resetHp();
-		(*_animator)[DEATH]->resetFrameCounter();
 	}
 }
 
 void Character::resetHp()
 {
-	_hp = 1;
+	_hp = _maxHp;
 }
 
 void Character::decreaseTimers()
@@ -296,7 +263,7 @@ void Character::decreaseTimers()
 
 void Character::updateAnime_n_Collider(const float deltaTime)
 {
-	_animator->updateAnimation(deltaTime, _facingRight);
+	_animator->updateAnimation(_facingRight);
 	_current_collider->setPosition(_position);
 }
 
@@ -320,6 +287,16 @@ void Character::setHp(const int hp)
 int Character::getHp() const
 {
 	return _hp;
+}
+
+void Character::setMaxHp(const int maxHp)
+{
+	_maxHp = maxHp;
+}
+
+int Character::getMaxHp() const
+{
+	return _maxHp;
 }
 
 void Character::switchAnime_n_Collider()

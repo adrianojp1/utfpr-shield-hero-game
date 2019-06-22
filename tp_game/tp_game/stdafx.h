@@ -9,6 +9,8 @@
 #include <iostream>
 #include <math.h>
 #include <vector>
+#include <time.h>
+#include <fstream>
 
 //======================================================================================================================================//
 /* === Notification Subtitles === //
@@ -18,3 +20,6 @@
 sf::Vector2f dot_product(sf::Vector2f v1, sf::Vector2f v2); //Or scalar product
 sf::Vector2f operator*(sf::Vector2f v1, sf::Vector2f v2);
 sf::Vector2f operator/(sf::Vector2f v1, sf::Vector2f v2);
+
+sf::Vector2i operator*(sf::Vector2i vi, sf::Vector2f vf);
+sf::Vector2f operator*(sf::Vector2f vf, sf::Vector2i vi);
