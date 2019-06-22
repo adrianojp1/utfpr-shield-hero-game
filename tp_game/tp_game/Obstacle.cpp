@@ -9,41 +9,36 @@
 //======================================================================================================================================//
 // === Obstacle methods === //
 
-Obstacle::Obstacle(const sf::Vector2f initPosition) :
-	Entity(initPosition, true)
+Obstacle::Obstacle(const sf::Vector2f initPosition, const int id) :
+	Tile(initPosition, id)
 {
-	_obs_collider = NULL;
-
 	_cd_action.trigger();
 
-	_state = 0;
 }
 
 Obstacle::Obstacle()
 {
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 1 | ");
+	_collider = NULL;
 }
 
 Obstacle::~Obstacle()
 {
-	_obs_collider = NULL;
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+	if (_collider)
+		delete _collider;
+	if (_animator)
+		delete _animator;
 }
 
-void Obstacle::initialize_AllColliders()
-{
-}
 
 void Obstacle::execute(const float deltaTime)
 {
+	if (this->isActive())
+	{
+		updateAction(deltaTime);
+		//updatePosition(deltaTime);
+	}
+
 }
 
-void Obstacle::draw() const
-{
-}
-
-void Obstacle::updateAction(const float deltaTime)
-{
-}
-
-void Obstacle::updatePosition(const float deltaTime)
-{
-}

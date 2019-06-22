@@ -8,7 +8,7 @@
 // === Tile Class === //
 class Tile : public Entity
 {
-private:
+protected:
 	// ========= Motion Members ========= //
 	sf::RectangleShape* _collider;
 
@@ -24,6 +24,8 @@ public:
 	//================================================================//
 	// ========== Initializers ========== //
 	void initialize_animator();
+
+	sf::Vector2i getTileRectPos(int id);
 
 	//================================================================//
 	// ========== Loop methods ========== //

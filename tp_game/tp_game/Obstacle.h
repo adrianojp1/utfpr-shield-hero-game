@@ -1,29 +1,26 @@
+#pragma once
+
 //======================================================================================================================================//
 // === Classes Headers === //
-#include "Entity.h" //Base class
+#include "Tile.h" //Base class
 
 //======================================================================================================================================//
 // === Derived classes from this === //
-// Weak_Stone
+// Weak_Block
 // Static_Spike
 
 //======================================================================================================================================//
-// === Character Class === //
-class Obstacle : public Entity
+// === Obstacle Class === //
+class Obstacle : public Tile
 {
 protected:
-	// ========= Motion Members ========= //
-	//Colliders
-	sf::RectangleShape* _obs_collider;
+	Timer _cd_action; //Weak_Block & Dynamic Spike
 
-	Timer _cd_action;
-
-	int _state;
 
 public:
 	//================================================================//
 	// ========== Constructors ========== //
-	Obstacle(const sf::Vector2f initPosition);
+	Obstacle(const sf::Vector2f initPosition, const int id);
 	Obstacle();
 
 	// ========== Destructors ========== //
@@ -31,17 +28,15 @@ public:
 
 	//================================================================//
 	// ========== Initializers ========== //
-	virtual void initialize_AllColliders();
 	virtual void initialize_animator() = 0;
 
 	//================================================================//
 	// ========== Loop methods ========== //
 	virtual void execute(const float deltaTime);
-	virtual void draw() const;
 
 	//================================================================//
-	// ========== Motion ========== //
-	virtual void updateAction(const float deltaTime);
-	virtual void updatePosition(const float deltaTime);
-};
+	// ========== Action ========== //
+	virtual void updateAction(const float deltaTime) = 0;
+	//virtual void updatePosition(const float deltaTime); //Dynamic Spike
 
+};

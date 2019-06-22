@@ -49,13 +49,18 @@ void Tile::initialize_animator()
 
 	Animation* pAnime = new Animation(gMng::tileset_texture, 1, 0.0f);
 
-	sf::Vector2i TileRectPosition = sf::Vector2i{_id % 24, _id / 24 } * OriginalSize;
+	sf::Vector2i TileRectPosition = getTileRectPos(_id);
 	pAnime->setCanvasRect(sf::IntRect(TileRectPosition, sf::Vector2i{ OriginalSize }));
 	pAnime->initializeSprite();
-
+	
 	(*_animator) << pAnime;
 	(*_animator).setCurrentAnime(0);
 	_animator->getCurrentAnime()->getpSprite()->setPosition(_position);
+}
+
+sf::Vector2i Tile::getTileRectPos(int id)
+{
+	return sf::Vector2i{ id % 24, id / 24 } *OriginalSize;
 }
 
 void Tile::execute(float deltaTime)
