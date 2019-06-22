@@ -300,7 +300,7 @@ void Level::setPlayersSpawnPoint()
 void Level::execute(const float deltaTime)
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
-
+	
 	executePlayers(deltaTime);
 
 	_orc->execute(deltaTime);
@@ -386,18 +386,24 @@ void Level::manage_collisions()
 	sf::Vector2f intersection;
 	Collision_Manager* collMng = Collision_Manager::getInstance();
 
-	for (Entity* pEnt : _concreteTile_list)
+	for (Entity* pTile : _concreteTile_list)
 		//Check collision with all blocks
 	{
-		if (collMng->check_collision_n_push(static_cast<Entity*>(_pPlayer1), pEnt, &intersection, &collisionDirection, 0.0f))
+		if (collMng->check_collision_n_push(static_cast<Entity*>(_pPlayer1), pTile, &intersection, &collisionDirection, 0.0f))
 			_pPlayer1->onCollision(collisionDirection);
 		if (_pPlayer2)
 		{
-			if (collMng->check_collision_n_push(static_cast<Entity*>(_pPlayer2), pEnt, &intersection, &collisionDirection, 0.0f))
+			if (collMng->check_collision_n_push(static_cast<Entity*>(_pPlayer2), pTile, &intersection, &collisionDirection, 0.0f))
 				_pPlayer2->onCollision(collisionDirection);
 		}
-		if (collMng->check_collision_n_push(static_cast<Entity*>(_orc), pEnt, &intersection, &collisionDirection, 0.0f))
+
+		if (collMng->intersects(pTile, _orc->getFrontEdge()))
+			_orc->setFloor_foward(true);
+		if (collMng->check_collision(static_cast<Entity*>(_orc), pTile, &intersection, &collisionDirection))
+		{
+			collMng->push_entities(static_cast<Entity*>(_orc), pTile, &intersection, &collisionDirection, 0.0f);
 			_orc->onCollision(collisionDirection);
+		}
 	}
 
 	if (_pPlayer1->isVulnerable() && (collMng->check_collision(static_cast<Entity*>(_pPlayer1), static_cast<Entity*>(_orc), &intersection, &collisionDirection)))

@@ -17,7 +17,7 @@ protected:
 	int _collisionDamage;
 	int _attackDamage;
 
-	std::vector<Entity*> _vblocksUnderneath;
+	bool _floor_foward;
 public:
 	//================================================================//
 	// ========== Constructors ========== //
@@ -41,11 +41,6 @@ public:
 	//================================================================//
 	// ========== Motion ========== //
 	virtual void attack() = 0;
-	
-
-	//virtual void onCollision(const sf::Vector2f collisionDirection);
-	//virtual void colliding_onLeft() = 0;
-	//virtual void colliding_onRight() = 0;
 
 	//================================================================//
 	// ========== State ========== //
@@ -53,8 +48,12 @@ public:
 
 	//================================================================//
 	// ========== State checkers ========== //
-	
 	virtual bool isAttacking() const;
+
+	virtual const sf::Vector2f getFrontEdge() const;
+	//_floor_foward
+	virtual void setFloor_foward(const bool floor_fwd);
+	virtual const bool getFloor_foward() const;
 	
 protected :
 	// ========== execute submethods ========== //

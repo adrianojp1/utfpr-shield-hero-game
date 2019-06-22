@@ -16,7 +16,7 @@ const sf::Vector2u Graphical_Manager::windowSize = {windowRatio.x * ratioMultipl
 std::vector<sf::Texture *> Graphical_Manager::_vTextures;
 
 const bool Graphical_Manager::CONSOLE_LOG = false;
-const bool Graphical_Manager::COLLISION_DBG = true;
+const bool Graphical_Manager::COLLISION_DBG = false;
 
 const float Graphical_Manager::gravity(1400.0f);
 

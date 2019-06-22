@@ -141,3 +141,14 @@ bool Collision_Manager::check_collision_n_push(Entity* ent1, Entity* ent2, sf::V
 	}
 	return false;
 }
+
+bool Collision_Manager::intersects(Entity* ent, sf::Vector2f point)
+{
+	sf::Vector2f halfSize = ent->getCollider()->getSize();
+	sf::Vector2f pos = ent->getCollider()->getPosition();
+
+	sf::Vector2f inf_lims = pos - halfSize;
+	sf::Vector2f sup_lims = pos + halfSize;
+
+	return ((point.x > inf_lims.x) && (point.x < sup_lims.x) && (point.y > inf_lims.y) && (point.y < sup_lims.y)) ? true : false;
+}

@@ -97,6 +97,8 @@ void Character::execute(const float deltaTime)
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
+	_velocity.x = 0.0f;
+
 	if (this->isActive())
 	{
 		checkColls();
@@ -110,7 +112,6 @@ void Character::execute(const float deltaTime)
 		else
 		{
 			updateDeath();
-			_velocity.x = 0.0f;
 		}
 
 		applyGforce(deltaTime);

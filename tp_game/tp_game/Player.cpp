@@ -76,8 +76,6 @@ void Player::updateAction(const float deltaTime)
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
-	_velocity.x = 0.0f;
-
 	if (defendKeyPressed())
 	{
 		_state = COMBAT;
