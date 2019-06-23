@@ -46,10 +46,10 @@ void Orc::initialize_animator()
 
 	_animator = new Animator(static_cast<Entity*>(this));
 
-	*_animator << new Animation(gMng::orc_idle_texture, 1, 0.0f);
-	*_animator << new Animation(gMng::orc_walk_texture, 4, 0.250f);
-	*_animator << new Animation(gMng::orc_die_texture, 3, 0.250f);
-	*_animator << new Animation(gMng::orc_atk_texture, 3, 0.200f);
+	*_animator << new Animation(gMng::orc_idle_texture, 1, 0.0f, 2);
+	*_animator << new Animation(gMng::orc_walk_texture, 4, 0.250f, 2);
+	*_animator << new Animation(gMng::orc_die_texture, 3, 0.250f, 2);
+	*_animator << new Animation(gMng::orc_atk_texture, 3, 0.200f, 2);
 } // end initializeAnimators
 
 
@@ -61,10 +61,7 @@ void Orc::attack()
 
 void Orc::turnArround()
 {
-	if (_facingRight)
-		_facingRight = false;
-	else
-		_facingRight = true;
+	_facingRight ? _facingRight = false : _facingRight = true;
 }
 
 void Orc::colliding_onLeft()
@@ -84,9 +81,19 @@ void Orc::updateAction(const float deltaTime)
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 	
-	_velocity.x = 0.0f;
-		
 	_state = WALK;
+
+	srand(static_cast<unsigned int>(time(NULL)));
+	int chanceToTurn = 3;//%
+	bool decidedToTurn = false;
+	if (rand() % 101 < chanceToTurn + 1)
+		bool decidedToTurn = true;
+
+	if (!_floor_foward || decidedToTurn)
+	{
+		turnArround();
+	}
+	_floor_foward = false;
 	moveFoward();
 	
 

@@ -16,7 +16,7 @@ const sf::Vector2u Graphical_Manager::windowSize = {windowRatio.x * ratioMultipl
 std::vector<sf::Texture *> Graphical_Manager::_vTextures;
 
 const bool Graphical_Manager::CONSOLE_LOG = false;
-const bool Graphical_Manager::COLLISION_DBG = true;
+const bool Graphical_Manager::COLLISION_DBG = false;
 
 const float Graphical_Manager::gravity(1400.0f);
 
@@ -39,7 +39,7 @@ sf::Texture *Graphical_Manager::tileset_texture = NULL;
 const std::string Graphical_Manager::player_idle_Sp_Fp = textures_dir + "shield-hero/shield_hero-idle.png";
 const std::string Graphical_Manager::player_walk_Sp_Fp = textures_dir + "shield-hero/shield_hero-walk.png";
 const std::string Graphical_Manager::player_def1_Sp_Fp = textures_dir + "shield-hero/shield_hero-def1.png";
-const std::string Graphical_Manager::player_def2_Sp_Fp = textures_dir + "shield-hero/shield_hero-def2-2.png";
+const std::string Graphical_Manager::player_def2_Sp_Fp = textures_dir + "shield-hero/shield_hero-def2.png";
 const std::string Graphical_Manager::player_die_Sp_Fp = textures_dir + "shield-hero/shield_hero-die.png";
 
 sf::Texture *Graphical_Manager::player_idle_texture = NULL;
@@ -172,6 +172,7 @@ void Graphical_Manager::setViewCenter(sf::Vector2f center)
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
 	pView->setCenter(center);
+	this->setView(*pView);
 }
 
 void Graphical_Manager::moveView(sf::Vector2f offset)
@@ -179,6 +180,7 @@ void Graphical_Manager::moveView(sf::Vector2f offset)
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
 	pView->move(offset);
+	this->setView(*pView);
 }
 
 void Graphical_Manager::printConsole_log(std::string log)

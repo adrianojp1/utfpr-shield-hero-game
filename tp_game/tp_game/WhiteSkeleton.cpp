@@ -28,10 +28,10 @@ void WhiteSkeleton::initialize_animator()
 
 	_animator = new Animator(static_cast<Entity*>(this));
 
-	*_animator << new Animation(gMng::white_skeleton_idle_texture, 1, 0.0f);
-	*_animator << new Animation(gMng::white_skeleton_walk_texture, 4, 0.250f);
-	*_animator << new Animation(gMng::white_skeleton_die_texture, 3, 0.250f);
-	*_animator << new Animation(gMng::white_skeleton_atk_texture, 3, 0.200f);
+	*_animator << new Animation(gMng::white_skeleton_idle_texture, 1, 0.0f, 2);
+	*_animator << new Animation(gMng::white_skeleton_walk_texture, 4, 0.250f, 2);
+	*_animator << new Animation(gMng::white_skeleton_die_texture, 3, 0.250f, 2);
+	*_animator << new Animation(gMng::white_skeleton_atk_texture, 3, 0.200f, 2);
 }
 
 void WhiteSkeleton::updateAction(const float deltaTime)

@@ -17,7 +17,6 @@
     <ClCompile Include="Abstract_Entity.cpp">
       <Filter>Abstract Entities</Filter>
     </ClCompile>
-    <ClCompile Include="CEnt_List.cpp" />
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="Main_Menu.cpp">
       <Filter>Abstract Entities\Menus</Filter>
@@ -65,12 +64,35 @@
     <ClCompile Include="Orc.cpp">
       <Filter>Characters\Enemies</Filter>
     </ClCompile>
-    <ClCompile Include="Projectile.cpp">
-      <Filter>Characters\Enemies</Filter>
-    </ClCompile>
-    <ClCompile Include="Tile.cpp" />
     <ClCompile Include="Collision_Manager.cpp">
       <Filter>Abstract Entities\Stages</Filter>
+    </ClCompile>
+    <ClCompile Include="Obstacle.cpp">
+      <Filter>Obstacles</Filter>
+    </ClCompile>
+    <ClCompile Include="Weak_Block.cpp">
+      <Filter>Obstacles</Filter>
+    </ClCompile>
+    <ClCompile Include="Static_Spike.cpp">
+      <Filter>Obstacles</Filter>
+    </ClCompile>
+    <ClCompile Include="Dynamic_Spike.cpp">
+      <Filter>Obstacles</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy_List.cpp">
+      <Filter>Lists</Filter>
+    </ClCompile>
+    <ClCompile Include="CEnt_List.cpp">
+      <Filter>Lists</Filter>
+    </ClCompile>
+    <ClCompile Include="Tile_List.cpp">
+      <Filter>Lists</Filter>
+    </ClCompile>
+    <ClCompile Include="Projectile.cpp">
+      <Filter>Other Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Tile.cpp">
+      <Filter>Other Entities</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -91,7 +113,6 @@
       <Filter>Abstract Entities</Filter>
     </ClInclude>
     <ClInclude Include="List.h" />
-    <ClInclude Include="CEnt_List.h" />
     <ClInclude Include="Main_Menu.h">
       <Filter>Abstract Entities\Menus</Filter>
     </ClInclude>
@@ -138,12 +159,35 @@
     <ClInclude Include="Enemy.h">
       <Filter>Characters\Enemies</Filter>
     </ClInclude>
-    <ClInclude Include="Projectile.h">
-      <Filter>Characters\Enemies</Filter>
-    </ClInclude>
-    <ClInclude Include="Tile.h" />
     <ClInclude Include="Collision_Manager.h">
       <Filter>Abstract Entities\Stages</Filter>
+    </ClInclude>
+    <ClInclude Include="Obstacle.h">
+      <Filter>Obstacles</Filter>
+    </ClInclude>
+    <ClInclude Include="Weak_Block.h">
+      <Filter>Obstacles</Filter>
+    </ClInclude>
+    <ClInclude Include="Static_Spike.h">
+      <Filter>Obstacles</Filter>
+    </ClInclude>
+    <ClInclude Include="Dynamic_Spike.h">
+      <Filter>Obstacles</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy_List.h">
+      <Filter>Lists</Filter>
+    </ClInclude>
+    <ClInclude Include="CEnt_List.h">
+      <Filter>Lists</Filter>
+    </ClInclude>
+    <ClInclude Include="Tile_List.h">
+      <Filter>Lists</Filter>
+    </ClInclude>
+    <ClInclude Include="Projectile.h">
+      <Filter>Other Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Tile.h">
+      <Filter>Other Entities</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -170,6 +214,12 @@
     </Filter>
     <Filter Include="Game">
       <UniqueIdentifier>{909280cc-a180-4e26-8e90-9c2f39d8bd64}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lists">
+      <UniqueIdentifier>{5993b3ab-b20e-4c73-b9fd-61dfb9affc50}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Other Entities">
+      <UniqueIdentifier>{970391aa-59ca-4a05-bf1b-ebff50112dd5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

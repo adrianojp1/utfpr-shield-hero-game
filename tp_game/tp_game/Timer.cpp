@@ -93,6 +93,7 @@ void Timer::reset_and_trigger()
 
 void Timer::zeroTimer()
 {
+	_zeroed = true;
 	setCurrentTime(0.0f);
 }
 

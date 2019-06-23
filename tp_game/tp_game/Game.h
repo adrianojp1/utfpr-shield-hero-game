@@ -22,8 +22,8 @@ private:
 	Pause_Menu* _pause_menu;
 
 	int _nPlayers;
-	Player* _player1;
-	Player* _player2;
+	Player* _pPlayer1;
+	Player* _pPlayer2;
 
 	Stage* _stage1;
 	//Stage1* _stage2;
@@ -82,6 +82,7 @@ public:
 	void run_stage();
 	void stop_runningStage();
 
+	void resetPlayers();
 	void set_nPlayers(int nP);
 	void set_currentStage(int stg_id);
 	Stage* get_currentStage();

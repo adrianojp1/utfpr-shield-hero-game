@@ -12,11 +12,12 @@
 
 //======================================================================================================================================//
 // === Animation Methods === //
-Animation::Animation(sf::Texture* pTexture, unsigned int nFrames, float switchTime) : 
+Animation::Animation(sf::Texture* pTexture, unsigned int nFrames, float switchTime, int nRows) : 
 	_switchTimer(switchTime)
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
+	_nRows = nRows;
 	_nFrames = nFrames;
 	_frameCounter = 0;
 	initialize(pTexture);
@@ -43,7 +44,7 @@ void Animation::initialize(sf::Texture* pTexture)
 
 	_sprite.setTexture(pTexture);
 
-	setCanvasSize(sf::Vector2u{ (pTexture->getSize().x / _nFrames), pTexture->getSize().y });
+	setCanvasSize(sf::Vector2u{ (pTexture->getSize().x / _nFrames), pTexture->getSize().y / _nRows});
 	initializeSprite();
 }
 
@@ -60,7 +61,16 @@ void Animation::updateAnimation(bool facingRight)
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 	
 	updateFrame();
-	updateCanvasDirection(facingRight);
+	updateCanvas(facingRight);
+
+	_sprite.setTextureRect(_canvasRect);
+}
+
+void Animation::updateAnimation()
+{
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+
+	updateFrame();
 
 	_sprite.setTextureRect(_canvasRect);
 }
@@ -193,18 +203,34 @@ void Animation::updateFrame()
 	}
 } // end updateFrame
 
-void Animation::updateCanvasDirection(bool facingRight)
+void Animation::updateCanvas(bool facingRight)
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
-	if (facingRight)
+	if (_nRows == 2)
 	{
 		_canvasRect.left = _frameCounter * _canvasRect.width;
-		_canvasRect.width = abs(_canvasRect.width);
+		if (facingRight)
+		{
+			_canvasRect.top = 0;
+		}
+		else
+		{
+			_canvasRect.top = _canvasRect.height;
+		}
 	}
 	else
 	{
-		_canvasRect.left = (_frameCounter + 1) * abs(_canvasRect.width);
-		_canvasRect.width = -abs(_canvasRect.width);
+		if (facingRight)
+		{
+			_canvasRect.left = _frameCounter * _canvasRect.width;
+			_canvasRect.width = abs(_canvasRect.width);
+		}
+		else
+		{
+			_canvasRect.left = (_frameCounter + 1) * abs(_canvasRect.width);
+			_canvasRect.width = -abs(_canvasRect.width);
+		}
 	}
+	
 } // end updateSpriteDirection

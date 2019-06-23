@@ -158,7 +158,9 @@
     <ClCompile Include="CEnt_List.cpp" />
     <ClCompile Include="Character.cpp" />
     <ClCompile Include="Collision_Manager.cpp" />
+    <ClCompile Include="Dynamic_Spike.cpp" />
     <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="Enemy_List.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Game_State.cpp" />
@@ -167,6 +169,7 @@
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="Graphical_Manager.cpp" />
     <ClCompile Include="NewGame_Menu.cpp" />
+    <ClCompile Include="Obstacle.cpp" />
     <ClCompile Include="Orc.cpp" />
     <ClCompile Include="Pause_Menu.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -174,9 +177,12 @@
     <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="Skeleton.cpp" />
     <ClCompile Include="Stage.cpp" />
+    <ClCompile Include="Static_Spike.cpp" />
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="Tile.cpp" />
+    <ClCompile Include="Tile_List.cpp" />
     <ClCompile Include="Timer.cpp" />
+    <ClCompile Include="Weak_Block.cpp" />
     <ClCompile Include="WhiteSkeleton.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -187,7 +193,9 @@
     <ClInclude Include="CEnt_List.h" />
     <ClInclude Include="Character.h" />
     <ClInclude Include="Collision_Manager.h" />
+    <ClInclude Include="Dynamic_Spike.h" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="Enemy_List.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Game_State.h" />
@@ -196,6 +204,7 @@
     <ClInclude Include="Menu.h" />
     <ClInclude Include="Graphical_Manager.h" />
     <ClInclude Include="NewGame_Menu.h" />
+    <ClInclude Include="Obstacle.h" />
     <ClInclude Include="Orc.h" />
     <ClInclude Include="Pause_Menu.h" />
     <ClInclude Include="Player.h" />
@@ -203,9 +212,12 @@
     <ClInclude Include="Projectile.h" />
     <ClInclude Include="Skeleton.h" />
     <ClInclude Include="Stage.h" />
+    <ClInclude Include="Static_Spike.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Tile.h" />
+    <ClInclude Include="Tile_List.h" />
     <ClInclude Include="Timer.h" />
+    <ClInclude Include="Weak_Block.h" />
     <ClInclude Include="WhiteSkeleton.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

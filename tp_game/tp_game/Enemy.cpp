@@ -21,6 +21,7 @@ Enemy::Enemy(const sf::Vector2f initPosition) :
 	_attackDamage = 2;
 	_canAttack = true;
 	_attacking = false;
+	_floor_foward = false;
 
 } // end constr (parameters)
 
@@ -32,6 +33,7 @@ Enemy::Enemy() : Character()
 	_canAttack = false;
 	_facingRight = false;
 	_canJump = false;
+	_floor_foward = false;
 	_position = {0.0f, 0.0f};
 	_hp = 0;
 	_collisionDamage = 0;
@@ -92,4 +94,21 @@ void Enemy::decreaseTimers()
 bool Enemy::isAttacking() const
 {
 	return _attacking;
+}
+
+const sf::Vector2f Enemy::getFrontEdge() const
+{
+	sf::Vector2f halfSize = _current_collider->getSize() / 2.0f;
+	float x = _position.x + (_facingRight? halfSize.x : -halfSize.x);
+	return { x, _position.y + halfSize.y + 5.0f};
+}
+
+void Enemy::setFloor_foward(const bool floor_fwd)
+{
+	_floor_foward = floor_fwd;
+}
+
+const bool Enemy::getFloor_foward() const
+{
+	return _floor_foward;
 }

@@ -91,11 +91,15 @@ void Character::initialize_AllColliders()
 	initialize_Collider(_walk_collider, (*_animator)[WALK]->getCanvasSize());
 	initialize_Collider(_death_collider, (*_animator)[DEATH]->getCanvasSize());
 	initialize_Collider(_combat_collider, (*_animator)[COMBAT]->getCanvasSize());
+
+	_current_collider = _idle_collider;
 }
 
 void Character::execute(const float deltaTime)
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+
+	_velocity.x = 0.0f;
 
 	if (this->isActive())
 	{
@@ -110,13 +114,11 @@ void Character::execute(const float deltaTime)
 		else
 		{
 			updateDeath();
-			_velocity.x = 0.0f;
 		}
 
 		applyGforce(deltaTime);
 		updatePosition(deltaTime);
 	
-
 		switchAnime_n_Collider();
 
 		if (!isVulnerable())
@@ -127,8 +129,6 @@ void Character::execute(const float deltaTime)
 		{
 			apply_default_effect();
 		}
-
-		updateAnime_n_Collider(deltaTime);
 
 		resetColls();
 	}
@@ -257,7 +257,7 @@ void Character::decreaseTimers()
 	_invulnerability.decreaseTime();
 }
 
-void Character::updateAnime_n_Collider(const float deltaTime)
+void Character::updateAnime_n_Collider()
 {
 	_animator->updateAnimation(_facingRight);
 	_current_collider->setPosition(_position);

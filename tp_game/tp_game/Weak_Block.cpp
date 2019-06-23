@@ -4,35 +4,35 @@
 
 //======================================================================================================================================//
 // === This Class Header === //
-#include "Tile.h"
+#include "Weak_Block.h"
 
 //======================================================================================================================================//
 // === Static initializations === //
-const sf::Vector2f Tile::OriginalSize = sf::Vector2f{ 16.0f, 16.0f };
-sf::Vector2f Tile::_realSize = OriginalSize;
+/*const sf::Vector2f Weak_Block::OriginalSize = sf::Vector2f{ 16.0f, 16.0f };
+sf::Vector2f Weak_Block::_realSize = OriginalSize;*/
 
 //======================================================================================================================================//
-// === Tile methods === //
+// === Weak_Block methods === //
 
-Tile::Tile(const sf::Vector2f initPosition, const int id) :
-	Entity(initPosition, true, id)
+Weak_Block::Weak_Block(const sf::Vector2f initPosition, const int id) :
+	Obstacle(initPosition, id)
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
 	initialize_animator();
 	initialize_Collider(_collider, (*_animator)[0]->getCanvasSize());
-	
+
 	_current_collider = _collider;
 	_current_collider->setPosition(_position);
 }
 
-Tile::Tile() : Entity()
+Weak_Block::Weak_Block() : Obstacle()
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 1 | ");
 	_collider = NULL;
 }
 
-Tile::~Tile()
+Weak_Block::~Weak_Block()
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 	if (_collider)
@@ -41,7 +41,7 @@ Tile::~Tile()
 		delete _animator;
 }
 
-void Tile::initialize_animator()
+void Weak_Block::initialize_animator()
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
@@ -52,28 +52,14 @@ void Tile::initialize_animator()
 	sf::Vector2i TileRectPosition = getTileRectPos(_id);
 	pAnime->setCanvasRect(sf::IntRect(TileRectPosition, sf::Vector2i{ OriginalSize }));
 	pAnime->initializeSprite();
-	
+
 	(*_animator) << pAnime;
 	(*_animator).setCurrentAnime(0);
 	_animator->getCurrentAnime()->getpSprite()->setPosition(_position);
 }
 
-sf::Vector2i Tile::getTileRectPos(int id)
+//upar rachaduras, tremer e sumir quando _coll_onTop
+void Weak_Block::updateAction(const float deltaTime)
 {
-	return sf::Vector2i{ id % 24, id / 24 } *OriginalSize;
 }
 
-void Tile::execute(float deltaTime)
-{
-	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
-}
-
-void Tile::setRealSize(const sf::Vector2f realSize)
-{
-	_realSize = realSize;
-}
-
-const sf::Vector2f Tile::getRealSize()
-{
-	return _realSize;
-}

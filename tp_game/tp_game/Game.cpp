@@ -27,8 +27,8 @@ Game::~Game()
 
 	if (_window)
 		delete _window;
-	if (_player1)
-		delete _player1;
+	if (_pPlayer1)
+		delete _pPlayer1;
 	if (_stage1)
 		delete _stage1;
 } // end destr
@@ -56,9 +56,12 @@ void Game::initialize()
 	_pause_menu = new Pause_Menu();
 
 	_nPlayers = 0;
-	_player1 = NULL;
-	_player2 = NULL;
-	_currentStage = NULL;
+	_pPlayer1 = NULL;
+	_pPlayer2 = NULL;
+
+	initialize_player1();
+	initialize_player2();
+	Abstract_Entity::setpPlayer1(_pPlayer1);
 
 	_stage1 = NULL;
 
@@ -67,19 +70,20 @@ void Game::initialize()
 
 	_runningStage = false;
 	_main_menu->open();
-	_currentStage = _stage1;
 
 	_state = On_MainMenu::getInstance();
+
+	_currentStage = _stage1;
 } // end initialize
 
 void Game::initialize_player1()
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
-	if (!_player1)
+	if (!_pPlayer1)
 	{
-		_player1 = new Player(sf::Vector2f{ -128.0f, 136.0f });
-		_player1->setPlayer1_configs();
+		_pPlayer1 = new Player(sf::Vector2f{ -128.0f, 136.0f });
+		_pPlayer1->setPlayer1_configs();
 	}
 }
 
@@ -87,10 +91,10 @@ void Game::initialize_player2()
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
-	if (!_player2)
+	if (!_pPlayer2)
 	{
-		_player2 = new Player(sf::Vector2f{ -150.0f, 136.0f });
-		_player2->setPlayer2_configs();
+		_pPlayer2 = new Player(sf::Vector2f{ -150.0f, 136.0f });
+		_pPlayer2->setPlayer2_configs();
 	}
 }
 
@@ -98,18 +102,32 @@ void Game::initialize_stage1()
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
-	if (!_stage1)
+	if (_stage1)
 	{
-		initialize_player1();
-		_stage1->setpPlayer1(_player1);
-
-		if (_nPlayers == 2)
-		{
-			initialize_player2();
-			_stage1->setpPlayer2(_player2);
-		}
-		_stage1 = new Stage();
+		delete _stage1;
+		_stage1 = NULL;
 	}
+
+	if (_nPlayers == 2)
+	{
+		_pPlayer2->activate();
+		Abstract_Entity::setpPlayer2(_pPlayer2);
+	}
+	else
+	{
+		_pPlayer2->desactivate();
+		Abstract_Entity::setpPlayer2(NULL);
+	}
+
+	_stage1 = new Stage(2, _nPlayers);
+}
+
+void Game::resetPlayers()
+{
+	if (_pPlayer1)
+		_pPlayer1->reset();
+	if (_pPlayer2)
+		_pPlayer2->reset();
 }
 
 void Game::set_nPlayers(int nP)
@@ -189,7 +207,7 @@ void Game::run_stage()
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
 	_runningStage = true;
-	unpause_stage();
+	_currentStage->start();
 }
 
 void Game::stop_runningStage()

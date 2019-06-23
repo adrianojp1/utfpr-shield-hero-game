@@ -82,20 +82,11 @@ void NewGame_Menu::execute_onOp()
 void NewGame_Menu::set_1player()
 {
 	Game::getInstance()->set_nPlayers(1);
-	set_n_run_stage1();
 }
 
 void NewGame_Menu::set_2players()
 {
 	Game::getInstance()->set_nPlayers(2);
-	set_n_run_stage1();
-}
-
-void NewGame_Menu::set_n_run_stage1()
-{
-	Game::getInstance()->initialize_stage1();
-	Game::getInstance()->set_currentStage(1);
-	Game::getInstance()->run_stage();
 }
 
 void NewGame_Menu::exit()

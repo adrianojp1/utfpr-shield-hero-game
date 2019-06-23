@@ -11,7 +11,7 @@
 
 //======================================================================================================================================//
 // === Character Class === //
-class Character : public Entity
+typedef class Character : public Entity
 {
 protected:
 	// ========= Motion Members ========= //
@@ -78,7 +78,7 @@ public:
 	virtual void resetHp();
 	virtual void decreaseTimers();
 
-	virtual void updateAnime_n_Collider(const float deltaTime);
+	virtual void updateAnime_n_Collider();
 
 	//================================================================//
 	// ========== Sets & Gets ========== //
@@ -109,6 +109,4 @@ protected:
 		DEATH,
 		COMBAT
 	};
-};
-
-typedef Character Charc;
+} Charc;

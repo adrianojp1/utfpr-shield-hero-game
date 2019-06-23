@@ -43,6 +43,7 @@ void RunningStage::execute(const float deltaTime)
 	if (Game::getInstance()->get_currentStage()->isPaused())
 	{
 		Game::getInstance()->open_Pause_Menu();
+		Abstract_Entity::getGraphManager()->setViewCenter({ 0.0f, 0.0f });
 		changeState(On_PauseMenu::getInstance());
 	}
 	else
@@ -115,8 +116,14 @@ void On_NewGameMenu::execute(const float deltaTime)
 
 	else if (Game::getInstance()->get_main_menu()->isOpen())
 		changeState(On_MainMenu::getInstance());
-	else if (Game::getInstance()->isRunning_stage())
+	else
+	{
+		Game::getInstance()->initialize_stage1();
+		Game::getInstance()->set_currentStage(1);
+		Game::getInstance()->run_stage();
+		Game::getInstance()->resetPlayers();
 		changeState(RunningStage::getInstance());
+	}
 }
 
 void On_NewGameMenu::draw()

@@ -9,7 +9,7 @@
 
 //======================================================================================================================================//
 // === Animation Class === //
-class Animation
+typedef class Animation
 {
 private:
 	//Visual members
@@ -20,13 +20,16 @@ private:
 	unsigned int _frameCounter;
 	unsigned int _nFrames;
 
+	//Rows
+	unsigned int _nRows;
+
 	//Time members
 	Timer _switchTimer;
 
 public:
 	//================================================================//
 	// ========== Constructors ========== //
-	Animation(sf::Texture* pTexture, unsigned int nFrames, float switchTime);
+	Animation(sf::Texture* pTexture, unsigned int nFrames, float switchTime, int nRows = 1);
 	Animation();
 
 	// ========== Destructors ========== //
@@ -40,7 +43,7 @@ public:
 	//================================================================//
 	// ========== Loop methods ========== //
 	void updateAnimation(bool facingRight);
-
+	void updateAnimation();
 	//================================================================//
 	// ========== Sets & Gets ========== //
 	//_frameCounter
@@ -71,7 +74,6 @@ public:
 private:
 	// ========== updateSprite submethods ========== //
 	void updateFrame();
-	void updateCanvasDirection(bool facingRight);
-};
-
-typedef Animation Anime;
+	void updateCanvas(bool facingRight);
+	void updateCanvas();
+} Anime;

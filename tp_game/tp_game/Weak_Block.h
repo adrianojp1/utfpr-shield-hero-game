@@ -2,38 +2,30 @@
 
 //======================================================================================================================================//
 // === Classes Headers === //
-#include "Enemy.h"
+#include "Obstacle.h" //Base class
 
 //======================================================================================================================================//
-// === Orc Class === //
-class Orc : public Enemy
+// === Weak_Block Class === //
+class Weak_Block : public Obstacle
 {
 private:
+
 
 public:
 	//================================================================//
 	// ========== Constructors ========== //
-	Orc(const sf::Vector2f initPosition);
-	Orc();
+	Weak_Block(const sf::Vector2f initPosition, const int id);
+	Weak_Block();
+
 	// ========== Destructors ========== //
-	~Orc();
+	~Weak_Block();
 
 	//================================================================//
 	// ========== Initializers ========== //
-	void initialize_animator(); //Initializes all the animators
+	virtual void initialize_animator();
 
-	//================================================================//
-	// ========== Motion ========== //
-	void attack();
-	void turnArround();
-	void colliding_onLeft();
-	void colliding_onRight();
-
-	//================================================================//
-	// ========== State checkers ========== //
-	//bool isAttacking() const;
 private:
 	// ========== execute submethods ========== //
-	void updateAction(const float deltaTime);
+	void updateAction(const float deltaTime); //tremer e sumir.
 };
 

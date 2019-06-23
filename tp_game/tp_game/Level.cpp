@@ -31,6 +31,8 @@ Level::Level()
 	_playerSpawn = { 0.0f, 0.0f };
 	_nTotalEnemies = 0;
 	_nTotalObstacles = 0;
+	_viewCenter = { 0.0f, 0.0f };
+	_realSize = { 0.0f, 0.0f };
 	_tilesIds_matrix = NULL;
 }
 
@@ -51,15 +53,19 @@ Level::~Level()
 		delete _tilesIds_matrix;
 	}
 
-	if (_orc)
-		delete _orc;
-
-	for (Entity* pEnt : _concreteTile_list)
+	for (Enemy* pEne : _enemy_list)
 	{
-		if (pEnt)
-			delete pEnt;
+		if (pEne)
+			delete pEne;
 	}
-	_concreteTile_list.clearList();
+	_enemy_list.clear();
+
+	for (Tile* pT : _collisiveTile_list)
+	{
+		if (pT)
+			delete pT;
+	}
+	_collisiveTile_list.clear();
 }
 
 void Level::serializeTiles(const std::string level_filePath)
@@ -194,7 +200,7 @@ int Level::extractNextInt(std::string& str, std::string::iterator& it)
 
 const sf::Vector2f Level::getRealPosition(const sf::Vector2i pos_inLayer) const
 {
-	return (Tile::getRealSize() * pos_inLayer +_position);
+	return (Tile::getRealSize() * pos_inLayer + _position);
 }
 
 void Level::initializeEntities()
@@ -203,11 +209,15 @@ void Level::initializeEntities()
 
 	Tile* pTile = NULL;
 	int id;
-	for (int i = 0; i < 2; i++)
+
+	_realSize = Tile::getRealSize() * _matrixSize;
+	_viewCenter = (_realSize / 2.0f) + _position - (Tile::getRealSize() / 2.0f);
+
+	for (int j = 0; j < _matrixSize.y; j++)
 	{
-		for (int j = 0; j < _matrixSize.y; j++)
+		for (int k = 0; k < _matrixSize.x; k++)
 		{
-			for (int k = 0; k < _matrixSize.x; k++)
+			for (int i = 0; i < 2; i++)
 			{
 				id = _tilesIds_matrix[i][j][k];
 				if (id != -1)
@@ -216,27 +226,15 @@ void Level::initializeEntities()
 					_all_EntList.includeEntity(pTile);
 				}
 			}
-		}
-	}
 
-	for (int j = 0; j < _matrixSize.y; j++)
-	{
-		for (int k = 0; k < _matrixSize.x; k++)
-		{
 			id = _tilesIds_matrix[CONCRETE][j][k];
 			if (id != -1)
 			{
 				pTile = new Tile(getRealPosition({ k, j }), _tilesIds_matrix[CONCRETE][j][k]);
 				_all_EntList.includeEntity(pTile);
-				_concreteTile_list.includeEntity(pTile);
+				_collisiveTile_list.includeTile(pTile);
 			}
-		}
-	}
 
-	for (int j = 0; j < _matrixSize.y; j++)
-	{
-		for (int k = 0; k < _matrixSize.x; k++)
-		{
 			id = _tilesIds_matrix[POSITIONS][j][k];
 			if (id != -1)
 			{
@@ -244,8 +242,6 @@ void Level::initializeEntities()
 				{
 				case PLAYER_SP:
 					_playerSpawn = getRealPosition({ k, j });
-					setPlayersSpawnPoint();
-					movePlayersToSpawn();
 					break;
 
 				case ENEMY_SP:
@@ -270,8 +266,13 @@ void Level::initializeEntities()
 	}
 
 	srand(static_cast<unsigned int>(time(NULL)));
-	_orc = new Orc(_enemiesSpawns[rand() % _enemiesSpawns.size()]);
-	_all_EntList.includeEntity(_orc);
+	for (int i = 0; i < _nTotalEnemies; i++)
+	{
+		Enemy* pEnemy = static_cast<Enemy*>(new Orc(_enemiesSpawns[rand() % _enemiesSpawns.size()]));
+		_enemy_list.includeEnemy(static_cast<Enemy*>(pEnemy));
+		_all_EntList.includeEntity(static_cast<Entity*>(pEnemy));
+	}
+
 	_all_EntList.includeEntity(_pPlayer1);
 	if (_pPlayer2)
 		_all_EntList.includeEntity(_pPlayer2);
@@ -297,35 +298,35 @@ void Level::setPlayersSpawnPoint()
 		_pPlayer2->setCurrSpawnPoint(_playerSpawn);
 }
 
+void Level::start()
+{
+	setPlayersSpawnPoint();
+	movePlayersToSpawn();
+
+	_pGraphMng->setViewCenter(_viewCenter);
+}
+
 void Level::execute(const float deltaTime)
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
 	executePlayers(deltaTime);
-
-	_orc->execute(deltaTime);
-
-	for (Entity* pEnt : _concreteTile_list)
-	{
-		pEnt->execute(deltaTime);
-	}
+	_enemy_list.execute_enemies(deltaTime);
 
 	manage_collisions();
+
+	updatePlayersDrawables();
+	_enemy_list.update_drawables();
 }
 
 void Level::draw()
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
-	//_pGraphMng->draw(*_background);
-
-	
 	for (Entity* pEnt : _all_EntList)
 	{
 		pEnt->draw();
 	}
-
-	//drawPlayers();
 }
 
 void Level::executePlayers(const float deltaTime)
@@ -335,11 +336,18 @@ void Level::executePlayers(const float deltaTime)
 	_pPlayer1->execute(deltaTime);
 	if (_pPlayer2)
 		_pPlayer2->execute(deltaTime);
-
+	
 	std::cout << "Player1 hp: " << _pPlayer1->getHp();
 	if (_pPlayer2)
 		std::cout << " | " << "Player2 hp: " << _pPlayer2->getHp();
 	std::cout << std::endl;
+}
+
+void Level::updatePlayersDrawables()
+{
+	_pPlayer1->updateAnime_n_Collider();
+	if (_pPlayer2)
+		_pPlayer2->updateAnime_n_Collider();
 }
 
 void Level::drawPlayers() const
@@ -382,52 +390,13 @@ void Level::manage_collisions()
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
-	sf::Vector2f collisionDirection;
-	sf::Vector2f intersection;
-	Collision_Manager* collMng = Collision_Manager::getInstance();
+	Collision_Manager* cMng = cMng::getInstance();
 
-	for (Entity* pEnt : _concreteTile_list)
-		//Check collision with all blocks
-	{
-		if (collMng->check_collision_n_push(static_cast<Entity*>(_pPlayer1), pEnt, &intersection, &collisionDirection, 0.0f))
-			_pPlayer1->onCollision(collisionDirection);
-		if (_pPlayer2)
-		{
-			if (collMng->check_collision_n_push(static_cast<Entity*>(_pPlayer2), pEnt, &intersection, &collisionDirection, 0.0f))
-				_pPlayer2->onCollision(collisionDirection);
-		}
-		if (collMng->check_collision_n_push(static_cast<Entity*>(_orc), pEnt, &intersection, &collisionDirection, 0.0f))
-			_orc->onCollision(collisionDirection);
-	}
+	cMng->collide(_pPlayer1, &_collisiveTile_list);
+	cMng->collide(_pPlayer2, &_collisiveTile_list);
 
-	if (_pPlayer1->isVulnerable() && (collMng->check_collision(static_cast<Entity*>(_pPlayer1), static_cast<Entity*>(_orc), &intersection, &collisionDirection)))
-	{ //Check collision between the ent1 and the orc
-		if (_pPlayer1->isDefendingInFront(collisionDirection))
-		{
-			collisionDirection = -collisionDirection;
-			collMng->push_entities(static_cast<Entity*>(_orc), static_cast<Entity*>(_pPlayer1), &intersection, &collisionDirection, 0.0f);
-			_orc->onCollision(collisionDirection);
-		}
-		else
-		{
-			_pPlayer1->takeDmg(_orc->getCollDmg());
-		}
-	}
+	cMng->collide(&_enemy_list, &_collisiveTile_list);
 
-	if (_pPlayer2)
-	{
-		if (_pPlayer2->isVulnerable() && (collMng->check_collision(static_cast<Entity*>(_pPlayer2), static_cast<Entity*>(_orc), &intersection, &collisionDirection)))
-		{ //Check collision between the ent1 and the orc
-			if (_pPlayer2->isDefendingInFront(collisionDirection))
-			{
-				collisionDirection = -collisionDirection;
-				collMng->push_entities(static_cast<Entity*>(_orc), static_cast<Entity*>(_pPlayer2), &intersection, &collisionDirection, 0.0f);
-				_orc->onCollision(collisionDirection);
-			}
-			else
-			{
-				_pPlayer2->takeDmg(_orc->getCollDmg());
-			}
-		}
-	}
+	cMng->collide(_pPlayer1, &_enemy_list);
+	cMng->collide(_pPlayer2, &_enemy_list);
 }

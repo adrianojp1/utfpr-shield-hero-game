@@ -8,7 +8,7 @@ CEnt_List::CEnt_List()
 
 CEnt_List::~CEnt_List()
 {
-	clearList();
+	clear();
 }
 
 CEnt_List::iterator CEnt_List::begin()
@@ -21,7 +21,7 @@ CEnt_List::iterator CEnt_List::end()
 	return _CEnt_List.end();
 }
 
-void CEnt_List::clearList()
+void CEnt_List::clear()
 {
 	_CEnt_List.clear();
 }
@@ -36,10 +36,18 @@ void CEnt_List::removeEntity(Entity* pe)
 	_CEnt_List.remove(pe);
 }
 
-void CEnt_List::drawList()
+void CEnt_List::execute_entities(const float deltaTime)
 {
-	for (List<Entity*>::iterator it = _CEnt_List.begin(); it != _CEnt_List.end(); it++)
+	for (Entity* pEnt : *this)
 	{
-		it->draw();
+		pEnt->execute(deltaTime);
+	}
+}
+
+void CEnt_List::draw_entities()
+{
+	for (Entity* pEnt : *this)
+	{
+		pEnt->draw();
 	}
 }

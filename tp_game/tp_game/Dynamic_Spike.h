@@ -2,38 +2,31 @@
 
 //======================================================================================================================================//
 // === Classes Headers === //
-#include "Enemy.h"
+#include "Static_Spike.h" //Base class
 
 //======================================================================================================================================//
-// === Orc Class === //
-class Orc : public Enemy
+// === Dynamic_Spike Class === //
+
+class Dynamic_Spike : public Static_Spike
 {
 private:
 
 public:
 	//================================================================//
 	// ========== Constructors ========== //
-	Orc(const sf::Vector2f initPosition);
-	Orc();
+	Dynamic_Spike(const sf::Vector2f initPosition, const int id);
+	Dynamic_Spike();
+
 	// ========== Destructors ========== //
-	~Orc();
+	~Dynamic_Spike();
 
 	//================================================================//
 	// ========== Initializers ========== //
-	void initialize_animator(); //Initializes all the animators
+	virtual void initialize_animator();
 
-	//================================================================//
-	// ========== Motion ========== //
-	void attack();
-	void turnArround();
-	void colliding_onLeft();
-	void colliding_onRight();
-
-	//================================================================//
-	// ========== State checkers ========== //
-	//bool isAttacking() const;
 private:
 	// ========== execute submethods ========== //
 	void updateAction(const float deltaTime);
+	//void updatePosition(const float deltaTime);
 };
 
