@@ -73,6 +73,18 @@
       <Filter>Abstract Entities\Stages</Filter>
     </ClCompile>
     <ClCompile Include="Enemy_List.cpp" />
+    <ClCompile Include="Obstacle.cpp">
+      <Filter>Obstacles</Filter>
+    </ClCompile>
+    <ClCompile Include="Weak_Block.cpp">
+      <Filter>Obstacles</Filter>
+    </ClCompile>
+    <ClCompile Include="Static_Spike.cpp">
+      <Filter>Obstacles</Filter>
+    </ClCompile>
+    <ClCompile Include="Dynamic_Spike.cpp">
+      <Filter>Obstacles</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Character.h">
@@ -147,6 +159,18 @@
       <Filter>Abstract Entities\Stages</Filter>
     </ClInclude>
     <ClInclude Include="Enemy_List.h" />
+    <ClInclude Include="Obstacle.h">
+      <Filter>Obstacles</Filter>
+    </ClInclude>
+    <ClInclude Include="Weak_Block.h">
+      <Filter>Obstacles</Filter>
+    </ClInclude>
+    <ClInclude Include="Static_Spike.h">
+      <Filter>Obstacles</Filter>
+    </ClInclude>
+    <ClInclude Include="Dynamic_Spike.h">
+      <Filter>Obstacles</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Characters">

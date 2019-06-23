@@ -2,40 +2,41 @@
 
 //======================================================================================================================================//
 // === Classes Headers === //
-#include "Entity.h" //Base class
+#include "Tile.h" //Base class
 
 //======================================================================================================================================//
-// === Tile Class === //
-class Tile : public Entity
+// === Derived classes from this === //
+// Weak_Block
+// Static_Spike
+
+//======================================================================================================================================//
+// === Obstacle Class === //
+class Obstacle : public Tile
 {
 protected:
-	// ========= Motion Members ========= //
-	sf::RectangleShape* _collider;
+	Timer _cd_action; //Weak_Block & Dynamic Spike
 
-	static sf::Vector2f _realSize;
+
 public:
 	//================================================================//
 	// ========== Constructors ========== //
-	Tile(const sf::Vector2f initPosition, const int id = 2);
-	Tile();
+	Obstacle(const sf::Vector2f initPosition, const int id);
+	Obstacle();
+
 	// ========== Destructors ========== //
-	virtual ~Tile();
+	virtual ~Obstacle();
 
 	//================================================================//
 	// ========== Initializers ========== //
-	void initialize_animator();
-
-	sf::Vector2i getTileRectPos(int id);
+	virtual void initialize_animator() = 0;
 
 	//================================================================//
 	// ========== Loop methods ========== //
 	virtual void execute(const float deltaTime);
-	//virtual void draw();
 
-	//_realSize
-	static void setRealSize(const sf::Vector2f realSize);
-	static const sf::Vector2f getRealSize();
 	//================================================================//
-	//======================== Static Consts =========================//
-	static const sf::Vector2f OriginalSize;
+	// ========== Action ========== //
+	virtual void updateAction(const float deltaTime) = 0;
+	//virtual void updatePosition(const float deltaTime); //Dynamic Spike
+
 };
