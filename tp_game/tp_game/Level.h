@@ -2,11 +2,16 @@
 //======================================================================================================================================//
 // === Classes Headers === //
 #include "Abstract_Entity.h" //base class
-#include "CEnt_List.h"
-#include "Enemy_List.h"
+
+//Entities
 #include "Player.h"
 #include "Orc.h"
 #include "Tile.h"
+
+//Lists
+#include "CEnt_List.h"
+#include "Enemy_List.h"
+#include "Tile_List.h"
 
 //======================================================================================================================================//
 // === Stage Class === //
@@ -14,13 +19,14 @@ class Level : public Abstract_Entity
 {
 private:
 	//Temp
-	CEnt_List _concreteTile_list;
+	CEnt_List _cTile_list;
 	Orc* _orc;
 	//
 	
 	//Lists
 	CEnt_List _all_EntList;
-	Enemy_List _enemies_list;
+	Enemy_List _enemy_list;
+	Tile_List _collisiveTile_list;
 	//
 	
 	//Totals

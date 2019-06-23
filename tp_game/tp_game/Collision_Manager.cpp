@@ -9,6 +9,13 @@
 //======================================================================================================================================//
 // === Classes headers for definition === //
 #include "Entity.h"
+#include "Player.h"
+#include "Enemy.h"
+#include "Obstacle.h"
+#include "Tile.h"
+
+#include "Enemy_List.h"
+#include "Tile_List.h"
 
 //======================================================================================================================================//
 // === Static initializations === //
@@ -29,6 +36,109 @@ Collision_Manager* Collision_Manager::getInstance()
 	if (!_instance)
 		_instance = new Collision_Manager();
 	return _instance;
+}
+
+void Collision_Manager::collide(Player* pPlayer, Tile* pTile)
+{
+	if (pPlayer && pTile)
+	{
+		sf::Vector2f intersection;
+		sf::Vector2f collisionDirection;
+
+		if(check_collision_n_push(static_cast<Entity*>(pPlayer), pTile, &intersection, &collisionDirection, 0.0f))
+				pPlayer->onCollision(collisionDirection);
+	}
+}
+
+void Collision_Manager::collide(Player* pPlayer, Enemy* pEnemy)
+{
+	if (pPlayer && pEnemy && pPlayer->isVulnerable())
+	{
+		sf::Vector2f intersection;
+		sf::Vector2f collisionDirection;
+
+		if (check_collision(static_cast<Entity*>(pPlayer), static_cast<Entity*>(pEnemy), &intersection, &collisionDirection))
+		{
+			if (pPlayer->isDefendingInFront(collisionDirection))
+			{
+				collisionDirection = -collisionDirection;
+				push_entities(static_cast<Entity*>(pEnemy), static_cast<Entity*>(pPlayer), &intersection, &collisionDirection, 0.0f);
+				pEnemy->onCollision(collisionDirection);
+			}
+			else
+			{
+				pPlayer->takeDmg(pEnemy->getCollDmg());
+			}
+		}
+	}
+}
+
+void Collision_Manager::collide(Player* pPlayer, Obstacle* pObstacle)
+{
+
+}
+
+void Collision_Manager::collide(Enemy* pEnemy, Tile* pTile)
+{
+	if (pEnemy && pTile)
+	{
+		sf::Vector2f intersection;
+		sf::Vector2f collisionDirection;
+
+		if (!pEnemy->getFloor_foward() && intersects(pTile, pEnemy->getFrontEdge()))
+			pEnemy->setFloor_foward(true);
+		if (check_collision(static_cast<Entity*>(pEnemy), pTile, &intersection, &collisionDirection))
+		{
+			push_entities(static_cast<Entity*>(pEnemy), pTile, &intersection, &collisionDirection, 0.0f);
+			pEnemy->onCollision(collisionDirection);
+		}
+	}
+}
+
+void Collision_Manager::collide(Enemy* pEnemy, Obstacle* pObstacle)
+{
+
+}
+
+void Collision_Manager::collide(Obstacle* pObstacle, Tile* pTile)
+{
+
+}
+
+void Collision_Manager::collide(Player* pPlayer, Tile_List* t_list)
+{
+	if (pPlayer && t_list)
+	{
+		for (Tile* pT : *t_list)
+		{
+			collide(pPlayer, pT);
+		}
+	}
+}
+
+void Collision_Manager::collide(Player* pPlayer, Enemy_List* e_list)
+{
+	if (pPlayer && e_list)
+	{
+		for (Enemy* pEne : *e_list)
+		{
+			collide(pPlayer, pEne);
+		}
+	}
+}
+
+void Collision_Manager::collide(Enemy_List* e_list, Tile_List* t_list)
+{
+	if (t_list && e_list)
+	{
+		for (Tile* pT : *t_list)
+		{
+			for (Enemy* pE : *e_list)
+			{
+				collide(pE, pT);
+			}
+		}
+	}
 }
 
 bool Collision_Manager::check_collision(Entity* ent1, Entity* ent2)

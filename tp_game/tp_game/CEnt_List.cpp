@@ -36,6 +36,14 @@ void CEnt_List::removeEntity(Entity* pe)
 	_CEnt_List.remove(pe);
 }
 
+void CEnt_List::execute_entities(const float deltaTime)
+{
+	for (Entity* pEnt : *this)
+	{
+		pEnt->execute(deltaTime);
+	}
+}
+
 void CEnt_List::draw_entities()
 {
 	for (Entity* pEnt : *this)

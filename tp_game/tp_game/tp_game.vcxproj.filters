@@ -17,7 +17,6 @@
     <ClCompile Include="Abstract_Entity.cpp">
       <Filter>Abstract Entities</Filter>
     </ClCompile>
-    <ClCompile Include="CEnt_List.cpp" />
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="Main_Menu.cpp">
       <Filter>Abstract Entities\Menus</Filter>
@@ -72,7 +71,6 @@
     <ClCompile Include="Collision_Manager.cpp">
       <Filter>Abstract Entities\Stages</Filter>
     </ClCompile>
-    <ClCompile Include="Enemy_List.cpp" />
     <ClCompile Include="Obstacle.cpp">
       <Filter>Obstacles</Filter>
     </ClCompile>
@@ -84,6 +82,15 @@
     </ClCompile>
     <ClCompile Include="Dynamic_Spike.cpp">
       <Filter>Obstacles</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy_List.cpp">
+      <Filter>Lists</Filter>
+    </ClCompile>
+    <ClCompile Include="CEnt_List.cpp">
+      <Filter>Lists</Filter>
+    </ClCompile>
+    <ClCompile Include="Tile_List.cpp">
+      <Filter>Lists</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -104,7 +111,6 @@
       <Filter>Abstract Entities</Filter>
     </ClInclude>
     <ClInclude Include="List.h" />
-    <ClInclude Include="CEnt_List.h" />
     <ClInclude Include="Main_Menu.h">
       <Filter>Abstract Entities\Menus</Filter>
     </ClInclude>
@@ -158,7 +164,6 @@
     <ClInclude Include="Collision_Manager.h">
       <Filter>Abstract Entities\Stages</Filter>
     </ClInclude>
-    <ClInclude Include="Enemy_List.h" />
     <ClInclude Include="Obstacle.h">
       <Filter>Obstacles</Filter>
     </ClInclude>
@@ -170,6 +175,15 @@
     </ClInclude>
     <ClInclude Include="Dynamic_Spike.h">
       <Filter>Obstacles</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy_List.h">
+      <Filter>Lists</Filter>
+    </ClInclude>
+    <ClInclude Include="CEnt_List.h">
+      <Filter>Lists</Filter>
+    </ClInclude>
+    <ClInclude Include="Tile_List.h">
+      <Filter>Lists</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

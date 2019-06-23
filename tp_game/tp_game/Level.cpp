@@ -51,15 +51,19 @@ Level::~Level()
 		delete _tilesIds_matrix;
 	}
 
-	if (_orc)
-		delete _orc;
+	for (Enemy* pEne : _enemy_list)
+	{
+		if (pEne)
+			delete pEne;
+	}
+	_enemy_list.clear();
 
-	for (Entity* pEnt : _concreteTile_list)
+	for (Entity* pEnt : _cTile_list)
 	{
 		if (pEnt)
 			delete pEnt;
 	}
-	_concreteTile_list.clear();
+	_cTile_list.clear();
 }
 
 void Level::serializeTiles(const std::string level_filePath)
@@ -223,7 +227,7 @@ void Level::initializeEntities()
 			{
 				pTile = new Tile(getRealPosition({ k, j }), _tilesIds_matrix[CONCRETE][j][k]);
 				_all_EntList.includeEntity(pTile);
-				_concreteTile_list.includeEntity(pTile);
+				_collisiveTile_list.includeTile(pTile);
 			}
 
 			id = _tilesIds_matrix[POSITIONS][j][k];
@@ -260,7 +264,7 @@ void Level::initializeEntities()
 
 	srand(static_cast<unsigned int>(time(NULL)));
 	_orc = new Orc(_enemiesSpawns[rand() % _enemiesSpawns.size()]);
-	_enemies_list.includeEnemy(static_cast<Enemy*>(_orc));
+	_enemy_list.includeEnemy(static_cast<Enemy*>(_orc));
 	_all_EntList.includeEntity(static_cast<Entity*>(_orc));
 
 	_all_EntList.includeEntity(_pPlayer1);
@@ -293,16 +297,7 @@ void Level::execute(const float deltaTime)
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 	
 	executePlayers(deltaTime);
-
-	for (Enemy* pEne : _enemies_list)
-	{
-		pEne->execute(deltaTime);
-	}
-
-	for (Entity* pEnt : _concreteTile_list)
-	{
-		pEnt->execute(deltaTime);
-	}
+	_enemy_list.execute_enemies(deltaTime);
 
 	manage_collisions();
 }
@@ -371,30 +366,13 @@ void Level::manage_collisions()
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
-	sf::Vector2f collisionDirection;
-	sf::Vector2f intersection;
-	Collision_Manager* collMng = Collision_Manager::getInstance();
+	Collision_Manager* cMng = cMng::getInstance();
 
-	for (Entity* pTile : _concreteTile_list)
-		//Check collision with all blocks
-	{
-		if (collMng->check_collision_n_push(static_cast<Entity*>(_pPlayer1), pTile, &intersection, &collisionDirection, 0.0f))
-			_pPlayer1->onCollision(collisionDirection);
-		if (_pPlayer2)
-		{
-			if (collMng->check_collision_n_push(static_cast<Entity*>(_pPlayer2), pTile, &intersection, &collisionDirection, 0.0f))
-				_pPlayer2->onCollision(collisionDirection);
-		}
+	cMng->collide(_pPlayer1, &_collisiveTile_list);
+	cMng->collide(_pPlayer2, &_collisiveTile_list);
 
-		if (collMng->intersects(pTile, _orc->getFrontEdge()))
-			_orc->setFloor_foward(true);
-		if (collMng->check_collision(static_cast<Entity*>(_orc), pTile, &intersection, &collisionDirection))
-		{
-			collMng->push_entities(static_cast<Entity*>(_orc), pTile, &intersection, &collisionDirection, 0.0f);
-			_orc->onCollision(collisionDirection);
-		}
-	}
+	cMng->collide(&_enemy_list, &_collisiveTile_list);
 
-	_enemies_list.mngCollision_player(_pPlayer1);
-	_enemies_list.mngCollision_player(_pPlayer2);
+	cMng->collide(_pPlayer1, &_enemy_list);
+	cMng->collide(_pPlayer2, &_enemy_list);
 }

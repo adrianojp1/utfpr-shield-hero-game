@@ -4,12 +4,7 @@
 #include "Enemy.h"
 
 //======================================================================================================================================//
-// === Derived classes from this === //
-// Character
-// Tile
-
-//======================================================================================================================================//
-// === Entity Class === //
+// === Enemy_List Class === //
 class Enemy_List
 {
 private:
@@ -29,8 +24,7 @@ public:
 	void clear();
 	void includeEnemy(Enemy* pe);
 	void removeEnemy(Enemy* pe);
+	void execute_enemies(const float deltaTime);
 	void draw_enemies();
-
-	void mngCollision_player(Player* pPlayer);
 };
 

@@ -21,6 +21,7 @@ public:
 	void clear();
 	void includeEntity(Entity* pe);
 	void removeEntity(Entity* pe);
+	void execute_entities(const float deltaTime);
 	void draw_entities();
 
 	//TODO

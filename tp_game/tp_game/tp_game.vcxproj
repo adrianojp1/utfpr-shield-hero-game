@@ -180,6 +180,7 @@
     <ClCompile Include="Static_Spike.cpp" />
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="Tile.cpp" />
+    <ClCompile Include="Tile_List.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="Weak_Block.cpp" />
     <ClCompile Include="WhiteSkeleton.cpp" />
@@ -214,6 +215,7 @@
     <ClInclude Include="Static_Spike.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Tile.h" />
+    <ClInclude Include="Tile_List.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="Weak_Block.h" />
     <ClInclude Include="WhiteSkeleton.h" />

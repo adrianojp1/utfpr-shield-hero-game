@@ -4,60 +4,48 @@
 
 //======================================================================================================================================//
 // === This Class Header === //
-#include "Enemy_List.h"
+#include "Tile_List.h"
 
 //======================================================================================================================================//
 // === Classes headers for definition === //
 #include "Player.h"
+#include "Enemy.h"
 
 //======================================================================================================================================//
-// === Enemy_List methods === //
-Enemy_List::Enemy_List()
+// === Tile_List methods === //
+Tile_List::Tile_List()
 {
 }
 
-Enemy_List::~Enemy_List()
+Tile_List::~Tile_List()
 {
 	clear();
 }
 
-Enemy_List::iterator Enemy_List::begin()
+std::set<Tile*>::iterator Tile_List::begin()
 {
-	return enemy_list.begin();
+	return _tile_set.begin();
 }
 
-Enemy_List::iterator Enemy_List::end()
+std::set<Tile*>::iterator Tile_List::end()
 {
-	return enemy_list.end();
+	return _tile_set.end();
 }
 
-void Enemy_List::clear()
+void Tile_List::clear()
 {
-	enemy_list.clear();
+	_tile_set.clear();
 }
 
-void Enemy_List::includeEnemy(Enemy* pe)
+void Tile_List::includeTile(Tile* pT)
 {
-	enemy_list.push_back(pe);
+	_tile_set.insert(pT);
 }
 
-void Enemy_List::removeEnemy(Enemy* pe)
+void Tile_List::draw_tiles()
 {
-	enemy_list.remove(pe);
-}
-
-void Enemy_List::execute_enemies(const float deltaTime)
-{
-	for (Enemy* pEne : *this)
+	for (Tile* pT : *this)
 	{
-		pEne->execute(deltaTime);
-	}
-}
-
-void Enemy_List::draw_enemies()
-{
-	for (Enemy* pEn : *this)
-	{
-		pEn->draw();
+		pT->draw();
 	}
 }
