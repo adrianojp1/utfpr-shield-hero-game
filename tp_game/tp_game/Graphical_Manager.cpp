@@ -39,7 +39,7 @@ sf::Texture *Graphical_Manager::tileset_texture = NULL;
 const std::string Graphical_Manager::player_idle_Sp_Fp = textures_dir + "shield-hero/shield_hero-idle.png";
 const std::string Graphical_Manager::player_walk_Sp_Fp = textures_dir + "shield-hero/shield_hero-walk.png";
 const std::string Graphical_Manager::player_def1_Sp_Fp = textures_dir + "shield-hero/shield_hero-def1.png";
-const std::string Graphical_Manager::player_def2_Sp_Fp = textures_dir + "shield-hero/shield_hero-def2-2.png";
+const std::string Graphical_Manager::player_def2_Sp_Fp = textures_dir + "shield-hero/shield_hero-def2.png";
 const std::string Graphical_Manager::player_die_Sp_Fp = textures_dir + "shield-hero/shield_hero-die.png";
 
 sf::Texture *Graphical_Manager::player_idle_texture = NULL;

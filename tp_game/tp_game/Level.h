@@ -5,14 +5,21 @@
 
 //Entities
 #include "Player.h"
-#include "Orc.h"
 #include "Tile.h"
+//Enemies
+#include "Orc.h"
+#include "BlackSkeleton.h"
+#include "WhiteSkeleton.h"
+//Obstacles
+#include "Dynamic_Spike.h"
+#include "Weak_Block.h"
+//
 
 //Lists
 #include "CEnt_List.h"
 #include "Enemy_List.h"
 #include "Tile_List.h"
-
+//
 //======================================================================================================================================//
 // === Stage Class === //
 class Level : public Abstract_Entity

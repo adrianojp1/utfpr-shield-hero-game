@@ -38,8 +38,8 @@ void Projectile::initialize_animator()
 
 	_animator = new Animator(static_cast<Entity*>(this));
 
-	*_animator << new Animation(gMng::white_skeleton_proj_texture, 2, 0.1f); 
-	*_animator << new Animation(gMng::black_skeleton_proj_texture, 2, 0.1f);
+	*_animator << new Animation(gMng::white_skeleton_proj_texture, 2, 0.1f, 2);
+	*_animator << new Animation(gMng::black_skeleton_proj_texture, 2, 0.1f, 2);
 }
 
 void Projectile::execute(const float deltaTime)

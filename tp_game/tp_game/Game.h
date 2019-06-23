@@ -82,6 +82,7 @@ public:
 	void run_stage();
 	void stop_runningStage();
 
+	void resetPlayers();
 	void set_nPlayers(int nP);
 	void set_currentStage(int stg_id);
 	Stage* get_currentStage();

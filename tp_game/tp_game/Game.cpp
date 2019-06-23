@@ -102,11 +102,6 @@ void Game::initialize_stage1()
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
-	if (_pPlayer1)
-		_pPlayer1->reset();
-	if (_pPlayer2)
-		_pPlayer2->reset();
-
 	if (_stage1)
 	{
 		delete _stage1;
@@ -125,6 +120,14 @@ void Game::initialize_stage1()
 	}
 
 	_stage1 = new Stage(2, _nPlayers);
+}
+
+void Game::resetPlayers()
+{
+	if (_pPlayer1)
+		_pPlayer1->reset();
+	if (_pPlayer2)
+		_pPlayer2->reset();
 }
 
 void Game::set_nPlayers(int nP)

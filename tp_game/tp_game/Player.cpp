@@ -65,11 +65,11 @@ void Player::initialize_animator()
 
 	_animator = new Animator(static_cast<Entity*>(this));
 
-	*_animator << new Animation(gMng::player_idle_texture, 1, 0.0f);
-	*_animator << new Animation(gMng::player_walk_texture, 4, 0.250f);
-	*_animator << new Animation(gMng::player_die_texture, 3, 0.500f);
-	*_animator << new Animation(gMng::player_def1_texture, 1, 0.0f);
-	*_animator << new Animation(gMng::player_def2_texture, 1, 0.0f);
+	*_animator << new Animation(gMng::player_idle_texture, 1, 0.0f, 2);
+	*_animator << new Animation(gMng::player_walk_texture, 4, 0.250f, 2);
+	*_animator << new Animation(gMng::player_die_texture, 3, 0.500f, 2);
+	*_animator << new Animation(gMng::player_def1_texture, 1, 0.0f, 2);
+	*_animator << new Animation(gMng::player_def2_texture, 1, 0.0f, 2);
 } // end initializeAnimators
 
 void Player::updateAction(const float deltaTime)
@@ -283,7 +283,10 @@ void Player::setPlayer2_configs()
 void Player::reset()
 {
 	resetHp();
+	_velocity = { 0.0f, 0.0f };
+	_facingRight = true;
 	_points = 0;
+	this->setPosition(_curr_spawnPoint);
 }
 
 bool Player::isDefending() const

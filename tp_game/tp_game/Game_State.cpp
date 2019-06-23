@@ -116,9 +116,12 @@ void On_NewGameMenu::execute(const float deltaTime)
 
 	else if (Game::getInstance()->get_main_menu()->isOpen())
 		changeState(On_MainMenu::getInstance());
-	else if (Game::getInstance()->isRunning_stage())
+	else
 	{
-		Game::getInstance()->get_currentStage()->start();
+		Game::getInstance()->initialize_stage1();
+		Game::getInstance()->set_currentStage(1);
+		Game::getInstance()->run_stage();
+		Game::getInstance()->resetPlayers();
 		changeState(RunningStage::getInstance());
 	}
 }

@@ -336,11 +336,11 @@ void Level::executePlayers(const float deltaTime)
 	_pPlayer1->execute(deltaTime);
 	if (_pPlayer2)
 		_pPlayer2->execute(deltaTime);
-	/*
+	
 	std::cout << "Player1 hp: " << _pPlayer1->getHp();
 	if (_pPlayer2)
 		std::cout << " | " << "Player2 hp: " << _pPlayer2->getHp();
-	std::cout << std::endl;*/
+	std::cout << std::endl;
 }
 
 void Level::updatePlayersDrawables()
