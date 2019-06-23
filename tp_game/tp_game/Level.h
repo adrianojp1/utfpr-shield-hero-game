@@ -75,6 +75,7 @@ public:
 
 	// ========== Players methods ========== //
 	virtual void executePlayers(const float deltaTime);
+	virtual void updatePlayersDrawables();
 	virtual void drawPlayers() const;
 	virtual void movePlayersToSpawn();
 

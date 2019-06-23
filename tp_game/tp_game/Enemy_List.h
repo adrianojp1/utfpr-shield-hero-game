@@ -25,6 +25,7 @@ public:
 	void includeEnemy(Enemy* pe);
 	void removeEnemy(Enemy* pe);
 	void execute_enemies(const float deltaTime);
+	void update_drawables();
 	void draw_enemies();
 };
 

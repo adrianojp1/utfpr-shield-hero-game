@@ -119,7 +119,6 @@ void Character::execute(const float deltaTime)
 		applyGforce(deltaTime);
 		updatePosition(deltaTime);
 	
-
 		switchAnime_n_Collider();
 
 		if (!isVulnerable())
@@ -130,8 +129,6 @@ void Character::execute(const float deltaTime)
 		{
 			apply_default_effect();
 		}
-
-		updateAnime_n_Collider(deltaTime);
 
 		resetColls();
 	}
@@ -260,7 +257,7 @@ void Character::decreaseTimers()
 	_invulnerability.decreaseTime();
 }
 
-void Character::updateAnime_n_Collider(const float deltaTime)
+void Character::updateAnime_n_Collider()
 {
 	_animator->updateAnimation(_facingRight);
 	_current_collider->setPosition(_position);

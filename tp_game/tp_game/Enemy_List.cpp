@@ -54,6 +54,14 @@ void Enemy_List::execute_enemies(const float deltaTime)
 	}
 }
 
+void Enemy_List::update_drawables()
+{
+	for (Enemy* pE : *this)
+	{
+		pE->updateAnime_n_Collider();
+	}
+}
+
 void Enemy_List::draw_enemies()
 {
 	for (Enemy* pEn : *this)

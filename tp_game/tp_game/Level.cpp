@@ -309,11 +309,14 @@ void Level::start()
 void Level::execute(const float deltaTime)
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
-	
+
 	executePlayers(deltaTime);
 	_enemy_list.execute_enemies(deltaTime);
 
 	manage_collisions();
+
+	updatePlayersDrawables();
+	_enemy_list.update_drawables();
 }
 
 void Level::draw()
@@ -338,6 +341,13 @@ void Level::executePlayers(const float deltaTime)
 	if (_pPlayer2)
 		std::cout << " | " << "Player2 hp: " << _pPlayer2->getHp();
 	std::cout << std::endl;*/
+}
+
+void Level::updatePlayersDrawables()
+{
+	_pPlayer1->updateAnime_n_Collider();
+	if (_pPlayer2)
+		_pPlayer2->updateAnime_n_Collider();
 }
 
 void Level::drawPlayers() const

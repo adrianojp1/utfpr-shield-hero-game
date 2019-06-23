@@ -78,7 +78,7 @@ public:
 	virtual void resetHp();
 	virtual void decreaseTimers();
 
-	virtual void updateAnime_n_Collider(const float deltaTime);
+	virtual void updateAnime_n_Collider();
 
 	//================================================================//
 	// ========== Sets & Gets ========== //
