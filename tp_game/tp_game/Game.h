@@ -22,8 +22,8 @@ private:
 	Pause_Menu* _pause_menu;
 
 	int _nPlayers;
-	Player* _player1;
-	Player* _player2;
+	Player* _pPlayer1;
+	Player* _pPlayer2;
 
 	Stage* _stage1;
 	//Stage1* _stage2;

@@ -91,6 +91,8 @@ void Character::initialize_AllColliders()
 	initialize_Collider(_walk_collider, (*_animator)[WALK]->getCanvasSize());
 	initialize_Collider(_death_collider, (*_animator)[DEATH]->getCanvasSize());
 	initialize_Collider(_combat_collider, (*_animator)[COMBAT]->getCanvasSize());
+
+	_current_collider = _idle_collider;
 }
 
 void Character::execute(const float deltaTime)

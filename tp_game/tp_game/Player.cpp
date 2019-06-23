@@ -280,6 +280,12 @@ void Player::setPlayer2_configs()
 	this->setRightKey(sf::Keyboard::L);
 }
 
+void Player::reset()
+{
+	resetHp();
+	_points = 0;
+}
+
 bool Player::isDefending() const
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");

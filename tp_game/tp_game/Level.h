@@ -18,11 +18,8 @@
 class Level : public Abstract_Entity
 {
 private:
-	//Temp
-	CEnt_List _cTile_list;
-	Orc* _orc;
-	//
-	
+	sf::Vector2f _viewCenter;
+
 	//Lists
 	CEnt_List _all_EntList;
 	Enemy_List _enemy_list;
@@ -38,6 +35,8 @@ private:
 	sf::Vector2i _matrixSize;
 	int*** _tilesIds_matrix;
 	//
+
+	sf::Vector2f _realSize;
 
 	//Positions
 	sf::Vector2f _playerSpawn;
@@ -67,6 +66,8 @@ public:
 
 	virtual void initializeEntities();
 	virtual void setPlayersSpawnPoint();
+	virtual void start();
+	//virtual void finish();
 
 	// ========== Loop methods ========== //
 	virtual void execute(const float deltaTime);

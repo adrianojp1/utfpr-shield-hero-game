@@ -83,7 +83,13 @@ void Orc::updateAction(const float deltaTime)
 	
 	_state = WALK;
 
-	if (!_floor_foward)
+	srand(static_cast<unsigned int>(time(NULL)));
+	int chanceToTurn = 5;//%
+	bool decidedToTurn = false;
+	if (rand() % 101 < chanceToTurn + 1)
+		bool decidedToTurn = true;
+
+	if (!_floor_foward || decidedToTurn)
 	{
 		turnArround();
 	}

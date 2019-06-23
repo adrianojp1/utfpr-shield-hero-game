@@ -172,6 +172,7 @@ void Graphical_Manager::setViewCenter(sf::Vector2f center)
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
 	pView->setCenter(center);
+	this->setView(*pView);
 }
 
 void Graphical_Manager::moveView(sf::Vector2f offset)
@@ -179,6 +180,7 @@ void Graphical_Manager::moveView(sf::Vector2f offset)
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
 	pView->move(offset);
+	this->setView(*pView);
 }
 
 void Graphical_Manager::printConsole_log(std::string log)

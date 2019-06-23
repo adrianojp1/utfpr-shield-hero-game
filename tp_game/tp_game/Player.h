@@ -55,6 +55,7 @@ public:
 	//configs
 	void setPlayer1_configs();
 	void setPlayer2_configs();
+	void reset();
 	//================================================================//
 	// ========== State checkers ========== //
 	bool isDefending() const;

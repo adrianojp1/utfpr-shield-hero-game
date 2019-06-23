@@ -26,6 +26,13 @@ Abstract_Entity::Abstract_Entity(const sf::Vector2f initPosition, const bool act
 	_id = id;
 }
 
+Abstract_Entity::Abstract_Entity(const int id, const sf::Vector2f initPosition, const bool active)
+{
+	_position = initPosition;
+	_active = active;
+	_id = id;
+}
+
 Abstract_Entity::Abstract_Entity()
 {
 	_position = { 0.0f, 0.0f };

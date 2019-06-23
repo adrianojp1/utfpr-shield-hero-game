@@ -11,7 +11,7 @@
 
 //======================================================================================================================================//
 // === Character Class === //
-class Character : public Entity
+typedef class Character : public Entity
 {
 protected:
 	// ========= Motion Members ========= //
@@ -109,6 +109,4 @@ protected:
 		DEATH,
 		COMBAT
 	};
-};
-
-typedef Character Charc;
+} Charc;

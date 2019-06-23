@@ -64,10 +64,6 @@
     <ClCompile Include="Orc.cpp">
       <Filter>Characters\Enemies</Filter>
     </ClCompile>
-    <ClCompile Include="Projectile.cpp">
-      <Filter>Characters\Enemies</Filter>
-    </ClCompile>
-    <ClCompile Include="Tile.cpp" />
     <ClCompile Include="Collision_Manager.cpp">
       <Filter>Abstract Entities\Stages</Filter>
     </ClCompile>
@@ -91,6 +87,12 @@
     </ClCompile>
     <ClCompile Include="Tile_List.cpp">
       <Filter>Lists</Filter>
+    </ClCompile>
+    <ClCompile Include="Projectile.cpp">
+      <Filter>Other Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Tile.cpp">
+      <Filter>Other Entities</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -157,10 +159,6 @@
     <ClInclude Include="Enemy.h">
       <Filter>Characters\Enemies</Filter>
     </ClInclude>
-    <ClInclude Include="Projectile.h">
-      <Filter>Characters\Enemies</Filter>
-    </ClInclude>
-    <ClInclude Include="Tile.h" />
     <ClInclude Include="Collision_Manager.h">
       <Filter>Abstract Entities\Stages</Filter>
     </ClInclude>
@@ -184,6 +182,12 @@
     </ClInclude>
     <ClInclude Include="Tile_List.h">
       <Filter>Lists</Filter>
+    </ClInclude>
+    <ClInclude Include="Projectile.h">
+      <Filter>Other Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Tile.h">
+      <Filter>Other Entities</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -213,6 +217,9 @@
     </Filter>
     <Filter Include="Lists">
       <UniqueIdentifier>{5993b3ab-b20e-4c73-b9fd-61dfb9affc50}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Other Entities">
+      <UniqueIdentifier>{970391aa-59ca-4a05-bf1b-ebff50112dd5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

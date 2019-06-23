@@ -31,6 +31,8 @@ Level::Level()
 	_playerSpawn = { 0.0f, 0.0f };
 	_nTotalEnemies = 0;
 	_nTotalObstacles = 0;
+	_viewCenter = { 0.0f, 0.0f };
+	_realSize = { 0.0f, 0.0f };
 	_tilesIds_matrix = NULL;
 }
 
@@ -58,12 +60,12 @@ Level::~Level()
 	}
 	_enemy_list.clear();
 
-	for (Entity* pEnt : _cTile_list)
+	for (Tile* pT : _collisiveTile_list)
 	{
-		if (pEnt)
-			delete pEnt;
+		if (pT)
+			delete pT;
 	}
-	_cTile_list.clear();
+	_collisiveTile_list.clear();
 }
 
 void Level::serializeTiles(const std::string level_filePath)
@@ -198,7 +200,7 @@ int Level::extractNextInt(std::string& str, std::string::iterator& it)
 
 const sf::Vector2f Level::getRealPosition(const sf::Vector2i pos_inLayer) const
 {
-	return (Tile::getRealSize() * pos_inLayer +_position);
+	return (Tile::getRealSize() * pos_inLayer + _position);
 }
 
 void Level::initializeEntities()
@@ -207,6 +209,9 @@ void Level::initializeEntities()
 
 	Tile* pTile = NULL;
 	int id;
+
+	_realSize = Tile::getRealSize() * _matrixSize;
+	_viewCenter = (_realSize / 2.0f) + _position - (Tile::getRealSize() / 2.0f);
 
 	for (int j = 0; j < _matrixSize.y; j++)
 	{
@@ -237,8 +242,6 @@ void Level::initializeEntities()
 				{
 				case PLAYER_SP:
 					_playerSpawn = getRealPosition({ k, j });
-					setPlayersSpawnPoint();
-					movePlayersToSpawn();
 					break;
 
 				case ENEMY_SP:
@@ -263,9 +266,12 @@ void Level::initializeEntities()
 	}
 
 	srand(static_cast<unsigned int>(time(NULL)));
-	_orc = new Orc(_enemiesSpawns[rand() % _enemiesSpawns.size()]);
-	_enemy_list.includeEnemy(static_cast<Enemy*>(_orc));
-	_all_EntList.includeEntity(static_cast<Entity*>(_orc));
+	for (int i = 0; i < _nTotalEnemies; i++)
+	{
+		Enemy* pEnemy = static_cast<Enemy*>(new Orc(_enemiesSpawns[rand() % _enemiesSpawns.size()]));
+		_enemy_list.includeEnemy(static_cast<Enemy*>(pEnemy));
+		_all_EntList.includeEntity(static_cast<Entity*>(pEnemy));
+	}
 
 	_all_EntList.includeEntity(_pPlayer1);
 	if (_pPlayer2)
@@ -290,6 +296,14 @@ void Level::setPlayersSpawnPoint()
 	_pPlayer1->setCurrSpawnPoint(_playerSpawn);
 	if (_pPlayer2)
 		_pPlayer2->setCurrSpawnPoint(_playerSpawn);
+}
+
+void Level::start()
+{
+	setPlayersSpawnPoint();
+	movePlayersToSpawn();
+
+	_pGraphMng->setViewCenter(_viewCenter);
 }
 
 void Level::execute(const float deltaTime)
@@ -319,11 +333,11 @@ void Level::executePlayers(const float deltaTime)
 	_pPlayer1->execute(deltaTime);
 	if (_pPlayer2)
 		_pPlayer2->execute(deltaTime);
-
+	/*
 	std::cout << "Player1 hp: " << _pPlayer1->getHp();
 	if (_pPlayer2)
 		std::cout << " | " << "Player2 hp: " << _pPlayer2->getHp();
-	std::cout << std::endl;
+	std::cout << std::endl;*/
 }
 
 void Level::drawPlayers() const
