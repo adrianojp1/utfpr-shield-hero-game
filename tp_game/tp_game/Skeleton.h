@@ -8,7 +8,7 @@
 // === Skeleton Class === //
 class Skeleton : public Enemy
 {
-private:
+protected:
 
 public:
 	//================================================================//
@@ -20,7 +20,8 @@ public:
 
 	//================================================================//
 	// ========== Initializers ========== //
-	void initialize_animator() = 0; //Initializes all the animators
+	virtual void initialize_animator() = 0; //Initializes all the animators
+	//virtual void initialize_overView();
 
 	//================================================================//
 	// ========== Motion ========== //
@@ -29,7 +30,7 @@ public:
 
 	//================================================================//
 	// ========== State checkers ========== //
-	//bool isAttacking() const;
+	//virtual bool player_on_overview() const;
 private:
 	// ========== execute submethods ========== //
 	virtual void updateAction(const float deltaTime) = 0;

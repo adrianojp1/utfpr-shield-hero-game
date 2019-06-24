@@ -25,9 +25,17 @@ Skeleton::~Skeleton()
 
 }
 
+
 //Define attack of both Skeletons
 void Skeleton::attack()
 {
-
+	_state = COMBAT;
+	//if(_animator)
 }
 
+/*bool Skeleton::player_on_overview() const
+{
+	return false;
+}
+
+*/

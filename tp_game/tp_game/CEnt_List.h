@@ -11,7 +11,7 @@ private:
 public:
 
 	CEnt_List();
-	~CEnt_List();
+	virtual ~CEnt_List();
 
 	typedef List<Entity*>::iterator iterator;
 
