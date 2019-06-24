@@ -11,6 +11,7 @@ class Tile;
 //Lists
 class Tile_List;
 class Enemy_List;
+class Obstacle_List;
 
 //======================================================================================================================================//
 // === Collision_Manager Class === //
@@ -42,10 +43,10 @@ public:
 	//Lists collisions
 	void collide(Player* pPlayer, Tile_List* t_list);
 	void collide(Player* pPlayer, Enemy_List* e_list);
-	//void collide(Player* pPlayer, Obstacle_List* o_list);
+	void collide(Player* pPlayer, Obstacle_List* o_list);
 	void collide(Enemy_List* e_list, Tile_List* t_list);
-	//void collide(Enemy_List* e_list, Obstacle_List* o_list);
-	//void collide(Obstacle_List* o_list, Tile_List* t_list);
+	void collide(Enemy_List* e_list, Obstacle_List* o_list);
+	void collide(Obstacle_List* o_list, Tile_List* t_list);
 
 	// ========== Collision Management ========== //
 	virtual bool check_collision(Entity* ent1, Entity* ent2);

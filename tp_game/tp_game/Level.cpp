@@ -268,9 +268,45 @@ void Level::initializeEntities()
 	srand(static_cast<unsigned int>(time(NULL)));
 	for (int i = 0; i < _nTotalEnemies; i++)
 	{
-		Enemy* pEnemy = static_cast<Enemy*>(new Orc(_enemiesSpawns[rand() % _enemiesSpawns.size()]));
+		Enemy* pEnemy = NULL;
+		switch (rand() % 3)
+		{
+		case 0:
+			pEnemy = static_cast<Enemy*>(new Orc(_enemiesSpawns[rand() % _enemiesSpawns.size()]));
+			break;
+		case 1:
+			pEnemy = static_cast<Enemy*>(new WhiteSkeleton(_enemiesSpawns[rand() % _enemiesSpawns.size()]));
+			break;
+		case 2:
+			pEnemy = static_cast<Enemy*>(new BlackSkeleton(_enemiesSpawns[rand() % _enemiesSpawns.size()]));
+			break;
+		default:
+			break;
+		}
 		_enemy_list.includeEnemy(static_cast<Enemy*>(pEnemy));
 		_all_EntList.includeEntity(static_cast<Entity*>(pEnemy));
+	}
+
+	for (int i = 0; i < _nTotalObstacles; i++)
+	{
+		Obstacle* pObstacle = NULL;
+
+		switch (rand() % 2)
+		{
+		case 0:
+			pObstacle = static_cast<Obstacle*>(new Static_Spike(_obstaclesSpawns[rand() % _obstaclesSpawns.size()]));
+			break;
+		case 1:
+			pObstacle = static_cast<Obstacle*>(new Dynamic_Spike(_obstaclesSpawns[rand() % _obstaclesSpawns.size()]));
+			break;/*
+		case 2:
+			pEnemy = static_cast<Enemy*>(new BlackSkeleton(_enemiesSpawns[rand() % _enemiesSpawns.size()]));
+			break;*/
+		default:
+			break;
+		}
+		_obstacle_list.includeObstacle(static_cast<Obstacle*>(pObstacle));
+		_all_EntList.includeEntity(static_cast<Obstacle*>(pObstacle));
 	}
 
 	_all_EntList.includeEntity(_pPlayer1);
@@ -303,6 +339,11 @@ void Level::start()
 	setPlayersSpawnPoint();
 	movePlayersToSpawn();
 
+	setViewToCenter();
+}
+
+void Level::setViewToCenter()
+{
 	_pGraphMng->setViewCenter(_viewCenter);
 }
 
@@ -312,11 +353,13 @@ void Level::execute(const float deltaTime)
 
 	executePlayers(deltaTime);
 	_enemy_list.execute_enemies(deltaTime);
+	_obstacle_list.execute_obstacles(deltaTime);
 
 	manage_collisions();
 
 	updatePlayersDrawables();
 	_enemy_list.update_drawables();
+	_obstacle_list.update_drawables();
 }
 
 void Level::draw()
@@ -394,9 +437,11 @@ void Level::manage_collisions()
 
 	cMng->collide(_pPlayer1, &_collisiveTile_list);
 	cMng->collide(_pPlayer2, &_collisiveTile_list);
-
-	cMng->collide(&_enemy_list, &_collisiveTile_list);
-
 	cMng->collide(_pPlayer1, &_enemy_list);
 	cMng->collide(_pPlayer2, &_enemy_list);
+	cMng->collide(_pPlayer1, &_obstacle_list);
+	cMng->collide(_pPlayer2, &_obstacle_list);
+
+	cMng->collide(&_enemy_list, &_collisiveTile_list);
+	cMng->collide(&_enemy_list, &_obstacle_list);
 }

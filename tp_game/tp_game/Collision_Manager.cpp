@@ -16,6 +16,7 @@
 
 #include "Enemy_List.h"
 #include "Tile_List.h"
+#include "Obstacle_List.h"
 
 //======================================================================================================================================//
 // === Static initializations === //
@@ -75,7 +76,17 @@ void Collision_Manager::collide(Player* pPlayer, Enemy* pEnemy)
 
 void Collision_Manager::collide(Player* pPlayer, Obstacle* pObstacle)
 {
+	if (pPlayer && pObstacle && pPlayer->isVulnerable())
+	{
+		sf::Vector2f intersection;
+		sf::Vector2f collisionDirection;
 
+		if (check_collision(static_cast<Entity*>(pPlayer), static_cast<Entity*>(pObstacle), &intersection, &collisionDirection))
+		{
+			pPlayer->takeDmg(pObstacle->getCollDmg());
+			pObstacle->onCollision(-collisionDirection);
+		}
+	}
 }
 
 void Collision_Manager::collide(Enemy* pEnemy, Tile* pTile)
@@ -97,7 +108,17 @@ void Collision_Manager::collide(Enemy* pEnemy, Tile* pTile)
 
 void Collision_Manager::collide(Enemy* pEnemy, Obstacle* pObstacle)
 {
+	if (pEnemy && pObstacle)
+	{
+		sf::Vector2f intersection;
+		sf::Vector2f collisionDirection;
 
+		if (check_collision(static_cast<Entity*>(pEnemy), pObstacle, &intersection, &collisionDirection))
+		{
+			push_entities(static_cast<Entity*>(pEnemy), pObstacle, &intersection, &collisionDirection, 0.0f);
+			pEnemy->onCollision(collisionDirection);
+		}
+	}
 }
 
 void Collision_Manager::collide(Obstacle* pObstacle, Tile* pTile)
@@ -118,11 +139,22 @@ void Collision_Manager::collide(Player* pPlayer, Tile_List* t_list)
 
 void Collision_Manager::collide(Player* pPlayer, Enemy_List* e_list)
 {
-	if (pPlayer && e_list)
+	if (pPlayer && pPlayer->isVulnerable() && e_list)
 	{
 		for (Enemy* pEne : *e_list)
 		{
 			collide(pPlayer, pEne);
+		}
+	}
+}
+
+void Collision_Manager::collide(Player* pPlayer, Obstacle_List* o_list)
+{
+	if (pPlayer && pPlayer->isVulnerable() && o_list)
+	{
+		for (Obstacle* pO : *o_list)
+		{
+			collide(pPlayer, pO);
 		}
 	}
 }
@@ -136,6 +168,34 @@ void Collision_Manager::collide(Enemy_List* e_list, Tile_List* t_list)
 			for (Enemy* pE : *e_list)
 			{
 				collide(pE, pT);
+			}
+		}
+	}
+}
+
+void Collision_Manager::collide(Enemy_List* e_list, Obstacle_List* o_list)
+{
+	if (o_list && e_list)
+	{
+		for (Obstacle* pO : *o_list)
+		{
+			for (Enemy* pE : *e_list)
+			{
+				collide(pE, pO);
+			}
+		}
+	}
+}
+
+void Collision_Manager::collide(Obstacle_List* o_list, Tile_List* t_list)
+{
+	if (t_list && o_list)
+	{
+		for (Tile* pT : *t_list)
+		{
+			for (Obstacle* pO : *o_list)
+			{
+				collide(pO, pT);
 			}
 		}
 	}

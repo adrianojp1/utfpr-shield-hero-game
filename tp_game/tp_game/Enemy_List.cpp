@@ -38,7 +38,8 @@ void Enemy_List::clear()
 
 void Enemy_List::includeEnemy(Enemy* pe)
 {
-	enemy_list.push_back(pe);
+	if(pe)
+		enemy_list.push_back(pe);
 }
 
 void Enemy_List::removeEnemy(Enemy* pe)

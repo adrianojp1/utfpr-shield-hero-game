@@ -23,14 +23,17 @@ public:
 
 	//================================================================//
 	// ========== Initializers ========== //
-	void initialize_animator();
+	virtual void initialize_animator();
 
 	sf::Vector2i getTileRectPos(int id);
 
 	//================================================================//
 	// ========== Loop methods ========== //
 	virtual void execute(const float deltaTime);
-	//virtual void draw();
+	virtual void draw();
+
+	virtual void colliding_onTop();
+	virtual void updateAnime();
 
 	//_realSize
 	static void setRealSize(const sf::Vector2f realSize);

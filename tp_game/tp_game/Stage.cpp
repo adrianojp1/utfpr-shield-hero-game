@@ -85,6 +85,7 @@ void Stage::unpause()
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
+	_vLevels[_currentLevel_id]->setViewToCenter();
 	this->activate();
 }
 

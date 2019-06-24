@@ -15,8 +15,8 @@ class Obstacle : public Tile
 {
 protected:
 	Timer _cd_action; //Weak_Block & Dynamic Spike
-
-
+	bool _triggered;
+	int _collisionDamage;
 public:
 	//================================================================//
 	// ========== Constructors ========== //
@@ -28,15 +28,18 @@ public:
 
 	//================================================================//
 	// ========== Initializers ========== //
-	virtual void initialize_animator() = 0;
 
 	//================================================================//
 	// ========== Loop methods ========== //
 	virtual void execute(const float deltaTime);
 
+	virtual void decreaseTimers();
+
+	virtual void setCollDmg(const int collDmg);
+	virtual const int getCollDmg() const;
+
 	//================================================================//
 	// ========== Action ========== //
 	virtual void updateAction(const float deltaTime) = 0;
-	//virtual void updatePosition(const float deltaTime); //Dynamic Spike
 
 };

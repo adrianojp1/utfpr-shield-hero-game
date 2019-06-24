@@ -170,6 +170,7 @@
     <ClCompile Include="Graphical_Manager.cpp" />
     <ClCompile Include="NewGame_Menu.cpp" />
     <ClCompile Include="Obstacle.cpp" />
+    <ClCompile Include="Obstacle_List.cpp" />
     <ClCompile Include="Orc.cpp" />
     <ClCompile Include="Pause_Menu.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -182,7 +183,7 @@
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="Tile_List.cpp" />
     <ClCompile Include="Timer.cpp" />
-    <ClCompile Include="Weak_Block.cpp" />
+    <ClCompile Include="Ghost_Tile.cpp" />
     <ClCompile Include="WhiteSkeleton.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -205,6 +206,7 @@
     <ClInclude Include="Graphical_Manager.h" />
     <ClInclude Include="NewGame_Menu.h" />
     <ClInclude Include="Obstacle.h" />
+    <ClInclude Include="Obstacle_List.h" />
     <ClInclude Include="Orc.h" />
     <ClInclude Include="Pause_Menu.h" />
     <ClInclude Include="Player.h" />
@@ -217,7 +219,7 @@
     <ClInclude Include="Tile.h" />
     <ClInclude Include="Tile_List.h" />
     <ClInclude Include="Timer.h" />
-    <ClInclude Include="Weak_Block.h" />
+    <ClInclude Include="Ghost_Tile.h" />
     <ClInclude Include="WhiteSkeleton.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -4,7 +4,7 @@
 // === Classes Headers === //
 #include "Stage.h"
 #include "Main_Menu.h"
-#include "NewGame_menu.h"
+#include "NewGame_Menu.h"
 #include "Pause_Menu.h"
 #include "Game_State.h"
 

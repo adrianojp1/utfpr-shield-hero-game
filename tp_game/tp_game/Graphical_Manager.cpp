@@ -142,6 +142,17 @@ void Graphical_Manager::loadAllTextures()
 
 	//White_Skeleton
 	loadTexture(white_skeleton_idle_Sp_Fp, &white_skeleton_idle_texture);
+	loadTexture(white_skeleton_walk_Sp_Fp, &white_skeleton_walk_texture);
+	loadTexture(white_skeleton_die_Sp_Fp, &white_skeleton_die_texture);
+	loadTexture(white_skeleton_atk_Sp_Fp, &white_skeleton_atk_texture);
+	loadTexture(white_skeleton_proj_Sp_Fp, &white_skeleton_proj_texture);
+
+	//Black_Skeleton
+	loadTexture(black_skeleton_idle_Sp_Fp, &black_skeleton_idle_texture);
+	loadTexture(black_skeleton_walk_Sp_Fp, &black_skeleton_walk_texture);
+	loadTexture(black_skeleton_die_Sp_Fp, &black_skeleton_die_texture);
+	loadTexture(black_skeleton_atk_Sp_Fp, &black_skeleton_atk_texture);
+	loadTexture(black_skeleton_proj_Sp_Fp, &black_skeleton_proj_texture);
 }
 
 void Graphical_Manager::loadAllFonts()

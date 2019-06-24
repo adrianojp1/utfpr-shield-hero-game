@@ -68,6 +68,28 @@ void Tile::execute(float deltaTime)
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 }
 
+void Tile::draw()
+{
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
+
+	if (this->isActive())
+	{
+		Entity::_pGraphMng->draw(*(_animator->getCurrentAnime()->getpSprite()));
+		if (gMng::COLLISION_DBG)
+			Entity::_pGraphMng->draw(*(_current_collider));
+	}
+}
+
+void Tile::colliding_onTop()
+{
+	_velocity.y = 0.0f;
+}
+
+void Tile::updateAnime()
+{
+	_animator->updateSpritePosition();
+}
+
 void Tile::setRealSize(const sf::Vector2f realSize)
 {
 	_realSize = realSize;

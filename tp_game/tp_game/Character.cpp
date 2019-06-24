@@ -140,11 +140,6 @@ void Character::colliding_onBottom()
 	_canJump = true;
 }
 
-void Character::updatePosition(const float deltaTime)
-{
-	_position += _velocity * deltaTime;
-}
-
 void Character::applyGforce(const float deltaTime)
 {
 	_velocity.y += gMng::gravity * deltaTime; //constant g force
@@ -255,12 +250,6 @@ void Character::resetHp()
 void Character::decreaseTimers()
 {
 	_invulnerability.decreaseTime();
-}
-
-void Character::updateAnime_n_Collider()
-{
-	_animator->updateAnimation(_facingRight);
-	_current_collider->setPosition(_position);
 }
 
 void Character::setJumpHeight(const float jumpHeight)

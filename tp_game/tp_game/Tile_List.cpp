@@ -22,12 +22,12 @@ Tile_List::~Tile_List()
 	clear();
 }
 
-std::set<Tile*>::iterator Tile_List::begin()
+Tile_List::iterator Tile_List::begin()
 {
 	return _tile_set.begin();
 }
 
-std::set<Tile*>::iterator Tile_List::end()
+Tile_List::iterator Tile_List::end()
 {
 	return _tile_set.end();
 }

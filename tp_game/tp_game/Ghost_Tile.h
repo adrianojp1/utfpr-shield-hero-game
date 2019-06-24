@@ -5,27 +5,27 @@
 #include "Obstacle.h" //Base class
 
 //======================================================================================================================================//
-// === Weak_Block Class === //
-class Weak_Block : public Obstacle
+// === Ghost_Tile Class === //
+class Ghost_Tile : public Obstacle
 {
 private:
-
-
+	
 public:
 	//================================================================//
 	// ========== Constructors ========== //
-	Weak_Block(const sf::Vector2f initPosition, const int id);
-	Weak_Block();
+	Ghost_Tile(const sf::Vector2f initPosition, const int id);
+	Ghost_Tile();
 
 	// ========== Destructors ========== //
-	~Weak_Block();
+	~Ghost_Tile();
 
 	//================================================================//
 	// ========== Initializers ========== //
-	virtual void initialize_animator();
-
+	virtual void colliding_onTop();
+	virtual void activ_ghost();
+	virtual void deactiv_ghost();
 private:
 	// ========== execute submethods ========== //
-	void updateAction(const float deltaTime); //tremer e sumir.
+	void updateAction(const float deltaTime);
 };
 

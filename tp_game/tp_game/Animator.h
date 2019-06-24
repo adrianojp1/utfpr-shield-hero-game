@@ -35,7 +35,7 @@ public:
 	//================================================================//
 	// ========== Loop methods ========== //
 	void updateAnimation(bool facingRight);
-
+	void updateSpritePosition();
 	//================================================================//
 	// ========== Sets & Gets ========== //
 	//_currentAnime

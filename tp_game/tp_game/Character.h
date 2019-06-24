@@ -57,7 +57,6 @@ public:
 	// ========== Motion ========== //
 	virtual void updateAction(const float deltaTime) = 0;
 	virtual void updateDeath();
-	virtual void updatePosition(const float deltaTime);
 	virtual void applyGforce(const float deltaTime);
 	virtual void jump();
 	virtual void moveToLeft(const float speedMultiplier = 1.0f);
@@ -77,8 +76,6 @@ public:
 	virtual void ressurect();
 	virtual void resetHp();
 	virtual void decreaseTimers();
-
-	virtual void updateAnime_n_Collider();
 
 	//================================================================//
 	// ========== Sets & Gets ========== //

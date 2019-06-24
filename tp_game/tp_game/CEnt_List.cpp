@@ -28,7 +28,8 @@ void CEnt_List::clear()
 
 void CEnt_List::includeEntity(Entity* pe)
 {
-	_CEnt_List.pushBack(pe);
+	if(pe)
+		_CEnt_List.pushBack(pe);
 }
 
 void CEnt_List::removeEntity(Entity* pe)

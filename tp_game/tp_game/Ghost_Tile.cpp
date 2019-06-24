@@ -4,17 +4,15 @@
 
 //======================================================================================================================================//
 // === This Class Header === //
-#include "Weak_Block.h"
+#include "Ghost_Tile.h"
 
 //======================================================================================================================================//
 // === Static initializations === //
-/*const sf::Vector2f Weak_Block::OriginalSize = sf::Vector2f{ 16.0f, 16.0f };
-sf::Vector2f Weak_Block::_realSize = OriginalSize;*/
 
 //======================================================================================================================================//
-// === Weak_Block methods === //
+// === Ghost_Tile methods === //
 
-Weak_Block::Weak_Block(const sf::Vector2f initPosition, const int id) :
+Ghost_Tile::Ghost_Tile(const sf::Vector2f initPosition, const int id) :
 	Obstacle(initPosition, id)
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
@@ -24,15 +22,17 @@ Weak_Block::Weak_Block(const sf::Vector2f initPosition, const int id) :
 
 	_current_collider = _collider;
 	_current_collider->setPosition(_position);
+
+	_cd_action.setTotalTime(4.0f);
 }
 
-Weak_Block::Weak_Block() : Obstacle()
+Ghost_Tile::Ghost_Tile() : Obstacle()
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 1 | ");
 	_collider = NULL;
 }
 
-Weak_Block::~Weak_Block()
+Ghost_Tile::~Ghost_Tile()
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 	if (_collider)
@@ -41,25 +41,37 @@ Weak_Block::~Weak_Block()
 		delete _animator;
 }
 
-void Weak_Block::initialize_animator()
+void Ghost_Tile::colliding_onTop()
 {
-	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
-
-	_animator = new Animator(static_cast<Entity*>(this));
-
-	Animation* pAnime = new Animation(gMng::tileset_texture, 1, 0.0f);
-
-	sf::Vector2i TileRectPosition = getTileRectPos(_id);
-	pAnime->setCanvasRect(sf::IntRect(TileRectPosition, sf::Vector2i{ OriginalSize }));
-	pAnime->initializeSprite();
-
-	(*_animator) << pAnime;
-	(*_animator).setCurrentAnime(0);
-	_animator->getCurrentAnime()->getpSprite()->setPosition(_position);
+	_triggered = true;
+	_cd_action.trigger();
 }
 
-//upar rachaduras, tremer e sumir quando _coll_onTop
-void Weak_Block::updateAction(const float deltaTime)
+void Ghost_Tile::activ_ghost()
 {
+	_animator->getCurrentAnime()->getpSprite()->setFillColor(sf::Color(255, 255, 255, 100));
+}
+
+void Ghost_Tile::deactiv_ghost()
+{
+	_animator->getCurrentAnime()->getpSprite()->setFillColor(sf::Color(255, 255, 255, 255));
+}
+
+void Ghost_Tile::updateAction(const float deltaTime)
+{
+	if (!_cd_action.isTicking())
+	{
+		if (_coll_onTop)
+		{
+			_cd_action.reset_and_trigger();
+		}
+	}
+	else
+	{
+		if (_cd_action.getCurrentTime() < 3.0f)
+			activ_ghost();
+		else
+			deactiv_ghost();
+	}
 }
 

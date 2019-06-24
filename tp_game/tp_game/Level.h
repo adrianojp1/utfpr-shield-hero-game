@@ -12,12 +12,13 @@
 #include "WhiteSkeleton.h"
 //Obstacles
 #include "Dynamic_Spike.h"
-#include "Weak_Block.h"
+#include "Ghost_Tile.h"
 //
 
 //Lists
 #include "CEnt_List.h"
 #include "Enemy_List.h"
+#include "Obstacle_List.h"
 #include "Tile_List.h"
 //
 //======================================================================================================================================//
@@ -30,6 +31,7 @@ private:
 	//Lists
 	CEnt_List _all_EntList;
 	Enemy_List _enemy_list;
+	Obstacle_List _obstacle_list;
 	Tile_List _collisiveTile_list;
 	//
 	
@@ -74,6 +76,7 @@ public:
 	virtual void initializeEntities();
 	virtual void setPlayersSpawnPoint();
 	virtual void start();
+	virtual void setViewToCenter();
 	//virtual void finish();
 
 	// ========== Loop methods ========== //

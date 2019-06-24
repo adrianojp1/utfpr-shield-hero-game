@@ -70,9 +70,6 @@
     <ClCompile Include="Obstacle.cpp">
       <Filter>Obstacles</Filter>
     </ClCompile>
-    <ClCompile Include="Weak_Block.cpp">
-      <Filter>Obstacles</Filter>
-    </ClCompile>
     <ClCompile Include="Static_Spike.cpp">
       <Filter>Obstacles</Filter>
     </ClCompile>
@@ -93,6 +90,12 @@
     </ClCompile>
     <ClCompile Include="Tile.cpp">
       <Filter>Other Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Obstacle_List.cpp">
+      <Filter>Lists</Filter>
+    </ClCompile>
+    <ClCompile Include="Ghost_Tile.cpp">
+      <Filter>Obstacles</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -165,9 +168,6 @@
     <ClInclude Include="Obstacle.h">
       <Filter>Obstacles</Filter>
     </ClInclude>
-    <ClInclude Include="Weak_Block.h">
-      <Filter>Obstacles</Filter>
-    </ClInclude>
     <ClInclude Include="Static_Spike.h">
       <Filter>Obstacles</Filter>
     </ClInclude>
@@ -188,6 +188,12 @@
     </ClInclude>
     <ClInclude Include="Tile.h">
       <Filter>Other Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Obstacle_List.h">
+      <Filter>Lists</Filter>
+    </ClInclude>
+    <ClInclude Include="Ghost_Tile.h">
+      <Filter>Obstacles</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
