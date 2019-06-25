@@ -36,8 +36,10 @@ Dynamic_Spike::~Dynamic_Spike()
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 	if (_collider)
 		delete _collider;
+	_collider = NULL;
 	if (_animator)
 		delete _animator;
+	_animator = NULL;
 }
 
 void Dynamic_Spike::updateAction(const float deltaTime)
