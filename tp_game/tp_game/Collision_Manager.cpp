@@ -77,15 +77,22 @@ void Collision_Manager::collide(Player* pPlayer, Enemy* pEnemy)
 
 void Collision_Manager::collide(Player* pPlayer, Obstacle* pObstacle)
 {
-	if (pPlayer && pObstacle && pPlayer->isVulnerable())
+	if (pPlayer && pObstacle)
 	{
 		sf::Vector2f intersection;
 		sf::Vector2f collisionDirection;
 
 		if (check_collision(static_cast<Entity*>(pPlayer), static_cast<Entity*>(pObstacle), &intersection, &collisionDirection))
 		{
-			pPlayer->takeDmg(pObstacle->getCollDmg());
-			pObstacle->onCollision(-collisionDirection);
+			int ob_id = pObstacle->getId();
+			if (ob_id == 15 || ob_id == 16)
+			{
+				collide(pPlayer, static_cast<Tile*>(pObstacle));
+			}
+			else if(pPlayer->isVulnerable())
+			{
+				pPlayer->takeDmg(pObstacle->getCollDmg());
+			}
 		}
 	}
 }
@@ -189,7 +196,7 @@ void Collision_Manager::collide(Player* pPlayer, Enemy_List* e_list)
 
 void Collision_Manager::collide(Player* pPlayer, Obstacle_List* o_list)
 {
-	if (pPlayer && pPlayer->isVulnerable() && o_list)
+	if (pPlayer && o_list)
 	{
 		for (Obstacle* pO : *o_list)
 		{

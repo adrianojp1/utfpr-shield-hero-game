@@ -4,8 +4,7 @@
 Skeleton::Skeleton(const sf::Vector2f initPosition) : Enemy(initPosition)
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
-
-	_cd_attack.setTotalTime(4.0f);
+	_proj_speed = 200.0f;
 	_speed = 0.0f;
 	_facingRight = false;
 	_overView.setSize({ 2688.0f, 13.0f*gMng::textures_scale.y });
@@ -16,6 +15,7 @@ Skeleton::Skeleton(const sf::Vector2f initPosition) : Enemy(initPosition)
 Skeleton::Skeleton() : Enemy()
 {
 	_speed = 0.0f;
+	_proj_speed = 0.0f;
 }
 
 Skeleton::~Skeleton()
@@ -48,7 +48,7 @@ void Skeleton::cast_spell(Player* pP)
 		cast_position.x = _position.x - _attack_offset.x;
 	}
 	Projectile* pProj = new Projectile(cast_position, _attackDamage, _facingRight, getProj_id());
-	pProj->setSpeed(200.0f);
+	pProj->setSpeed(_proj_speed);
 }
 
 void Skeleton::cast_spell(Player* pP1, Player* pP2)

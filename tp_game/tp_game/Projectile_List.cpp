@@ -60,3 +60,13 @@ void Projectile_List::remove_projectile(Projectile* pP)
 	_proj_list.remove(pP);
 }
 
+void Projectile_List::delete_projectiles()
+{
+	for (Projectile* pP : *this)
+	{
+		if (pP)
+			delete pP;
+	}
+	clear();
+}
+

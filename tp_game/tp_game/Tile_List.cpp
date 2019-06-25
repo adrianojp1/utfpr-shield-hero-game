@@ -49,3 +49,13 @@ void Tile_List::draw_tiles()
 		pT->draw();
 	}
 }
+
+void Tile_List::delete_tiles()
+{
+	for (Tile* pT : *this)
+	{
+		if (pT)
+			delete pT;
+	}
+	clear();
+}

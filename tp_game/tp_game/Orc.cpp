@@ -22,7 +22,8 @@ Orc::Orc(const sf::Vector2f initPosition) :
 	initialize_animator();
 	initialize_AllColliders();
 
-	_overView = *(*_animator)[COMBAT]->getpSprite();
+	_overView.setSize((*_animator)[COMBAT]->getpSprite()->getSize() *gMng::textures_scale);
+	_overView.setOrigin(_overView.getSize() / 2.0f);
 } // end constr (parameters)
 
 Orc::Orc() :

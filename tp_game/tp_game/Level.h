@@ -60,6 +60,7 @@ private:
 	std::vector<sf::Vector2i> _enemiesSpawns;
 	std::vector<sf::Vector2i> _spikeSpawns;
 	std::vector<sf::Vector2i> _dispenserSpawns;
+	sf::Vector2f* _boss_spawn;
 	//
 
 	bool _finished;
@@ -133,4 +134,5 @@ private:
 #define SPIKE_SP		193
 #define Dispenser_SP	170
 #define LEVEL_END		192
+#define BOSS_SP			194
 };

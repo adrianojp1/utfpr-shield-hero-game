@@ -33,7 +33,7 @@ Dispenser::Dispenser(const sf::Vector2f initPosition, const bool facingRight, co
 	_current_collider = _collider;
 	_current_collider->setPosition(_position);
 
-	_cd_action.setTotalTime(10.0f);
+	_cd_action.setTotalTime(5.0f);
 	_cd_action.trigger();
 }
 

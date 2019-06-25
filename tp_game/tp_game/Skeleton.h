@@ -9,8 +9,8 @@
 // === Skeleton Class === //
 class Skeleton : public Enemy
 {
-private:
-
+protected:
+	float _proj_speed;
 public:
 	//================================================================//
 	// ========== Constructors ========== //

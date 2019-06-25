@@ -7,6 +7,7 @@ WhiteSkeleton::WhiteSkeleton(const sf::Vector2f initPosition):
 {
 	initialize_animator();
 	initialize_AllColliders();
+	_cd_attack.setTotalTime(3.0f);
 }
 
 WhiteSkeleton::WhiteSkeleton() : 

@@ -26,5 +26,6 @@ public:
 	void includeTile(Tile* pT);
 	//void removeTile(Tile* pT);
 	void draw_tiles();
+	void delete_tiles();
 };
 

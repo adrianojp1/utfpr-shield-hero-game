@@ -26,5 +26,6 @@ public:
 	//void removeTile(Tile* pT);
 	void draw_projectiles();
 	void remove_projectile(Projectile* pP);
+	void delete_projectiles();
 };
 
