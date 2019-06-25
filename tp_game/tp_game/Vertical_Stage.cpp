@@ -4,6 +4,7 @@
 Vertical_Stage::Vertical_Stage(const int nPlayers) : Stage(2, nPlayers)
 {
 	initializeLevels(this, 5);
+	_vLevels[4]->spawnBoss({ 800.0f, 600.0f });
 }
 
 Vertical_Stage::Vertical_Stage() : Stage(2, 1)

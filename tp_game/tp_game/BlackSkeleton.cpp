@@ -30,9 +30,10 @@ void BlackSkeleton::initialize_animator()
 	*_animator << new Animation(gMng::black_skeleton_idle_texture, 1, 0.0f, 2);
 	*_animator << new Animation(gMng::black_skeleton_walk_texture, 4, 0.250f, 2);
 	*_animator << new Animation(gMng::black_skeleton_die_texture, 3, 0.250f, 2);
-	*_animator << new Animation(gMng::black_skeleton_atk_texture, 3, 0.200f, 2);
+	*_animator << new Animation(gMng::black_skeleton_atk_texture, 3, 0.120f, 2);
 }
 
-void BlackSkeleton::updateAction(const float deltaTime)
+int BlackSkeleton::getProj_id()
 {
+	return 1;
 }

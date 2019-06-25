@@ -9,7 +9,7 @@
 class Orc : public Enemy
 {
 private:
-
+	sf::RectangleShape _attack_rect;
 public:
 	//================================================================//
 	// ========== Constructors ========== //
@@ -24,13 +24,13 @@ public:
 
 	//================================================================//
 	// ========== Motion ========== //
-	void attack();
 	void colliding_onLeft();
 	void colliding_onRight();
-
+	void doPrincipalOfAttack();
 	//================================================================//
 	// ========== State checkers ========== //
 	//bool isAttacking() const;
+	virtual sf::RectangleShape* getAttackRect();
 private:
 	// ========== execute submethods ========== //
 	void updateAction(const float deltaTime);

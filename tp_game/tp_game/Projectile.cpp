@@ -35,6 +35,11 @@ Projectile::Projectile()
 
 Projectile::~Projectile()
 {
+	_level_proj_list->remove_projectile(this);
+	if (_animator)
+		delete _animator;
+	if (_collider)
+		delete _collider;
 }
 
 void Projectile::initialize_animator()
@@ -89,6 +94,12 @@ const int Projectile::getCollDmg() const
 	return _collisionDamage;
 }
 
+void Projectile::desactivate()
+{
+	_active = false;
+	//_current_collider->setPosition(3000.0f, 3000.0f);
+}
+
 const bool Projectile::wasReflected() const
 {
 	return _reflected;
@@ -98,6 +109,7 @@ void Projectile::reflect()
 {
 	turnArround();
 	_reflected = true;
+	_animator->getCurrentAnime()->getpSprite()->setFillColor(sf::Color(120, 255, 0));
 }
 
 void Projectile::setProjList(Projectile_List* projList)

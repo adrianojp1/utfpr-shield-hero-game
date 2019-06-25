@@ -31,13 +31,10 @@ void WhiteSkeleton::initialize_animator()
 	*_animator << new Animation(gMng::white_skeleton_idle_texture, 1, 0.0f, 2);
 	*_animator << new Animation(gMng::white_skeleton_walk_texture, 4, 0.250f, 2);
 	*_animator << new Animation(gMng::white_skeleton_die_texture, 3, 0.250f, 2);
-	*_animator << new Animation(gMng::white_skeleton_atk_texture, 3, 0.200f, 2);
+	*_animator << new Animation(gMng::white_skeleton_atk_texture, 3, 0.120f, 2);
 }
 
-void WhiteSkeleton::updateAction(const float deltaTime)
+int WhiteSkeleton::getProj_id()
 {
-	if (_facingRight)
-		_velocity.x = _speed;
-	else
-		_velocity.x = -_speed;
+	return 0;
 }

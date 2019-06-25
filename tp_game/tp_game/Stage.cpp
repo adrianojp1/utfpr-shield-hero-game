@@ -45,6 +45,7 @@ void Stage::initializeLevels(Stage* pStage, int nLevels)
 		std::string tiles_fp = get_lv_fp(_id, lv_id) + gMng::tile_sufix;
 		_vLevels.push_back(new Level(tiles_fp, { 0.0f, 0.0f }, pStage));
 	}
+	//_vLevels[0]->spawnBoss();
 }
 
 void Stage::execute(const float deltaTime)
@@ -59,9 +60,7 @@ void Stage::execute(const float deltaTime)
 		{
 			if (_currentLevel_index < _vLevels.size() - 1)
 			{
-				_currentLevel_index++;
-				_vLevels[_currentLevel_index]->start();
-				Game::getInstance()->execute();
+				goToNextLevel();
 			}
 			else //Stage finished
 			{
@@ -136,6 +135,13 @@ bool Stage::pauseKey_isPressed()
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
 	return (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape));
+}
+
+void Stage::goToNextLevel()
+{
+	_currentLevel_index++;
+	_vLevels[_currentLevel_index]->start();
+	Game::getInstance()->execute();
 }
 
 const std::string Stage::get_stg_fp(const int stg_id) const

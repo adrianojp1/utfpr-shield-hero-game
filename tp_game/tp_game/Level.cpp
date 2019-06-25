@@ -359,9 +359,10 @@ void Level::setViewToCenter()
 	_pGraphMng->setViewCenter(_viewCenter);
 }
 
-void Level::spawnBoss()
+void Level::spawnBoss(sf::Vector2f pos)
 {
-	//Boss* pBoss = new Boss;
+	Boss* pBoss = new Boss(pos);
+	_enemy_list.includeEnemy(pBoss);
 }
 
 void Level::check_endLevel()
@@ -423,10 +424,10 @@ void Level::executePlayers(const float deltaTime)
 	if (_pPlayer2)
 		_pPlayer2->execute(deltaTime);
 	
-	std::cout << "Player1 hp: " << _pPlayer1->getHp();
+	/*std::cout << "Player1 hp: " << _pPlayer1->getHp();
 	if (_pPlayer2)
 		std::cout << " | " << "Player2 hp: " << _pPlayer2->getHp();
-	std::cout << std::endl;
+	std::cout << std::endl;*/
 }
 
 void Level::updatePlayersDrawables()
@@ -493,7 +494,10 @@ void Level::manage_collisions()
 	cMng->collide(_pPlayer2, &_enemy_list);
 	cMng->collide(_pPlayer1, &_obstacle_list);
 	cMng->collide(_pPlayer2, &_obstacle_list);
+	cMng->collide(_pPlayer1, &_projectile_list);
+	cMng->collide(_pPlayer2, &_projectile_list);
 
 	cMng->collide(&_enemy_list, &_tile_list[CONCRETE]);
 	cMng->collide(&_enemy_list, &_obstacle_list);
+	cMng->collide(&_enemy_list, &_projectile_list);
 }

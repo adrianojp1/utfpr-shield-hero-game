@@ -34,6 +34,8 @@ public:
 	virtual void setCollDmg(const int collDmg);
 	virtual const int getCollDmg() const;
 
+	virtual void desactivate();
+
 	virtual const bool wasReflected() const;
 
 	virtual void reflect();

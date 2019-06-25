@@ -89,7 +89,7 @@ public:
 	virtual void start();
 	virtual void setViewToCenter();
 
-	virtual void spawnBoss();
+	virtual void spawnBoss(sf::Vector2f pos);
 
 	// ========== Loop methods ========== //
 	virtual void execute(const float deltaTime);

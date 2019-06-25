@@ -234,6 +234,12 @@ void Character::decreaseTimers()
 	_invulnerability.decreaseTime();
 }
 
+void Character::updateAnime_n_Collider()
+{
+	updateAnime();
+	updateCollider();
+}
+
 void Character::setJumpHeight(const float jumpHeight)
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");

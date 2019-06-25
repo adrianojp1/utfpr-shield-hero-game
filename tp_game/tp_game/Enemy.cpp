@@ -19,9 +19,9 @@ Enemy::Enemy(const sf::Vector2f initPosition) :
 	resetHp();
 	_collisionDamage = 1;
 	_attackDamage = 2;
-	_canAttack = true;
-	_attacking = false;
+	_canCauseDmg = false;
 	_floor_foward = false;
+	_cd_attack.trigger();
 
 } // end constr (parameters)
 
@@ -29,8 +29,7 @@ Enemy::Enemy() : Character()
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 1| ");
 
-	_attacking = false;
-	_canAttack = false;
+	_canCauseDmg = false;
 	_facingRight = false;
 	_canJump = false;
 	_floor_foward = false;
@@ -76,9 +75,69 @@ void Enemy::decreaseTimers()
 	_cd_attack.decreaseTime();
 }
 
+Player* Enemy::a_playerInRange()
+{
+	Player* pP = NULL;
+	cMng* collMng = cMng::getInstance();
+	if (collMng->intersects(_pPlayer1, &_overView))
+		pP = _pPlayer1;
+	else if (_pPlayer2 && collMng->intersects(_pPlayer2, &_overView))
+		pP = _pPlayer2;
+	
+	return pP;
+}
+
+bool Enemy::playerAhead(Player* pPlayer)
+{
+	return (_facingRight && pPlayer->getPosition().x > _position.x) || (!_facingRight && pPlayer->getPosition().x < _position.x);
+}
+
+void Enemy::updateAnime_n_Collider()
+{
+	updateAnime();
+	updateCollider();
+	_overView.setPosition(_position);
+}
+
+void Enemy::check_attack()
+{
+	_canCauseDmg = false;
+	if (_cd_attack.isZeroed())
+	{
+		Player* pPlayer = a_playerInRange();
+		if (pPlayer && playerAhead(pPlayer))
+		{
+			attack();
+		}
+	}
+}
+
+void Enemy::attack()
+{
+	_state = COMBAT;
+}
+
+void Enemy::updateAttack()
+{
+	if (principalFrameOfAttack())
+	{
+		doPrincipalOfAttack();
+	}
+	if ((*_animator)[COMBAT]->isFinished())
+	{
+		_state = IDLE;
+		_cd_attack.reset_and_trigger();
+	}
+}
+
 bool Enemy::isAttacking() const
 {
-	return _attacking;
+	return (_state == COMBAT);
+}
+
+bool Enemy::principalFrameOfAttack()
+{
+	return (*_animator)[COMBAT]->getFrameCounter() == (*_animator)[COMBAT]->getnFrames() - 1;
 }
 
 const sf::Vector2f Enemy::getFrontEdge() const
@@ -86,6 +145,11 @@ const sf::Vector2f Enemy::getFrontEdge() const
 	sf::Vector2f halfSize = _current_collider->getSize() / 2.0f;
 	float x = _position.x + (_facingRight? halfSize.x : -halfSize.x);
 	return { x, _position.y + halfSize.y + 5.0f};
+}
+
+bool Enemy::ableToCauseDamage()
+{
+	return _canCauseDmg;
 }
 
 void Enemy::setFloor_foward(const bool floor_fwd)
@@ -96,4 +160,9 @@ void Enemy::setFloor_foward(const bool floor_fwd)
 const bool Enemy::getFloor_foward() const
 {
 	return _floor_foward;
+}
+
+sf::RectangleShape* Enemy::getAttackRect() const
+{
+	return NULL;
 }
