@@ -3,13 +3,15 @@
 //======================================================================================================================================//
 // === Classes Headers === //
 #include "Enemy.h"
+#include "Projectile_List.h"
 
 //======================================================================================================================================//
 // === Skeleton Class === //
 class Skeleton : public Enemy
 {
 private:
-
+	static Projectile_List* _level_proj_list;
+	sf::Vector2f _proj_offset;
 public:
 	//================================================================//
 	// ========== Constructors ========== //
@@ -26,7 +28,8 @@ public:
 	// ========== Motion ========== //
 	virtual void attack(); //Attack of both skeletons
 	
-
+	static void setProjList(Projectile_List* projList);
+	static Projectile_List* getProjList();
 	//================================================================//
 	// ========== State checkers ========== //
 	//bool isAttacking() const;

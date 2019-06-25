@@ -59,9 +59,6 @@ public:
 	virtual void updateDeath();
 	virtual void applyGforce(const float deltaTime);
 	virtual void jump();
-	virtual void moveToLeft(const float speedMultiplier = 1.0f);
-	virtual void moveToRight(const float speedMultiplier = 1.0f);
-	virtual void moveFoward();
 	virtual void colliding_onBottom();
 
 	//================================================================//

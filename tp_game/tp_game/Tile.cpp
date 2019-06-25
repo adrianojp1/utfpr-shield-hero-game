@@ -35,10 +35,7 @@ Tile::Tile() : Entity()
 Tile::~Tile()
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
-	if (_collider)
-		delete _collider;
-	if (_animator)
-		delete _animator;
+
 }
 
 void Tile::initialize_animator()

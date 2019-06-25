@@ -52,3 +52,13 @@ void CEnt_List::draw_entities()
 		pEnt->draw();
 	}
 }
+
+void CEnt_List::delete_entities()
+{
+	for(Entity* pEnt: *this)
+	{
+		if (pEnt)
+			delete pEnt;
+	}
+	_CEnt_List.clear();
+}

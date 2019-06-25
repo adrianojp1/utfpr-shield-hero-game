@@ -27,10 +27,6 @@ Obstacle::Obstacle()
 Obstacle::~Obstacle()
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
-	if (_collider)
-		delete _collider;
-	if (_animator)
-		delete _animator;
 }
 
 void Obstacle::execute(const float deltaTime)
