@@ -4,6 +4,7 @@
 // === Classes Headers === //
 #include "Character.h" //Base class
 
+#include "Player.h"
 //======================================================================================================================================//
 // === Enemy Class === //
 class Enemy : public Character
@@ -19,7 +20,8 @@ protected:
 
 	bool _floor_foward;
 
-
+	sf::RectangleShape _overView;
+	sf::Vector2f _attack_offset;
 public:
 	//================================================================//
 	// ========== Constructors ========== //
@@ -49,16 +51,21 @@ public:
 
 	//================================================================//
 	// ========== Motion ========== //
-	virtual void attack() = 0;
-
+	virtual void attack();
+	virtual void updateAttack();
 	//================================================================//
 	// ========== State ========== //
 	virtual void decreaseTimers();
+	virtual Player* a_playerInRange();
+	virtual bool playerAhead(Player* pPlayer);
 
+	virtual void updateAnime_n_Collider();
+	virtual void check_attack();
 	//================================================================//
 	// ========== State checkers ========== //
 	virtual bool isAttacking() const;
-
+	virtual bool principalFrameOfAttack();
+	virtual void doPrincipalOfAttack() = 0;
 	virtual const sf::Vector2f getFrontEdge() const;
 
 protected :

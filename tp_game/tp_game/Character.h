@@ -74,6 +74,7 @@ public:
 	virtual void resetHp();
 	virtual void decreaseTimers();
 
+	virtual void updateAnime_n_Collider();
 	//================================================================//
 	// ========== Sets & Gets ========== //
 	// _jumpHeight

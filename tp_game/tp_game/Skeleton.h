@@ -10,7 +10,6 @@
 class Skeleton : public Enemy
 {
 private:
-	sf::Vector2f _proj_offset;
 
 public:
 	//================================================================//
@@ -26,14 +25,15 @@ public:
 
 	//================================================================//
 	// ========== Motion ========== //
-	virtual void attack(); //Attack of both skeletons
-
+	virtual int getProj_id() = 0;
+	void updateAttack();
+	void cast_spell();
+	void doPrincipalOfAttack();
 	//================================================================//
 	// ========== State checkers ========== //
-	//virtual bool player_on_overview() const;
 private:
 	//bool isAttacking() const;
 protected:
 	// ========== execute submethods ========== //
-	virtual void updateAction(const float deltaTime) = 0;
+	virtual void updateAction(const float deltaTime);
 };

@@ -22,6 +22,7 @@ Enemy::Enemy(const sf::Vector2f initPosition) :
 	_canAttack = true;
 	_attacking = false;
 	_floor_foward = false;
+	_cd_attack.trigger();
 
 } // end constr (parameters)
 
@@ -76,9 +77,68 @@ void Enemy::decreaseTimers()
 	_cd_attack.decreaseTime();
 }
 
+Player* Enemy::a_playerInRange()
+{
+	Player* pP = NULL;
+	cMng* collMng = cMng::getInstance();
+	if (collMng->intersects(_pPlayer1, &_overView))
+		pP = _pPlayer1;
+	else if (_pPlayer2 && collMng->intersects(_pPlayer2, &_overView))
+		pP = _pPlayer2;
+	
+	return pP;
+}
+
+bool Enemy::playerAhead(Player* pPlayer)
+{
+	return (_facingRight && pPlayer->getPosition().x > _position.x) || (!_facingRight && pPlayer->getPosition().x < _position.x);
+}
+
+void Enemy::updateAnime_n_Collider()
+{
+	updateAnime();
+	updateCollider();
+	_overView.setPosition(_position);
+}
+
+void Enemy::check_attack()
+{
+	if (_cd_attack.isZeroed())
+	{
+		Player* pPlayer = a_playerInRange();
+		if (pPlayer && playerAhead(pPlayer))
+		{
+			attack();
+		}
+	}
+}
+
+void Enemy::attack()
+{
+	_state = COMBAT;
+}
+
+void Enemy::updateAttack()
+{
+	if (principalFrameOfAttack())
+	{
+		doPrincipalOfAttack();
+	}
+	if ((*_animator)[COMBAT]->isFinished())
+	{
+		_state = IDLE;
+		_cd_attack.reset_and_trigger();
+	}
+}
+
 bool Enemy::isAttacking() const
 {
-	return _attacking;
+	return (_state == COMBAT);
+}
+
+bool Enemy::principalFrameOfAttack()
+{
+	return (*_animator)[COMBAT]->getFrameCounter() == (*_animator)[COMBAT]->getnFrames() - 1;
 }
 
 const sf::Vector2f Enemy::getFrontEdge() const

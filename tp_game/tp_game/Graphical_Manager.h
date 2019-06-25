@@ -39,14 +39,13 @@ public:
 
 	//================================================================//
 	//======================== Static Consts =========================//
-private:
+public:
 	// ========== Window ========== //
 	static const sf::Vector2u windowRatio;
 	static const unsigned int ratioMultiplier;
 	static const std::string windowName;
 	static const sf::Vector2u windowSize;
 
-public:
 	// ========== Debug ========== //
 	static const bool CONSOLE_LOG;
 	static const bool COLLISION_DBG;

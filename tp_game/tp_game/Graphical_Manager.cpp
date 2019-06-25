@@ -87,9 +87,9 @@ const std::string Graphical_Manager::black_skeleton_proj_Sp_Fp = textures_dir + 
 sf::Texture* Graphical_Manager::white_skeleton_proj_texture = NULL;
 sf::Texture* Graphical_Manager::black_skeleton_proj_texture = NULL;
 
-const std::string Graphical_Manager::boss_idle_Sp_Fp = textures_dir + "boss/boss-idle";
-const std::string Graphical_Manager::boss_walk_Sp_Fp = textures_dir + "boss/boss-walk";
-const std::string Graphical_Manager::boss_atk_Sp_Fp = textures_dir + "boss/boss-atk";
+const std::string Graphical_Manager::boss_idle_Sp_Fp = textures_dir + "boss/boss-idle.png";
+const std::string Graphical_Manager::boss_walk_Sp_Fp = textures_dir + "boss/boss-walk.png";
+const std::string Graphical_Manager::boss_atk_Sp_Fp = textures_dir + "boss/boss-atk.png";
 
 sf::Texture* Graphical_Manager::boss_idle_texture = NULL;
 sf::Texture* Graphical_Manager::boss_walk_texture = NULL;

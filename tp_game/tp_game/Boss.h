@@ -8,7 +8,7 @@ class Boss :
 	public Enemy
 {
 private:
-
+	sf::RectangleShape _attack_rect;
 public:
 	//================================================================//
 	// ========== Constructors ========== //
