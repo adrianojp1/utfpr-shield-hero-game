@@ -14,14 +14,15 @@ Orc::Orc(const sf::Vector2f initPosition) :
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
-	cd_attack.setTotalTime(1.0f);
+	_cd_attack.setTotalTime(0.7f);
 	_speed = 150.0f;
-	_canAttack = true;
-	_velocity.x = _speed;
-
+	_attack_offset = sf::Vector2f{ 6.0f, 2.0f } *gMng::textures_scale;
+	_attack_rect.setSize(sf::Vector2f{ 12.0f, 4.0f }*gMng::textures_scale);
+	_attack_rect.setOrigin(_attack_rect.getSize());
 	initialize_animator();
 	initialize_AllColliders();
 
+	_overView = *(*_animator)[COMBAT]->getpSprite();
 } // end constr (parameters)
 
 Orc::Orc() :
@@ -49,20 +50,9 @@ void Orc::initialize_animator()
 	*_animator << new Animation(gMng::orc_idle_texture, 1, 0.0f, 2);
 	*_animator << new Animation(gMng::orc_walk_texture, 4, 0.250f, 2);
 	*_animator << new Animation(gMng::orc_die_texture, 3, 0.250f, 2);
-	*_animator << new Animation(gMng::orc_atk_texture, 3, 0.200f, 2);
+	*_animator << new Animation(gMng::orc_atk_texture, 3, 0.100f, 2);
 } // end initializeAnimators
 
-
-void Orc::attack()
-{
-	_velocity.x = 0.0f;
-	_state = COMBAT;
-}
-
-void Orc::turnArround()
-{
-	_facingRight ? _facingRight = false : _facingRight = true;
-}
 
 void Orc::colliding_onLeft()
 {
@@ -76,25 +66,48 @@ void Orc::colliding_onRight()
 	turnArround();
 }
 
+void Orc::doPrincipalOfAttack()
+{
+	if (_facingRight)
+	{
+		_attack_rect.setPosition(_position + _attack_offset);
+	}
+	else
+	{
+		_attack_rect.setPosition(_position - _attack_offset);
+	}
+	_canCauseDmg = true;
+}
+
+
+sf::RectangleShape* Orc::getAttackRect()
+{
+	return &_attack_rect;
+}
 
 void Orc::updateAction(const float deltaTime)
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 	
-	_state = WALK;
-
-	srand(static_cast<unsigned int>(time(NULL)));
-	int chanceToTurn = 3;//%
-	bool decidedToTurn = false;
-	if (rand() % 101 < chanceToTurn + 1)
-		bool decidedToTurn = true;
-
-	if (!_floor_foward || decidedToTurn)
+	check_attack();
+	if (isAttacking())
 	{
-		turnArround();
+		updateAttack();
 	}
-	_floor_foward = false;
-	moveFoward();
-	
+	else
+	{
+		_state = WALK;
 
+		int chanceToTurn = 1;//%
+		bool decidedToTurn = false;
+		if (rand() % 101 < chanceToTurn + 1)
+			bool decidedToTurn = true;
+
+		if (!_floor_foward || decidedToTurn)
+		{
+			turnArround();
+		}
+		_floor_foward = false;
+		moveFoward();
+	}
 } // end updatePosition

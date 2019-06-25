@@ -46,8 +46,13 @@ void Animator::updateAnimation(bool facingRight)
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
 	_currentAnime->updateAnimation(facingRight);
-	_currentAnime->getpSprite()->setPosition(_pEntity->getPosition());
+	updateSpritePosition();
 } // end updateSprite
+
+void Animator::updateSpritePosition()
+{
+	_currentAnime->getpSprite()->setPosition(_pEntity->getPosition());
+}
 
 void Animator::setCurrentAnime(const int i)
 {

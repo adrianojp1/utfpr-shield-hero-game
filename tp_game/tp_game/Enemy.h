@@ -4,20 +4,23 @@
 // === Classes Headers === //
 #include "Character.h" //Base class
 
+#include "Player.h"
 //======================================================================================================================================//
 // === Enemy Class === //
 class Enemy : public Character
 {
 protected:
 	// ========= State control members ========= //
-	bool _attacking;
-	bool _canAttack;
+	bool _canCauseDmg;
 
-	Timer cd_attack;
+	Timer _cd_attack;
 	int _collisionDamage;
 	int _attackDamage;
 
 	bool _floor_foward;
+
+	sf::RectangleShape _overView;
+	sf::Vector2f _attack_offset;
 public:
 	//================================================================//
 	// ========== Constructors ========== //
@@ -32,29 +35,38 @@ public:
 
 	virtual bool isVulnerable();
 
+	//================================================================//
+	// ========== Sets & Gets ============== //
 	virtual void setCollDmg(const int dmg);
 	virtual int getCollDmg() const;
 
 	virtual void setAttackDmg(const int dmg);
 	virtual int getAttackDmg() const;
 
-	//================================================================//
-	// ========== Motion ========== //
-	virtual void attack() = 0;
-
-	//================================================================//
-	// ========== State ========== //
-	virtual void decreaseTimers();
-
-	//================================================================//
-	// ========== State checkers ========== //
-	virtual bool isAttacking() const;
-
-	virtual const sf::Vector2f getFrontEdge() const;
 	//_floor_foward
 	virtual void setFloor_foward(const bool floor_fwd);
 	virtual const bool getFloor_foward() const;
-	
+
+	virtual sf::RectangleShape* getAttackRect() const;
+	//================================================================//
+	// ========== Motion ========== //
+	virtual void attack();
+	virtual void updateAttack();
+	//================================================================//
+	// ========== State ========== //
+	virtual void decreaseTimers();
+	virtual Player* a_playerInRange();
+	virtual bool playerAhead(Player* pPlayer);
+
+	virtual void updateAnime_n_Collider();
+	virtual void check_attack();
+	//================================================================//
+	// ========== State checkers ========== //
+	virtual bool isAttacking() const;
+	virtual bool principalFrameOfAttack();
+	virtual void doPrincipalOfAttack() = 0;
+	virtual const sf::Vector2f getFrontEdge() const;
+	bool ableToCauseDamage();
 protected :
 	// ========== execute submethods ========== //
 	virtual void updateAction(const float deltaTime) = 0;

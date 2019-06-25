@@ -11,7 +11,7 @@ private:
 public:
 
 	CEnt_List();
-	~CEnt_List();
+	virtual ~CEnt_List();
 
 	typedef List<Entity*>::iterator iterator;
 
@@ -23,6 +23,7 @@ public:
 	void removeEntity(Entity* pe);
 	void execute_entities(const float deltaTime);
 	void draw_entities();
+	void delete_entities();
 
 	//TODO
 	void recordEntity();

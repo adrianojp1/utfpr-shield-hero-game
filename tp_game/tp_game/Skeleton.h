@@ -3,6 +3,7 @@
 //======================================================================================================================================//
 // === Classes Headers === //
 #include "Enemy.h"
+#include "Projectile_List.h"
 
 //======================================================================================================================================//
 // === Skeleton Class === //
@@ -16,23 +17,25 @@ public:
 	Skeleton(const sf::Vector2f initPosition);
 	Skeleton();
 	// ========== Destructors ========== //
-	~Skeleton();
+	virtual ~Skeleton();
 
 	//================================================================//
 	// ========== Initializers ========== //
-	void initialize_animator() = 0; //Initializes all the animators
+	virtual void initialize_animator() = 0; //Initializes all the animators
 
 	//================================================================//
 	// ========== Motion ========== //
-	virtual void attack(); //Attack of both skeletons
-	
-
+	virtual int getProj_id() = 0;
+	void updateAttack();
+	void cast_spell(Player* pP);
+	void cast_spell(Player* pP1, Player*pP2);
+	void doPrincipalOfAttack();
 	//================================================================//
-	// ========== State checkers ========== //
-	//bool isAttacking() const;
+	// ========== State ========== //
+	virtual void check_attack();
 private:
+	//bool isAttacking() const;
+protected:
 	// ========== execute submethods ========== //
-	virtual void updateAction(const float deltaTime) = 0;
-}
-;
-
+	virtual void updateAction(const float deltaTime);
+};

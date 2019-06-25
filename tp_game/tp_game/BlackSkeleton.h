@@ -1,8 +1,6 @@
 #pragma once
 #include "Skeleton.h"
 
-class Projectile;
-
 class BlackSkeleton : public Skeleton
 {
 private:
@@ -18,9 +16,8 @@ public:
 	//================================================================//
 	// ========== Initializers ========== //
 	void initialize_animator(); //Initializes all the animators
-
+	int getProj_id();
 private:
 	// ========== execute submethods ========== //
-	void updateAction(const float deltaTime);
 };
 

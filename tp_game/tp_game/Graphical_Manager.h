@@ -39,14 +39,13 @@ public:
 
 	//================================================================//
 	//======================== Static Consts =========================//
-private:
+public:
 	// ========== Window ========== //
 	static const sf::Vector2u windowRatio;
 	static const unsigned int ratioMultiplier;
 	static const std::string windowName;
 	static const sf::Vector2u windowSize;
 
-public:
 	// ========== Debug ========== //
 	static const bool CONSOLE_LOG;
 	static const bool COLLISION_DBG;
@@ -77,9 +76,12 @@ public:
 	static sf::Font* menu_title_ft;
 
 	// ========== Sprites (Sp) file paths (Fp) ========== //
-	//Tiled
+	//Tileset
 	static const std::string tileset_Fp;
 	static sf::Texture* tileset_texture;
+	//Energy_ball
+	static const std::string energy_ball_Fp;
+	static sf::Texture* energy_ball_texture;
 
 	//Player
 	static const std::string player_idle_Sp_Fp;
@@ -133,4 +135,13 @@ public:
 
 	static sf::Texture* white_skeleton_proj_texture;
 	static sf::Texture* black_skeleton_proj_texture;
+
+	//Boss
+	static const std::string boss_idle_Sp_Fp;
+	static const std::string boss_walk_Sp_Fp;
+	static const std::string boss_atk_Sp_Fp;
+
+	static sf::Texture* boss_idle_texture;
+	static sf::Texture* boss_walk_texture;
+	static sf::Texture* boss_atk_texture;
 }gMng;

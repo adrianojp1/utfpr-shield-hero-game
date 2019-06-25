@@ -4,35 +4,46 @@
 
 //======================================================================================================================================//
 // === This Class Header === //
-#include "Weak_Block.h"
+#include "Dispenser.h"
 
 //======================================================================================================================================//
 // === Static initializations === //
-/*const sf::Vector2f Weak_Block::OriginalSize = sf::Vector2f{ 16.0f, 16.0f };
-sf::Vector2f Weak_Block::_realSize = OriginalSize;*/
 
 //======================================================================================================================================//
-// === Weak_Block methods === //
-
-Weak_Block::Weak_Block(const sf::Vector2f initPosition, const int id) :
+// === Dispenser methods === //
+Dispenser::Dispenser(const sf::Vector2f initPosition, const bool facingRight, const int id) :
 	Obstacle(initPosition, id)
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
+
+	_facingRight = facingRight;
+	if (_facingRight)
+	{
+		_id++;
+		_proj_initPos = _position + (sf::Vector2f{ 9.0f, 0.0f } *gMng::textures_scale);
+	}
+	else
+	{
+		_proj_initPos = _position - (sf::Vector2f{ 9.0f, 0.0f } *gMng::textures_scale);
+	}
 
 	initialize_animator();
 	initialize_Collider(_collider, (*_animator)[0]->getCanvasSize());
 
 	_current_collider = _collider;
 	_current_collider->setPosition(_position);
+
+	_cd_action.setTotalTime(10.0f);
+	_cd_action.trigger();
 }
 
-Weak_Block::Weak_Block() : Obstacle()
+Dispenser::Dispenser() : Obstacle()
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 1 | ");
 	_collider = NULL;
 }
 
-Weak_Block::~Weak_Block()
+Dispenser::~Dispenser()
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 	if (_collider)
@@ -41,25 +52,18 @@ Weak_Block::~Weak_Block()
 		delete _animator;
 }
 
-void Weak_Block::initialize_animator()
+void Dispenser::spit_ball()
 {
-	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
-
-	_animator = new Animator(static_cast<Entity*>(this));
-
-	Animation* pAnime = new Animation(gMng::tileset_texture, 1, 0.0f);
-
-	sf::Vector2i TileRectPosition = getTileRectPos(_id);
-	pAnime->setCanvasRect(sf::IntRect(TileRectPosition, sf::Vector2i{ OriginalSize }));
-	pAnime->initializeSprite();
-
-	(*_animator) << pAnime;
-	(*_animator).setCurrentAnime(0);
-	_animator->getCurrentAnime()->getpSprite()->setPosition(_position);
+	Projectile* pProj = new Projectile(_proj_initPos, 1, _facingRight, 2);
+	pProj->setSpeed(100.0f);
 }
 
-//upar rachaduras, tremer e sumir quando _coll_onTop
-void Weak_Block::updateAction(const float deltaTime)
+void Dispenser::updateAction(const float deltaTime)
 {
+	if (_cd_action.isZeroed())
+	{
+		spit_ball();
+		_cd_action.reset_and_trigger();
+	}
 }
 

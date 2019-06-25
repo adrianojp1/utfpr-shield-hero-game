@@ -14,7 +14,7 @@ Player::Player(const sf::Vector2f initPosition) :
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
-	_jumpHeight = 120.0f;
+	_jumpHeight = 140.0f;
 	_speed = 200.f;
 	_points = 0;
 
@@ -144,6 +144,8 @@ void Player::ressurect()
 	{
 		_state = IDLE;
 		resetHp();
+		_velocity = { 0.0f, 0.0f };
+		_facingRight = true;
 	}
 	
 	this->setPosition(_curr_spawnPoint);

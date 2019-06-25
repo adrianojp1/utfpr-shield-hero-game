@@ -10,27 +10,36 @@
 #include "Orc.h"
 #include "BlackSkeleton.h"
 #include "WhiteSkeleton.h"
+#include "Boss.h"
 //Obstacles
 #include "Dynamic_Spike.h"
-#include "Weak_Block.h"
+#include "Dispenser.h"
 //
 
 //Lists
 #include "CEnt_List.h"
 #include "Enemy_List.h"
+#include "Obstacle_List.h"
 #include "Tile_List.h"
+#include "Projectile_List.h"
 //
+
+class Stage;
+
 //======================================================================================================================================//
 // === Stage Class === //
 class Level : public Abstract_Entity
 {
 private:
 	sf::Vector2f _viewCenter;
+	sf::RectangleShape _levelRect;
 
 	//Lists
-	CEnt_List _all_EntList;
+	CEnt_List _all_level_ents;
+	Tile_List _tile_list[4];
 	Enemy_List _enemy_list;
-	Tile_List _collisiveTile_list;
+	Obstacle_List _obstacle_list;
+	Projectile_List _projectile_list;
 	//
 	
 	//Totals
@@ -47,14 +56,18 @@ private:
 
 	//Positions
 	sf::Vector2f _playerSpawn;
-	sf::RectangleShape _levelEnd;
-	std::vector<sf::Vector2f> _enemiesSpawns;
-	std::vector<sf::Vector2f> _obstaclesSpawns;
+	std::vector<sf::RectangleShape*> _levelEnd;
+	std::vector<sf::Vector2i> _enemiesSpawns;
+	std::vector<sf::Vector2i> _spikeSpawns;
+	std::vector<sf::Vector2i> _dispenserSpawns;
 	//
+
+	bool _finished;
+	Stage* _pStage;
 
 public:
 	// ========== Constructors ========== //
-	Level(std::string level_tiles_filePath, sf::Vector2f initPosition, const int nEnemies, const int nObstacles);
+	Level(std::string level_tiles_filePath, sf::Vector2f initPosition, Stage* pStage);
 	Level();
 	// ========== Destructors ========== //
 	virtual ~Level();
@@ -70,11 +83,13 @@ public:
 	virtual int extractNextInt(std::string& str, std::string::iterator& it);
 	virtual const sf::Vector2f getRealPosition(const sf::Vector2i pos_inLayer) const;
 	//
-
+	
 	virtual void initializeEntities();
 	virtual void setPlayersSpawnPoint();
 	virtual void start();
-	//virtual void finish();
+	virtual void setViewToCenter();
+
+	virtual void spawnBoss(sf::Vector2f pos);
 
 	// ========== Loop methods ========== //
 	virtual void execute(const float deltaTime);
@@ -85,8 +100,11 @@ public:
 	virtual void updatePlayersDrawables();
 	virtual void drawPlayers() const;
 	virtual void movePlayersToSpawn();
+	virtual void check_playersInScreen();
 
 	// ========== State ========== //
+	virtual void check_endLevel();
+	virtual bool was_finished();
 
 	// ========== Sets & Gets ========== //
 	//_block_ids_matrix
@@ -110,8 +128,9 @@ private:
 	};
 	static const int nLayers;
 
-#define PLAYER_SP	168
-#define ENEMY_SP	169
-#define OBSTACLE_SP 193
-#define LEVEL_END	192
+#define PLAYER_SP		168
+#define ENEMY_SP		169
+#define SPIKE_SP		193
+#define Dispenser_SP	170
+#define LEVEL_END		192
 };

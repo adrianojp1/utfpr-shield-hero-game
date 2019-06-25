@@ -140,11 +140,6 @@ void Character::colliding_onBottom()
 	_canJump = true;
 }
 
-void Character::updatePosition(const float deltaTime)
-{
-	_position += _velocity * deltaTime;
-}
-
 void Character::applyGforce(const float deltaTime)
 {
 	_velocity.y += gMng::gravity * deltaTime; //constant g force
@@ -158,24 +153,6 @@ void Character::jump()
 	10 pixels = 1m
 	gravity = 98.1*/
 	_velocity.y = -sqrtf(2.0f * gMng::gravity * _jumpHeight);
-}
-
-void Character::moveToLeft(const float speedMultiplier)
-{
-	_velocity.x -= _speed * speedMultiplier;
-}
-
-void Character::moveToRight(const float speedMultiplier)
-{
-	_velocity.x += _speed * speedMultiplier;
-}
-
-void Character::moveFoward()
-{
-	if (_facingRight)
-		moveToRight();
-	else
-		moveToLeft();
 }
 
 void Character::updateDeath()
@@ -212,7 +189,7 @@ void Character::apply_default_effect()
 
 bool Character::isDying()
 {
-	return (this->isActive() && _hp <= 0);
+	return (this->isActive() && _state == DEATH);
 }
 
 void Character::takeDmg(const int dmg)
@@ -259,8 +236,8 @@ void Character::decreaseTimers()
 
 void Character::updateAnime_n_Collider()
 {
-	_animator->updateAnimation(_facingRight);
-	_current_collider->setPosition(_position);
+	updateAnime();
+	updateCollider();
 }
 
 void Character::setJumpHeight(const float jumpHeight)
