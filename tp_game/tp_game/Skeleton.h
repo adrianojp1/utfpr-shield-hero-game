@@ -27,10 +27,12 @@ public:
 	// ========== Motion ========== //
 	virtual int getProj_id() = 0;
 	void updateAttack();
-	void cast_spell();
+	void cast_spell(Player* pP);
+	void cast_spell(Player* pP1, Player*pP2);
 	void doPrincipalOfAttack();
 	//================================================================//
-	// ========== State checkers ========== //
+	// ========== State ========== //
+	virtual void check_attack();
 private:
 	//bool isAttacking() const;
 protected:

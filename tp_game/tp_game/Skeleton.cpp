@@ -35,23 +35,60 @@ void Skeleton::updateAttack()
 	}
 }
 
-void Skeleton::cast_spell()
+void Skeleton::cast_spell(Player* pP)
 {
 	sf::Vector2f cast_position;
 	cast_position.y = _position.y + _attack_offset.y;
-	if (_facingRight)
+	if (pP->getPosition().x - this->_position.x >= 0)
 	{
+		_facingRight = true;
 		cast_position.x = _position.x + _attack_offset.x;
 	}
 	else
+	{
+		_facingRight = false;
 		cast_position.x = _position.x - _attack_offset.x;
+	}
+	Projectile* pProj = new Projectile(cast_position, _attackDamage, _facingRight, getProj_id());
+	pProj->setSpeed(200.0f);
+}
+
+void Skeleton::cast_spell(Player* pP1, Player* pP2)
+{
+	sf::Vector2f cast_position;
+	cast_position.y = _position.y + _attack_offset.y;
+	if (pP1->getPosition().x - this->_position.x >= 0 || pP2->getPosition().x - this->_position.x >= 0)
+	{
+		_facingRight = true;
+		cast_position.x = _position.x + _attack_offset.x;
+	}
+	else
+	{
+		_facingRight = false;
+		cast_position.x = _position.x - _attack_offset.x;
+	}
 	Projectile* pProj = new Projectile(cast_position, _attackDamage, _facingRight, getProj_id());
 	pProj->setSpeed(200.0f);
 }
 
 void Skeleton::doPrincipalOfAttack()
 {
-	cast_spell();
+	if (_pPlayer2)
+		cast_spell(_pPlayer1, _pPlayer2);
+	else
+	cast_spell(_pPlayer1);
+}
+
+void Skeleton::check_attack()
+{
+	if (_cd_attack.isZeroed())
+	{
+		Player* pPlayer = a_playerInRange();
+		if (pPlayer)
+		{
+			attack();
+		}
+	}
 }
 
 void Skeleton::updateAction(const float deltaTime)
