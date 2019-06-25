@@ -45,6 +45,7 @@ void Stage::initializeLevels(Stage* pStage, int nLevels)
 		std::string tiles_fp = get_lv_fp(_id, lv_id) + gMng::tile_sufix;
 		_vLevels.push_back(new Level(tiles_fp, { 0.0f, 0.0f }, pStage));
 	}
+	//_vLevels[0]->spawnBoss();
 }
 
 void Stage::execute(const float deltaTime)

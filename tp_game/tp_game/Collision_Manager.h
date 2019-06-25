@@ -7,11 +7,13 @@ class Player;
 class Enemy;
 class Obstacle;
 class Tile;
+class Projectile;
 
 //Lists
 class Tile_List;
 class Enemy_List;
 class Obstacle_List;
+class Projectile_List;
 
 //======================================================================================================================================//
 // === Collision_Manager Class === //
@@ -36,16 +38,20 @@ public:
 	void collide(Player* pPlayer, Tile* pTile);
 	void collide(Player* pPlayer, Enemy* pEnemy);
 	void collide(Player* pPlayer, Obstacle* pObstacle);
+	void collide(Player* pPlayer, Projectile* pProjectile);
 	void collide(Enemy* pEnemy, Tile* pTile);
 	void collide(Enemy* pEnemy, Obstacle* pObstacle);
+	void collide(Enemy* pEnemy, Projectile* pProjectile);
 	void collide(Obstacle* pObstacle, Tile* pTile);
 
 	//Lists collisions
 	void collide(Player* pPlayer, Tile_List* t_list);
 	void collide(Player* pPlayer, Enemy_List* e_list);
 	void collide(Player* pPlayer, Obstacle_List* o_list);
+	void collide(Player* pPlayer, Projectile_List* p_list);
 	void collide(Enemy_List* e_list, Tile_List* t_list);
 	void collide(Enemy_List* e_list, Obstacle_List* o_list);
+	void collide(Enemy_List* e_list, Projectile_List* p_list);
 	void collide(Obstacle_List* o_list, Tile_List* t_list);
 
 	// ========== Collision Management ========== //

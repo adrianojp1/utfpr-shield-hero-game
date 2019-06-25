@@ -22,6 +22,7 @@ public:
 	void initialize_animator(); //Initializes all the animators
 
 	virtual void attack();
-
+	virtual bool principalFrameOfAttack();
+	virtual void doPrincipalOfAttack();
 	virtual void updateAction(const float deltaTime);
 };
