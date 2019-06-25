@@ -16,6 +16,8 @@
 #include <list>
 #include <set>
 #include <deque>
+#include <map>
+#include <iterator>
 
 //======================================================================================================================================//
 /* === Notification Subtitles === //

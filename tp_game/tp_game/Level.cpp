@@ -53,19 +53,22 @@ Level::~Level()
 		delete _tilesIds_matrix;
 	}
 
-	for (Enemy* pEne : _enemy_list)
-	{
-		if (pEne)
-			delete pEne;
-	}
-	_enemy_list.clear();
+	_all_level_ents.delete_entities();
 
-	for (Tile* pT : _collisiveTile_list)
+	_enemy_list.clear();
+	_obstacle_list.clear();
+	
+	for (Projectile* pJ : _projectile_list)
 	{
-		if (pT)
-			delete pT;
+		if (pJ)
+			delete pJ;
 	}
-	_collisiveTile_list.clear();
+	_projectile_list.clear();
+
+	for (int i = 0; i < 4; i++)
+	{
+		_tile_list[i].clear();
+	}
 }
 
 void Level::serializeTiles(const std::string level_filePath)
@@ -207,34 +210,23 @@ void Level::initializeEntities()
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
-	Tile* pTile = NULL;
-	int id;
+	Dispenser::setProjList(&_projectile_list);
+	Skeleton::setProjList(&_projectile_list);
+
+	int id = -1;
+	sf::Vector2i pos_inMatrix = { 0, 0 };
 
 	_realSize = Tile::getRealSize() * _matrixSize;
 	_viewCenter = (_realSize / 2.0f) + _position - (Tile::getRealSize() / 2.0f);
+
+	_levelRect.setSize(_realSize);
+	_levelRect.setOrigin(_realSize / 2.0f);
+	_levelRect.setPosition(_viewCenter);
 
 	for (int j = 0; j < _matrixSize.y; j++)
 	{
 		for (int k = 0; k < _matrixSize.x; k++)
 		{
-			for (int i = 0; i < 2; i++)
-			{
-				id = _tilesIds_matrix[i][j][k];
-				if (id != -1)
-				{
-					pTile = new Tile(getRealPosition({ k, j }), _tilesIds_matrix[i][j][k]);
-					_all_EntList.includeEntity(pTile);
-				}
-			}
-
-			id = _tilesIds_matrix[CONCRETE][j][k];
-			if (id != -1)
-			{
-				pTile = new Tile(getRealPosition({ k, j }), _tilesIds_matrix[CONCRETE][j][k]);
-				_all_EntList.includeEntity(pTile);
-				_collisiveTile_list.includeTile(pTile);
-			}
-
 			id = _tilesIds_matrix[POSITIONS][j][k];
 			if (id != -1)
 			{
@@ -245,11 +237,15 @@ void Level::initializeEntities()
 					break;
 
 				case ENEMY_SP:
-					_enemiesSpawns.push_back(getRealPosition({ k, j }));
+					_enemiesSpawns.push_back({ k, j });
 					break;
 
-				case OBSTACLE_SP:
-					_obstaclesSpawns.push_back(getRealPosition({ k, j }));
+				case SPIKE_SP:
+					_spikeSpawns.push_back({ k, j });
+					break;
+
+				case Dispenser_SP:
+					_dispenserSpawns.push_back({ k, j });
 					break;
 
 				case LEVEL_END:
@@ -266,62 +262,76 @@ void Level::initializeEntities()
 	}
 
 	srand(static_cast<unsigned int>(time(NULL)));
-	for (int i = 0; i < _nTotalEnemies; i++)
+	if (!_enemiesSpawns.empty())
 	{
-		Enemy* pEnemy = NULL;
-		switch (rand() % 3)
+		for (int i = 0; i < _nTotalEnemies; i++)
 		{
-		case 0:
-			pEnemy = static_cast<Enemy*>(new Orc(_enemiesSpawns[rand() % _enemiesSpawns.size()]));
-			break;
-		case 1:
-			pEnemy = static_cast<Enemy*>(new WhiteSkeleton(_enemiesSpawns[rand() % _enemiesSpawns.size()]));
-			break;
-		case 2:
-			pEnemy = static_cast<Enemy*>(new BlackSkeleton(_enemiesSpawns[rand() % _enemiesSpawns.size()]));
-			break;
-		default:
-			break;
+			Enemy* pEnemy = NULL;
+			pos_inMatrix = _enemiesSpawns[rand() % _enemiesSpawns.size()];
+			switch (rand() % 3)
+			{
+			case 0:
+				pEnemy = static_cast<Enemy*>(new Orc(getRealPosition(pos_inMatrix)));
+				break;
+			case 1:
+				pEnemy = static_cast<Enemy*>(new WhiteSkeleton(getRealPosition(pos_inMatrix)));
+				break;
+			case 2:
+				pEnemy = static_cast<Enemy*>(new BlackSkeleton(getRealPosition(pos_inMatrix)));
+				break;
+			default:
+				break;
+			}
+			_enemy_list.includeEnemy(static_cast<Enemy*>(pEnemy));
+			_all_level_ents.includeEntity(pEnemy);
 		}
-		_enemy_list.includeEnemy(static_cast<Enemy*>(pEnemy));
-		_all_EntList.includeEntity(static_cast<Entity*>(pEnemy));
 	}
-
+	
 	for (int i = 0; i < _nTotalObstacles; i++)
 	{
 		Obstacle* pObstacle = NULL;
 
-		switch (rand() % 2)
+		if (!_spikeSpawns.empty())
 		{
-		case 0:
-			pObstacle = static_cast<Obstacle*>(new Static_Spike(_obstaclesSpawns[rand() % _obstaclesSpawns.size()]));
-			break;
-		case 1:
-			pObstacle = static_cast<Obstacle*>(new Dynamic_Spike(_obstaclesSpawns[rand() % _obstaclesSpawns.size()]));
-			break;/*
-		case 2:
-			pEnemy = static_cast<Enemy*>(new BlackSkeleton(_enemiesSpawns[rand() % _enemiesSpawns.size()]));
-			break;*/
-		default:
-			break;
+			pos_inMatrix = _spikeSpawns[rand() % _spikeSpawns.size()];
+			pObstacle = static_cast<Obstacle*>(new Static_Spike(getRealPosition(pos_inMatrix)));
+			_obstacle_list.includeObstacle(static_cast<Obstacle*>(pObstacle));
+			_all_level_ents.includeEntity(pObstacle);
 		}
-		_obstacle_list.includeObstacle(static_cast<Obstacle*>(pObstacle));
-		_all_EntList.includeEntity(static_cast<Obstacle*>(pObstacle));
+
+		if (!_dispenserSpawns.empty())
+		{
+			pos_inMatrix = _dispenserSpawns[rand() % _dispenserSpawns.size()];
+
+			bool facingRight = false;
+			if (_tilesIds_matrix[CONCRETE][pos_inMatrix.y][pos_inMatrix.x - 1] == -1)
+				facingRight = false;
+			else if (_tilesIds_matrix[CONCRETE][pos_inMatrix.y][pos_inMatrix.x + 1] == -1)
+				facingRight = true;
+
+			pObstacle = static_cast<Obstacle*>(new Dispenser(getRealPosition(pos_inMatrix), facingRight));
+			_obstacle_list.includeObstacle(static_cast<Obstacle*>(pObstacle));
+			_all_level_ents.includeEntity(pObstacle);
+
+			//Kill the concrete tile at that position
+			_tilesIds_matrix[CONCRETE][pos_inMatrix.y][pos_inMatrix.x] = -1;
+		}
 	}
-
-	_all_EntList.includeEntity(_pPlayer1);
-	if (_pPlayer2)
-		_all_EntList.includeEntity(_pPlayer2);
-
+	
+	Tile* pTile = NULL;
 	for (int j = 0; j < _matrixSize.y; j++)
 	{
 		for (int k = 0; k < _matrixSize.x; k++)
 		{
-			id = _tilesIds_matrix[FOREGROUND][j][k];
-			if (id != -1)
+			for (int i = 0; i < 4; i++)
 			{
-				pTile = new Tile(getRealPosition({ k, j }), _tilesIds_matrix[FOREGROUND][j][k]);
-				_all_EntList.includeEntity(pTile);
+				id = _tilesIds_matrix[i][j][k];
+				if (id != -1)
+				{
+					pTile = new Tile(getRealPosition({ k, j }), _tilesIds_matrix[i][j][k]);
+					_tile_list[i].includeTile(pTile);
+					_all_level_ents.includeEntity(pTile);
+				}
 			}
 		}
 	}
@@ -351,25 +361,35 @@ void Level::execute(const float deltaTime)
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
+	check_playersInScreen();
+
 	executePlayers(deltaTime);
 	_enemy_list.execute_enemies(deltaTime);
 	_obstacle_list.execute_obstacles(deltaTime);
+	_projectile_list.execute_projectiles(deltaTime);
 
 	manage_collisions();
 
 	updatePlayersDrawables();
 	_enemy_list.update_drawables();
 	_obstacle_list.update_drawables();
+	_projectile_list.update_drawables();
 }
 
 void Level::draw()
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
-	for (Entity* pEnt : _all_EntList)
+	for (int i = 0; i < 2; i++)
 	{
-		pEnt->draw();
+		_tile_list[i].draw_tiles();
 	}
+	_obstacle_list.draw_obstacles();
+	_tile_list[CONCRETE].draw_tiles();
+	_enemy_list.draw_enemies();
+	_projectile_list.draw_projectiles();
+	drawPlayers();
+	_tile_list[FOREGROUND].draw_tiles();
 }
 
 void Level::executePlayers(const float deltaTime)
@@ -409,6 +429,14 @@ void Level::movePlayersToSpawn()
 		_pPlayer2->setPosition(_playerSpawn);
 }
 
+void Level::check_playersInScreen()
+{
+	if (!_pPlayer1->getCollider()->getGlobalBounds().intersects(_levelRect.getGlobalBounds()))
+		_pPlayer1->die();
+	if (_pPlayer2 && !_pPlayer2->getCollider()->getGlobalBounds().intersects(_levelRect.getGlobalBounds()))
+		_pPlayer2->die();
+}
+
 void Level::setTiles_ids_matrix(int*** matrix)
 {
 	_tilesIds_matrix = matrix;
@@ -435,13 +463,13 @@ void Level::manage_collisions()
 
 	Collision_Manager* cMng = cMng::getInstance();
 
-	cMng->collide(_pPlayer1, &_collisiveTile_list);
-	cMng->collide(_pPlayer2, &_collisiveTile_list);
+	cMng->collide(_pPlayer1, &_tile_list[CONCRETE]);
+	cMng->collide(_pPlayer2, &_tile_list[CONCRETE]);
 	cMng->collide(_pPlayer1, &_enemy_list);
 	cMng->collide(_pPlayer2, &_enemy_list);
 	cMng->collide(_pPlayer1, &_obstacle_list);
 	cMng->collide(_pPlayer2, &_obstacle_list);
 
-	cMng->collide(&_enemy_list, &_collisiveTile_list);
+	cMng->collide(&_enemy_list, &_tile_list[CONCRETE]);
 	cMng->collide(&_enemy_list, &_obstacle_list);
 }

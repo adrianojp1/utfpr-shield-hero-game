@@ -91,11 +91,17 @@
     <ClCompile Include="Tile.cpp">
       <Filter>Other Entities</Filter>
     </ClCompile>
+    <ClCompile Include="Dispenser.cpp">
+      <Filter>Obstacles</Filter>
+    </ClCompile>
     <ClCompile Include="Obstacle_List.cpp">
       <Filter>Lists</Filter>
     </ClCompile>
-    <ClCompile Include="Ghost_Tile.cpp">
-      <Filter>Obstacles</Filter>
+    <ClCompile Include="Boss.cpp">
+      <Filter>Characters\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="Projectile_List.cpp">
+      <Filter>Lists</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -189,11 +195,17 @@
     <ClInclude Include="Tile.h">
       <Filter>Other Entities</Filter>
     </ClInclude>
+    <ClInclude Include="Dispenser.h">
+      <Filter>Obstacles</Filter>
+    </ClInclude>
     <ClInclude Include="Obstacle_List.h">
       <Filter>Lists</Filter>
     </ClInclude>
-    <ClInclude Include="Ghost_Tile.h">
-      <Filter>Obstacles</Filter>
+    <ClInclude Include="Boss.h">
+      <Filter>Characters\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="Projectile_List.h">
+      <Filter>Lists</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "BlackSkeleton.h"
-#include "Projectile.h"
 
 BlackSkeleton::BlackSkeleton(const sf::Vector2f initPosition) :
 	Skeleton(initPosition)

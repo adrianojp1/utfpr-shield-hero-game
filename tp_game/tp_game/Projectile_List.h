@@ -1,27 +1,29 @@
 #pragma once
 //======================================================================================================================================//
 // === Classes Headers === //
-#include "Obstacle.h"
+#include "Projectile.h"
+#include "List.h"
 
 //======================================================================================================================================//
-// === Obstacle_List Class === //
-class Obstacle_List
+// === Projectile_List Class === //
+class Projectile_List
 {
 private:
-	std::deque<Obstacle*> _obst_deque;
+	List<Projectile*> _proj_list;
 public:
-	Obstacle_List();
-	virtual ~Obstacle_List();
+	Projectile_List();
+	virtual ~Projectile_List();
 
-	typedef std::deque<Obstacle*>::iterator iterator;
+	typedef List<Projectile*>::iterator iterator;
 
 	iterator begin();
 	iterator end();
 
 	void clear();
-	void includeObstacle(Obstacle* pO);
-	void execute_obstacles(const float deltaTime);
+	void includeProjectile(Projectile* pJ);
+	void execute_projectiles(const float deltaTime);
 	void update_drawables();
-	void draw_obstacles();
+	//void removeTile(Tile* pT);
+	void draw_projectiles();
 };
 

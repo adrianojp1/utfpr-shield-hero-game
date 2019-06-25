@@ -77,9 +77,12 @@ public:
 	static sf::Font* menu_title_ft;
 
 	// ========== Sprites (Sp) file paths (Fp) ========== //
-	//Tiled
+	//Tileset
 	static const std::string tileset_Fp;
 	static sf::Texture* tileset_texture;
+	//Energy_ball
+	static const std::string energy_ball_Fp;
+	static sf::Texture* energy_ball_texture;
 
 	//Player
 	static const std::string player_idle_Sp_Fp;

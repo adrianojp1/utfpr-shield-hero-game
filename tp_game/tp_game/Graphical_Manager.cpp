@@ -33,8 +33,11 @@ const std::string Graphical_Manager::menu_title_Ft_Fp = fonts_dir + "alagard.ttf
 sf::Font* Graphical_Manager::menu_ops_ft = NULL;
 sf::Font* Graphical_Manager::menu_title_ft = NULL;
 
-const std::string Graphical_Manager::tileset_Fp = textures_dir + "tileset.png";
+const std::string Graphical_Manager::tileset_Fp = textures_dir + "stage/tileset.png";
 sf::Texture *Graphical_Manager::tileset_texture = NULL;
+
+const std::string Graphical_Manager::energy_ball_Fp = textures_dir + "stage/energy_ball.png";
+sf::Texture* Graphical_Manager::energy_ball_texture = NULL;
 
 const std::string Graphical_Manager::player_idle_Sp_Fp = textures_dir + "shield-hero/shield_hero-idle.png";
 const std::string Graphical_Manager::player_walk_Sp_Fp = textures_dir + "shield-hero/shield_hero-walk.png";
@@ -126,6 +129,7 @@ void Graphical_Manager::loadAllTextures()
 
 	//Tilet
 	loadTexture(tileset_Fp, &tileset_texture);
+	loadTexture(energy_ball_Fp, &energy_ball_texture);
 
 	//Player
 	loadTexture(player_idle_Sp_Fp, &player_idle_texture);

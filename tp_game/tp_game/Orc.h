@@ -25,7 +25,6 @@ public:
 	//================================================================//
 	// ========== Motion ========== //
 	void attack();
-	void turnArround();
 	void colliding_onLeft();
 	void colliding_onRight();
 

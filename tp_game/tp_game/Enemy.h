@@ -13,11 +13,13 @@ protected:
 	bool _attacking;
 	bool _canAttack;
 
-	Timer cd_attack;
+	Timer _cd_attack;
 	int _collisionDamage;
 	int _attackDamage;
 
 	bool _floor_foward;
+
+
 public:
 	//================================================================//
 	// ========== Constructors ========== //

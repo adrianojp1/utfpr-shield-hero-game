@@ -155,24 +155,6 @@ void Character::jump()
 	_velocity.y = -sqrtf(2.0f * gMng::gravity * _jumpHeight);
 }
 
-void Character::moveToLeft(const float speedMultiplier)
-{
-	_velocity.x -= _speed * speedMultiplier;
-}
-
-void Character::moveToRight(const float speedMultiplier)
-{
-	_velocity.x += _speed * speedMultiplier;
-}
-
-void Character::moveFoward()
-{
-	if (_facingRight)
-		moveToRight();
-	else
-		moveToLeft();
-}
-
 void Character::updateDeath()
 {
 	if ((*_animator)[DEATH]->isFinished())

@@ -161,6 +161,29 @@ void Entity::decreaseTimers()
 {
 }
 
+void Entity::turnArround()
+{
+	_facingRight ? _facingRight = false : _facingRight = true;
+}
+
+void Entity::moveFoward()
+{
+	if (_facingRight)
+		moveToRight();
+	else
+		moveToLeft();
+}
+
+void Entity::moveToLeft(const float speedMultiplier)
+{
+	_velocity.x -= _speed * speedMultiplier;
+}
+
+void Entity::moveToRight(const float speedMultiplier)
+{
+	_velocity.x += _speed * speedMultiplier;
+}
+
 void Entity::onCollision(const sf::Vector2f collisionDirection)
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");

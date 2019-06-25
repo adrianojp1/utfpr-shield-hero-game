@@ -96,7 +96,7 @@ void Collision_Manager::collide(Enemy* pEnemy, Tile* pTile)
 		sf::Vector2f intersection;
 		sf::Vector2f collisionDirection;
 
-		if (!pEnemy->getFloor_foward() && intersects(pTile, pEnemy->getFrontEdge()))
+		if (!pEnemy->getFloor_foward() && contains(pTile, pEnemy->getFrontEdge()))
 			pEnemy->setFloor_foward(true);
 		if (check_collision(static_cast<Entity*>(pEnemy), pTile, &intersection, &collisionDirection))
 		{
@@ -312,7 +312,7 @@ bool Collision_Manager::check_collision_n_push(Entity* ent1, Entity* ent2, sf::V
 	return false;
 }
 
-bool Collision_Manager::intersects(Entity* ent, sf::Vector2f point)
+bool Collision_Manager::contains(Entity* ent, sf::Vector2f point)
 {
 	sf::Vector2f halfSize = ent->getCollider()->getSize();
 	sf::Vector2f pos = ent->getCollider()->getPosition();
@@ -321,4 +321,23 @@ bool Collision_Manager::intersects(Entity* ent, sf::Vector2f point)
 	sf::Vector2f sup_lims = pos + halfSize;
 
 	return ((point.x > inf_lims.x) && (point.x < sup_lims.x) && (point.y > inf_lims.y) && (point.y < sup_lims.y)) ? true : false;
+}
+
+bool Collision_Manager::intersects(Entity* ent, sf::RectangleShape* rect)
+{
+	sf::Vector2f otherPosition = rect->getPosition();
+	sf::Vector2f otherHalfSize = rect->getSize() / 2.0f;
+	sf::Vector2f thisPosition = ent->getPosition();
+	sf::Vector2f thisHalfSize = ent->getCollider()->getSize() / 2.0f;
+
+	sf::Vector2f delta = { otherPosition.x - thisPosition.x, otherPosition.y - thisPosition.y };
+
+	sf::Vector2f intersection = { abs(delta.x) - (otherHalfSize.x + thisHalfSize.x),
+								 abs(delta.y) - (otherHalfSize.y + thisHalfSize.y) };
+
+	if (intersection.x < 0.0f && intersection.y < 0.0f)
+	{
+		return true;
+	}
+	return false;
 }

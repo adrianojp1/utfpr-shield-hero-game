@@ -62,6 +62,10 @@ public:
 	virtual void updateAnime();
 	virtual void updateCollider();
 	virtual void decreaseTimers();
+	virtual void turnArround();
+	virtual void moveFoward();
+	virtual void moveToLeft(const float speedMultiplier = 1.0f);
+	virtual void moveToRight(const float speedMultiplier = 1.0f);
 
 	//================================================================//
 	// ========== Sets & Gets ========== //

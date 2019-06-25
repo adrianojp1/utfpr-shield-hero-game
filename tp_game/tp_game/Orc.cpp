@@ -14,7 +14,7 @@ Orc::Orc(const sf::Vector2f initPosition) :
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
-	cd_attack.setTotalTime(1.0f);
+	_cd_attack.setTotalTime(1.0f);
 	_speed = 150.0f;
 	_canAttack = true;
 	_velocity.x = _speed;
@@ -59,11 +59,6 @@ void Orc::attack()
 	_state = COMBAT;
 }
 
-void Orc::turnArround()
-{
-	_facingRight ? _facingRight = false : _facingRight = true;
-}
-
 void Orc::colliding_onLeft()
 {
 	_velocity.x = 0.0f;
@@ -84,7 +79,7 @@ void Orc::updateAction(const float deltaTime)
 	_state = WALK;
 
 	srand(static_cast<unsigned int>(time(NULL)));
-	int chanceToTurn = 3;//%
+	int chanceToTurn = 1;//%
 	bool decidedToTurn = false;
 	if (rand() % 101 < chanceToTurn + 1)
 		bool decidedToTurn = true;
