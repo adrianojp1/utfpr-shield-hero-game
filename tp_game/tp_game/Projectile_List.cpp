@@ -28,7 +28,7 @@ void Projectile_List::clear()
 void Projectile_List::includeProjectile(Projectile* pJ)
 {
 	if (pJ)
-		_proj_list.pushBack(pJ);
+		_proj_list.push_back(pJ);
 }
 
 void Projectile_List::execute_projectiles(const float deltaTime)
@@ -54,3 +54,9 @@ void Projectile_List::draw_projectiles()
 		pJ->draw();
 	}
 }
+
+void Projectile_List::remove_projectile(Projectile* pP)
+{
+	_proj_list.remove(pP);
+}
+

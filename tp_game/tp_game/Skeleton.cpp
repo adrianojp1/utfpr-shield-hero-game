@@ -7,8 +7,6 @@ Skeleton::Skeleton(const sf::Vector2f initPosition) : Enemy(initPosition)
 
 	_cd_attack.setTotalTime(4.0f);
 	_speed = 0.0f;
-	_canAttack = true;
-	_velocity.x = _speed;
 	_facingRight = false;
 	_overView.setSize({ 2688.0f, 13.0f*gMng::textures_scale.y });
 	_overView.setOrigin(_overView.getSize() / 2.0f);

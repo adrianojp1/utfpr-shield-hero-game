@@ -13,10 +13,12 @@
 #include "Enemy.h"
 #include "Obstacle.h"
 #include "Tile.h"
+#include "Projectile.h"
 
 #include "Enemy_List.h"
 #include "Tile_List.h"
 #include "Obstacle_List.h"
+#include "Projectile_List.h"
 
 //======================================================================================================================================//
 // === Static initializations === //
@@ -53,23 +55,15 @@ void Collision_Manager::collide(Player* pPlayer, Tile* pTile)
 
 void Collision_Manager::collide(Player* pPlayer, Enemy* pEnemy)
 {
-	if (pPlayer && pEnemy && pPlayer->isVulnerable())
+	if (pPlayer && pEnemy && pEnemy->isActive() && pPlayer->isVulnerable())
 	{
 		sf::Vector2f intersection;
 		sf::Vector2f collisionDirection;
 
-		if (check_collision(static_cast<Entity*>(pPlayer), static_cast<Entity*>(pEnemy), &intersection, &collisionDirection))
+		if (check_collision(static_cast<Entity*>(pPlayer), static_cast<Entity*>(pEnemy), &intersection, &collisionDirection) && 
+			pEnemy->isAttacking())
 		{
-			if (pPlayer->isDefendingInFront(collisionDirection))
-			{
-				collisionDirection = -collisionDirection;
-				push_entities(static_cast<Entity*>(pEnemy), static_cast<Entity*>(pPlayer), &intersection, &collisionDirection, 0.0f);
-				pEnemy->onCollision(collisionDirection);
-			}
-			else
-			{
-				pPlayer->takeDmg(pEnemy->getCollDmg());
-			}
+			
 		}
 	}
 }
@@ -85,6 +79,35 @@ void Collision_Manager::collide(Player* pPlayer, Obstacle* pObstacle)
 		{
 			pPlayer->takeDmg(pObstacle->getCollDmg());
 			pObstacle->onCollision(-collisionDirection);
+		}
+	}
+}
+
+void Collision_Manager::collide(Player* pPlayer, Projectile* pProjectile)
+{
+	if (pPlayer && pProjectile && pProjectile->isActive() && !pProjectile->wasReflected())
+	{
+		sf::Vector2f intersection;
+		sf::Vector2f collisionDirection;
+
+		if (check_collision(static_cast<Entity*>(pPlayer), static_cast<Entity*>(pProjectile), &intersection, &collisionDirection))
+		{
+			if (pPlayer->isDefendingInFront(collisionDirection))
+			{
+				if (pPlayer->isCounterUp())
+				{
+					pProjectile->reflect();
+				}
+				else
+				{
+					pProjectile->desactivate();
+				}
+			}
+			else if(pPlayer->isVulnerable())
+			{
+				pPlayer->takeDmg(pProjectile->getCollDmg());
+				pProjectile->desactivate();
+			}
 		}
 	}
 }
@@ -118,6 +141,15 @@ void Collision_Manager::collide(Enemy* pEnemy, Obstacle* pObstacle)
 			push_entities(static_cast<Entity*>(pEnemy), pObstacle, &intersection, &collisionDirection, 0.0f);
 			pEnemy->onCollision(collisionDirection);
 		}
+	}
+}
+
+void Collision_Manager::collide(Enemy* pEnemy, Projectile* pProjectile)
+{
+	if (pEnemy && pProjectile && pEnemy->isActive() && pProjectile->isActive() && pProjectile->wasReflected() && check_collision(pEnemy, pProjectile))
+	{
+		pEnemy->takeDmg(pProjectile->getCollDmg());
+		pProjectile->desactivate();
 	}
 }
 
@@ -159,6 +191,17 @@ void Collision_Manager::collide(Player* pPlayer, Obstacle_List* o_list)
 	}
 }
 
+void Collision_Manager::collide(Player* pPlayer, Projectile_List* p_list)
+{
+	if (pPlayer && p_list)
+	{
+		for (Projectile* pP : *p_list)
+		{
+			collide(pPlayer, pP);
+		}
+	}
+}
+
 void Collision_Manager::collide(Enemy_List* e_list, Tile_List* t_list)
 {
 	if (t_list && e_list)
@@ -184,6 +227,16 @@ void Collision_Manager::collide(Enemy_List* e_list, Obstacle_List* o_list)
 				collide(pE, pO);
 			}
 		}
+	}
+}
+
+void Collision_Manager::collide(Enemy_List* e_list, Projectile_List* p_list)
+{
+	if (e_list && p_list)
+	{
+		for (Enemy* pE : *e_list)
+			for (Projectile* pP : *p_list)
+				collide(pE, pP);
 	}
 }
 

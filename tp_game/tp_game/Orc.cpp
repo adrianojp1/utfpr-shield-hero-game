@@ -14,10 +14,8 @@ Orc::Orc(const sf::Vector2f initPosition) :
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
-	_cd_attack.setTotalTime(1.0f);
+	_cd_attack.setTotalTime(0.7f);
 	_speed = 150.0f;
-	_canAttack = true;
-	_velocity.x = _speed;
 	_attack_offset = sf::Vector2f{ 6.0f, 2.0f } *gMng::textures_scale;
 	_attack_rect.setSize(sf::Vector2f{ 12.0f, 4.0f }*gMng::textures_scale);
 	_attack_rect.setOrigin(_attack_rect.getSize());
@@ -52,7 +50,7 @@ void Orc::initialize_animator()
 	*_animator << new Animation(gMng::orc_idle_texture, 1, 0.0f, 2);
 	*_animator << new Animation(gMng::orc_walk_texture, 4, 0.250f, 2);
 	*_animator << new Animation(gMng::orc_die_texture, 3, 0.250f, 2);
-	*_animator << new Animation(gMng::orc_atk_texture, 3, 0.200f, 2);
+	*_animator << new Animation(gMng::orc_atk_texture, 3, 0.100f, 2);
 } // end initializeAnimators
 
 void Orc::colliding_onLeft()

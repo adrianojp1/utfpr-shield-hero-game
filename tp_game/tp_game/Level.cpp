@@ -361,7 +361,8 @@ void Level::setViewToCenter()
 
 void Level::spawnBoss()
 {
-	//Boss* pBoss = new Boss;
+	Boss* pBoss = new Boss(sf::Vector2f{ 500.0f, 400.0f });
+	_enemy_list.includeEnemy(pBoss);
 }
 
 void Level::check_endLevel()
@@ -489,11 +490,14 @@ void Level::manage_collisions()
 
 	cMng->collide(_pPlayer1, &_tile_list[CONCRETE]);
 	cMng->collide(_pPlayer2, &_tile_list[CONCRETE]);
-	cMng->collide(_pPlayer1, &_enemy_list);
-	cMng->collide(_pPlayer2, &_enemy_list);
+	//cMng->collide(_pPlayer1, &_enemy_list);
+	//cMng->collide(_pPlayer2, &_enemy_list);
 	cMng->collide(_pPlayer1, &_obstacle_list);
 	cMng->collide(_pPlayer2, &_obstacle_list);
+	cMng->collide(_pPlayer1, &_projectile_list);
+	cMng->collide(_pPlayer2, &_projectile_list);
 
 	cMng->collide(&_enemy_list, &_tile_list[CONCRETE]);
 	cMng->collide(&_enemy_list, &_obstacle_list);
+	cMng->collide(&_enemy_list, &_projectile_list);
 }
