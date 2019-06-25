@@ -63,7 +63,6 @@ void Entity::initialize_Collider(sf::RectangleShape *&pCollider, sf::Vector2f sp
 
 void Entity::draw()
 {
-
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
 	if (this->isActive())

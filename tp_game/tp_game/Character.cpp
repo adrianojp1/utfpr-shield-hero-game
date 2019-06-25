@@ -189,7 +189,7 @@ void Character::apply_default_effect()
 
 bool Character::isDying()
 {
-	return (this->isActive() && _hp <= 0);
+	return (this->isActive() && _state == DEATH);
 }
 
 void Character::takeDmg(const int dmg)

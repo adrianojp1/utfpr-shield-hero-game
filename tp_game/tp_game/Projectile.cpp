@@ -6,6 +6,9 @@
 // === This Class Header === //
 #include "Projectile.h"
 
+#include "Projectile_List.h"
+Projectile_List* Projectile::_level_proj_list = NULL;
+
 //======================================================================================================================================//
 // === Static initializations === //
 
@@ -20,6 +23,8 @@ Projectile::Projectile(const sf::Vector2f initPosition, const int collDmg, const
 	initialize_animator();
 	initialize_Collider(_collider, (*_animator)[0]->getCanvasSize());
 	_current_collider = _collider;
+
+	_level_proj_list->includeProjectile(this);
 }
 
 Projectile::Projectile()
@@ -93,6 +98,16 @@ void Projectile::reflect()
 {
 	turnArround();
 	_reflected = true;
+}
+
+void Projectile::setProjList(Projectile_List* projList)
+{
+	_level_proj_list = projList;
+}
+
+Projectile_List* Projectile::getProjList()
+{
+	return _level_proj_list;
 }
 
 void Projectile::updateAction(const float deltaTime)

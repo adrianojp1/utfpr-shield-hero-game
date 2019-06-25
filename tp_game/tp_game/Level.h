@@ -53,11 +53,13 @@ private:
 
 	//Positions
 	sf::Vector2f _playerSpawn;
-	sf::RectangleShape _levelEnd;
+	std::vector<sf::RectangleShape*> _levelEnd;
 	std::vector<sf::Vector2i> _enemiesSpawns;
 	std::vector<sf::Vector2i> _spikeSpawns;
 	std::vector<sf::Vector2i> _dispenserSpawns;
 	//
+
+	bool _finished;
 
 public:
 	// ========== Constructors ========== //
@@ -82,7 +84,6 @@ public:
 	virtual void setPlayersSpawnPoint();
 	virtual void start();
 	virtual void setViewToCenter();
-	//virtual void finish();
 
 	// ========== Loop methods ========== //
 	virtual void execute(const float deltaTime);
@@ -96,6 +97,8 @@ public:
 	virtual void check_playersInScreen();
 
 	// ========== State ========== //
+	virtual void check_endLevel();
+	virtual bool was_finished();
 
 	// ========== Sets & Gets ========== //
 	//_block_ids_matrix

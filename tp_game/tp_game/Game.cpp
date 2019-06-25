@@ -25,12 +25,14 @@ Game::~Game()
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
-	if (_window)
-		delete _window;
+	destroy(_window);
 	if (_pPlayer1)
 		delete _pPlayer1;
-	if (_stage1)
-		delete _stage1;
+	if (_pPlayer2)
+		delete _pPlayer2;
+	if (_main_menu)
+		delete _main_menu;
+	_stages.erase(_stages.begin(), _stages.end());
 } // end destr
 
 Game* Game::getInstance()
@@ -63,17 +65,17 @@ void Game::initialize()
 	initialize_player2();
 	Abstract_Entity::setpPlayer1(_pPlayer1);
 
-	_stage1 = NULL;
+	_stages.push_back(NULL);
+	_stages.push_back(NULL);
+	_currentStage_index = 0;
 
 	_deltaTime = 0.0f;
 	Timer::setpDeltaTime(&_deltaTime);
 
-	_runningStage = false;
 	_main_menu->open();
 
 	_state = On_MainMenu::getInstance();
 
-	_currentStage = _stage1;
 } // end initialize
 
 void Game::initialize_player1()
@@ -98,14 +100,15 @@ void Game::initialize_player2()
 	}
 }
 
-void Game::initialize_stage1()
+void Game::initialize_stage(const int stg_id)
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
-
-	if (_stage1)
+	int index = stg_id - 1;
+	
+	if (_stages[index])
 	{
-		delete _stage1;
-		_stage1 = NULL;
+		delete _stages[index];
+		_stages[index] = NULL;
 	}
 
 	if (_nPlayers == 2)
@@ -119,7 +122,17 @@ void Game::initialize_stage1()
 		Abstract_Entity::setpPlayer2(NULL);
 	}
 
-	_stage1 = new Stage(2, _nPlayers);
+	switch (stg_id)
+	{
+	case 1:
+		_stages[index] = new Horizontal_Stage(_nPlayers);
+		break;
+	case 2:
+		_stages[index] = new Vertical_Stage(_nPlayers);
+		break;
+	default:
+		break;
+	}
 }
 
 void Game::resetPlayers()
@@ -141,17 +154,14 @@ void Game::set_currentStage(int stg_id)
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
-	if (stg_id == 1)
-		_currentStage = _stage1;
-	//else
-		//_currentStage = stage2;
+	_currentStage_index = stg_id - 1;
 }
 
 Stage* Game::get_currentStage()
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
-	return _currentStage;
+	return _stages[_currentStage_index];
 }
 
 Main_Menu* Game::get_main_menu()
@@ -175,13 +185,35 @@ Pause_Menu* Game::get_pause_menu()
 	return _pause_menu;
 }
 
+void Game::destroy(void* pointer)
+{
+	if (pointer)
+		delete pointer;
+}
+
+void Game::goToNextStage()
+{
+	if (_currentStage_index < _stages.size() - 1)
+	{
+		_currentStage_index++;
+		start_stage(_currentStage_index + 1);
+		execute();
+	}
+	else
+	{
+		std::cout << "Game finished!" << std::endl;
+		getchar();
+		/* Game was finished */
+	}
+}
+
 void Game::pause_stage()
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
-	if (_runningStage)
+	if (isRunning_stage())
 	{
-		_currentStage->pause();
+		_stages[_currentStage_index]->pause();
 	}
 }
 
@@ -189,32 +221,36 @@ void Game::unpause_stage()
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
-	if (_runningStage)
-	{
-		_currentStage->unpause();
-	}
+	if(isRunning_stage())
+		_stages[_currentStage_index]->unpause();
 }
 
 bool Game::isRunning_stage()
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
-	return _runningStage;
+	return _stages[_currentStage_index]->isRunning();
 }
 
 void Game::run_stage()
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
-	_runningStage = true;
-	_currentStage->start();
+	_stages[_currentStage_index]->start();
 }
 
 void Game::stop_runningStage()
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
-	_runningStage = false;
+	_stages[_currentStage_index]->stop();
+}
+
+void Game::start_stage(int stg_id)
+{
+	initialize_stage(stg_id);
+	set_currentStage(stg_id);
+	run_stage();
 }
 
 void Game::open_Main_Menu()
@@ -290,8 +326,8 @@ void Game::update_deltaTime()
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
 	_deltaTime = _clock.restart().asSeconds(); //Iteration clock
-	if (_deltaTime > 1.0f / 20.f)
-		_deltaTime = 1.0f / 20.f;
+	if (_deltaTime > 1.0f / 4.0f)
+		_deltaTime = 1.0f / 4.0f;
 }
 
 void Game::changeState(Game_State* state)

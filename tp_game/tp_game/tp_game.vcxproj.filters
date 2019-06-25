@@ -103,6 +103,12 @@
     <ClCompile Include="Projectile_List.cpp">
       <Filter>Lists</Filter>
     </ClCompile>
+    <ClCompile Include="Vertical_Stage.cpp">
+      <Filter>Abstract Entities\Stages</Filter>
+    </ClCompile>
+    <ClCompile Include="Horizontal_Stage.cpp">
+      <Filter>Abstract Entities\Stages</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Character.h">
@@ -206,6 +212,12 @@
     </ClInclude>
     <ClInclude Include="Projectile_List.h">
       <Filter>Lists</Filter>
+    </ClInclude>
+    <ClInclude Include="Vertical_Stage.h">
+      <Filter>Abstract Entities\Stages</Filter>
+    </ClInclude>
+    <ClInclude Include="Horizontal_Stage.h">
+      <Filter>Abstract Entities\Stages</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

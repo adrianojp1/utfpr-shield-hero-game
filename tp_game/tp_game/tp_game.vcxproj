@@ -166,6 +166,7 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Game_State.cpp" />
     <ClCompile Include="Dispenser.cpp" />
+    <ClCompile Include="Horizontal_Stage.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Main_Menu.cpp" />
     <ClCompile Include="Menu.cpp" />
@@ -186,6 +187,7 @@
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="Tile_List.cpp" />
     <ClCompile Include="Timer.cpp" />
+    <ClCompile Include="Vertical_Stage.cpp" />
     <ClCompile Include="WhiteSkeleton.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -204,6 +206,7 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="Game_State.h" />
     <ClInclude Include="Dispenser.h" />
+    <ClInclude Include="Horizontal_Stage.h" />
     <ClInclude Include="List.h" />
     <ClInclude Include="Main_Menu.h" />
     <ClInclude Include="Menu.h" />
@@ -224,6 +227,7 @@
     <ClInclude Include="Tile.h" />
     <ClInclude Include="Tile_List.h" />
     <ClInclude Include="Timer.h" />
+    <ClInclude Include="Vertical_Stage.h" />
     <ClInclude Include="WhiteSkeleton.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

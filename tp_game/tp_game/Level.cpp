@@ -19,7 +19,8 @@ Level::Level(const std::string level_tiles_filePath, sf::Vector2f initPosition, 
 	_nTotalEnemies = nEnemies;
 	_nTotalObstacles = nObstacles;
 	_tilesIds_matrix = NULL;
-	
+	_finished = false;
+
 	serializeTiles(level_tiles_filePath);
 	initializeEntities();
 }
@@ -69,6 +70,13 @@ Level::~Level()
 	{
 		_tile_list[i].clear();
 	}
+
+	for (sf::RectangleShape* pR : _levelEnd)
+	{
+		if (pR)
+			delete pR;
+	}
+	_levelEnd.clear();
 }
 
 void Level::serializeTiles(const std::string level_filePath)
@@ -210,8 +218,7 @@ void Level::initializeEntities()
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
-	Dispenser::setProjList(&_projectile_list);
-	Skeleton::setProjList(&_projectile_list);
+	Projectile::setProjList(&_projectile_list);
 
 	int id = -1;
 	sf::Vector2i pos_inMatrix = { 0, 0 };
@@ -222,6 +229,8 @@ void Level::initializeEntities()
 	_levelRect.setSize(_realSize);
 	_levelRect.setOrigin(_realSize / 2.0f);
 	_levelRect.setPosition(_viewCenter);
+
+	sf::RectangleShape* new_level_end = NULL;
 
 	for (int j = 0; j < _matrixSize.y; j++)
 	{
@@ -249,9 +258,10 @@ void Level::initializeEntities()
 					break;
 
 				case LEVEL_END:
-					_levelEnd.setSize(Tile::getRealSize());
-					_levelEnd.setOrigin(_levelEnd.getSize() / 2.0f);
-					_levelEnd.setPosition(getRealPosition({ k, j }));
+					new_level_end = new sf::RectangleShape(Tile::getRealSize());
+					new_level_end->setOrigin(new_level_end->getSize() / 2.0f);
+					new_level_end->setPosition(getRealPosition({ k, j }));
+					_levelEnd.push_back(new_level_end);
 					break;
 
 				default:
@@ -357,10 +367,26 @@ void Level::setViewToCenter()
 	_pGraphMng->setViewCenter(_viewCenter);
 }
 
+void Level::check_endLevel()
+{
+	cMng* collMng = cMng::getInstance();
+	for (sf::RectangleShape* endTile : _levelEnd)
+	{
+		if (collMng->intersects(_pPlayer1, endTile) || (_pPlayer2 && collMng->intersects(_pPlayer2, endTile)))
+			_finished = true;
+	}
+}
+
+bool Level::was_finished()
+{
+	return _finished;
+}
+
 void Level::execute(const float deltaTime)
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
+	check_endLevel();
 	check_playersInScreen();
 
 	executePlayers(deltaTime);
@@ -431,9 +457,10 @@ void Level::movePlayersToSpawn()
 
 void Level::check_playersInScreen()
 {
-	if (!_pPlayer1->getCollider()->getGlobalBounds().intersects(_levelRect.getGlobalBounds()))
+	cMng* colMng = cMng::getInstance();
+	if (!colMng->intersects(_pPlayer1, &_levelRect))
 		_pPlayer1->die();
-	if (_pPlayer2 && !_pPlayer2->getCollider()->getGlobalBounds().intersects(_levelRect.getGlobalBounds()))
+	if (_pPlayer2 && !colMng->intersects(_pPlayer2, &_levelRect))
 		_pPlayer2->die();
 }
 

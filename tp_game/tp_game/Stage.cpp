@@ -17,7 +17,15 @@ Stage::Stage(const int id, const int nPlayers) : Abstract_Entity(id)
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
-	initializeStage(nPlayers);
+	_currentLevel_index = 0;
+	_nPlayers = nPlayers;
+	_running = false;
+
+	srand(static_cast<unsigned int>(time(NULL)));
+	_nEnemies = (rand() % 11) + 5;
+	_nObstacles = (rand() % 11) + 5;
+
+	initializeLevels();
 }
 Stage::~Stage()
 {
@@ -31,19 +39,10 @@ Stage::~Stage()
 	_vLevels.clear();
 }
 
-void Stage::initializeStage(const int nPlayers)
+void Stage::initializeLevels()
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
-	_currentLevel_id = 0;
-	_nPlayers = nPlayers;
-	_running = false;
-
-	srand(static_cast<unsigned int>(time(NULL)));
-	_nEnemies = (rand() % 11) + 5;
-	_nObstacles = (rand() % 11) + 5;
-
-	//levels_dir + stage2_dir + stg2_prefix + "id" + pos_sufix;
 	int lv_id = 1;
 	std::string tiles_fp = get_lv_fp(_id, lv_id) + gMng::tile_sufix;
 	
@@ -57,21 +56,47 @@ void Stage::execute(const float deltaTime)
 	check_pauseKey();
 
 	if (!this->isPaused())
-		_vLevels[_currentLevel_id]->execute(deltaTime);
+	{
+		if (_vLevels[_currentLevel_index]->was_finished())
+		{
+			if (_currentLevel_index < _vLevels.size() - 1)
+			{
+				_currentLevel_index++;
+			}
+			else //Stage finished
+			{
+				Game::getInstance()->goToNextStage();
+			}
+		}
+		else
+		{
+			_vLevels[_currentLevel_index]->execute(deltaTime);
+		}
+	}
 }
 
 void Stage::draw()
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
-	_vLevels[_currentLevel_id]->draw();
+	_vLevels[_currentLevel_index]->draw();
 }
 
 void Stage::start()
 {
 	unpause();
 	_running = true;
-	_vLevels[_currentLevel_id]->start();
+	_vLevels[_currentLevel_index]->start();
+}
+
+void Stage::stop()
+{
+	_running = false;
+}
+
+bool Stage::isRunning()
+{
+	return _running;
 }
 
 void Stage::pause()
@@ -85,7 +110,7 @@ void Stage::unpause()
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
-	_vLevels[_currentLevel_id]->setViewToCenter();
+	_vLevels[_currentLevel_index]->setViewToCenter();
 	this->activate();
 }
 

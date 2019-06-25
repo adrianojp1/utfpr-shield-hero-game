@@ -11,7 +11,7 @@
 const sf::Vector2u Graphical_Manager::windowRatio = {16, 9};
 const unsigned int Graphical_Manager::ratioMultiplier = 84;
 const std::string Graphical_Manager::windowName = "Shield Hero";
-const sf::Vector2u Graphical_Manager::windowSize = {windowRatio.x * ratioMultiplier, windowRatio.y *ratioMultiplier};
+const sf::Vector2u Graphical_Manager::windowSize = {windowRatio.x * ratioMultiplier, 728};
 
 std::vector<sf::Texture *> Graphical_Manager::_vTextures;
 
@@ -96,6 +96,7 @@ Graphical_Manager::Graphical_Manager() : sf::RenderWindow(sf::VideoMode(windowSi
 	loadAllTextures();
 	loadAllFonts();
 	initializeView({0.0f, 0.0f}, (sf::Vector2f)this->getSize());
+	this->setFramerateLimit(60);
 } // end constr
 
 Graphical_Manager::~Graphical_Manager()

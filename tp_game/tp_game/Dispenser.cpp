@@ -8,7 +8,6 @@
 
 //======================================================================================================================================//
 // === Static initializations === //
-Projectile_List* Dispenser::_level_proj_list = NULL;
 
 //======================================================================================================================================//
 // === Dispenser methods === //
@@ -53,21 +52,10 @@ Dispenser::~Dispenser()
 		delete _animator;
 }
 
-void Dispenser::setProjList(Projectile_List* projList)
-{
-	_level_proj_list = projList;
-}
-
-Projectile_List* Dispenser::getProjList()
-{
-	return _level_proj_list;
-}
-
 void Dispenser::spit_ball()
 {
 	Projectile* pProj = new Projectile(_proj_initPos, 1, _facingRight, 2);
 	pProj->setSpeed(100.0f);
-	_level_proj_list->includeProjectile(pProj);
 }
 
 void Dispenser::updateAction(const float deltaTime)

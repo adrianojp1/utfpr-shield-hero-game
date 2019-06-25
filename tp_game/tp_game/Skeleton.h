@@ -10,7 +10,6 @@
 class Skeleton : public Enemy
 {
 private:
-	static Projectile_List* _level_proj_list;
 	sf::Vector2f _proj_offset;
 public:
 	//================================================================//
@@ -28,8 +27,6 @@ public:
 	// ========== Motion ========== //
 	virtual void attack(); //Attack of both skeletons
 	
-	static void setProjList(Projectile_List* projList);
-	static Projectile_List* getProjList();
 	//================================================================//
 	// ========== State checkers ========== //
 	//bool isAttacking() const;

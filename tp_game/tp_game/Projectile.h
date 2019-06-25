@@ -1,9 +1,13 @@
 #pragma once
 #include "Entity.h"
 
+class Projectile_List;
+
 class Projectile : public Entity
 {
 private:
+	static Projectile_List* _level_proj_list;
+
 	sf::RectangleShape *_collider;
 
 	int _collisionDamage;
@@ -33,6 +37,9 @@ public:
 	virtual const bool wasReflected() const;
 
 	virtual void reflect();
+
+	static void setProjList(Projectile_List* projList);
+	static Projectile_List* getProjList();
 private:
 	void updateAction(const float deltaTime);
 };

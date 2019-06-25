@@ -144,6 +144,8 @@ void Player::ressurect()
 	{
 		_state = IDLE;
 		resetHp();
+		_velocity = { 0.0f, 0.0f };
+		_facingRight = true;
 	}
 	
 	this->setPosition(_curr_spawnPoint);

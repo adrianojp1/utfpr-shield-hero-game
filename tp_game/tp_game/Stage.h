@@ -9,7 +9,7 @@ class Stage : public Abstract_Entity
 {
 protected:
 	std::vector<Level*> _vLevels;
-	int _currentLevel_id;
+	int _currentLevel_index;
 
 	int _nObstacles;
 	int _nEnemies;
@@ -24,7 +24,7 @@ public:
 	virtual ~Stage();
 
 	// ========== Initializers ========== //
-	virtual void initializeStage(const int nPlayers);
+	virtual void initializeLevels();
 
 	// ========== Loop methods ========== //
 	virtual void execute(const float deltaTime);
@@ -32,6 +32,8 @@ public:
 
 	// ========== State ========== //
 	virtual void start();
+	virtual void stop();
+	virtual bool isRunning();
 	virtual void pause();
 	virtual void unpause();
 	virtual bool isPaused();

@@ -2,7 +2,8 @@
 
 //======================================================================================================================================//
 // === Classes Headers === //
-#include "Stage.h"
+#include "Horizontal_Stage.h"
+#include "Vertical_Stage.h"
 #include "Main_Menu.h"
 #include "NewGame_Menu.h"
 #include "Pause_Menu.h"
@@ -25,14 +26,10 @@ private:
 	Player* _pPlayer1;
 	Player* _pPlayer2;
 
-	Stage* _stage1;
-	//Stage1* _stage2;
-	Stage* _currentStage;
+	std::vector<Stage*> _stages;
+	int _currentStage_index;
 
 	//Save* _currentSave;
-
-	//State control
-	bool _runningStage; //True if a stage is running, paused or not
 	
 	//Time control
 	float _deltaTime;
@@ -57,7 +54,7 @@ public:
 	void initialize();
 	void initialize_player1();
 	void initialize_player2();
-	void initialize_stage1();
+	void initialize_stage(const int stg_id);
 
 	//================================================================//
 	// ========== Menus ========== //
@@ -76,11 +73,13 @@ public:
 
 	void close();
 
+	void goToNextStage();
 	void pause_stage();
 	void unpause_stage();
 	bool isRunning_stage();
 	void run_stage();
 	void stop_runningStage();
+	void start_stage(int stg_id);
 
 	void resetPlayers();
 	void set_nPlayers(int nP);
@@ -90,4 +89,6 @@ public:
 	NewGame_Menu* get_newGame_menu();
 	//Saves_Menu* get_saves_menu();
 	Pause_Menu* get_pause_menu();
+
+	void destroy(void* pointer);
 };

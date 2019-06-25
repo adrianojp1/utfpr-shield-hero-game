@@ -10,7 +10,6 @@
 class Dispenser : public Obstacle
 {
 private:
-	static Projectile_List* _level_proj_list;
 	sf::Vector2f _proj_initPos;
 public:
 	//================================================================//
@@ -20,9 +19,6 @@ public:
 
 	// ========== Destructors ========== //
 	virtual ~Dispenser();
-
-	static void setProjList(Projectile_List* projList);
-	static Projectile_List* getProjList();
 
 	void spit_ball();
 private:
