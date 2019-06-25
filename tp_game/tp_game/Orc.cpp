@@ -53,6 +53,7 @@ void Orc::initialize_animator()
 	*_animator << new Animation(gMng::orc_atk_texture, 3, 0.100f, 2);
 } // end initializeAnimators
 
+
 void Orc::colliding_onLeft()
 {
 	_velocity.x = 0.0f;
@@ -75,14 +76,14 @@ void Orc::doPrincipalOfAttack()
 	{
 		_attack_rect.setPosition(_position - _attack_offset);
 	}
-	
-	cMng* collMng = cMng::getInstance();
-	if (collMng->intersects(_pPlayer1, &_attack_rect))
-		_pPlayer1->takeDmg(_attackDamage);
-	if (_pPlayer2 && collMng->intersects(_pPlayer2, &_attack_rect))
-		_pPlayer2->takeDmg(_attackDamage);
+	_canCauseDmg = true;
 }
 
+
+sf::RectangleShape* Orc::getAttackRect()
+{
+	return &_attack_rect;
+}
 
 void Orc::updateAction(const float deltaTime)
 {

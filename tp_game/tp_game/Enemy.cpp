@@ -19,8 +19,7 @@ Enemy::Enemy(const sf::Vector2f initPosition) :
 	resetHp();
 	_collisionDamage = 1;
 	_attackDamage = 2;
-	_canAttack = true;
-	_attacking = false;
+	_canCauseDmg = false;
 	_floor_foward = false;
 	_cd_attack.trigger();
 
@@ -30,8 +29,7 @@ Enemy::Enemy() : Character()
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 1| ");
 
-	_attacking = false;
-	_canAttack = false;
+	_canCauseDmg = false;
 	_facingRight = false;
 	_canJump = false;
 	_floor_foward = false;
@@ -103,6 +101,7 @@ void Enemy::updateAnime_n_Collider()
 
 void Enemy::check_attack()
 {
+	_canCauseDmg = false;
 	if (_cd_attack.isZeroed())
 	{
 		Player* pPlayer = a_playerInRange();
@@ -148,6 +147,11 @@ const sf::Vector2f Enemy::getFrontEdge() const
 	return { x, _position.y + halfSize.y + 5.0f};
 }
 
+bool Enemy::ableToCauseDamage()
+{
+	return _canCauseDmg;
+}
+
 void Enemy::setFloor_foward(const bool floor_fwd)
 {
 	_floor_foward = floor_fwd;
@@ -156,4 +160,9 @@ void Enemy::setFloor_foward(const bool floor_fwd)
 const bool Enemy::getFloor_foward() const
 {
 	return _floor_foward;
+}
+
+sf::RectangleShape* Enemy::getAttackRect() const
+{
+	return NULL;
 }

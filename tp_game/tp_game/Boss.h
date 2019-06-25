@@ -25,4 +25,6 @@ public:
 	virtual bool principalFrameOfAttack();
 	virtual void doPrincipalOfAttack();
 	virtual void updateAction(const float deltaTime);
+
+	virtual sf::RectangleShape* getAttackRect();
 };

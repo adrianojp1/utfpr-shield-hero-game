@@ -55,15 +55,22 @@ void Collision_Manager::collide(Player* pPlayer, Tile* pTile)
 
 void Collision_Manager::collide(Player* pPlayer, Enemy* pEnemy)
 {
-	if (pPlayer && pEnemy && pEnemy->isActive() && pPlayer->isVulnerable())
+	if (pPlayer && pEnemy && pEnemy->isActive() && pPlayer->isVulnerable() && pEnemy->ableToCauseDamage())
 	{
 		sf::Vector2f intersection;
 		sf::Vector2f collisionDirection;
 
-		if (check_collision(static_cast<Entity*>(pPlayer), static_cast<Entity*>(pEnemy), &intersection, &collisionDirection) && 
-			pEnemy->isAttacking())
+		if (check_collision(static_cast<Entity*>(pPlayer), static_cast<Entity*>(pEnemy), &intersection, &collisionDirection) )
 		{
-			
+			if (pPlayer->isDefendingInFront(collisionDirection))
+			{
+				if (pPlayer->isCounterUp())
+					pEnemy->takeDmg(pEnemy->getAttackDmg());
+			}
+			else
+			{
+				pPlayer->takeDmg(pEnemy->getAttackDmg());
+			}
 		}
 	}
 }

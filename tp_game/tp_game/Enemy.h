@@ -11,8 +11,7 @@ class Enemy : public Character
 {
 protected:
 	// ========= State control members ========= //
-	bool _attacking;
-	bool _canAttack;
+	bool _canCauseDmg;
 
 	Timer _cd_attack;
 	int _collisionDamage;
@@ -48,7 +47,7 @@ public:
 	virtual void setFloor_foward(const bool floor_fwd);
 	virtual const bool getFloor_foward() const;
 
-
+	virtual sf::RectangleShape* getAttackRect() const;
 	//================================================================//
 	// ========== Motion ========== //
 	virtual void attack();
@@ -67,7 +66,7 @@ public:
 	virtual bool principalFrameOfAttack();
 	virtual void doPrincipalOfAttack() = 0;
 	virtual const sf::Vector2f getFrontEdge() const;
-
+	bool ableToCauseDamage();
 protected :
 	// ========== execute submethods ========== //
 	virtual void updateAction(const float deltaTime) = 0;

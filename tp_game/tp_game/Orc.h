@@ -30,6 +30,7 @@ public:
 	//================================================================//
 	// ========== State checkers ========== //
 	//bool isAttacking() const;
+	virtual sf::RectangleShape* getAttackRect();
 private:
 	// ========== execute submethods ========== //
 	void updateAction(const float deltaTime);

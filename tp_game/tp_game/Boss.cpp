@@ -47,11 +47,7 @@ void Boss::doPrincipalOfAttack()
 		_attack_rect.setPosition(_position - _attack_offset);
 	}
 
-	cMng* collMng = cMng::getInstance();
-	if (collMng->intersects(_pPlayer1, &_attack_rect))
-		_pPlayer1->takeDmg(_attackDamage);
-	if (_pPlayer2 && collMng->intersects(_pPlayer2, &_attack_rect))
-		_pPlayer2->takeDmg(_attackDamage);
+	_canCauseDmg = true;
 }
 
 void Boss::updateAction(const float deltaTime)
@@ -80,4 +76,9 @@ void Boss::updateAction(const float deltaTime)
 		_floor_foward = false;
 		moveFoward();*/
 	}
+}
+
+sf::RectangleShape* Boss::getAttackRect()
+{
+	return &_attack_rect;
 }

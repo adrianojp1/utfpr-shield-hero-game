@@ -41,7 +41,7 @@ public:
 	virtual bool pauseKey_isPressed();
 	virtual Enemy* get_an_enemy(sf::Vector2f pos) = 0;
 	virtual Obstacle* get_spike(sf::Vector2f pos) = 0;
-
+	virtual void goToNextLevel();
 	// ========== Sets & Gets ========== //
 	virtual const std::string get_stg_fp(const int stg_id) const;
 	virtual const std::string get_lv_fp(const int stg_id, const int lv_id) const;
