@@ -8,7 +8,6 @@
 // === Standart Libraries === //
 #include <iostream>
 #include <math.h>
-#include <vector>
 #include <time.h>
 #include <fstream>
 
@@ -16,6 +15,7 @@
 #include <vector>
 #include <list>
 #include <set>
+#include <deque>
 
 //======================================================================================================================================//
 /* === Notification Subtitles === //

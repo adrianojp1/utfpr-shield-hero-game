@@ -122,7 +122,7 @@ void On_NewGameMenu::execute(const float deltaTime)
 		changeState(On_MainMenu::getInstance());
 	else
 	{
-		pG->start_stage(2);
+		pG->start_stage(1);
 		pG->resetPlayers();
 		changeState(RunningStage::getInstance());
 	}
