@@ -52,13 +52,7 @@
     <ClCompile Include="Skeleton.cpp">
       <Filter>Characters\Enemies</Filter>
     </ClCompile>
-    <ClCompile Include="WhiteSkeleton.cpp">
-      <Filter>Characters\Enemies</Filter>
-    </ClCompile>
     <ClCompile Include="Enemy.cpp">
-      <Filter>Characters\Enemies</Filter>
-    </ClCompile>
-    <ClCompile Include="BlackSkeleton.cpp">
       <Filter>Characters\Enemies</Filter>
     </ClCompile>
     <ClCompile Include="Orc.cpp">
@@ -108,6 +102,12 @@
     </ClCompile>
     <ClCompile Include="Horizontal_Stage.cpp">
       <Filter>Abstract Entities\Stages</Filter>
+    </ClCompile>
+    <ClCompile Include="Black_Skeleton.cpp">
+      <Filter>Characters\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="White_Skeleton.cpp">
+      <Filter>Characters\Enemies</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -162,13 +162,7 @@
     <ClInclude Include="Skeleton.h">
       <Filter>Characters\Enemies</Filter>
     </ClInclude>
-    <ClInclude Include="WhiteSkeleton.h">
-      <Filter>Characters\Enemies</Filter>
-    </ClInclude>
     <ClInclude Include="Orc.h">
-      <Filter>Characters\Enemies</Filter>
-    </ClInclude>
-    <ClInclude Include="BlackSkeleton.h">
       <Filter>Characters\Enemies</Filter>
     </ClInclude>
     <ClInclude Include="Enemy.h">
@@ -218,6 +212,12 @@
     </ClInclude>
     <ClInclude Include="Horizontal_Stage.h">
       <Filter>Abstract Entities\Stages</Filter>
+    </ClInclude>
+    <ClInclude Include="Black_Skeleton.h">
+      <Filter>Characters\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="White_Skeleton.h">
+      <Filter>Characters\Enemies</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

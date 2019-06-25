@@ -14,7 +14,7 @@ White_Skeleton::White_Skeleton() :
 {
 }
 
-WhiteSkeleton::~WhiteSkeleton()
+White_Skeleton::~White_Skeleton()
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
@@ -22,7 +22,7 @@ WhiteSkeleton::~WhiteSkeleton()
 		delete _animator;
 }
 
-void WhiteSkeleton::initialize_animator()
+void White_Skeleton::initialize_animator()
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
@@ -34,7 +34,7 @@ void WhiteSkeleton::initialize_animator()
 	*_animator << new Animation(gMng::white_skeleton_atk_texture, 3, 0.120f, 2);
 }
 
-int WhiteSkeleton::getProj_id()
+int White_Skeleton::getProj_id()
 {
 	return 0;
 }

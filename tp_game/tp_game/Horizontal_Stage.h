@@ -2,7 +2,7 @@
 //======================================================================================================================================//
 // === Classes Headers === //
 #include "Stage.h"
-#include "WhiteSkeleton.h"
+#include "White_Skeleton.h"
 #include "Static_Spike.h"
 #include "Orc.h"
 

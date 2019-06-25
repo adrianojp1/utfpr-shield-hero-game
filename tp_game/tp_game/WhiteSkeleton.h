@@ -3,15 +3,15 @@
 
 class Projectile;
 
-class WhiteSkeleton : public Skeleton
+class White_Skeleton : public Skeleton
 {
 private:
 
 public:
 	//================================================================//
 	// ========== Constructors ========== //
-	WhiteSkeleton(const sf::Vector2f initPosition);
-	WhiteSkeleton();
+	White_Skeleton(const sf::Vector2f initPosition);
+	White_Skeleton();
 	// ========== Destructors ========== //
 	~WhiteSkeleton();
 

@@ -1,19 +1,19 @@
 #include "stdafx.h"
 #include "Black_Skeleton.h"
 
-BlackSkeleton::BlackSkeleton(const sf::Vector2f initPosition) :
+Black_Skeleton::Black_Skeleton(const sf::Vector2f initPosition) :
 	Skeleton(initPosition)
 {
 	initialize_animator();
 	initialize_AllColliders();
 }
 
-BlackSkeleton::BlackSkeleton() :
+Black_Skeleton::Black_Skeleton() :
 	Skeleton()
 {
 }
 
-BlackSkeleton::~BlackSkeleton()
+Black_Skeleton::~Black_Skeleton()
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
@@ -21,7 +21,7 @@ BlackSkeleton::~BlackSkeleton()
 		delete _animator;
 }
 
-void BlackSkeleton::initialize_animator()
+void Black_Skeleton::initialize_animator()
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
@@ -33,7 +33,7 @@ void BlackSkeleton::initialize_animator()
 	*_animator << new Animation(gMng::black_skeleton_atk_texture, 3, 0.120f, 2);
 }
 
-int BlackSkeleton::getProj_id()
+int Black_Skeleton::getProj_id()
 {
 	return 1;
 }

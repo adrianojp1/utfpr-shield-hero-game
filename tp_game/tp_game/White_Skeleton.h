@@ -1,23 +1,26 @@
 #pragma once
 #include "Skeleton.h"
 
-class Black_Skeleton : public Skeleton
+class Projectile;
+
+class White_Skeleton : public Skeleton
 {
 private:
 
 public:
 	//================================================================//
 	// ========== Constructors ========== //
-	Black_Skeleton(const sf::Vector2f initPosition);
-	Black_Skeleton();
+	White_Skeleton(const sf::Vector2f initPosition);
+	White_Skeleton();
 	// ========== Destructors ========== //
-	~Black_Skeleton();
+	~White_Skeleton();
 
 	//================================================================//
 	// ========== Initializers ========== //
 	void initialize_animator(); //Initializes all the animators
+
 	int getProj_id();
 private:
 	// ========== execute submethods ========== //
-};
+}; 
 

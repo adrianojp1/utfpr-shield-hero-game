@@ -8,8 +8,8 @@
 #include "Tile.h"
 //Enemies
 #include "Orc.h"
-#include "BlackSkeleton.h"
-#include "WhiteSkeleton.h"
+#include "Black_Skeleton.h"
+#include "White_Skeleton.h"
 #include "Boss.h"
 //Obstacles
 #include "Dynamic_Spike.h"

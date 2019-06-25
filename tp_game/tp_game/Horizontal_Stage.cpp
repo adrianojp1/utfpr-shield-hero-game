@@ -25,7 +25,7 @@ Enemy* Horizontal_Stage::get_an_enemy(sf::Vector2f pos)
 		break;
 
 	case 1:
-		pEnemy = new WhiteSkeleton(pos);
+		pEnemy = new White_Skeleton(pos);
 		break;
 
 	default:

@@ -26,7 +26,7 @@ Enemy* Vertical_Stage::get_an_enemy(sf::Vector2f pos)
 		break;
 
 	case 1:
-		pEnemy = new BlackSkeleton(pos);
+		pEnemy = new Black_Skeleton(pos);
 		break;
 
 	default:
