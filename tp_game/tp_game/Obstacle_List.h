@@ -11,7 +11,7 @@ private:
 	std::deque<Obstacle*> _obst_deque;
 public:
 	Obstacle_List();
-	~Obstacle_List();
+	virtual ~Obstacle_List();
 
 	typedef std::deque<Obstacle*>::iterator iterator;
 

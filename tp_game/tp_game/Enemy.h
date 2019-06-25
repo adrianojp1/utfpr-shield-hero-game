@@ -32,11 +32,18 @@ public:
 
 	virtual bool isVulnerable();
 
+	//================================================================//
+	// ========== Sets & Gets ============== //
 	virtual void setCollDmg(const int dmg);
 	virtual int getCollDmg() const;
 
 	virtual void setAttackDmg(const int dmg);
 	virtual int getAttackDmg() const;
+
+	//_floor_foward
+	virtual void setFloor_foward(const bool floor_fwd);
+	virtual const bool getFloor_foward() const;
+
 
 	//================================================================//
 	// ========== Motion ========== //
@@ -51,10 +58,7 @@ public:
 	virtual bool isAttacking() const;
 
 	virtual const sf::Vector2f getFrontEdge() const;
-	//_floor_foward
-	virtual void setFloor_foward(const bool floor_fwd);
-	virtual const bool getFloor_foward() const;
-	
+
 protected :
 	// ========== execute submethods ========== //
 	virtual void updateAction(const float deltaTime) = 0;

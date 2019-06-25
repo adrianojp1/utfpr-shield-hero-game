@@ -25,7 +25,7 @@ public:
 	// ========== Initializers ========== //
 	virtual void initialize_animator();
 
-	sf::Vector2i getTileRectPos(int id);
+	virtual sf::Vector2i getTileRectPos(int id);
 
 	//================================================================//
 	// ========== Loop methods ========== //

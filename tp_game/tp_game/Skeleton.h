@@ -16,11 +16,11 @@ public:
 	Skeleton(const sf::Vector2f initPosition);
 	Skeleton();
 	// ========== Destructors ========== //
-	~Skeleton();
+	virtual ~Skeleton();
 
 	//================================================================//
 	// ========== Initializers ========== //
-	void initialize_animator() = 0; //Initializes all the animators
+	virtual void initialize_animator() = 0; //Initializes all the animators
 
 	//================================================================//
 	// ========== Motion ========== //
@@ -30,7 +30,7 @@ public:
 	//================================================================//
 	// ========== State checkers ========== //
 	//bool isAttacking() const;
-private:
+protected:
 	// ========== execute submethods ========== //
 	virtual void updateAction(const float deltaTime) = 0;
 }

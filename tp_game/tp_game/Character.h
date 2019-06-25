@@ -16,7 +16,7 @@ typedef class Character : public Entity
 protected:
 	// ========= Motion Members ========= //
 	//Colliders
-	sf::RectangleShape *_idle_collider;   //Idle
+	sf::RectangleShape *_idle_collider;   //Idle 
 	sf::RectangleShape *_walk_collider;   //Walking
 	sf::RectangleShape *_combat_collider; //Defense
 	sf::RectangleShape *_death_collider;  //Death
