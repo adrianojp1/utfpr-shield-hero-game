@@ -10,11 +10,12 @@
 class Dynamic_Spike : public Static_Spike
 {
 private:
-
+	sf::Vector2f _hidden_position;
+	
 public:
 	//================================================================//
 	// ========== Constructors ========== //
-	Dynamic_Spike(const sf::Vector2f initPosition, const int id);
+	Dynamic_Spike(const sf::Vector2f initPosition, const int id = 36);
 	Dynamic_Spike();
 
 	// ========== Destructors ========== //
@@ -22,11 +23,9 @@ public:
 
 	//================================================================//
 	// ========== Initializers ========== //
-	virtual void initialize_animator();
 
 private:
 	// ========== execute submethods ========== //
 	void updateAction(const float deltaTime);
-	//void updatePosition(const float deltaTime);
 };
 

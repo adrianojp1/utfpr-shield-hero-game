@@ -10,7 +10,7 @@
 // === Enemy methods === //
 
 Enemy::Enemy(const sf::Vector2f initPosition) : 
-	Character(initPosition), cd_attack()
+	Character(initPosition), _cd_attack()
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
@@ -70,25 +70,10 @@ int Enemy::getAttackDmg() const
 	return _attackDamage;
 }
 
-/*void Enemy::turnArround()
-{
-	_velocity.x = -_velocity.x;
-}
-
-void Enemy::colliding_onLeft()
-{
-	turnArround();
-}
-
-void Enemy::colliding_onRight()
-{
-	turnArround();
-}*/
-
 void Enemy::decreaseTimers()
 {
 	_invulnerability.decreaseTime();
-	cd_attack.decreaseTime();
+	_cd_attack.decreaseTime();
 }
 
 bool Enemy::isAttacking() const

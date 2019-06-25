@@ -11,7 +11,7 @@
 const sf::Vector2u Graphical_Manager::windowRatio = {16, 9};
 const unsigned int Graphical_Manager::ratioMultiplier = 84;
 const std::string Graphical_Manager::windowName = "Shield Hero";
-const sf::Vector2u Graphical_Manager::windowSize = {windowRatio.x * ratioMultiplier, windowRatio.y *ratioMultiplier};
+const sf::Vector2u Graphical_Manager::windowSize = {windowRatio.x * ratioMultiplier, 728};
 
 std::vector<sf::Texture *> Graphical_Manager::_vTextures;
 
@@ -33,13 +33,16 @@ const std::string Graphical_Manager::menu_title_Ft_Fp = fonts_dir + "alagard.ttf
 sf::Font* Graphical_Manager::menu_ops_ft = NULL;
 sf::Font* Graphical_Manager::menu_title_ft = NULL;
 
-const std::string Graphical_Manager::tileset_Fp = textures_dir + "tileset.png";
+const std::string Graphical_Manager::tileset_Fp = textures_dir + "stage/tileset.png";
 sf::Texture *Graphical_Manager::tileset_texture = NULL;
+
+const std::string Graphical_Manager::energy_ball_Fp = textures_dir + "stage/energy_ball.png";
+sf::Texture* Graphical_Manager::energy_ball_texture = NULL;
 
 const std::string Graphical_Manager::player_idle_Sp_Fp = textures_dir + "shield-hero/shield_hero-idle.png";
 const std::string Graphical_Manager::player_walk_Sp_Fp = textures_dir + "shield-hero/shield_hero-walk.png";
 const std::string Graphical_Manager::player_def1_Sp_Fp = textures_dir + "shield-hero/shield_hero-def1.png";
-const std::string Graphical_Manager::player_def2_Sp_Fp = textures_dir + "shield-hero/shield_hero-def2-2.png";
+const std::string Graphical_Manager::player_def2_Sp_Fp = textures_dir + "shield-hero/shield_hero-def2.png";
 const std::string Graphical_Manager::player_die_Sp_Fp = textures_dir + "shield-hero/shield_hero-die.png";
 
 sf::Texture *Graphical_Manager::player_idle_texture = NULL;
@@ -84,6 +87,14 @@ const std::string Graphical_Manager::black_skeleton_proj_Sp_Fp = textures_dir + 
 sf::Texture* Graphical_Manager::white_skeleton_proj_texture = NULL;
 sf::Texture* Graphical_Manager::black_skeleton_proj_texture = NULL;
 
+const std::string Graphical_Manager::boss_idle_Sp_Fp = textures_dir + "boss/boss-idle";
+const std::string Graphical_Manager::boss_walk_Sp_Fp = textures_dir + "boss/boss-walk";
+const std::string Graphical_Manager::boss_atk_Sp_Fp = textures_dir + "boss/boss-atk";
+
+sf::Texture* Graphical_Manager::boss_idle_texture = NULL;
+sf::Texture* Graphical_Manager::boss_walk_texture = NULL;
+sf::Texture* Graphical_Manager::boss_atk_texture = NULL;
+
 //======================================================================================================================================//
 // === Graphical_Manager methods === //
 Graphical_Manager::Graphical_Manager() : sf::RenderWindow(sf::VideoMode(windowSize.x, windowSize.y), gMng::windowName, sf::Style::Close | sf::Style::Titlebar)
@@ -93,6 +104,7 @@ Graphical_Manager::Graphical_Manager() : sf::RenderWindow(sf::VideoMode(windowSi
 	loadAllTextures();
 	loadAllFonts();
 	initializeView({0.0f, 0.0f}, (sf::Vector2f)this->getSize());
+	this->setFramerateLimit(60);
 } // end constr
 
 Graphical_Manager::~Graphical_Manager()
@@ -126,6 +138,7 @@ void Graphical_Manager::loadAllTextures()
 
 	//Tilet
 	loadTexture(tileset_Fp, &tileset_texture);
+	loadTexture(energy_ball_Fp, &energy_ball_texture);
 
 	//Player
 	loadTexture(player_idle_Sp_Fp, &player_idle_texture);
@@ -142,6 +155,22 @@ void Graphical_Manager::loadAllTextures()
 
 	//White_Skeleton
 	loadTexture(white_skeleton_idle_Sp_Fp, &white_skeleton_idle_texture);
+	loadTexture(white_skeleton_walk_Sp_Fp, &white_skeleton_walk_texture);
+	loadTexture(white_skeleton_die_Sp_Fp, &white_skeleton_die_texture);
+	loadTexture(white_skeleton_atk_Sp_Fp, &white_skeleton_atk_texture);
+	loadTexture(white_skeleton_proj_Sp_Fp, &white_skeleton_proj_texture);
+
+	//Black_Skeleton
+	loadTexture(black_skeleton_idle_Sp_Fp, &black_skeleton_idle_texture);
+	loadTexture(black_skeleton_walk_Sp_Fp, &black_skeleton_walk_texture);
+	loadTexture(black_skeleton_die_Sp_Fp, &black_skeleton_die_texture);
+	loadTexture(black_skeleton_atk_Sp_Fp, &black_skeleton_atk_texture);
+	loadTexture(black_skeleton_proj_Sp_Fp, &black_skeleton_proj_texture);
+
+	//Boss
+	loadTexture(boss_idle_Sp_Fp, &boss_idle_texture);
+	loadTexture(boss_walk_Sp_Fp, &boss_walk_texture);
+	loadTexture(boss_atk_Sp_Fp, &boss_atk_texture);
 }
 
 void Graphical_Manager::loadAllFonts()
@@ -172,6 +201,7 @@ void Graphical_Manager::setViewCenter(sf::Vector2f center)
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
 	pView->setCenter(center);
+	this->setView(*pView);
 }
 
 void Graphical_Manager::moveView(sf::Vector2f offset)
@@ -179,6 +209,7 @@ void Graphical_Manager::moveView(sf::Vector2f offset)
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
 	pView->move(offset);
+	this->setView(*pView);
 }
 
 void Graphical_Manager::printConsole_log(std::string log)

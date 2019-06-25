@@ -6,20 +6,27 @@
 // === This Class Header === //
 #include "Level.h"
 
+#include "Stage.h"
+#include "Vertical_Stage.h"
+#include "Horizontal_Stage.h"
+
 //======================================================================================================================================//
 // === Statics Initialization === //
 const int Level::nLayers(5);
 
 //======================================================================================================================================//
 // === Level methods === //
-Level::Level(const std::string level_tiles_filePath, sf::Vector2f initPosition, const int nEnemies, const int nObstacles) : Abstract_Entity(initPosition)
+Level::Level(std::string level_tiles_filePath, sf::Vector2f initPosition, Stage* pStage) : Abstract_Entity(initPosition)
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
-	_nTotalEnemies = nEnemies;
-	_nTotalObstacles = nObstacles;
+	_pStage = pStage;
 	_tilesIds_matrix = NULL;
-	
+	_finished = false;
+
+	_nTotalObstacles = 5;
+	_nTotalEnemies = 5;
+
 	serializeTiles(level_tiles_filePath);
 	initializeEntities();
 }
@@ -31,6 +38,8 @@ Level::Level()
 	_playerSpawn = { 0.0f, 0.0f };
 	_nTotalEnemies = 0;
 	_nTotalObstacles = 0;
+	_viewCenter = { 0.0f, 0.0f };
+	_realSize = { 0.0f, 0.0f };
 	_tilesIds_matrix = NULL;
 }
 
@@ -51,15 +60,29 @@ Level::~Level()
 		delete _tilesIds_matrix;
 	}
 
-	if (_orc)
-		delete _orc;
+	_all_level_ents.delete_entities();
 
-	for (Entity* pEnt : _concreteTile_list)
+	_enemy_list.clear();
+	_obstacle_list.clear();
+	
+	for (Projectile* pJ : _projectile_list)
 	{
-		if (pEnt)
-			delete pEnt;
+		if (pJ)
+			delete pJ;
 	}
-	_concreteTile_list.clearList();
+	_projectile_list.clear();
+
+	for (int i = 0; i < 4; i++)
+	{
+		_tile_list[i].clear();
+	}
+
+	for (sf::RectangleShape* pR : _levelEnd)
+	{
+		if (pR)
+			delete pR;
+	}
+	_levelEnd.clear();
 }
 
 void Level::serializeTiles(const std::string level_filePath)
@@ -194,44 +217,24 @@ int Level::extractNextInt(std::string& str, std::string::iterator& it)
 
 const sf::Vector2f Level::getRealPosition(const sf::Vector2i pos_inLayer) const
 {
-	return (Tile::getRealSize() * pos_inLayer +_position);
+	return (Tile::getRealSize() * pos_inLayer + _position);
 }
 
 void Level::initializeEntities()
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
-	Tile* pTile = NULL;
-	int id;
-	for (int i = 0; i < 2; i++)
-	{
-		for (int j = 0; j < _matrixSize.y; j++)
-		{
-			for (int k = 0; k < _matrixSize.x; k++)
-			{
-				id = _tilesIds_matrix[i][j][k];
-				if (id != -1)
-				{
-					pTile = new Tile(getRealPosition({ k, j }), _tilesIds_matrix[i][j][k]);
-					_all_EntList.includeEntity(pTile);
-				}
-			}
-		}
-	}
+	int id = -1;
+	sf::Vector2i pos_inMatrix = { 0, 0 };
 
-	for (int j = 0; j < _matrixSize.y; j++)
-	{
-		for (int k = 0; k < _matrixSize.x; k++)
-		{
-			id = _tilesIds_matrix[CONCRETE][j][k];
-			if (id != -1)
-			{
-				pTile = new Tile(getRealPosition({ k, j }), _tilesIds_matrix[CONCRETE][j][k]);
-				_all_EntList.includeEntity(pTile);
-				_concreteTile_list.includeEntity(pTile);
-			}
-		}
-	}
+	_realSize = Tile::getRealSize() * _matrixSize;
+	_viewCenter = (_realSize / 2.0f) + _position - (Tile::getRealSize() / 2.0f);
+
+	_levelRect.setSize(_realSize);
+	_levelRect.setOrigin(_realSize / 2.0f);
+	_levelRect.setPosition(_viewCenter);
+
+	sf::RectangleShape* new_level_end = NULL;
 
 	for (int j = 0; j < _matrixSize.y; j++)
 	{
@@ -244,22 +247,25 @@ void Level::initializeEntities()
 				{
 				case PLAYER_SP:
 					_playerSpawn = getRealPosition({ k, j });
-					setPlayersSpawnPoint();
-					movePlayersToSpawn();
 					break;
 
 				case ENEMY_SP:
-					_enemiesSpawns.push_back(getRealPosition({ k, j }));
+					_enemiesSpawns.push_back({ k, j });
 					break;
 
-				case OBSTACLE_SP:
-					_obstaclesSpawns.push_back(getRealPosition({ k, j }));
+				case SPIKE_SP:
+					_spikeSpawns.push_back({ k, j });
+					break;
+
+				case Dispenser_SP:
+					_dispenserSpawns.push_back({ k, j });
 					break;
 
 				case LEVEL_END:
-					_levelEnd.setSize(Tile::getRealSize());
-					_levelEnd.setOrigin(_levelEnd.getSize() / 2.0f);
-					_levelEnd.setPosition(getRealPosition({ k, j }));
+					new_level_end = new sf::RectangleShape(Tile::getRealSize());
+					new_level_end->setOrigin(new_level_end->getSize() / 2.0f);
+					new_level_end->setPosition(getRealPosition({ k, j }));
+					_levelEnd.push_back(new_level_end);
 					break;
 
 				default:
@@ -269,22 +275,63 @@ void Level::initializeEntities()
 		}
 	}
 
-	srand(static_cast<unsigned int>(time(NULL)));
-	_orc = new Orc(_enemiesSpawns[rand() % _enemiesSpawns.size()]);
-	_all_EntList.includeEntity(_orc);
-	_all_EntList.includeEntity(_pPlayer1);
-	if (_pPlayer2)
-		_all_EntList.includeEntity(_pPlayer2);
+	if (!_enemiesSpawns.empty())
+	{
+		Enemy* pEnemy = NULL;
+		for (int i = 0; i < _nTotalEnemies; i++)
+		{
+			pos_inMatrix = _enemiesSpawns[rand() % _enemiesSpawns.size()];
+			pEnemy = _pStage->get_an_enemy(getRealPosition(pos_inMatrix));
+			_enemy_list.includeEnemy(pEnemy);
+			_all_level_ents.includeEntity(static_cast<Entity*>(pEnemy));
+		}
+	}
+	
+	for (int i = 0; i < _nTotalObstacles; i++)
+	{
+		Obstacle* pObstacle = NULL;
 
+		if (!_spikeSpawns.empty())
+		{
+			pos_inMatrix = _spikeSpawns[rand() % _spikeSpawns.size()];
+			pObstacle = _pStage->get_spike(getRealPosition(pos_inMatrix));
+			_obstacle_list.includeObstacle(pObstacle);
+			_all_level_ents.includeEntity(static_cast<Entity*>(pObstacle));
+		}
+
+		if (!_dispenserSpawns.empty())
+		{
+			pos_inMatrix = _dispenserSpawns[rand() % _dispenserSpawns.size()];
+
+			bool facingRight = false;
+			if (_tilesIds_matrix[CONCRETE][pos_inMatrix.y][pos_inMatrix.x - 1] == -1)
+				facingRight = false;
+			else if (_tilesIds_matrix[CONCRETE][pos_inMatrix.y][pos_inMatrix.x + 1] == -1)
+				facingRight = true;
+
+			pObstacle = static_cast<Obstacle*>(new Dispenser(getRealPosition(pos_inMatrix), facingRight));
+			_obstacle_list.includeObstacle(pObstacle);
+			_all_level_ents.includeEntity(static_cast<Entity*>((pObstacle)));
+
+			//Kill the concrete tile at that position
+			_tilesIds_matrix[CONCRETE][pos_inMatrix.y][pos_inMatrix.x] = -1;
+		}
+	}
+	
+	Tile* pTile = NULL;
 	for (int j = 0; j < _matrixSize.y; j++)
 	{
 		for (int k = 0; k < _matrixSize.x; k++)
 		{
-			id = _tilesIds_matrix[FOREGROUND][j][k];
-			if (id != -1)
+			for (int i = 0; i < 4; i++)
 			{
-				pTile = new Tile(getRealPosition({ k, j }), _tilesIds_matrix[FOREGROUND][j][k]);
-				_all_EntList.includeEntity(pTile);
+				id = _tilesIds_matrix[i][j][k];
+				if (id != -1)
+				{
+					pTile = new Tile(getRealPosition({ k, j }), _tilesIds_matrix[i][j][k]);
+					_tile_list[i].includeTile(pTile);
+					_all_level_ents.includeEntity(pTile);
+				}
 			}
 		}
 	}
@@ -297,35 +344,75 @@ void Level::setPlayersSpawnPoint()
 		_pPlayer2->setCurrSpawnPoint(_playerSpawn);
 }
 
+void Level::start()
+{
+	setPlayersSpawnPoint();
+	movePlayersToSpawn();
+
+	setViewToCenter();
+
+	Projectile::setProjList(&_projectile_list);
+}
+
+void Level::setViewToCenter()
+{
+	_pGraphMng->setViewCenter(_viewCenter);
+}
+
+void Level::spawnBoss()
+{
+	//Boss* pBoss = new Boss;
+}
+
+void Level::check_endLevel()
+{
+	cMng* collMng = cMng::getInstance();
+	for (sf::RectangleShape* endTile : _levelEnd)
+	{
+		if (collMng->intersects(_pPlayer1, endTile) || (_pPlayer2 && collMng->intersects(_pPlayer2, endTile)))
+			_finished = true;
+	}
+}
+
+bool Level::was_finished()
+{
+	return _finished;
+}
+
 void Level::execute(const float deltaTime)
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
-	
+
+	check_endLevel();
+	check_playersInScreen();
+
 	executePlayers(deltaTime);
-
-	_orc->execute(deltaTime);
-
-	for (Entity* pEnt : _concreteTile_list)
-	{
-		pEnt->execute(deltaTime);
-	}
+	_enemy_list.execute_enemies(deltaTime);
+	_obstacle_list.execute_obstacles(deltaTime);
+	_projectile_list.execute_projectiles(deltaTime);
 
 	manage_collisions();
+
+	updatePlayersDrawables();
+	_enemy_list.update_drawables();
+	_obstacle_list.update_drawables();
+	_projectile_list.update_drawables();
 }
 
 void Level::draw()
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
-	//_pGraphMng->draw(*_background);
-
-	
-	for (Entity* pEnt : _all_EntList)
+	for (int i = 0; i < 2; i++)
 	{
-		pEnt->draw();
+		_tile_list[i].draw_tiles();
 	}
-
-	//drawPlayers();
+	_obstacle_list.draw_obstacles();
+	_tile_list[CONCRETE].draw_tiles();
+	_enemy_list.draw_enemies();
+	_projectile_list.draw_projectiles();
+	drawPlayers();
+	_tile_list[FOREGROUND].draw_tiles();
 }
 
 void Level::executePlayers(const float deltaTime)
@@ -335,11 +422,18 @@ void Level::executePlayers(const float deltaTime)
 	_pPlayer1->execute(deltaTime);
 	if (_pPlayer2)
 		_pPlayer2->execute(deltaTime);
-
+	
 	std::cout << "Player1 hp: " << _pPlayer1->getHp();
 	if (_pPlayer2)
 		std::cout << " | " << "Player2 hp: " << _pPlayer2->getHp();
 	std::cout << std::endl;
+}
+
+void Level::updatePlayersDrawables()
+{
+	_pPlayer1->updateAnime_n_Collider();
+	if (_pPlayer2)
+		_pPlayer2->updateAnime_n_Collider();
 }
 
 void Level::drawPlayers() const
@@ -356,6 +450,15 @@ void Level::movePlayersToSpawn()
 	_pPlayer1->setPosition(_playerSpawn);
 	if (_pPlayer2)
 		_pPlayer2->setPosition(_playerSpawn);
+}
+
+void Level::check_playersInScreen()
+{
+	cMng* colMng = cMng::getInstance();
+	if (!colMng->intersects(_pPlayer1, &_levelRect))
+		_pPlayer1->die();
+	if (_pPlayer2 && !colMng->intersects(_pPlayer2, &_levelRect))
+		_pPlayer2->die();
 }
 
 void Level::setTiles_ids_matrix(int*** matrix)
@@ -382,58 +485,15 @@ void Level::manage_collisions()
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
-	sf::Vector2f collisionDirection;
-	sf::Vector2f intersection;
-	Collision_Manager* collMng = Collision_Manager::getInstance();
+	Collision_Manager* cMng = cMng::getInstance();
 
-	for (Entity* pTile : _concreteTile_list)
-		//Check collision with all blocks
-	{
-		if (collMng->check_collision_n_push(static_cast<Entity*>(_pPlayer1), pTile, &intersection, &collisionDirection, 0.0f))
-			_pPlayer1->onCollision(collisionDirection);
-		if (_pPlayer2)
-		{
-			if (collMng->check_collision_n_push(static_cast<Entity*>(_pPlayer2), pTile, &intersection, &collisionDirection, 0.0f))
-				_pPlayer2->onCollision(collisionDirection);
-		}
+	cMng->collide(_pPlayer1, &_tile_list[CONCRETE]);
+	cMng->collide(_pPlayer2, &_tile_list[CONCRETE]);
+	cMng->collide(_pPlayer1, &_enemy_list);
+	cMng->collide(_pPlayer2, &_enemy_list);
+	cMng->collide(_pPlayer1, &_obstacle_list);
+	cMng->collide(_pPlayer2, &_obstacle_list);
 
-		if (collMng->intersects(pTile, _orc->getFrontEdge()))
-			_orc->setFloor_foward(true);
-		if (collMng->check_collision(static_cast<Entity*>(_orc), pTile, &intersection, &collisionDirection))
-		{
-			collMng->push_entities(static_cast<Entity*>(_orc), pTile, &intersection, &collisionDirection, 0.0f);
-			_orc->onCollision(collisionDirection);
-		}
-	}
-
-	if (_pPlayer1->isVulnerable() && (collMng->check_collision(static_cast<Entity*>(_pPlayer1), static_cast<Entity*>(_orc), &intersection, &collisionDirection)))
-	{ //Check collision between the ent1 and the orc
-		if (_pPlayer1->isDefendingInFront(collisionDirection))
-		{
-			collisionDirection = -collisionDirection;
-			collMng->push_entities(static_cast<Entity*>(_orc), static_cast<Entity*>(_pPlayer1), &intersection, &collisionDirection, 0.0f);
-			_orc->onCollision(collisionDirection);
-		}
-		else
-		{
-			_pPlayer1->takeDmg(_orc->getCollDmg());
-		}
-	}
-
-	if (_pPlayer2)
-	{
-		if (_pPlayer2->isVulnerable() && (collMng->check_collision(static_cast<Entity*>(_pPlayer2), static_cast<Entity*>(_orc), &intersection, &collisionDirection)))
-		{ //Check collision between the ent1 and the orc
-			if (_pPlayer2->isDefendingInFront(collisionDirection))
-			{
-				collisionDirection = -collisionDirection;
-				collMng->push_entities(static_cast<Entity*>(_orc), static_cast<Entity*>(_pPlayer2), &intersection, &collisionDirection, 0.0f);
-				_orc->onCollision(collisionDirection);
-			}
-			else
-			{
-				_pPlayer2->takeDmg(_orc->getCollDmg());
-			}
-		}
-	}
+	cMng->collide(&_enemy_list, &_tile_list[CONCRETE]);
+	cMng->collide(&_enemy_list, &_obstacle_list);
 }

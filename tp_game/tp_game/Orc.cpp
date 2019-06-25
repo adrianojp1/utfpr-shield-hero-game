@@ -14,7 +14,7 @@ Orc::Orc(const sf::Vector2f initPosition) :
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
-	cd_attack.setTotalTime(1.0f);
+	_cd_attack.setTotalTime(1.0f);
 	_speed = 150.0f;
 	_canAttack = true;
 	_velocity.x = _speed;
@@ -46,10 +46,10 @@ void Orc::initialize_animator()
 
 	_animator = new Animator(static_cast<Entity*>(this));
 
-	*_animator << new Animation(gMng::orc_idle_texture, 1, 0.0f);
-	*_animator << new Animation(gMng::orc_walk_texture, 4, 0.250f);
-	*_animator << new Animation(gMng::orc_die_texture, 3, 0.250f);
-	*_animator << new Animation(gMng::orc_atk_texture, 3, 0.200f);
+	*_animator << new Animation(gMng::orc_idle_texture, 1, 0.0f, 2);
+	*_animator << new Animation(gMng::orc_walk_texture, 4, 0.250f, 2);
+	*_animator << new Animation(gMng::orc_die_texture, 3, 0.250f, 2);
+	*_animator << new Animation(gMng::orc_atk_texture, 3, 0.200f, 2);
 } // end initializeAnimators
 
 
@@ -57,11 +57,6 @@ void Orc::attack()
 {
 	_velocity.x = 0.0f;
 	_state = COMBAT;
-}
-
-void Orc::turnArround()
-{
-	_facingRight ? _facingRight = false : _facingRight = true;
 }
 
 void Orc::colliding_onLeft()
@@ -83,7 +78,12 @@ void Orc::updateAction(const float deltaTime)
 	
 	_state = WALK;
 
-	if (!_floor_foward)
+	int chanceToTurn = 1;//%
+	bool decidedToTurn = false;
+	if (rand() % 101 < chanceToTurn + 1)
+		bool decidedToTurn = true;
+
+	if (!_floor_foward || decidedToTurn)
 	{
 		turnArround();
 	}

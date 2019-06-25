@@ -63,7 +63,6 @@ void Entity::initialize_Collider(sf::RectangleShape *&pCollider, sf::Vector2f sp
 
 void Entity::draw()
 {
-
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
 	if (this->isActive())
@@ -134,6 +133,54 @@ void Entity::colliding_onBottom()
 void Entity::colliding_onTop()
 {
 	_velocity.y = 0.0f;
+}
+
+void Entity::updatePosition(const float deltaTime)
+{
+	_position += _velocity * deltaTime;
+}
+
+void Entity::updateAnime_n_Collider()
+{
+	updateAnime();
+	updateCollider();
+}
+
+void Entity::updateAnime()
+{
+	_animator->updateAnimation(_facingRight);
+}
+
+void Entity::updateCollider()
+{
+	_current_collider->setPosition(_position);
+}
+
+void Entity::decreaseTimers()
+{
+}
+
+void Entity::turnArround()
+{
+	_facingRight ? _facingRight = false : _facingRight = true;
+}
+
+void Entity::moveFoward()
+{
+	if (_facingRight)
+		moveToRight();
+	else
+		moveToLeft();
+}
+
+void Entity::moveToLeft(const float speedMultiplier)
+{
+	_velocity.x -= _speed * speedMultiplier;
+}
+
+void Entity::moveToRight(const float speedMultiplier)
+{
+	_velocity.x += _speed * speedMultiplier;
 }
 
 void Entity::onCollision(const sf::Vector2f collisionDirection)

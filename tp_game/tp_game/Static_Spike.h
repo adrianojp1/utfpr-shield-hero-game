@@ -14,11 +14,10 @@ class Static_Spike : public Obstacle
 {
 private:
 
-
 public:
 	//================================================================//
 	// ========== Constructors ========== //
-	Static_Spike(const sf::Vector2f initPosition, const int id);
+	Static_Spike(const sf::Vector2f initPosition, const int id = 39);
 	Static_Spike();
 
 	// ========== Destructors ========== //
@@ -26,7 +25,6 @@ public:
 
 	//================================================================//
 	// ========== Initializers ========== //
-	virtual void initialize_animator();
 
 private:
 	// ========== execute submethods ========== //

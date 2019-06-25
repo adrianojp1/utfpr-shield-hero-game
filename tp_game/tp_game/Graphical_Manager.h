@@ -2,7 +2,7 @@
 
 //======================================================================================================================================//
 // === MyWindow Class === //
-class Graphical_Manager : public sf::RenderWindow
+typedef class Graphical_Manager : public sf::RenderWindow
 {
 private:
 	sf::View* pView;
@@ -77,9 +77,12 @@ public:
 	static sf::Font* menu_title_ft;
 
 	// ========== Sprites (Sp) file paths (Fp) ========== //
-	//Tiled
+	//Tileset
 	static const std::string tileset_Fp;
 	static sf::Texture* tileset_texture;
+	//Energy_ball
+	static const std::string energy_ball_Fp;
+	static sf::Texture* energy_ball_texture;
 
 	//Player
 	static const std::string player_idle_Sp_Fp;
@@ -133,6 +136,13 @@ public:
 
 	static sf::Texture* white_skeleton_proj_texture;
 	static sf::Texture* black_skeleton_proj_texture;
-};
 
-typedef Graphical_Manager gMng;
+	//Boss
+	static const std::string boss_idle_Sp_Fp;
+	static const std::string boss_walk_Sp_Fp;
+	static const std::string boss_atk_Sp_Fp;
+
+	static sf::Texture* boss_idle_texture;
+	static sf::Texture* boss_walk_texture;
+	static sf::Texture* boss_atk_texture;
+}gMng;

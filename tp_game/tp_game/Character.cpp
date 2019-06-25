@@ -91,6 +91,8 @@ void Character::initialize_AllColliders()
 	initialize_Collider(_walk_collider, (*_animator)[WALK]->getCanvasSize());
 	initialize_Collider(_death_collider, (*_animator)[DEATH]->getCanvasSize());
 	initialize_Collider(_combat_collider, (*_animator)[COMBAT]->getCanvasSize());
+
+	_current_collider = _idle_collider;
 }
 
 void Character::execute(const float deltaTime)
@@ -117,7 +119,6 @@ void Character::execute(const float deltaTime)
 		applyGforce(deltaTime);
 		updatePosition(deltaTime);
 	
-
 		switchAnime_n_Collider();
 
 		if (!isVulnerable())
@@ -129,8 +130,6 @@ void Character::execute(const float deltaTime)
 			apply_default_effect();
 		}
 
-		updateAnime_n_Collider(deltaTime);
-
 		resetColls();
 	}
 }
@@ -139,11 +138,6 @@ void Character::colliding_onBottom()
 {
 	_velocity.y = 0.0f;
 	_canJump = true;
-}
-
-void Character::updatePosition(const float deltaTime)
-{
-	_position += _velocity * deltaTime;
 }
 
 void Character::applyGforce(const float deltaTime)
@@ -159,24 +153,6 @@ void Character::jump()
 	10 pixels = 1m
 	gravity = 98.1*/
 	_velocity.y = -sqrtf(2.0f * gMng::gravity * _jumpHeight);
-}
-
-void Character::moveToLeft(const float speedMultiplier)
-{
-	_velocity.x -= _speed * speedMultiplier;
-}
-
-void Character::moveToRight(const float speedMultiplier)
-{
-	_velocity.x += _speed * speedMultiplier;
-}
-
-void Character::moveFoward()
-{
-	if (_facingRight)
-		moveToRight();
-	else
-		moveToLeft();
 }
 
 void Character::updateDeath()
@@ -213,7 +189,7 @@ void Character::apply_default_effect()
 
 bool Character::isDying()
 {
-	return (this->isActive() && _hp <= 0);
+	return (this->isActive() && _state == DEATH);
 }
 
 void Character::takeDmg(const int dmg)
@@ -256,12 +232,6 @@ void Character::resetHp()
 void Character::decreaseTimers()
 {
 	_invulnerability.decreaseTime();
-}
-
-void Character::updateAnime_n_Collider(const float deltaTime)
-{
-	_animator->updateAnimation(_facingRight);
-	_current_collider->setPosition(_position);
 }
 
 void Character::setJumpHeight(const float jumpHeight)

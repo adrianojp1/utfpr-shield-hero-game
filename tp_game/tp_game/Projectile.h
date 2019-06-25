@@ -1,23 +1,21 @@
 #pragma once
 #include "Entity.h"
-#include "WhiteSkeleton.h"
-#include "BlackSkeleton.h"
+
+class Projectile_List;
 
 class Projectile : public Entity
 {
 private:
-	sf::RectangleShape *_red_proj_collider; //WSkltn projectile
-	sf::RectangleShape *_blue_proj_collider; //BSkltn projectile
+	static Projectile_List* _level_proj_list;
 
-	//================================================================//
-	//======================== Static Consts =========================//
-	static const int WSproj;
-	static const int BSproj;
+	sf::RectangleShape *_collider;
 
+	int _collisionDamage;
+	bool _reflected;
 public:
 	//================================================================//
 	// ========== Constructors ========== //
-	Projectile(const sf::Vector2f initPosition);
+	Projectile(const sf::Vector2f initPosition, const int collDmg, const bool facingRight, const int _id = 0);
 	Projectile();
 	// ========== Destructors ========== //
 	~Projectile();
@@ -30,14 +28,18 @@ public:
 	// ========== Loop methods ========== //
 	virtual void execute(const float deltaTime);
 
-
 	//================================================================//
 	// ========== Motion ========== //
-	virtual void throw_proj();
-	virtual void updatePosition(const float deltaTime);
-	virtual void updateAnime_n_Collider(const float deltaTime);
 
+	virtual void setCollDmg(const int collDmg);
+	virtual const int getCollDmg() const;
 
+	virtual const bool wasReflected() const;
+
+	virtual void reflect();
+
+	static void setProjList(Projectile_List* projList);
+	static Projectile_List* getProjList();
 private:
 	void updateAction(const float deltaTime);
 };

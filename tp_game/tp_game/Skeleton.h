@@ -3,12 +3,14 @@
 //======================================================================================================================================//
 // === Classes Headers === //
 #include "Enemy.h"
+#include "Projectile_List.h"
 
 //======================================================================================================================================//
 // === Skeleton Class === //
 class Skeleton : public Enemy
 {
-protected:
+private:
+	sf::Vector2f _proj_offset;
 
 public:
 	//================================================================//
@@ -16,24 +18,22 @@ public:
 	Skeleton(const sf::Vector2f initPosition);
 	Skeleton();
 	// ========== Destructors ========== //
-	~Skeleton();
+	virtual ~Skeleton();
 
 	//================================================================//
 	// ========== Initializers ========== //
 	virtual void initialize_animator() = 0; //Initializes all the animators
-	//virtual void initialize_overView();
 
 	//================================================================//
 	// ========== Motion ========== //
 	virtual void attack(); //Attack of both skeletons
-	
 
 	//================================================================//
 	// ========== State checkers ========== //
 	//virtual bool player_on_overview() const;
 private:
+	//bool isAttacking() const;
+protected:
 	// ========== execute submethods ========== //
 	virtual void updateAction(const float deltaTime) = 0;
-}
-;
-
+};

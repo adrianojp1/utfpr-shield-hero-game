@@ -34,6 +34,7 @@ public:
 	//================================================================//
 	// ========== Constructors ========== //
 	Abstract_Entity(const sf::Vector2f initPosition, const bool active = false, const int id = -1);
+	Abstract_Entity(const int id, const sf::Vector2f initPosition = { 0.0f, 0.0f }, const bool active = false);
 	Abstract_Entity();
 	// ========== Destructors ========== //
 	virtual ~Abstract_Entity();

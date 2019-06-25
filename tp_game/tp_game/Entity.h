@@ -57,6 +57,15 @@ public:
 	virtual void colliding_onRight();
 	virtual void colliding_onBottom();
 	virtual void colliding_onTop();
+	virtual void updatePosition(const float deltaTime);
+	virtual void updateAnime_n_Collider();
+	virtual void updateAnime();
+	virtual void updateCollider();
+	virtual void decreaseTimers();
+	virtual void turnArround();
+	virtual void moveFoward();
+	virtual void moveToLeft(const float speedMultiplier = 1.0f);
+	virtual void moveToRight(const float speedMultiplier = 1.0f);
 
 	//================================================================//
 	// ========== Sets & Gets ========== //

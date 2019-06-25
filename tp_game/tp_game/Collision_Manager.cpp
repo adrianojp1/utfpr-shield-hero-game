@@ -9,6 +9,14 @@
 //======================================================================================================================================//
 // === Classes headers for definition === //
 #include "Entity.h"
+#include "Player.h"
+#include "Enemy.h"
+#include "Obstacle.h"
+#include "Tile.h"
+
+#include "Enemy_List.h"
+#include "Tile_List.h"
+#include "Obstacle_List.h"
 
 //======================================================================================================================================//
 // === Static initializations === //
@@ -29,6 +37,168 @@ Collision_Manager* Collision_Manager::getInstance()
 	if (!_instance)
 		_instance = new Collision_Manager();
 	return _instance;
+}
+
+void Collision_Manager::collide(Player* pPlayer, Tile* pTile)
+{
+	if (pPlayer && pTile)
+	{
+		sf::Vector2f intersection;
+		sf::Vector2f collisionDirection;
+
+		if(check_collision_n_push(static_cast<Entity*>(pPlayer), pTile, &intersection, &collisionDirection, 0.0f))
+				pPlayer->onCollision(collisionDirection);
+	}
+}
+
+void Collision_Manager::collide(Player* pPlayer, Enemy* pEnemy)
+{
+	if (pPlayer && pEnemy && pPlayer->isVulnerable())
+	{
+		sf::Vector2f intersection;
+		sf::Vector2f collisionDirection;
+
+		if (check_collision(static_cast<Entity*>(pPlayer), static_cast<Entity*>(pEnemy), &intersection, &collisionDirection))
+		{
+			if (pPlayer->isDefendingInFront(collisionDirection))
+			{
+				collisionDirection = -collisionDirection;
+				push_entities(static_cast<Entity*>(pEnemy), static_cast<Entity*>(pPlayer), &intersection, &collisionDirection, 0.0f);
+				pEnemy->onCollision(collisionDirection);
+			}
+			else
+			{
+				pPlayer->takeDmg(pEnemy->getCollDmg());
+			}
+		}
+	}
+}
+
+void Collision_Manager::collide(Player* pPlayer, Obstacle* pObstacle)
+{
+	if (pPlayer && pObstacle && pPlayer->isVulnerable())
+	{
+		sf::Vector2f intersection;
+		sf::Vector2f collisionDirection;
+
+		if (check_collision(static_cast<Entity*>(pPlayer), static_cast<Entity*>(pObstacle), &intersection, &collisionDirection))
+		{
+			pPlayer->takeDmg(pObstacle->getCollDmg());
+			pObstacle->onCollision(-collisionDirection);
+		}
+	}
+}
+
+void Collision_Manager::collide(Enemy* pEnemy, Tile* pTile)
+{
+	if (pEnemy && pTile)
+	{
+		sf::Vector2f intersection;
+		sf::Vector2f collisionDirection;
+
+		if (!pEnemy->getFloor_foward() && contains(pTile, pEnemy->getFrontEdge()))
+			pEnemy->setFloor_foward(true);
+		if (check_collision(static_cast<Entity*>(pEnemy), pTile, &intersection, &collisionDirection))
+		{
+			push_entities(static_cast<Entity*>(pEnemy), pTile, &intersection, &collisionDirection, 0.0f);
+			pEnemy->onCollision(collisionDirection);
+		}
+	}
+}
+
+void Collision_Manager::collide(Enemy* pEnemy, Obstacle* pObstacle)
+{
+	if (pEnemy && pObstacle)
+	{
+		sf::Vector2f intersection;
+		sf::Vector2f collisionDirection;
+
+		if (check_collision(static_cast<Entity*>(pEnemy), pObstacle, &intersection, &collisionDirection))
+		{
+			push_entities(static_cast<Entity*>(pEnemy), pObstacle, &intersection, &collisionDirection, 0.0f);
+			pEnemy->onCollision(collisionDirection);
+		}
+	}
+}
+
+void Collision_Manager::collide(Obstacle* pObstacle, Tile* pTile)
+{
+
+}
+
+void Collision_Manager::collide(Player* pPlayer, Tile_List* t_list)
+{
+	if (pPlayer && t_list)
+	{
+		for (Tile* pT : *t_list)
+		{
+			collide(pPlayer, pT);
+		}
+	}
+}
+
+void Collision_Manager::collide(Player* pPlayer, Enemy_List* e_list)
+{
+	if (pPlayer && pPlayer->isVulnerable() && e_list)
+	{
+		for (Enemy* pEne : *e_list)
+		{
+			collide(pPlayer, pEne);
+		}
+	}
+}
+
+void Collision_Manager::collide(Player* pPlayer, Obstacle_List* o_list)
+{
+	if (pPlayer && pPlayer->isVulnerable() && o_list)
+	{
+		for (Obstacle* pO : *o_list)
+		{
+			collide(pPlayer, pO);
+		}
+	}
+}
+
+void Collision_Manager::collide(Enemy_List* e_list, Tile_List* t_list)
+{
+	if (t_list && e_list)
+	{
+		for (Tile* pT : *t_list)
+		{
+			for (Enemy* pE : *e_list)
+			{
+				collide(pE, pT);
+			}
+		}
+	}
+}
+
+void Collision_Manager::collide(Enemy_List* e_list, Obstacle_List* o_list)
+{
+	if (o_list && e_list)
+	{
+		for (Obstacle* pO : *o_list)
+		{
+			for (Enemy* pE : *e_list)
+			{
+				collide(pE, pO);
+			}
+		}
+	}
+}
+
+void Collision_Manager::collide(Obstacle_List* o_list, Tile_List* t_list)
+{
+	if (t_list && o_list)
+	{
+		for (Tile* pT : *t_list)
+		{
+			for (Obstacle* pO : *o_list)
+			{
+				collide(pO, pT);
+			}
+		}
+	}
 }
 
 bool Collision_Manager::check_collision(Entity* ent1, Entity* ent2)
@@ -142,7 +312,7 @@ bool Collision_Manager::check_collision_n_push(Entity* ent1, Entity* ent2, sf::V
 	return false;
 }
 
-bool Collision_Manager::intersects(Entity* ent, sf::Vector2f point)
+bool Collision_Manager::contains(Entity* ent, sf::Vector2f point)
 {
 	sf::Vector2f halfSize = ent->getCollider()->getSize();
 	sf::Vector2f pos = ent->getCollider()->getPosition();
@@ -151,4 +321,23 @@ bool Collision_Manager::intersects(Entity* ent, sf::Vector2f point)
 	sf::Vector2f sup_lims = pos + halfSize;
 
 	return ((point.x > inf_lims.x) && (point.x < sup_lims.x) && (point.y > inf_lims.y) && (point.y < sup_lims.y)) ? true : false;
+}
+
+bool Collision_Manager::intersects(Entity* ent, sf::RectangleShape* rect)
+{
+	sf::Vector2f otherPosition = rect->getPosition();
+	sf::Vector2f otherHalfSize = rect->getSize() / 2.0f;
+	sf::Vector2f thisPosition = ent->getPosition();
+	sf::Vector2f thisHalfSize = ent->getCollider()->getSize() / 2.0f;
+
+	sf::Vector2f delta = { otherPosition.x - thisPosition.x, otherPosition.y - thisPosition.y };
+
+	sf::Vector2f intersection = { abs(delta.x) - (otherHalfSize.x + thisHalfSize.x),
+								 abs(delta.y) - (otherHalfSize.y + thisHalfSize.y) };
+
+	if (intersection.x < 0.0f && intersection.y < 0.0f)
+	{
+		return true;
+	}
+	return false;
 }

@@ -11,12 +11,12 @@
 
 //======================================================================================================================================//
 // === Character Class === //
-class Character : public Entity
+typedef class Character : public Entity
 {
 protected:
 	// ========= Motion Members ========= //
 	//Colliders
-	sf::RectangleShape *_idle_collider;   //Idle
+	sf::RectangleShape *_idle_collider;   //Idle 
 	sf::RectangleShape *_walk_collider;   //Walking
 	sf::RectangleShape *_combat_collider; //Defense
 	sf::RectangleShape *_death_collider;  //Death
@@ -57,12 +57,8 @@ public:
 	// ========== Motion ========== //
 	virtual void updateAction(const float deltaTime) = 0;
 	virtual void updateDeath();
-	virtual void updatePosition(const float deltaTime);
 	virtual void applyGforce(const float deltaTime);
 	virtual void jump();
-	virtual void moveToLeft(const float speedMultiplier = 1.0f);
-	virtual void moveToRight(const float speedMultiplier = 1.0f);
-	virtual void moveFoward();
 	virtual void colliding_onBottom();
 
 	//================================================================//
@@ -77,8 +73,6 @@ public:
 	virtual void ressurect();
 	virtual void resetHp();
 	virtual void decreaseTimers();
-
-	virtual void updateAnime_n_Collider(const float deltaTime);
 
 	//================================================================//
 	// ========== Sets & Gets ========== //
@@ -109,6 +103,4 @@ protected:
 		DEATH,
 		COMBAT
 	};
-};
-
-typedef Character Charc;
+} Charc;

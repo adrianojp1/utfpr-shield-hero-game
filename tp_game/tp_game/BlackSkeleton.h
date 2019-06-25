@@ -1,8 +1,6 @@
 #pragma once
 #include "Skeleton.h"
 
-class Projectile;
-
 class BlackSkeleton : public Skeleton
 {
 private:
