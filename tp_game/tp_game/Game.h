@@ -27,7 +27,7 @@ private:
 	Player* _pPlayer2;
 
 	std::vector<Stage*> _stages;
-	int _currentStage_index;
+	unsigned int _currentStage_index;
 
 	//Save* _currentSave;
 	

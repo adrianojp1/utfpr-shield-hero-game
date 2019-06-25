@@ -21,11 +21,8 @@ Stage::Stage(const int id, const int nPlayers) : Abstract_Entity(id)
 	_nPlayers = nPlayers;
 	_running = false;
 
-	srand(static_cast<unsigned int>(time(NULL)));
 	_nEnemies = (rand() % 11) + 5;
 	_nObstacles = (rand() % 11) + 5;
-
-	initializeLevels();
 }
 Stage::~Stage()
 {
@@ -39,14 +36,15 @@ Stage::~Stage()
 	_vLevels.clear();
 }
 
-void Stage::initializeLevels()
+void Stage::initializeLevels(Stage* pStage, int nLevels)
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
-	int lv_id = 1;
-	std::string tiles_fp = get_lv_fp(_id, lv_id) + gMng::tile_sufix;
-	
-	_vLevels.push_back(new Level(tiles_fp, { 0.0f, 0.0f }, _nEnemies, _nObstacles));
+	for (int lv_id = 1; lv_id < nLevels+1; lv_id++)
+	{
+		std::string tiles_fp = get_lv_fp(_id, lv_id) + gMng::tile_sufix;
+		_vLevels.push_back(new Level(tiles_fp, { 0.0f, 0.0f }, pStage));
+	}
 }
 
 void Stage::execute(const float deltaTime)
@@ -62,6 +60,8 @@ void Stage::execute(const float deltaTime)
 			if (_currentLevel_index < _vLevels.size() - 1)
 			{
 				_currentLevel_index++;
+				_vLevels[_currentLevel_index]->start();
+				Game::getInstance()->execute();
 			}
 			else //Stage finished
 			{

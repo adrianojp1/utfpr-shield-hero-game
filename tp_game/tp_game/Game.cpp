@@ -76,6 +76,7 @@ void Game::initialize()
 
 	_state = On_MainMenu::getInstance();
 
+	srand(static_cast<unsigned int>(time(NULL)));
 } // end initialize
 
 void Game::initialize_player1()
@@ -324,10 +325,10 @@ void Game::draw()
 void Game::update_deltaTime()
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
-
+	float maxDeltaTime = 1.0f / 10.0f;
 	_deltaTime = _clock.restart().asSeconds(); //Iteration clock
-	if (_deltaTime > 1.0f / 4.0f)
-		_deltaTime = 1.0f / 4.0f;
+	if (_deltaTime > maxDeltaTime)
+		_deltaTime = maxDeltaTime;
 }
 
 void Game::changeState(Game_State* state)

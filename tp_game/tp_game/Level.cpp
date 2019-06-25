@@ -6,20 +6,26 @@
 // === This Class Header === //
 #include "Level.h"
 
+#include "Stage.h"
+#include "Vertical_Stage.h"
+#include "Horizontal_Stage.h"
+
 //======================================================================================================================================//
 // === Statics Initialization === //
 const int Level::nLayers(5);
 
 //======================================================================================================================================//
 // === Level methods === //
-Level::Level(const std::string level_tiles_filePath, sf::Vector2f initPosition, const int nEnemies, const int nObstacles) : Abstract_Entity(initPosition)
+Level::Level(std::string level_tiles_filePath, sf::Vector2f initPosition, Stage* pStage) : Abstract_Entity(initPosition)
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
-	_nTotalEnemies = nEnemies;
-	_nTotalObstacles = nObstacles;
+	_pStage = pStage;
 	_tilesIds_matrix = NULL;
 	_finished = false;
+
+	_nTotalObstacles = 5;
+	_nTotalEnemies = 5;
 
 	serializeTiles(level_tiles_filePath);
 	initializeEntities();
@@ -218,8 +224,6 @@ void Level::initializeEntities()
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
-	Projectile::setProjList(&_projectile_list);
-
 	int id = -1;
 	sf::Vector2i pos_inMatrix = { 0, 0 };
 
@@ -271,29 +275,15 @@ void Level::initializeEntities()
 		}
 	}
 
-	srand(static_cast<unsigned int>(time(NULL)));
 	if (!_enemiesSpawns.empty())
 	{
+		Enemy* pEnemy = NULL;
 		for (int i = 0; i < _nTotalEnemies; i++)
 		{
-			Enemy* pEnemy = NULL;
 			pos_inMatrix = _enemiesSpawns[rand() % _enemiesSpawns.size()];
-			switch (rand() % 3)
-			{
-			case 0:
-				pEnemy = static_cast<Enemy*>(new Orc(getRealPosition(pos_inMatrix)));
-				break;
-			case 1:
-				pEnemy = static_cast<Enemy*>(new WhiteSkeleton(getRealPosition(pos_inMatrix)));
-				break;
-			case 2:
-				pEnemy = static_cast<Enemy*>(new BlackSkeleton(getRealPosition(pos_inMatrix)));
-				break;
-			default:
-				break;
-			}
-			_enemy_list.includeEnemy(static_cast<Enemy*>(pEnemy));
-			_all_level_ents.includeEntity(pEnemy);
+			pEnemy = _pStage->get_an_enemy(getRealPosition(pos_inMatrix));
+			_enemy_list.includeEnemy(pEnemy);
+			_all_level_ents.includeEntity(static_cast<Entity*>(pEnemy));
 		}
 	}
 	
@@ -304,9 +294,9 @@ void Level::initializeEntities()
 		if (!_spikeSpawns.empty())
 		{
 			pos_inMatrix = _spikeSpawns[rand() % _spikeSpawns.size()];
-			pObstacle = static_cast<Obstacle*>(new Static_Spike(getRealPosition(pos_inMatrix)));
-			_obstacle_list.includeObstacle(static_cast<Obstacle*>(pObstacle));
-			_all_level_ents.includeEntity(pObstacle);
+			pObstacle = _pStage->get_spike(getRealPosition(pos_inMatrix));
+			_obstacle_list.includeObstacle(pObstacle);
+			_all_level_ents.includeEntity(static_cast<Entity*>(pObstacle));
 		}
 
 		if (!_dispenserSpawns.empty())
@@ -320,8 +310,8 @@ void Level::initializeEntities()
 				facingRight = true;
 
 			pObstacle = static_cast<Obstacle*>(new Dispenser(getRealPosition(pos_inMatrix), facingRight));
-			_obstacle_list.includeObstacle(static_cast<Obstacle*>(pObstacle));
-			_all_level_ents.includeEntity(pObstacle);
+			_obstacle_list.includeObstacle(pObstacle);
+			_all_level_ents.includeEntity(static_cast<Entity*>((pObstacle)));
 
 			//Kill the concrete tile at that position
 			_tilesIds_matrix[CONCRETE][pos_inMatrix.y][pos_inMatrix.x] = -1;
@@ -360,11 +350,18 @@ void Level::start()
 	movePlayersToSpawn();
 
 	setViewToCenter();
+
+	Projectile::setProjList(&_projectile_list);
 }
 
 void Level::setViewToCenter()
 {
 	_pGraphMng->setViewCenter(_viewCenter);
+}
+
+void Level::spawnBoss()
+{
+	//Boss* pBoss = new Boss;
 }
 
 void Level::check_endLevel()

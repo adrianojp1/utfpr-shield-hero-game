@@ -10,6 +10,7 @@
 #include "Orc.h"
 #include "BlackSkeleton.h"
 #include "WhiteSkeleton.h"
+#include "Boss.h"
 //Obstacles
 #include "Dynamic_Spike.h"
 #include "Dispenser.h"
@@ -22,6 +23,8 @@
 #include "Tile_List.h"
 #include "Projectile_List.h"
 //
+
+class Stage;
 
 //======================================================================================================================================//
 // === Stage Class === //
@@ -60,10 +63,11 @@ private:
 	//
 
 	bool _finished;
+	Stage* _pStage;
 
 public:
 	// ========== Constructors ========== //
-	Level(std::string level_tiles_filePath, sf::Vector2f initPosition, const int nEnemies, const int nObstacles);
+	Level(std::string level_tiles_filePath, sf::Vector2f initPosition, Stage* pStage);
 	Level();
 	// ========== Destructors ========== //
 	virtual ~Level();
@@ -84,6 +88,8 @@ public:
 	virtual void setPlayersSpawnPoint();
 	virtual void start();
 	virtual void setViewToCenter();
+
+	virtual void spawnBoss();
 
 	// ========== Loop methods ========== //
 	virtual void execute(const float deltaTime);

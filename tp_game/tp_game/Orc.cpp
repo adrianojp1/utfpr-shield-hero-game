@@ -78,7 +78,6 @@ void Orc::updateAction(const float deltaTime)
 	
 	_state = WALK;
 
-	srand(static_cast<unsigned int>(time(NULL)));
 	int chanceToTurn = 1;//%
 	bool decidedToTurn = false;
 	if (rand() % 101 < chanceToTurn + 1)

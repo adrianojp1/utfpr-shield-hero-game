@@ -87,6 +87,14 @@ const std::string Graphical_Manager::black_skeleton_proj_Sp_Fp = textures_dir + 
 sf::Texture* Graphical_Manager::white_skeleton_proj_texture = NULL;
 sf::Texture* Graphical_Manager::black_skeleton_proj_texture = NULL;
 
+const std::string Graphical_Manager::boss_idle_Sp_Fp = textures_dir + "boss/boss-idle";
+const std::string Graphical_Manager::boss_walk_Sp_Fp = textures_dir + "boss/boss-walk";
+const std::string Graphical_Manager::boss_atk_Sp_Fp = textures_dir + "boss/boss-atk";
+
+sf::Texture* Graphical_Manager::boss_idle_texture = NULL;
+sf::Texture* Graphical_Manager::boss_walk_texture = NULL;
+sf::Texture* Graphical_Manager::boss_atk_texture = NULL;
+
 //======================================================================================================================================//
 // === Graphical_Manager methods === //
 Graphical_Manager::Graphical_Manager() : sf::RenderWindow(sf::VideoMode(windowSize.x, windowSize.y), gMng::windowName, sf::Style::Close | sf::Style::Titlebar)
@@ -158,6 +166,11 @@ void Graphical_Manager::loadAllTextures()
 	loadTexture(black_skeleton_die_Sp_Fp, &black_skeleton_die_texture);
 	loadTexture(black_skeleton_atk_Sp_Fp, &black_skeleton_atk_texture);
 	loadTexture(black_skeleton_proj_Sp_Fp, &black_skeleton_proj_texture);
+
+	//Boss
+	loadTexture(boss_idle_Sp_Fp, &boss_idle_texture);
+	loadTexture(boss_walk_Sp_Fp, &boss_walk_texture);
+	loadTexture(boss_atk_Sp_Fp, &boss_atk_texture);
 }
 
 void Graphical_Manager::loadAllFonts()

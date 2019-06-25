@@ -136,4 +136,13 @@ public:
 
 	static sf::Texture* white_skeleton_proj_texture;
 	static sf::Texture* black_skeleton_proj_texture;
+
+	//Boss
+	static const std::string boss_idle_Sp_Fp;
+	static const std::string boss_walk_Sp_Fp;
+	static const std::string boss_atk_Sp_Fp;
+
+	static sf::Texture* boss_idle_texture;
+	static sf::Texture* boss_walk_texture;
+	static sf::Texture* boss_atk_texture;
 }gMng;
