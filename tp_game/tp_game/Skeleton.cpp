@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Skeleton.h"
 
+
 Skeleton::Skeleton(const sf::Vector2f initPosition) : Enemy(initPosition)
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
@@ -74,7 +75,7 @@ void Skeleton::doPrincipalOfAttack()
 	if (_pPlayer2)
 		cast_spell(_pPlayer1, _pPlayer2);
 	else
-	cast_spell(_pPlayer1);
+		cast_spell(_pPlayer1);
 }
 
 void Skeleton::check_attack()

@@ -75,7 +75,7 @@ void Main_Menu::execute_onOp()
 		open_newGame_menu();
 		break;
 	case 1:
-		open_saves_menu();
+		load_save();
 		break;
 	case 2:
 		show_ranking();
@@ -95,11 +95,11 @@ void Main_Menu::open_newGame_menu()
  	Game::getInstance()->open_NewGame_Menu();
 }
 
-void Main_Menu::open_saves_menu()
+void Main_Menu::load_save()
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 
-	//_pGame->open_saves_menu();
+	//Game::getInstance()->load_save();
 }
 
 void Main_Menu::show_ranking()

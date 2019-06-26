@@ -28,7 +28,7 @@ public:
 	//================================================================//
 	// ========== Options methods ========== //
 	void open_newGame_menu();
-	void open_saves_menu();
+	void load_save();
 	void show_ranking();
 	void close_game();
 

@@ -1,6 +1,7 @@
 #pragma once
 #include "Skeleton.h"
 
+
 class BlackSkeleton : public Skeleton
 {
 private:

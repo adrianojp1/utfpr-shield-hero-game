@@ -29,6 +29,13 @@ Level::Level(std::string level_tiles_filePath, sf::Vector2f initPosition, Stage*
 
 	serializeTiles(level_tiles_filePath);
 	initializeEntities();
+
+	_playersProps.setCharacterSize(50);
+	_playersProps.setPosition(_position + sf::Vector2f{ 70.0f, 30.0f });
+	_playersProps.setFont(*gMng::normal_text_ft);
+	_playersProps.setFillColor(sf::Color(50, 150, 0));
+	_playersProps.setOutlineColor(sf::Color::Black);
+	_playersProps.setOutlineThickness(2.0f);
 }
 
 Level::Level()
@@ -279,7 +286,7 @@ void Level::initializeEntities()
 	Enemy* pEnemy = NULL;
 	for (unsigned int i = 0; i < _enemiesSpawns.size(); i++)
 	{
-		if (rand() % 2) {
+		if (rand() % 4 > 0) {
 			pos_inMatrix = _enemiesSpawns[i];
 			pEnemy = _pStage->get_an_enemy(getRealPosition(pos_inMatrix));
 			_enemy_list.includeEnemy(pEnemy);
@@ -295,7 +302,7 @@ void Level::initializeEntities()
 	Obstacle* pObstacle = NULL;
 	for (unsigned int i = 0; i < _spikeSpawns.size(); i++)
 	{
-		if (rand() % 2)
+		if (rand() % 4 > 0)
 		{
 			pos_inMatrix = _spikeSpawns[i];
 			pObstacle = _pStage->get_spike(getRealPosition(pos_inMatrix));
@@ -305,7 +312,7 @@ void Level::initializeEntities()
 	
 	for (unsigned int i = 0; i < _dispenserSpawns.size(); i++)
 	{
-		if (rand() % 2)
+		if (rand() % 4 > 0)
 		{
 			pos_inMatrix = _dispenserSpawns[i];
 
@@ -425,6 +432,7 @@ void Level::draw()
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
 	_all_level_ents.draw_entities();
+	drawPlayersProps();
 }
 
 void Level::executePlayers(const float deltaTime)
@@ -491,6 +499,23 @@ void Level::setMatrixSize(sf::Vector2i size)
 sf::Vector2i Level::getMatrixSize() const
 {
 	return _matrixSize;
+}
+
+void Level::drawPlayersProps()
+{
+	int hp = _pPlayer1->getHp();
+	if (hp < 0)
+		hp = 0;
+	std::string str = "HP 1: " + std::to_string(hp) + '\n';
+	if (_pPlayer2)
+	{
+		int hp = _pPlayer2->getHp();
+		if (hp < 0)
+			hp = 0;
+			std::string str = "HP 2: " + std::to_string(hp) + '\n';
+	}
+	_playersProps.setString(str);
+	_pGraphMng->draw(_playersProps);
 }
 
 void Level::manage_collisions()

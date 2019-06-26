@@ -84,6 +84,8 @@ void On_MainMenu::execute(const float deltaTime)
 
 	else if (pG->get_newGame_menu()->isOpen())
 		changeState(On_NewGameMenu::getInstance());
+	else if (pG->isRunning_stage())
+		changeState(RunningStage::getInstance());
 	//if(Game::getInstance()->get_saves_menu()->isOpen())
 	//	Game::getInstance()->changeState(On_SavesMenu::getInstance());
 }
@@ -122,8 +124,7 @@ void On_NewGameMenu::execute(const float deltaTime)
 		changeState(On_MainMenu::getInstance());
 	else
 	{
-		pG->start_stage(2);
-		pG->resetPlayers();
+		pG->start_newMatch(1, 1);
 		changeState(RunningStage::getInstance());
 	}
 }

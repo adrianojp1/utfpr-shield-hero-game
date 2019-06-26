@@ -5,6 +5,7 @@
 #include "Character.h" //Base class
 
 #include "Player.h"
+
 //======================================================================================================================================//
 // === Enemy Class === //
 class Enemy : public Character

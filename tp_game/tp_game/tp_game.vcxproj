@@ -180,6 +180,7 @@
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="Projectile_List.cpp" />
+    <ClCompile Include="Save.cpp" />
     <ClCompile Include="Skeleton.cpp" />
     <ClCompile Include="Stage.cpp" />
     <ClCompile Include="Static_Spike.cpp" />
@@ -220,6 +221,7 @@
     <ClInclude Include="Level.h" />
     <ClInclude Include="Projectile.h" />
     <ClInclude Include="Projectile_List.h" />
+    <ClInclude Include="Save.h" />
     <ClInclude Include="Skeleton.h" />
     <ClInclude Include="Stage.h" />
     <ClInclude Include="Static_Spike.h" />

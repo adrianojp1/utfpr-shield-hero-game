@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Boss.h"
 
+
 Boss::Boss(const sf::Vector2f initPosition) : Enemy(initPosition)
 {
 	initialize_animator();

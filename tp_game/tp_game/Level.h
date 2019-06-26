@@ -66,6 +66,8 @@ private:
 	bool _finished;
 	Stage* _pStage;
 
+	sf::Text _playersProps;
+
 public:
 	// ========== Constructors ========== //
 	Level(std::string level_tiles_filePath, sf::Vector2f initPosition, Stage* pStage);
@@ -114,10 +116,11 @@ public:
 	//_matrixSize
 	void setMatrixSize(sf::Vector2i size);
 	sf::Vector2i getMatrixSize() const;
+	
+	void drawPlayersProps();
 
 	// ========== Collision Management ========== //
 	virtual void manage_collisions();
-
 private:
 	enum Layers
 	{
