@@ -30,8 +30,8 @@ const sf::Vector2f Graphical_Manager::textures_scale = {3.5f, 3.5f};
 
 const std::string Graphical_Manager::menu_ops_Ft_Fp = fonts_dir + "romulus.ttf";
 const std::string Graphical_Manager::menu_title_Ft_Fp = fonts_dir + "alagard.ttf";
-sf::Font* Graphical_Manager::menu_ops_ft = NULL;
-sf::Font* Graphical_Manager::menu_title_ft = NULL;
+sf::Font* Graphical_Manager::normal_text_ft = NULL;
+sf::Font* Graphical_Manager::title_ft = NULL;
 
 const std::string Graphical_Manager::tileset_Fp = textures_dir + "stage/tileset.png";
 sf::Texture *Graphical_Manager::tileset_texture = NULL;
@@ -176,8 +176,8 @@ void Graphical_Manager::loadAllTextures()
 void Graphical_Manager::loadAllFonts()
 {
 	//Menu
-	loadFont(menu_ops_Ft_Fp, &menu_ops_ft);
-	loadFont(menu_title_Ft_Fp, &menu_title_ft);
+	loadFont(menu_ops_Ft_Fp, &normal_text_ft);
+	loadFont(menu_title_Ft_Fp, &title_ft);
 }
 
 void Graphical_Manager::execute()

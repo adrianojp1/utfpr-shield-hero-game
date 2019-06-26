@@ -77,10 +77,10 @@ public:
 
 	//================================================================//
 	// ========== Initializers ========== //
-	virtual void initializeTitle(const std::string str, const int charSize, const sf::Vector2f pos, sf::Color fillColor, sf::Color olColor, const float olThickness, sf::Font* ft = gMng::menu_title_ft);
+	virtual void initializeTitle(const std::string str, const int charSize, const sf::Vector2f pos, sf::Color fillColor, sf::Color olColor, const float olThickness, sf::Font* ft = gMng::title_ft);
 	virtual void initializeAllOps() = 0;
-	virtual void initialize_n_addOp(Option*& pOp, const sf::Vector2f position, const std::string label, const int actSize, const int deactSize, sf::Color actColor, sf::Color deactColor, sf::Font* font = gMng::menu_ops_ft);
-	virtual void initializeOp(Option*& pOp, const sf::Vector2f position, const std::string label, const int actSize, const int deactSize, sf::Color actColor, sf::Color deactColor, sf::Font* font = gMng::menu_ops_ft);
+	virtual void initialize_n_addOp(Option*& pOp, const sf::Vector2f position, const std::string label, const int actSize, const int deactSize, sf::Color actColor, sf::Color deactColor, sf::Font* font = gMng::normal_text_ft);
+	virtual void initializeOp(Option*& pOp, const sf::Vector2f position, const std::string label, const int actSize, const int deactSize, sf::Color actColor, sf::Color deactColor, sf::Font* font = gMng::normal_text_ft);
 	
 	//================================================================//
 	// ========== Loop methods ========== //

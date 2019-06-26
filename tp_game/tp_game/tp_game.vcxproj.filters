@@ -109,6 +109,7 @@
     <ClCompile Include="White_Skeleton.cpp">
       <Filter>Characters\Enemies</Filter>
     </ClCompile>
+    <ClCompile Include="Save.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Character.h">
@@ -219,6 +220,7 @@
     <ClInclude Include="White_Skeleton.h">
       <Filter>Characters\Enemies</Filter>
     </ClInclude>
+    <ClInclude Include="Save.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Characters">

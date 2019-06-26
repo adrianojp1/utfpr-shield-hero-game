@@ -192,6 +192,48 @@ void Game::destroy(void* pointer)
 		delete pointer;
 }
 
+/*
+void Game::load_save()
+{
+	recoverSave();
+}
+
+void Game::recoverSave()
+{
+	std::ifstream match_recoverer("save.dat", std::ios::in);
+	if (!match_recoverer)
+	{
+		std::cerr << "File couldn't be opened!" << std::endl;
+		fflush(stdin);
+		getchar();
+		return;
+	}
+
+	//match_recoverer >> *_stages[_currentStage_index];
+
+
+	match_recoverer.close();
+}
+
+void Game::recordSave()
+{
+	std::ofstream match_recorder("save.dat", std::ios::out);
+	if (!match_recorder)
+	{
+		std::cerr << "File couldn't be opened!" << std::endl;
+		fflush(stdin);
+		getchar();
+		return;
+	}
+
+	match_recorder 
+		<< _currentStage_index + 1 << ' '
+		<< _stages[_currentStage_index]->get_lv_id() << '\n'
+		<< 
+
+	match_recorder.close();
+}
+*/
 void Game::goToNextStage()
 {
 	if (_currentStage_index < _stages.size() - 1)
@@ -254,6 +296,14 @@ void Game::start_stage(int stg_id)
 	run_stage();
 }
 
+void Game::start_newMatch(int stg_id, int lv_id)
+{
+	start_stage(stg_id);
+	resetPlayers();
+	get_currentStage()->set_lv_id(lv_id);
+	get_currentStage()->start_currentLv();
+}
+
 void Game::open_Main_Menu()
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
@@ -284,19 +334,20 @@ void Game::open_Pause_Menu()
 void Game::main_loop()
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
-	
-	while (Game::getInstance()->_window->isOpen())
+
+	Game* pG = Game::getInstance();
+	while (pG->_window->isOpen())
 	{
-		Game::getInstance()->update_deltaTime();
+		pG->update_deltaTime();
 
-		Game::getInstance()->execute();
+		pG->execute();
 
-		Game::getInstance()->_window->execute();
-		Game::getInstance()->_window->clear(); //Clear window buffer
+		pG->_window->execute();
+		pG->_window->clear(); //Clear window buffer
 
-		Game::getInstance()->draw();
+		pG->draw();
 
-		Game::getInstance()->_window->display(); //Show current frame
+		pG->_window->display(); //Show current frame
 	}
 }
 

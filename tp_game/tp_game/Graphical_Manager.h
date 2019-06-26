@@ -6,7 +6,7 @@ typedef class Graphical_Manager : public sf::RenderWindow
 {
 private:
 	sf::View* pView;
-
+	//sf::Text notif_text;
 	static std::vector<sf::Texture*> _vTextures;
 public:
 	//================================================================//
@@ -30,13 +30,14 @@ public:
 	void setViewCenter(sf::Vector2f center);
 	void moveView(sf::Vector2f offset);
 
+	//void notify(std::string notif);
 	//================================================================//
 	// ========== Log method ========== //
 	static void printConsole_log(std::string log);
 	static void loadFont(const std::string file_path, sf::Font** pFont);
 	static void loadTexture(const std::string file_path, sf::Texture** pTexture);
 	static void load_n_setTexture(sf::RectangleShape* pShape, const std::string file_path, sf::Texture* pTexture);
-
+	
 	//================================================================//
 	//======================== Static Consts =========================//
 public:
@@ -72,8 +73,8 @@ public:
 	// ========== Menu (Ft) file paths (Fp) ========== //
 	static const std::string menu_ops_Ft_Fp;
 	static const std::string menu_title_Ft_Fp;
-	static sf::Font* menu_ops_ft;
-	static sf::Font* menu_title_ft;
+	static sf::Font* normal_text_ft;
+	static sf::Font* title_ft;
 
 	// ========== Sprites (Sp) file paths (Fp) ========== //
 	//Tileset

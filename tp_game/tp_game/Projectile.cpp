@@ -7,7 +7,10 @@
 #include "Projectile.h"
 
 #include "Projectile_List.h"
+//#include "CEnt_List.h"
+
 Projectile_List* Projectile::_level_proj_list = NULL;
+CEnt_List* Projectile::_level_ents_list = NULL;
 
 //======================================================================================================================================//
 // === Static initializations === //
@@ -25,6 +28,7 @@ Projectile::Projectile(const sf::Vector2f initPosition, const int collDmg, const
 	_current_collider = _collider;
 
 	_level_proj_list->includeProjectile(this);
+	_level_ents_list->includeEntity(static_cast<Entity*>(this));
 }
 
 Projectile::Projectile()
@@ -35,7 +39,6 @@ Projectile::Projectile()
 
 Projectile::~Projectile()
 {
-	_level_proj_list->remove_projectile(this);
 	if (_animator)
 		delete _animator;
 	if (_collider)
@@ -51,11 +54,11 @@ void Projectile::initialize_animator()
 	switch (_id)
 	{
 	case 0: //White_Skeleton
-		*_animator << new Animation(gMng::white_skeleton_proj_texture, 2, 0.1f, 2);
+		*_animator << new Animation(gMng::white_skeleton_proj_texture, 2, 0.2f, 2);
 		break;
 
 	case 1: //Black_Skeleton
-		*_animator << new Animation(gMng::black_skeleton_proj_texture, 2, 0.1f, 2);
+		*_animator << new Animation(gMng::black_skeleton_proj_texture, 2, 0.2f, 2);
 		break;
 
 	case 2: //Dispenser
@@ -120,6 +123,16 @@ void Projectile::setProjList(Projectile_List* projList)
 Projectile_List* Projectile::getProjList()
 {
 	return _level_proj_list;
+}
+
+void Projectile::setEntList(CEnt_List* entList)
+{
+	_level_ents_list = entList;
+}
+
+CEnt_List* Projectile::getEntList()
+{
+	return _level_ents_list;
 }
 
 void Projectile::updateAction(const float deltaTime)

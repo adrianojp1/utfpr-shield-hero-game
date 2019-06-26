@@ -29,7 +29,7 @@ private:
 	std::vector<Stage*> _stages;
 	unsigned int _currentStage_index;
 
-	//Save* _currentSave;
+	Save* _save;
 	
 	//Time control
 	float _deltaTime;
@@ -80,7 +80,7 @@ public:
 	void run_stage();
 	void stop_runningStage();
 	void start_stage(int stg_id);
-
+	void start_newMatch(int stg_id, int lv_id = 1);
 	void resetPlayers();
 	void set_nPlayers(int nP);
 	void set_currentStage(int stg_id);
@@ -91,4 +91,8 @@ public:
 	Pause_Menu* get_pause_menu();
 
 	void destroy(void* pointer);
+
+	void load_save();
+	void recoverSave();
+	void recordSave();
 };

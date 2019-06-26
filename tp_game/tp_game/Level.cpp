@@ -29,6 +29,13 @@ Level::Level(std::string level_tiles_filePath, sf::Vector2f initPosition, Stage*
 
 	serializeTiles(level_tiles_filePath);
 	initializeEntities();
+
+	_playersProps.setCharacterSize(50);
+	_playersProps.setPosition(_position + sf::Vector2f{ 70.0f, 30.0f });
+	_playersProps.setFont(*gMng::normal_text_ft);
+	_playersProps.setFillColor(sf::Color(50, 150, 0));
+	_playersProps.setOutlineColor(sf::Color::Black);
+	_playersProps.setOutlineThickness(2.0f);
 }
 
 Level::Level()
@@ -60,21 +67,14 @@ Level::~Level()
 		delete _tilesIds_matrix;
 	}
 
-	_all_level_ents.delete_entities();
 
-	_enemy_list.clear();
-	_obstacle_list.clear();
-	
-	for (Projectile* pJ : _projectile_list)
-	{
-		if (pJ)
-			delete pJ;
-	}
-	_projectile_list.clear();
+	_enemy_list.delete_enemies();
+	_obstacle_list.delete_obstacles();
+	_projectile_list.delete_projectiles();
 
 	for (int i = 0; i < 4; i++)
 	{
-		_tile_list[i].clear();
+		_tile_list[i].delete_tiles();
 	}
 
 	for (sf::RectangleShape* pR : _levelEnd)
@@ -226,6 +226,7 @@ void Level::initializeEntities()
 
 	int id = -1;
 	sf::Vector2i pos_inMatrix = { 0, 0 };
+	_boss_spawn = NULL;
 
 	_realSize = Tile::getRealSize() * _matrixSize;
 	_viewCenter = (_realSize / 2.0f) + _position - (Tile::getRealSize() / 2.0f);
@@ -235,6 +236,7 @@ void Level::initializeEntities()
 	_levelRect.setPosition(_viewCenter);
 
 	sf::RectangleShape* new_level_end = NULL;
+	Tile* pTile = NULL;
 
 	for (int j = 0; j < _matrixSize.y; j++)
 	{
@@ -268,40 +270,51 @@ void Level::initializeEntities()
 					_levelEnd.push_back(new_level_end);
 					break;
 
+				case BOSS_SP:
+					_boss_spawn = new sf::Vector2f(getRealPosition({ k, j }));
+					break;
+
 				default:
 					break;
 				}
 			}
 		}
 	}
+	
 
-	if (!_enemiesSpawns.empty())
+
+	Enemy* pEnemy = NULL;
+	for (unsigned int i = 0; i < _enemiesSpawns.size(); i++)
 	{
-		Enemy* pEnemy = NULL;
-		for (int i = 0; i < _nTotalEnemies; i++)
-		{
-			pos_inMatrix = _enemiesSpawns[rand() % _enemiesSpawns.size()];
+		if (rand() % 4 > 0) {
+			pos_inMatrix = _enemiesSpawns[i];
 			pEnemy = _pStage->get_an_enemy(getRealPosition(pos_inMatrix));
 			_enemy_list.includeEnemy(pEnemy);
-			_all_level_ents.includeEntity(static_cast<Entity*>(pEnemy));
 		}
 	}
 	
-	for (int i = 0; i < _nTotalObstacles; i++)
+	if (_boss_spawn)
 	{
-		Obstacle* pObstacle = NULL;
+		pEnemy = new Boss(*_boss_spawn);
+		_enemy_list.includeEnemy(pEnemy);
+	}
 
-		if (!_spikeSpawns.empty())
+	Obstacle* pObstacle = NULL;
+	for (unsigned int i = 0; i < _spikeSpawns.size(); i++)
+	{
+		if (rand() % 4 > 0)
 		{
-			pos_inMatrix = _spikeSpawns[rand() % _spikeSpawns.size()];
+			pos_inMatrix = _spikeSpawns[i];
 			pObstacle = _pStage->get_spike(getRealPosition(pos_inMatrix));
 			_obstacle_list.includeObstacle(pObstacle);
-			_all_level_ents.includeEntity(static_cast<Entity*>(pObstacle));
 		}
-
-		if (!_dispenserSpawns.empty())
+	}
+	
+	for (unsigned int i = 0; i < _dispenserSpawns.size(); i++)
+	{
+		if (rand() % 4 > 0)
 		{
-			pos_inMatrix = _dispenserSpawns[rand() % _dispenserSpawns.size()];
+			pos_inMatrix = _dispenserSpawns[i];
 
 			bool facingRight = false;
 			if (_tilesIds_matrix[CONCRETE][pos_inMatrix.y][pos_inMatrix.x - 1] == -1)
@@ -311,14 +324,12 @@ void Level::initializeEntities()
 
 			pObstacle = static_cast<Obstacle*>(new Dispenser(getRealPosition(pos_inMatrix), facingRight));
 			_obstacle_list.includeObstacle(pObstacle);
-			_all_level_ents.includeEntity(static_cast<Entity*>((pObstacle)));
 
 			//Kill the concrete tile at that position
 			_tilesIds_matrix[CONCRETE][pos_inMatrix.y][pos_inMatrix.x] = -1;
 		}
 	}
-	
-	Tile* pTile = NULL;
+
 	for (int j = 0; j < _matrixSize.y; j++)
 	{
 		for (int k = 0; k < _matrixSize.x; k++)
@@ -330,11 +341,26 @@ void Level::initializeEntities()
 				{
 					pTile = new Tile(getRealPosition({ k, j }), _tilesIds_matrix[i][j][k]);
 					_tile_list[i].includeTile(pTile);
-					_all_level_ents.includeEntity(pTile);
 				}
 			}
 		}
 	}
+
+	/* Include all entities on the general list */
+	for(int i = 0; i < 2; i++)
+		for (Tile* pT : _tile_list[i])
+			_all_level_ents.includeEntity(static_cast<Entity*>(pT));
+	for (Obstacle* pO : _obstacle_list)
+		_all_level_ents.includeEntity(static_cast<Entity*>(pO));
+	for (Enemy* pE : _enemy_list)
+		_all_level_ents.includeEntity(static_cast<Entity*>(pE));
+	for (Tile* pT : _tile_list[CONCRETE])
+		_all_level_ents.includeEntity(static_cast<Entity*>(pT));
+	_all_level_ents.includeEntity(static_cast<Entity*>(_pPlayer1));
+	if(_pPlayer2)
+		_all_level_ents.includeEntity(static_cast<Entity*>(_pPlayer2));
+	for(Tile* pT : _tile_list[FOREGROUND])
+		_all_level_ents.includeEntity(static_cast<Entity*>(pT));
 }
 
 void Level::setPlayersSpawnPoint()
@@ -352,6 +378,7 @@ void Level::start()
 	setViewToCenter();
 
 	Projectile::setProjList(&_projectile_list);
+	Projectile::setEntList(&_all_level_ents);
 }
 
 void Level::setViewToCenter()
@@ -404,16 +431,8 @@ void Level::draw()
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
 
-	for (int i = 0; i < 2; i++)
-	{
-		_tile_list[i].draw_tiles();
-	}
-	_obstacle_list.draw_obstacles();
-	_tile_list[CONCRETE].draw_tiles();
-	_enemy_list.draw_enemies();
-	_projectile_list.draw_projectiles();
-	drawPlayers();
-	_tile_list[FOREGROUND].draw_tiles();
+	_all_level_ents.draw_entities();
+	drawPlayersProps();
 }
 
 void Level::executePlayers(const float deltaTime)
@@ -480,6 +499,23 @@ void Level::setMatrixSize(sf::Vector2i size)
 sf::Vector2i Level::getMatrixSize() const
 {
 	return _matrixSize;
+}
+
+void Level::drawPlayersProps()
+{
+	int hp = _pPlayer1->getHp();
+	if (hp < 0)
+		hp = 0;
+	std::string str = "HP 1: " + std::to_string(hp) + '\n';
+	if (_pPlayer2)
+	{
+		int hp = _pPlayer2->getHp();
+		if (hp < 0)
+			hp = 0;
+			std::string str = "HP 2: " + std::to_string(hp) + '\n';
+	}
+	_playersProps.setString(str);
+	_pGraphMng->draw(_playersProps);
 }
 
 void Level::manage_collisions()

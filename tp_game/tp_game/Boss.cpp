@@ -1,12 +1,20 @@
 #include "stdafx.h"
 #include "Boss.h"
 
+
 Boss::Boss(const sf::Vector2f initPosition) : Enemy(initPosition)
 {
 	initialize_animator();
 	initialize_AllColliders();
-	_speed = 200.0f;
-	_state = IDLE;
+	_speed = 70.0f;
+	_hp = 10;
+	_cd_attack.setTotalTime(2.0f);
+	_attack_offset = sf::Vector2f{ 31.0f, 5.0f } *gMng::textures_scale;
+	_attack_rect.setSize(sf::Vector2f{ 49.0f, 62.0f }*gMng::textures_scale);
+	_attack_rect.setOrigin(_attack_rect.getSize());
+
+	_overView.setSize((*_animator)[COMBAT]->getpSprite()->getSize() * gMng::textures_scale);
+	_overView.setOrigin(_overView.getSize() / 2.0f);
 }
 
 Boss::Boss()
@@ -21,19 +29,15 @@ void Boss::initialize_animator()
 {
 	_animator = new Animator(static_cast<Entity*>(this));
 
-	*_animator << new Animation(gMng::boss_idle_texture, 4, 150.0f, 2);
-	*_animator << new Animation(gMng::boss_walk_texture, 6, 150.0f, 2);
-	*_animator << new Animation(gMng::boss_atk_texture, 3, 100.0f, 2);
-	*_animator << new Animation(gMng::boss_atk_texture, 3, 100.0f, 2);
-}
-
-void Boss::attack()
-{
+	*_animator << new Animation(gMng::boss_idle_texture, 4, 0.150f, 2);
+	*_animator << new Animation(gMng::boss_walk_texture, 6, 0.300f, 2);
+	*_animator << new Animation(gMng::boss_atk_texture, 3, 0.100f, 2);
+	*_animator << new Animation(gMng::boss_atk_texture, 3, 0.100f, 2);
 }
 
 bool Boss::principalFrameOfAttack()
 {
-	return (*_animator)[2]->getFrameCounter() == (*_animator)[2]->getnFrames() - 2;
+	return 1;
 }
 
 void Boss::doPrincipalOfAttack()
@@ -57,24 +61,15 @@ void Boss::updateAction(const float deltaTime)
 	{
 		updateAttack();
 	}
-	
 	else
 	{
-		_state = IDLE;
-		/*
-		_state = WALK;
-
-		int chanceToTurn = 1;//%
-		bool decidedToTurn = false;
-		if (rand() % 101 < chanceToTurn + 1)
-			bool decidedToTurn = true;
-
-		if (!_floor_foward || decidedToTurn)
+		if (_cd_attack.isTicking() && a_playerInRange())
+			_state = IDLE;
+		else
 		{
-			turnArround();
+			_state = WALK;
+			followAPlayer();
 		}
-		_floor_foward = false;
-		moveFoward();*/
 	}
 }
 

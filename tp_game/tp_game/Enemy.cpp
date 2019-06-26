@@ -6,6 +6,9 @@
 // === This Class Header === //
 #include "Enemy.h"
 
+#include "Player.h"
+
+
 //======================================================================================================================================//
 // === Enemy methods === //
 
@@ -92,6 +95,13 @@ bool Enemy::playerAhead(Player* pPlayer)
 	return (_facingRight && pPlayer->getPosition().x > _position.x) || (!_facingRight && pPlayer->getPosition().x < _position.x);
 }
 
+void Enemy::die()
+{
+	_state = DEATH;
+	_canCauseDmg = false;
+	_invulnerability.zeroTimer();
+}
+
 void Enemy::updateAnime_n_Collider()
 {
 	updateAnime();
@@ -110,6 +120,21 @@ void Enemy::check_attack()
 			attack();
 		}
 	}
+}
+
+void Enemy::followAPlayer()
+{
+	Player* followed_player = _pPlayer1;
+	if (_pPlayer2)
+	{
+		if(abs(_pPlayer2->getPosition().x - _position.x) > abs(_pPlayer1->getPosition().x - _position.x))
+			followed_player = _pPlayer2;
+	}
+
+	if (followed_player->getPosition().x > _position.x)
+		moveToRight();
+	else
+		moveToLeft();
 }
 
 void Enemy::attack()
@@ -137,7 +162,7 @@ bool Enemy::isAttacking() const
 
 bool Enemy::principalFrameOfAttack()
 {
-	return (*_animator)[COMBAT]->getFrameCounter() == (*_animator)[COMBAT]->getnFrames() - 1;
+	return (*_animator)[COMBAT]->getFrameCounter() == 1;
 }
 
 const sf::Vector2f Enemy::getFrontEdge() const

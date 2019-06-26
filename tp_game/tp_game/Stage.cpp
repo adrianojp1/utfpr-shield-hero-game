@@ -140,7 +140,7 @@ bool Stage::pauseKey_isPressed()
 void Stage::goToNextLevel()
 {
 	_currentLevel_index++;
-	_vLevels[_currentLevel_index]->start();
+	start_currentLv();
 	Game::getInstance()->execute();
 }
 
@@ -153,3 +153,19 @@ const std::string Stage::get_lv_fp(const int stg_id, const int lv_id) const
 {
 	return get_stg_fp(stg_id) + "_lv" + std::to_string(lv_id);
 }
+
+const int Stage::get_lv_id() const
+{
+	return _vLevels[_currentLevel_index]->getId();
+}
+
+void Stage::set_lv_id(const int lv_id)
+{
+	_currentLevel_index = lv_id - 1;
+}
+
+void Stage::start_currentLv()
+{
+	_vLevels[_currentLevel_index]->start();
+}
+

@@ -5,6 +5,7 @@
 #include "Character.h" //Base class
 
 #include "Player.h"
+
 //======================================================================================================================================//
 // === Enemy Class === //
 class Enemy : public Character
@@ -57,9 +58,10 @@ public:
 	virtual void decreaseTimers();
 	virtual Player* a_playerInRange();
 	virtual bool playerAhead(Player* pPlayer);
-
+	virtual void die();
 	virtual void updateAnime_n_Collider();
 	virtual void check_attack();
+	virtual void followAPlayer();
 	//================================================================//
 	// ========== State checkers ========== //
 	virtual bool isAttacking() const;

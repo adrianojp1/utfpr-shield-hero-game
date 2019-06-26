@@ -54,3 +54,13 @@ void Obstacle_List::draw_obstacles()
 		pO->draw();
 	}
 }
+
+void Obstacle_List::delete_obstacles()
+{
+	for (Obstacle* pO : *this)
+	{
+		if (pO)
+			delete pO;
+	}
+	clear();
+}

@@ -1,12 +1,14 @@
 #pragma once
 #include "Entity.h"
 
+#include "CEnt_List.h"
 class Projectile_List;
 
 class Projectile : public Entity
 {
 private:
 	static Projectile_List* _level_proj_list;
+	static CEnt_List* _level_ents_list;
 
 	sf::RectangleShape *_collider;
 
@@ -42,6 +44,8 @@ public:
 
 	static void setProjList(Projectile_List* projList);
 	static Projectile_List* getProjList();
+	static void setEntList(CEnt_List* entList);
+	static CEnt_List* getEntList();
 private:
 	void updateAction(const float deltaTime);
 };

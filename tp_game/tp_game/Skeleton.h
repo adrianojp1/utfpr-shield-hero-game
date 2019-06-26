@@ -5,12 +5,13 @@
 #include "Enemy.h"
 #include "Projectile_List.h"
 
+
 //======================================================================================================================================//
 // === Skeleton Class === //
 class Skeleton : public Enemy
 {
-private:
-
+protected:
+	float _proj_speed;
 public:
 	//================================================================//
 	// ========== Constructors ========== //

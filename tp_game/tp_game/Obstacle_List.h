@@ -23,5 +23,6 @@ public:
 	void execute_obstacles(const float deltaTime);
 	void update_drawables();
 	void draw_obstacles();
+	void delete_obstacles();
 };
 

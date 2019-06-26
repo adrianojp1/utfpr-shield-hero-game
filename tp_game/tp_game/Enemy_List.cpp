@@ -70,3 +70,13 @@ void Enemy_List::draw_enemies()
 		pEn->draw();
 	}
 }
+
+void Enemy_List::delete_enemies()
+{
+	for (Enemy* pE : *this)
+	{
+		if (pE)
+			delete pE;
+	}
+	clear();
+}
