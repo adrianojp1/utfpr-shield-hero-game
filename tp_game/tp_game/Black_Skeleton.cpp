@@ -6,6 +6,8 @@ Black_Skeleton::Black_Skeleton(const sf::Vector2f initPosition) :
 {
 	initialize_animator();
 	initialize_AllColliders();
+	_cd_attack.setTotalTime(2.0f);
+	_proj_speed = 300.0f;
 }
 
 Black_Skeleton::Black_Skeleton() :

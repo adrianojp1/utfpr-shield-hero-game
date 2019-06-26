@@ -512,7 +512,7 @@ void Level::drawPlayersProps()
 		int hp = _pPlayer2->getHp();
 		if (hp < 0)
 			hp = 0;
-			std::string str = "HP 2: " + std::to_string(hp) + '\n';
+			str += "HP 2: " + std::to_string(hp) + '\n';
 	}
 	_playersProps.setString(str);
 	_pGraphMng->draw(_playersProps);
