@@ -37,7 +37,7 @@ void Boss::initialize_animator()
 
 bool Boss::principalFrameOfAttack()
 {
-	return 1;
+	return ((*_animator)[2]->getFrameCounter() == 1);
 }
 
 void Boss::doPrincipalOfAttack()
