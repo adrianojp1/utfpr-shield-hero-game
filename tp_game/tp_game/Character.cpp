@@ -157,7 +157,7 @@ void Character::jump()
 
 void Character::updateDeath()
 {
-	if ((*_animator)[DEATH]->isFinished())
+	if ((*_animator)[DEATH]->hasEnded())
 	{
 		doAfterDeath();
 	}

@@ -148,7 +148,7 @@ void Enemy::updateAttack()
 	{
 		doPrincipalOfAttack();
 	}
-	if ((*_animator)[COMBAT]->isFinished())
+	if ((*_animator)[COMBAT]->hasEnded())
 	{
 		_state = IDLE;
 		_cd_attack.reset_and_trigger();
@@ -162,7 +162,7 @@ bool Enemy::isAttacking() const
 
 bool Enemy::principalFrameOfAttack()
 {
-	return (*_animator)[COMBAT]->getFrameCounter() == 1;
+	return (*_animator)[COMBAT]->isOnLastFrame();
 }
 
 const sf::Vector2f Enemy::getFrontEdge() const
@@ -187,7 +187,7 @@ const bool Enemy::getFloor_foward() const
 	return _floor_foward;
 }
 
-sf::RectangleShape* Enemy::getAttackRect() const
+sf::RectangleShape* Enemy::getAttackRect()
 {
 	return NULL;
 }

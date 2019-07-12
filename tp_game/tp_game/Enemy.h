@@ -48,7 +48,7 @@ public:
 	virtual void setFloor_foward(const bool floor_fwd);
 	virtual const bool getFloor_foward() const;
 
-	virtual sf::RectangleShape* getAttackRect() const;
+	virtual sf::RectangleShape* getAttackRect();
 	//================================================================//
 	// ========== Motion ========== //
 	virtual void attack();

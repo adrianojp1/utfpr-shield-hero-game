@@ -69,8 +69,9 @@ public:
 
 	bool isGoingToChangeFrame() const;
 	bool isRunning();
-	bool isFinished();
+	bool hasEnded();
 	void resetFrameCounter();
+	bool isOnLastFrame();
 private:
 	// ========== updateSprite submethods ========== //
 	void updateFrame();

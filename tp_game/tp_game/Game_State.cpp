@@ -124,7 +124,7 @@ void On_NewGameMenu::execute(const float deltaTime)
 		changeState(On_MainMenu::getInstance());
 	else
 	{
-		pG->start_newMatch(1, 1);
+		pG->start_newMatch(2, 5);
 		changeState(RunningStage::getInstance());
 	}
 }

@@ -161,7 +161,7 @@ bool Animation::isRunning()
 	return _switchTimer.isTicking();
 }
 
-bool Animation::isFinished()
+bool Animation::hasEnded()
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 	if ((getFrameCounter() == (getnFrames() - 1)) && isGoingToChangeFrame())
@@ -177,6 +177,11 @@ void Animation::resetFrameCounter()
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string)" | -ov: 0 | ");
 	setFrameCounter(0);
+}
+
+bool Animation::isOnLastFrame()
+{
+	return getFrameCounter() == getnFrames() - 1;
 }
 
 void Animation::updateFrame()

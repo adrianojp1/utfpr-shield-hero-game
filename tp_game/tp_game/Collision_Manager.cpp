@@ -57,10 +57,9 @@ void Collision_Manager::collide(Player* pPlayer, Enemy* pEnemy)
 {
 	if (pPlayer && pEnemy && pEnemy->isActive() && pPlayer->isVulnerable() && pEnemy->ableToCauseDamage())
 	{
-		sf::Vector2f intersection;
 		sf::Vector2f collisionDirection;
 
-		if (check_collision(static_cast<Entity*>(pPlayer), static_cast<Entity*>(pEnemy), &intersection, &collisionDirection) )
+		if (intersects(pPlayer, pEnemy->getAttackRect(), &collisionDirection))
 		{
 			if (pPlayer->isDefendingInFront(collisionDirection))
 			{
@@ -333,6 +332,49 @@ bool Collision_Manager::check_collision(Entity* ent1, Entity* ent2, sf::Vector2f
 	return false;
 }
 
+bool Collision_Manager::check_collision(sf::RectangleShape* rect1, sf::RectangleShape* rect2, sf::Vector2f* intersection, sf::Vector2f* coll_direction)
+{
+	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
+
+	sf::Vector2f otherPosition = rect1->getPosition();
+	sf::Vector2f otherHalfSize = rect2->getSize() / 2.0f;
+	sf::Vector2f thisPosition = rect1->getPosition();
+	sf::Vector2f thisHalfSize = rect2->getSize() / 2.0f;
+
+	sf::Vector2f delta = { otherPosition.x - thisPosition.x, otherPosition.y - thisPosition.y };
+
+	*intersection = { abs(delta.x) - (otherHalfSize.x + thisHalfSize.x),
+					 abs(delta.y) - (otherHalfSize.y + thisHalfSize.y) };
+
+	if (intersection->x < 0.0f && intersection->y < 0.0f)
+	{
+		if (intersection->x > intersection->y) // = (abs(intersectX) < abs(intersectY))
+		{									   // pushing on the X axe
+			if (delta.x > 0.0f)
+			{
+				*coll_direction = sf::Vector2f(1.0f, 0.0f);
+			}
+			else
+			{
+				*coll_direction = sf::Vector2f(-1.0f, 0.0f);
+			}
+		}
+		else
+		{ // pushing on the Y axe
+			if (delta.y > 0.0f)
+			{
+				*coll_direction = sf::Vector2f(0.0f, 1.0f);
+			}
+			else
+			{
+				*coll_direction = sf::Vector2f(0.0f, -1.0f);
+			}
+		}
+		return true;
+	}
+	return false;
+}
+
 void Collision_Manager::push_entities(Entity* ent1, Entity* ent2, sf::Vector2f* intersection, sf::Vector2f* coll_direction, float push)
 {
 	Graphical_Manager::printConsole_log(__FUNCTION__ + (std::string) " | -ov: 0 | ");
@@ -405,6 +447,47 @@ bool Collision_Manager::intersects(Entity* ent, sf::RectangleShape* rect)
 
 	if (intersection.x < 0.0f && intersection.y < 0.0f)
 	{
+		return true;
+	}
+	return false;
+}
+
+bool Collision_Manager::intersects(Entity* ent, sf::RectangleShape* rect, sf::Vector2f* coll_direction)
+{
+	sf::Vector2f otherPosition = rect->getPosition();
+	sf::Vector2f otherHalfSize = rect->getSize() / 2.0f;
+	sf::Vector2f thisPosition = ent->getPosition();
+	sf::Vector2f thisHalfSize = ent->getCollider()->getSize() / 2.0f;
+
+	sf::Vector2f delta = { otherPosition.x - thisPosition.x, otherPosition.y - thisPosition.y };
+
+	sf::Vector2f intersection = { abs(delta.x) - (otherHalfSize.x + thisHalfSize.x),
+								 abs(delta.y) - (otherHalfSize.y + thisHalfSize.y) };
+
+	if (intersection.x < 0.0f && intersection.y < 0.0f)
+	{
+		if (intersection.x > intersection.y) // = (abs(intersectX) < abs(intersectY))
+		{									   // pushing on the X axe
+			if (delta.x > 0.0f)
+			{
+				*coll_direction = sf::Vector2f(1.0f, 0.0f);
+			}
+			else
+			{
+				*coll_direction = sf::Vector2f(-1.0f, 0.0f);
+			}
+		}
+		else
+		{ // pushing on the Y axe
+			if (delta.y > 0.0f)
+			{
+				*coll_direction = sf::Vector2f(0.0f, 1.0f);
+			}
+			else
+			{
+				*coll_direction = sf::Vector2f(0.0f, -1.0f);
+			}
+		}
 		return true;
 	}
 	return false;

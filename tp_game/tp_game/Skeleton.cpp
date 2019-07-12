@@ -26,7 +26,7 @@ Skeleton::~Skeleton()
 
 void Skeleton::updateAttack()
 {
-	if ((*_animator)[COMBAT]->isFinished())
+	if ((*_animator)[COMBAT]->hasEnded())
 	{
 		doPrincipalOfAttack();
 		_state = IDLE;
