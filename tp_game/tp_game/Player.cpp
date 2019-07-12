@@ -18,7 +18,7 @@ Player::Player(const sf::Vector2f initPosition) :
 	_speed = 200.f;
 	_points = 0;
 
-	_maxHp = 5;
+	_maxHp = 10;
 	resetHp();
 
 	_curr_spawnPoint = {initPosition};
@@ -119,7 +119,7 @@ void Player::switchTo_combat()
 
 void Player::resetHp()
 {
-	_hp = 5;
+	_hp = 10;
 }
 
 void Player::decreaseTimers()

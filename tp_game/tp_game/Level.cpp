@@ -286,7 +286,7 @@ void Level::initializeEntities()
 	Enemy* pEnemy = NULL;
 	for (unsigned int i = 0; i < _enemiesSpawns.size(); i++)
 	{
-		if (rand() % 4 > 0) {
+		if (rand() % 3 > 0) {
 			pos_inMatrix = _enemiesSpawns[i];
 			pEnemy = _pStage->get_an_enemy(getRealPosition(pos_inMatrix));
 			_enemy_list.includeEnemy(pEnemy);
@@ -302,7 +302,7 @@ void Level::initializeEntities()
 	Obstacle* pObstacle = NULL;
 	for (unsigned int i = 0; i < _spikeSpawns.size(); i++)
 	{
-		if (rand() % 4 > 0)
+		if (rand() % 3 > 0)
 		{
 			pos_inMatrix = _spikeSpawns[i];
 			pObstacle = _pStage->get_spike(getRealPosition(pos_inMatrix));
@@ -312,7 +312,7 @@ void Level::initializeEntities()
 	
 	for (unsigned int i = 0; i < _dispenserSpawns.size(); i++)
 	{
-		if (rand() % 4 > 0)
+		if (rand() % 3 > 0)
 		{
 			pos_inMatrix = _dispenserSpawns[i];
 
